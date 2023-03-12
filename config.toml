@@ -1,4 +1,4 @@
 baseURL = 'http://plagueho.github.io/'
 languageCode = 'en-us'
-title = 'PowerShell, Programming and DevOps'
+title = 'Code And Seek - Coding, DevOps, ML and PowerShell'
 theme = 'ananke'
