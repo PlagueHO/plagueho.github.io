@@ -1,4 +1,25 @@
 baseURL = 'http://plagueho.github.io/'
 languageCode = 'en-us'
-title = 'Code And Seek - Coding, DevOps, ML and PowerShell'
-theme = 'ananke'
+title = 'Code and go Seek'
+theme = "paper"
+
+disqusShortname = 'danscottraynsford'   # use disqus comments
+
+[params]
+  # color style
+  color = 'linen'                           # linen, wheat, gray, light
+
+  # header social icons
+  twitter = 'dscottraynsford'               # twitter.com/YOUR_TWITTER_ID
+  github = 'PlagueHO'                 # github.com/YOUR_GITHUB_ID
+  rss = true                                # show rss icon
+
+  # home page profile
+  avatar = 'dscottraynsford@outlook.com'                 # gravatar email or image url
+  name = 'Daniel Scott-Raynsford'
+  bio = 'Partner Technology Strategist @ Microsoft. Ex. Microsoft MVP.'
+
+
+  # misc
+  disableHLJS = true                        # disable highlight.js
+  monoDarkIcon = true                       # show monochrome dark mode icon
