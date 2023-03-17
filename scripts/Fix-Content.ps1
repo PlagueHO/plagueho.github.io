@@ -5,9 +5,10 @@ param(
 )
 
 <#
-    .SYNOPSIS Download all the images referenced in the markdown to the images folder.
+    .SYNOPSIS
+        Download all the images referenced in the markdown to the images folder and fix the markdown.
 #>
-function Download-ImagesFromMarkdown {
+function Start-DownloadImagesFromMarkdownAndFix {
 [CmdletBinding()]
     param (
         [System.String]
@@ -17,7 +18,7 @@ function Download-ImagesFromMarkdown {
         $ImagesPath
     )
 
-    $images = [regex]::Matches($Content,'!\[.*\]\((.*)\)')
+    $images = [regex]::Matches($Content,'\[!\[.*\]\((.*)\)\]\((.*)\)')
     foreach ($image in $images) {
         $imageUri = $image.Groups[1].Value
         if (-not $imageUri.StartsWith("https://")) {
@@ -39,6 +40,8 @@ function Download-ImagesFromMarkdown {
             Start-Sleep -Seconds 0.5
         }
     }
+
+    return $Content
 }
 
 # Main
@@ -51,5 +54,5 @@ foreach ($post in $posts) {
     Write-Verbose -Message "Processing post path: $postPath, name: $postName, imagesPath: $imagesPath"
 
     $content = Get-Content -Path $post -Raw
-    Download-ImagesFromMarkdown -Content $content -ImagesPath $imagesPath
+    $content = Start-DownloadImagesFromMarkdownAndFix -Content $content -ImagesPath $imagesPath
 }
