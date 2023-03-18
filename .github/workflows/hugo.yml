@@ -46,7 +46,9 @@ jobs:
         id: pages
         uses: actions/configure-pages@v3
       - name: Install Node.js dependencies
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+        run: "cd themes/hugo-geekblog[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+      - name: Build theme
+        run: "cd themes/hugo-geekblog && npm install && npm run build && npm run pack"
       - name: Build with Hugo
         env:
           # For maximum backward compatibility with Hugo modules
