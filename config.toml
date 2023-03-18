@@ -1,25 +1,125 @@
 baseURL = 'http://plagueho.github.io/'
 languageCode = 'en-us'
 title = 'Code and go Seek'
-theme = "ananke"
+theme = "hugo-geekblog"
 
-disqusShortname = 'danscottraynsford'   # use disqus comments
+paginate = 5
+pluralizeListTitles = false
+
+# Required to get well formatted code blocks
+pygmentsUseClasses = true
+pygmentsCodeFences = true
+disablePathToLower = true
+enableGitInfo = true
+
+# Required if you want to render robots.txt template
+enableRobotsTXT = true
+
+[markup]
+  [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 1
+    endLevel = 9
+
+[taxonomies]
+  author = "authors"
+  tag = "tags"
+
+[mediaTypes]
+  [mediaTypes."application/atom+xml"]
+    suffixes = ["xml"]
+
+[outputFormats]
+  [outputFormats.Atom]
+    # https://validator.w3.org/feed/docs/atom.html#whatIsAtom
+    name = "Atom"
+    mediaType = "application/atom+xml"
+    # generated file = <baseName>.<mediaType."application/atom+xml".suffixes[0]> = atom.xml
+    baseName = "feed"
+    isPlainText = false
+    rel = "alternate"
+    isHTML = false
+    noUgly = true
+    permalinkable = false
+
+[outputs]
+  home = ["HTML", "ATOM"]
+  page = ["HTML"]
+  section = ["HTML"]
+  taxonomy = ["HTML"]
+  term = ["HTML", "ATOM"]
 
 [params]
-  # color style
-  color = 'linen'                           # linen, wheat, gray, light
+  subtitle = "Blog about my favorite topics"
+  description = "This is my personal blog about tech."
+  keywords = []
+  images = []
 
-  # header social icons
-  twitter = 'dscottraynsford'               # twitter.com/YOUR_TWITTER_ID
-  github = 'PlagueHO'                 # github.com/YOUR_GITHUB_ID
-  rss = true                                # show rss icon
+  # (Optional, default static/brand.svg) Set the path to a logo for the Geekblog
+  # relative to your 'static/' folder.
+  logo = "logo.png"
 
-  # home page profile
-  avatar = 'dscottraynsford@outlook.com'                 # gravatar email or image url
-  name = 'Daniel Scott-Raynsford'
-  bio = 'Partner Technology Strategist @ Microsoft. Ex. Microsoft MVP.'
+  # (Optional, default 6) Set how many table of contents levels to be showed on page.
+  # Use false to hide ToC, note that 0 will default to 6 (https://gohugo.io/functions/default/)
+  # You can also specify this parameter per page in front matter.
+  geekblogToC = 3
 
+  # (Optional, default none) Add a link to your Legal Notice page to the site footer.
+  # It can be either a remote url or a local file path relative to your content directory.
+  geekblogLegalNotice = "https://blog.example.com/legal"
 
-  # misc
-  disableHLJS = true                        # disable highlight.js
-  monoDarkIcon = true                       # show monochrome dark mode icon
+  # (Optional, default none) Add a link to your Privacy Policy page to the site footer.
+  # It can be either a remote url or a local file path relative to your content directory.
+  geekblogPrivacyPolicy = "/privacy"
+
+  # (Optional, default true) Add an anchor link to headlines.
+  geekblogAnchor = true
+
+  # (Optional, default none) Sites main author.
+  geekblogAuthor = "john-doe"
+
+  # (Optional, default posts) Set the name of the default content section.
+  geekblogContentSection = "my-pages"
+
+  # (Optional, default true) Enable or disable image lazy loading for images rendered
+  # by the 'img' shortcode.
+  geekblogImageLazyLoading = true
+
+  # (Optional, default false) Set HTMl <base> to .Site.BaseURL if enabled. It might be required
+  # if a subdirectory is used within Hugo's BaseURL.
+  # See https://developer.mozilla.org/de/docs/Web/HTML/Element/base.
+  geekblogOverwriteHTMLBase = false
+
+  # (Optional, default true) Enable or disable the JavaScript based color theme toggle switch. The CSS based
+  # user preference mode still works.
+  geekblogDarkModeToggle = false
+
+  # (Optional, default true) Enable or disable adding tags automatically to the main menu.
+  geekblogTagsToMenu = true
+
+  # (Optional, default false) Auto-decrease brightness of images and add a slightly grayscale to avoid
+  # bright spots while using the dark mode.
+  geekblogDarkModeDim = false
+
+  # (Optional, default false) Enforce code blocks to always use the dark color theme.
+  geekblogDarkModeCode = false
+
+  # (Optional, default true) Display a "Back to top" link in the site footer.
+  geekblogBackToTop = true
+
+  # (Optional, default ["taxonomy", "section", "term", "404"])
+  # Page types to exclude from the sitemap and set to noindex,nofollow.
+  geekblogSeoIgnore = ["taxonomy", "section"]
+
+  # (Optional, default none) Adds a "Hosted on <provider>" line to the footer.
+  # Could be used if you want to give credits to your hosting provider.
+  [params.geekblogHostedOn]
+    name = "GitHub Pages"
+    link = "https://github.com"
+
+  # (Optional, default none) Adds a "Content licensed under <license>" line to the footer.
+  # Could be used if you want to define a default license for your content.
+  [params.geekblogContentLicense]
+    name = "CC BY-SA 4.0"
+    link = "https://creativecommons.org/licenses/by-sa/4.0/"
