@@ -1,6 +1,6 @@
 baseURL = 'http://plagueho.github.io/'
 languageCode = 'en-us'
-title = 'Code and go Seek'
+title = 'Code Frenzy'
 theme = "hugo-geekblog"
 
 paginate = 5
@@ -51,9 +51,9 @@ enableRobotsTXT = true
   term = ["HTML", "ATOM"]
 
 [params]
-  subtitle = "Blog about my favorite topics"
-  description = "This is my personal blog about tech."
-  keywords = []
+  subtitle = "Frenzied coding by Daniel Scott-Raynsford"
+  description = "My frenzied journey in coding documented. Just another software engineering blog."
+  keywords = [SaaS, Azure, PowerShell, .NET, C#, Pyhton, Machine Learning, DevOps, DSC]
   images = []
 
   # (Optional, default static/brand.svg) Set the path to a logo for the Geekblog
@@ -65,22 +65,14 @@ enableRobotsTXT = true
   # You can also specify this parameter per page in front matter.
   geekblogToC = 3
 
-  # (Optional, default none) Add a link to your Legal Notice page to the site footer.
-  # It can be either a remote url or a local file path relative to your content directory.
-  geekblogLegalNotice = "https://blog.example.com/legal"
-
-  # (Optional, default none) Add a link to your Privacy Policy page to the site footer.
-  # It can be either a remote url or a local file path relative to your content directory.
-  geekblogPrivacyPolicy = "/privacy"
-
   # (Optional, default true) Add an anchor link to headlines.
   geekblogAnchor = true
 
   # (Optional, default none) Sites main author.
-  geekblogAuthor = "john-doe"
+  geekblogAuthor = "Daniel Scott-Raynsford"
 
   # (Optional, default posts) Set the name of the default content section.
-  geekblogContentSection = "my-pages"
+  # geekblogContentSection = "my-pages"
 
   # (Optional, default true) Enable or disable image lazy loading for images rendered
   # by the 'img' shortcode.
@@ -96,7 +88,7 @@ enableRobotsTXT = true
   geekblogDarkModeToggle = false
 
   # (Optional, default true) Enable or disable adding tags automatically to the main menu.
-  geekblogTagsToMenu = true
+  geekblogTagsToMenu = false
 
   # (Optional, default false) Auto-decrease brightness of images and add a slightly grayscale to avoid
   # bright spots while using the dark mode.
@@ -117,9 +109,3 @@ enableRobotsTXT = true
   [params.geekblogHostedOn]
     name = "GitHub Pages"
     link = "https://github.com"
-
-  # (Optional, default none) Adds a "Content licensed under <license>" line to the footer.
-  # Could be used if you want to define a default license for your content.
-  [params.geekblogContentLicense]
-    name = "CC BY-SA 4.0"
-    link = "https://creativecommons.org/licenses/by-sa/4.0/"
