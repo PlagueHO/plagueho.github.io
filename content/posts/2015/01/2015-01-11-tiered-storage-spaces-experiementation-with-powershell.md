@@ -1,7 +1,7 @@
 ---
 title: "Tiered Storage Spaces Experiementation with PowerShell"
 date: "2015-01-11"
-categories: 
+categories:
   - "windows-server-2012"
 ---
 
@@ -15,7 +15,8 @@ I also modified it slightly to have some of the configuration items, such as whe
 
 This is the script to run on the Host OS that will install Hyper-V, create the VM, create the test VHDXs and start it up:
 
-\[code lang="powershell"\] # -------------------------------------------------------------------------- # Execute on HOST OS # -------------------------------------------------------------------------- # Configure these paths and names # Path to store the VM SSDs $SSD\_VHD\_Path = "F:\\VM\\VHD" # Path to store the VM HDDs $HDD\_VHD\_Path = "E:\\VM\\VHD" # Name of the VM To create/use $VMName = 'Windows Server 2012' # Path to the VM OS disk (if creating a VM). $VM\_OS\_Path = "F:\\VM\\OS\\Windows Server 2012.VHDX" # --------------------------------------------------------------------------
+```powershel
+# -------------------------------------------------------------------------- # Execute on HOST OS # -------------------------------------------------------------------------- # Configure these paths and names # Path to store the VM SSDs $SSD\_VHD\_Path = "F:\\VM\\VHD" # Path to store the VM HDDs $HDD\_VHD\_Path = "E:\\VM\\VHD" # Name of the VM To create/use $VMName = 'Windows Server 2012' # Path to the VM OS disk (if creating a VM). $VM\_OS\_Path = "F:\\VM\\OS\\Windows Server 2012.VHDX" # --------------------------------------------------------------------------
 
 \# Preparation steps: Install Window Server 2012 R2 Preview # Install required roles and features, restart at the end # If Hyper-V is already installed comment out this line: Install-WindowsFeature Hyper-V -IncludeManagementTools –Restart
 
@@ -27,11 +28,13 @@ This is the script to run on the Host OS that will install Hyper-V, create the V
 
 \# Add all data disks to the VM 1..4 | % { Add-VMHardDiskDrive -VMName $VMName -ControllerType SCSI -Path "$SSD\_VHD\_Path\\VMA\_SSD\_$\_.VHDX" } 1..8 | % { Add-VMHardDiskDrive -VMName $VMName -ControllerType SCSI -Path "$HDD\_VHD\_Path\\VMA\_HDD\_$\_.VHDX" }
 
-\# Start the VM Start-VM $VMName Get-VM $VMName Get-VM $VMName | Get-VMHardDiskDrive \[/code\]
+\# Start the VM Start-VM $VMName Get-VM $VMName Get-VM $VMName | Get-VMHardDiskDrive
+```
 
 Once you've got your VM up and running you can execute the following script on it to experiement with the actual Tiered Storage Spaces:
 
-\[code lang="powershell"\] # -------------------------------------------------------------------------- # Execute on GUEST OS # -------------------------------------------------------------------------- Get-PhysicalDisk | Sort Size | FT DeviceId, FriendlyName, CanPool, Size, MediaType -AutoSize Get-PhysicalDisk -CanPool $true | ? Size -lt 20GB | Sort Size | FT -AutoSize Get-PhysicalDisk -CanPool $true | ? Size -gt 20GB | Sort Size | FT -AutoSize
+```powershell
+# -------------------------------------------------------------------------- # Execute on GUEST OS # -------------------------------------------------------------------------- Get-PhysicalDisk | Sort Size | FT DeviceId, FriendlyName, CanPool, Size, MediaType -AutoSize Get-PhysicalDisk -CanPool $true | ? Size -lt 20GB | Sort Size | FT -AutoSize Get-PhysicalDisk -CanPool $true | ? Size -gt 20GB | Sort Size | FT -AutoSize
 
 $s = Get-StorageSubSystem New-StoragePool -StorageSubSystemId $s.UniqueId -FriendlyName Pool1 -PhysicalDisks (Get-PhysicalDisk -CanPool $true)
 
@@ -73,7 +76,7 @@ Get-FileStorageTier -VolumeDriveLetter F | FT -AutoSize c:\\sqlio\\sqlio2.exe -s
 
 \# Extend partition (also extends the volume) Resize-Partition -DriveLetter F -Size 43.87GB
 
-\# Check after Partition/Volume change Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize Get-VirtualDisk Space1 | FT -AutoSize Get-StorageTier Space1\* | FT FriendlyName, Size –AutoSize Get-StorageTierSupportedSize SSDTier -ResiliencySettingName Simple | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT -AutoSize Resize-StorageTier Space1\_SSDTier -Size 12GB Get-VirtualDisk Space1 | Get-Disk | Update-Disk Get-VirtualDisk Space1 | FT -AutoSize Get-StorageTier Space1\* | FT FriendlyName, Size –AutoSize Get-StorageTierSupportedSize SSDTier -ResiliencySettingName Simple | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize Resize-Partition -DriveLetter F -Size 43.87GB Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize \[/code\]
+\# Check after Partition/Volume change Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize Get-VirtualDisk Space1 | FT -AutoSize Get-StorageTier Space1\* | FT FriendlyName, Size –AutoSize Get-StorageTierSupportedSize SSDTier -ResiliencySettingName Simple | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT -AutoSize Resize-StorageTier Space1\_SSDTier -Size 12GB Get-VirtualDisk Space1 | Get-Disk | Update-Disk Get-VirtualDisk Space1 | FT -AutoSize Get-StorageTier Space1\* | FT FriendlyName, Size –AutoSize Get-StorageTierSupportedSize SSDTier -ResiliencySettingName Simple | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | FT -AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize Resize-Partition -DriveLetter F -Size 43.87GB Get-VirtualDisk Space1 | Get-Disk | Get-Partition | FT –AutoSize Get-VirtualDisk Space1 | Get-Disk | Get-Partition | Get-Volume | FT –AutoSize
+```
 
 Hopefully this saves someone out there a little time copying and pasting!
-
