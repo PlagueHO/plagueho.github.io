@@ -53,7 +53,7 @@ enableRobotsTXT = true
 [params]
   subtitle = "Frenzied coding by Daniel Scott-Raynsford"
   description = "My frenzied journey in coding documented. Just another software engineering blog."
-  keywords = [SaaS, Azure, PowerShell, .NET, C#, Pyhton, Machine Learning, DevOps, DSC]
+  keywords = ["SaaS", "Azure", "PowerShell", ".NET", "C#", "Pyhton", "Machine Learning", "AI", "DevOps", "DSC"]
   images = []
 
   # (Optional, default static/brand.svg) Set the path to a logo for the Geekblog
