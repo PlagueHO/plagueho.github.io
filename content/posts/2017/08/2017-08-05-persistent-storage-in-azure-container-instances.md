@@ -61,7 +61,7 @@ The process will perform the following tasks:
 
 This is the content of the script:
 
-\[gist\]d8f61cb9490015532442ee90a5ea8311\[/gist\]
+{{< gist PlagueHO d8f61cb9490015532442ee90a5ea8311 >}}
 
 The script requires a four parameters to be provided:
 
@@ -94,13 +94,13 @@ There are two other files that are required for this process:
 
 This file is called **aci-azuredeploy.json** and should be downloaded to the same folder as the script above.
 
-\[gist\]2e3307a21802a97f2db46be7c8f1b984\[/gist\]
+{{< gist PlagueHO 2e3307a21802a97f2db46be7c8f1b984 >}}
 
 ## ARM Template Parameters
 
 This file is called **aci-azuredeploy.parameters.json** and should be downloaded to the same folder as the script above.
 
-\[gist\]6b8fb93b7f2eb16582060d42946edf37\[/gist\]
+{{< gist PlagueHO 6b8fb93b7f2eb16582060d42946edf37 >}}
 
 # Steps
 
@@ -110,7 +110,7 @@ To use the script the following steps need to be followed:
 2. Open a **PowerShell** window.
 3. Change directory to the folder you place the files into by executing:
 4. CD <folder location>
-5. Execute the script like this (passing in the variables):\[gist\]1bab27a8a7d5f8f81bb9712c50a3152f\[/gist\]![ss_aci_executingscript](/images/ss_aci_executingscript.png)
+5. Execute the script like this (passing in the variables):{{< gist PlagueHO 1bab27a8a7d5f8f81bb9712c50a3152f >}}![ss_aci_executingscript](/images/ss_aci_executingscript.png)
 6. The process will then begin and make take a few minutes to complete:![ss_aci_creategocd](/images/ss_aci_creategocd.gif)**Note:** I've changed the keys to this service principal and deleted this storage account, so I using these Service Principal or Storage Account keys won't work!
 7. Once completed you will be able to log in to the Azure Portal and find the newly created Resource Groups:![ss_aci_resourcegroup](/images/ss_aci_resourcegroup.png)
 8. Open the resource group **\*gocdacirg** and then select the container group **\*gocdaci****:**![ss_aci_getcontainerip](/images/ss_aci_getcontainerip.png)

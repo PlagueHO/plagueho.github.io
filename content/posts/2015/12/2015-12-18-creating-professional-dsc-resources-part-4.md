@@ -33,7 +33,7 @@ _**Important:** If you aren't familiar with **Pester** and **automated testing**
 
 An example of a **Pester** test on a **DSC Resource**:
 
-\[gist\]07f0914ce00ae8a963df\[/gist\]
+{{< gist PlagueHO 07f0914ce00ae8a963df >}}
 
 The above test is a **unit** test of the **xFirewall** resource in the **xNetworking** module. the Don't worry if you don't completely understand this yet, that is the purpose of this article - although you should understand the basic structure of the **Pester** test - if you don't, you'll definitely want to go and review [this series](http://blogs.technet.com/b/heyscriptingguy/archive/2015/12/14/what-is-pester-and-why-should-i-care.aspx).
 
@@ -78,7 +78,7 @@ You could just go ahead and create a new unit from scratch, but there is a much 
 
 The easiest way to do this is to **clone** the repository containing the **test template** files and copy the **unit\_template.ps1** file to your **Tests/Unit** folder:
 
-\[gist\]ebbfb03f731265d61eaf\[/gist\]
+{{< gist PlagueHO ebbfb03f731265d61eaf >}}
 
 ![ss_dsc_createnewunittestfromtemplate](/images/ss_dsc_createnewunittestfromtemplate3.png)
 
@@ -116,7 +116,7 @@ The purpose of this section is to initialize any variables or objects that you'r
 
 For example, if you were testing a resource that was for creating an **iSCSI** **Virtual Disk** you might define the parameters of the **iSCSI Virtual Disk** that you're going to use for testing:
 
-\[gist\]a8c09c14ac3497b946cb\[/gist\]
+{{< gist PlagueHO a8c09c14ac3497b946cb >}}
 
 The **$TestVirtualDisk object** is used to **@splat** onto the **Set-TargetResource** and **Test-TargetResource** functions and for comparison. It saves us lots of typing and therefore potential mistakes.
 
@@ -135,7 +135,7 @@ This area will contain the actual **Pester** tests that test the **Get-TargetRes
 
 For example:
 
-\[gist\]80684b9dae6d655fcdf8\[/gist\]
+{{< gist PlagueHO 80684b9dae6d655fcdf8 >}}
 
 In the above code we have two **Context** blocks - one for each of our scenarios above.
 

@@ -32,7 +32,7 @@ So, to work around this limitation I determined I had to use [Web Deploy/MSDeplo
 
 So, I'll start by just pasting the function that does performs the task:
 
-\[gist\]c028ce068df16c3afa68eaa810bcb9f6\[/gist\]
+{{< gist PlagueHO c028ce068df16c3afa68eaa810bcb9f6 >}}
 
 Just save this file as **Publish-AzureRMWebappProject.ps1** and you're ready to start publishing (almost).
 
@@ -49,7 +49,7 @@ Before you can use this function you'll need to get a few things sorted:
 
 Once you have got all this information you can call the script above like this:
 
-\[gist\]aa3604e4d820768a7ec79164187adbb2\[/gist\]
+{{< gist PlagueHO aa3604e4d820768a7ec79164187adbb2 >}}
 
 > **Note:** You'll need to make sure to replace the variables $SubscriptionId, $TenantId, $Password and $Username with the values for **your Azure Subscription**, **Tenancy** and **Service Principal**.
 

@@ -72,7 +72,7 @@ Most Labs use DSC to configure each VM once it has been provisioned, so the abil
 
 The first thing you'll need to do is install the LabBuilder Module. Execute this PowerShell command at an Administrator PowerShell prompt:
 
-\[gist\]7113b802a227a166ce1df229e4036d17\[/gist\]
+{{< gist PlagueHO 7113b802a227a166ce1df229e4036d17 >}}
 
 ![ss_labbuilder_installmodule](/images/ss_labbuilder_installmodule.png)
 
@@ -86,7 +86,7 @@ By default all sample Labs expect these folders to be D:\\ISOs and D:\\VHDs. If 
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-\[gist\]5933ce33b74b16fe5d63298bf66aa071\[/gist\]
+{{< gist PlagueHO 5933ce33b74b16fe5d63298bf66aa071 >}}
 
 ![ss_labbuilder_createisosandvhdsfolders](/images/ss_labbuilder_createisosandvhdsfolders.png)
 
@@ -100,7 +100,7 @@ For all sample LabBuilder configurations, this folder defaults to a folder in C:
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-\[gist\]62b7fbba3576d8172ce5e71556ec826a\[/gist\]
+{{< gist PlagueHO 62b7fbba3576d8172ce5e71556ec826a >}}
 
 ### Step 4 - Customize the Sample Lab file
 
@@ -138,7 +138,7 @@ We're now ready to build the lab from the sample configuration.
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-\[gist\]180c7c66c2768fb9316d4e2891241853\[/gist\]
+{{< gist PlagueHO 180c7c66c2768fb9316d4e2891241853 >}}
 
 This will begin the task of building out your Lab. The commands just determine the location of your LabBuilder sample file and then call the **Install-Lab** cmdlet. I could have specified the path to the sample file manually, and you can if you prefer.
 
@@ -162,7 +162,7 @@ For the sample Lab the Domain **Administrator** account password is configured a
 
 Once the Lab has been completely built, you can shut it down with the **Stop-Lab** command. You need to pass the path to the Lab Configuration file to shut it down:
 
-\[gist\]bfdc23cbf4a9166ef21610976376df8b\[/gist\]
+{{< gist PlagueHO bfdc23cbf4a9166ef21610976376df8b >}}
 
 The Virtual Machines in the Lab will be shut down in an order defined in the Lab Configuration file. This will ensure that the VMs are shut down in the correct order (e.g. shut down the domain controllers last).
 
@@ -170,7 +170,7 @@ The Virtual Machines in the Lab will be shut down in an order defined in the Lab
 
 If you need to start up a previously created Lab, use the **Start-Lab** command. You will again need to provide the path to the Lab Configuration file of the Lab you want to shut down:
 
-\[gist\]3431605d673745726c758d68f5417678\[/gist\]
+{{< gist PlagueHO 3431605d673745726c758d68f5417678 >}}
 
 The Virtual Machines in the Lab will be started up in an order defined in the Lab Configuration file. This will ensure that the VMs are started up in the correct order.
 
@@ -178,7 +178,7 @@ The Virtual Machines in the Lab will be started up in an order defined in the La
 
 If you want to completely remove a Lab, use the **Uninstall-Lab** command. You will again need to provide the path to the Lab Configuration file of the Lab you want to unisntall:
 
-\[gist\]7f50968b19708099519b88db80a5829a\[/gist\]
+{{< gist PlagueHO 7f50968b19708099519b88db80a5829a >}}
 
 **Note: You will be asked to confirm the removals**.
 

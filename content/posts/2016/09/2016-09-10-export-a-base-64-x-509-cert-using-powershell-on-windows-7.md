@@ -1,9 +1,9 @@
 ---
 title: "Export a Base-64 x.509 Cert using PowerShell on Windows 7"
 date: "2016-09-10"
-categories: 
+categories:
   - "certificate-services"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -11,7 +11,7 @@ Exporting a Base-64 Encoded x.509 certificate using PowerShell is trivial if you
 
 So I came up with this little snippet of code:
 
-\[gist\]40c20a6cc143d3856c9c23da88843642\[/gist\]
+{{< gist PlagueHO 40c20a6cc143d3856c9c23da88843642 >}}
 
 Hope someone finds it useful.
 

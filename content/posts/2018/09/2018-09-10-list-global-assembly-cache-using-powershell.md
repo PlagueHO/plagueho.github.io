@@ -11,7 +11,7 @@ The list of assemblies stored in the Global Assembly Cache (GAC) can be found in
 
 If you want to get a list of the assemblies registered in the GAC using PowerShell you can use this snippet:
 
-\[gist\]465089bda19dca776dcb59b13293d872\[/gist\]
+{{< gist PlagueHO 465089bda19dca776dcb59b13293d872 >}}
 
 ![ss_gac_getcontent](/images/ss_gac_getcontent.png)
 

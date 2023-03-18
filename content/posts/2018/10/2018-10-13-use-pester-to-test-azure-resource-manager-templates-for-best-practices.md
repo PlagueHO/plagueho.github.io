@@ -15,7 +15,7 @@ The feature of this module that I was most interested in for my current project 
 
 To install the module, open a PowerShell Window and run:
 
-\[gist\]5cbc71984116172d0d28a1b85f315650\[/gist\]
+{{< gist PlagueHO 5cbc71984116172d0d28a1b85f315650 >}}
 
 > Important: At the time of writing this post, the AzSK module has dependencies on the **AzureRM.Profile** and other AzureRM.\* PowerShell modules. As of December 2018, the **AzureRM.\*** PowerShell Modules are going to be renamed to **Az.\*** (see [this post](https://github.com/Azure/azure-powershell/blob/preview/documentation/announcing-az-module.md)). The AzureRM and Az modules **can not** be installed side-by-side, so if you've installed the Az PowerShell modules on your system then the installation of AzSK will fail because the AzureRM modules will also be installed and a conflict will occur.
 
@@ -29,7 +29,7 @@ In my case, I wanted to be able to use the [PowerShell Pester Module](https://gi
 
 This is what the script looks like:
 
-\[gist\]1af35ee65a2276ca90b3a8a5b224a5d4\[/gist\]
+{{< gist PlagueHO 1af35ee65a2276ca90b3a8a5b224a5d4 >}}
 
 You can download the script from GitHub Gist directly or get it from the [PowerShell Gallery](https://www.powershellgallery.com/packages/AzSKARMTemplateSecurityStatus.Test/1.0.0) by running:
 
@@ -37,11 +37,11 @@ Install-Script -Name AzSKARMTemplateSecurityStatus.Test
 
 To use it you will need to install Pester 4.3.0 and AzSK 3.6.1 modules:
 
-\[gist\]4a1884d10b44416a85c0a632e90fa2d7\[/gist\]
+{{< gist PlagueHO 4a1884d10b44416a85c0a632e90fa2d7 >}}
 
 Once that is done, you can use **Invoke-Pester** and pass in the **TemplatePath** and **Severity** parameters to the test script:
 
-\[gist\]a9cffa90bcaddcd9f905618b4c384d5e\[/gist\]
+{{< gist PlagueHO a9cffa90bcaddcd9f905618b4c384d5e >}}
 
 This will execute the Pester tests in the file above on the specified ARM template. The tests will fail when there are any best practice violations with the specified **Severity** or above. If you didn't pass in a **Severity** then it will default to failing on **Medium** and **High**.
 

@@ -13,7 +13,7 @@ So, today's post shows how you can use some simple PowerShell code to pull down 
 
 First up, lets get the list of available _.gitIgnore templates:_
 
-\[gist\]55330104b449cd78c4d1a00450cccffb\[/gist\]
+{{< gist PlagueHO 55330104b449cd78c4d1a00450cccffb >}}
 
 This will get the list of _.GitIgnore templates_ to an array variable called **$templateList**. I could then display the list to a user:
 
@@ -21,7 +21,7 @@ This will get the list of _.GitIgnore templates_ to an array variable called **$
 
 Now, all I need to do is to download the named _.gitIgnore Template_ to a folder:
 
-\[gist\]f9e6ba57407f7974063c48a20d65fe88\[/gist\]
+{{< gist PlagueHO f9e6ba57407f7974063c48a20d65fe88 >}}
 
 This will download the **VisualStudio** _.giIgnore_ template and save it with the filename **.gitignore** to the current folder.
 

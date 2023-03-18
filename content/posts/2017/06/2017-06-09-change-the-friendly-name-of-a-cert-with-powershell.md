@@ -11,7 +11,7 @@ While working on adding a new feature in the certificate request DSC resource, I
 
 All you need to do is identify the certificate using Get-ChildItem and then assign the new FriendlyName to it.
 
-\[gist\]ab6ed6e6e9f38a286608ffda6b9aca0c\[/gist\]
+{{< gist PlagueHO ab6ed6e6e9f38a286608ffda6b9aca0c >}}
 
 ![ss_cert_changefriendlyname](/images/ss_cert_changefriendlyname.png)
 

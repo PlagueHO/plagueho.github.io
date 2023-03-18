@@ -32,7 +32,7 @@ In Windows Nano Server TP4 Microsoft included CIM cmdlets. This enabled us to us
 
 However, I have lots of Nano Servers and updating them one at a time would be a real pain. So I decided to write a short PowerShell snippet to update all of them at once. This snippet should actually work with any Windows Server 2016 TP4 (or greater) version.
 
-\[gist\]3dd091d45db5800775321fbacfeaf479\[/gist\]
+{{< gist PlagueHO 3dd091d45db5800775321fbacfeaf479 >}}
 
 This snippet contains a simple function that takes three parameters:
 

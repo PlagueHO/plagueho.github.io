@@ -1,9 +1,9 @@
 ---
 title: "Which Physical Network Adapters are bound to Virtual Switches?"
 date: "2016-04-08"
-categories: 
+categories:
   - "hyper-v"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -11,7 +11,7 @@ Today's post has quite a long title for what is going to be a fairly short post.
 
 So I wrote a few lines of PowerShell that would do the trick:
 
-\[gist\]fc07435c7321be0f7ba072f3da601c84\[/gist\]
+{{< gist PlagueHO fc07435c7321be0f7ba072f3da601c84 >}}
 
 The first piece gets a list of MAC addresses for all Virtual Network Adapters that are configured for use by the host OS (managementOS) on External Switches.
 

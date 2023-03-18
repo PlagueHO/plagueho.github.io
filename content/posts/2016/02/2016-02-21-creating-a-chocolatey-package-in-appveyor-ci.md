@@ -58,13 +58,13 @@ This is the **Chocolatey** manifest file for the package. It is really just an X
 
 Alternately, if you have **Chocolatey** installed, you can run (from PowerShell or CMD):
 
-\[gist\]fe0c3c1e2f91c16a2818\[/gist\]
+{{< gist PlagueHO fe0c3c1e2f91c16a2818 >}}
 
 This will create a new folder called **devcon.portable** with a file **devcon.portable**.**nuspec** in it. You can then just customize the **devcon.portable**.**nuspec** with the details of the package. I also deleted the **tools** folder that was created as I had no need for that.
 
 In my case I ended up with this:
 
-\[gist\]360ae5e7d0b82d651158\[/gist\]
+{{< gist PlagueHO 360ae5e7d0b82d651158 >}}
 
  
 
@@ -82,11 +82,11 @@ For more information on .portable packages, see [this page](https://github.com/c
 
 The **AppVeyor.yml** file looks like this:
 
-\[gist\]46b8f4e4d87b5c42b205\[/gist\]
+{{< gist PlagueHO 46b8f4e4d87b5c42b205 >}}
 
 The key part of this file is in the **deploy\_script** section:
 
-\[gist\]3da1dec0d56d7e1e3650\[/gist\]
+{{< gist PlagueHO 3da1dec0d56d7e1e3650 >}}
 
 The first line changes to the folder containing the **devcon.portable.nuspec** and **devcon\*.exe** files.
 

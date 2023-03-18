@@ -18,7 +18,7 @@ But lets face it, that's no fun and it really doesn't fit well when when we have
 
 It is [easy enough](https://blogs.technet.microsoft.com/filecab/2012/06/08/iscsi-target-cmdlet-reference/) to configure **iSCSI Targets** to register with an **iSNS Server**:
 
-\[gist\]de9d5068d11d135eb9b1\[/gist\]
+{{< gist PlagueHO de9d5068d11d135eb9b1 >}}
 
 But unfortunately I couldn't find any documentation on how to do this on an **iSCSI Initiator**. But after a little bit of digging around WMI I found the appropriate class:
 
@@ -26,19 +26,19 @@ _**MSiSCSIInitiator\_iSNSServerClass**_
 
 So, to add the **iSNS Server** to the **iSCSI Initiator**:
 
-\[gist\]17975238e03fb1db3f87\[/gist\]
+{{< gist PlagueHO 17975238e03fb1db3f87 >}}
 
 Notice that the WMI Class **argument** **name** for the setting the **iSNS Server** name in an **iSCSI Initiator** is different (iSNSServerAddress) compared to setting it for an **iSCSI Target** (ServerName).
 
 To list the currently set iSNS Servers:
 
-\[gist\]76f89aa26791188cac5c\[/gist\]
+{{< gist PlagueHO 76f89aa26791188cac5c >}}
 
 ![ss_isns_getlistservers](/images/ss_isns_getlistservers.png)
 
 And if you need to remove an **iSNS Server** from the **iSCSI Initiator**:
 
-\[gist\]b5cac574910ae8d9a1e7\[/gist\]
+{{< gist PlagueHO b5cac574910ae8d9a1e7 >}}
 
 Pretty easy right?
 

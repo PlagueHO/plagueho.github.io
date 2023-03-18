@@ -11,7 +11,7 @@ I've just spent the last few hours looking into how I can get the BIOS GUID from
 
 So after a fair bit of hunting all I could turn up was an older [VBS script](http://blogs.technet.com/b/m2/archive/2008/07/04/how-to-get-the-bios-guid-from-a-hyper-v-vm.aspx). I decided this wasn't ideal and so went about investigating how I might do this in PowerShell (this is a PowerShell blog mainly after all). Well after a few minutes I came up with this (rather long) command:
 
-\[gist\]df990e4da91f81f0123b\[/gist\]
+{{< gist PlagueHO df990e4da91f81f0123b >}}
 
 It uses WMI/CIM, but does seem to work nicely (don't forget to set the name of the VM):
 

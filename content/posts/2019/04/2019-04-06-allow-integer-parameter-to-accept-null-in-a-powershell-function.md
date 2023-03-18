@@ -1,7 +1,7 @@
 ---
 title: "Allow Integer Parameter to Accept Null in a PowerShell Function"
 date: "2019-04-06"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -9,7 +9,7 @@ One of the great things about PowerShell being based on .NET is that we get to t
 
 A problem I came across today was that I needed to have a function that took a mandatory integer parameter, but that parameter needed to allow **Null**. In .NET there is a generic type **System.Nullable<T>** that allows other types to take on a null value.
 
-\[gist\]4d640f93053b230b6dc88171dba9aa92\[/gist\]
+{{< gist PlagueHO 4d640f93053b230b6dc88171dba9aa92 >}}
 
 This allows me to call the function above with the following:
 

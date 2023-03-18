@@ -98,7 +98,7 @@ You need to copy the **integration test template** files and rename them to matc
 
 The easiest way to do this is to **clone** the repository containing the **test template** files and copy the **integration\_template.ps1** and **integration\_config\_template.ps1** files to your **Tests/Integration** folder:
 
-\[gist\]9e6244d25c241e5dc995\[/gist\]
+{{< gist PlagueHO 9e6244d25c241e5dc995 >}}
 
 ![ss_dsc_createnewinttestfromtemplate](/images/ss_dsc_createnewinttestfromtemplate.png)
 
@@ -112,13 +112,13 @@ The first file I usually edit is the \*.**config.ps1** file:
 
 ![ss_dsc_newinttestconfigtemplate](/images/ss_dsc_newinttestconfigtemplate1.png)
 
-Next, you'll want to change any **<ResourceName>** occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed: \[gist\]2fa06a8c28f64b7966dc\[/gist\]
+Next, you'll want to change any **<ResourceName>** occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed: {{< gist PlagueHO 2fa06a8c28f64b7966dc >}}
 
 Next, we need to configure the **config** file with the parameters we want to use as tests of the resource.
 
 The best way of doing this is actually to create a **hash table** object at the beginning of the file with the parameters that we're going to set. This is so that we can use this **hash table** object in the other **integration file** (\*.Integration.Tests.ps1) when we're comparing the values that are expected to be set.
 
-\[gist\]2c854c65a6ff6500d78c\[/gist\]
+{{< gist PlagueHO 2c854c65a6ff6500d78c >}}
 
 As you can see in the example above, I create a **$VirtualDisk** hash table that contains all the parameters and values that will be used to test this DSC Resource. The **$VirtualDisk** object is then also accessible in the **\*.Integration.Tests.ps1** file.
 
@@ -142,7 +142,7 @@ Feel free to remove the **TODO** comments if you want (I always do).
 
 After customizing the header we need to add any code that might be required to set this machine up to actually perform these **integration tests**. The first thing I like to do is add code to check that these integration tests can actually be performed on this machine. In my example resource, the **iSCSI Virtual Disk** resource will require the **iSCSI Target Server** feature to be installed, which also means the OS must be a Server OS. So, first thing in the **try/catch** block I add these checks:
 
-\[gist\]e3d943ebd95fb4156ea2\[/gist\]
+{{< gist PlagueHO e3d943ebd95fb4156ea2 >}}
 
 This will cause the **try/catch** block to be **exited** straight away if these tests can't actually be performed on this machine.
 
@@ -162,7 +162,7 @@ To do this, we complete this section:
 
 In this case, I've changed it to:
 
-\[gist\]33ff449f92ed9242c96d\[/gist\]
+{{< gist PlagueHO 33ff449f92ed9242c96d >}}
 
 What this code does is gets the iSCSI Virtual Disk that is at the path specified in the **$VirtualDisk.path** into a variable **$VirtualDiskNew**.
 
@@ -174,7 +174,7 @@ The parameters in **$VirtualDiskNew** are then matched to ensure they are the sa
 
 It is important that after the tests have been run that any changes that were made to the testing computer are reverted. So, after the end of the last test I add any clean up code. In my case, I want to remove the **iSCSI Virtual Disk** that was created:
 
-\[gist\]e2e30a66d466a488941d\[/gist\]
+{{< gist PlagueHO e2e30a66d466a488941d >}}
 
 The above code just removes the **iSCSI Virtual Disk** and then also makes sure that the **VHD** file was also deleted. This is also very important because if the clean up does not occur and the tests are run again on the same computer they may fail.
 

@@ -1,10 +1,10 @@
 ---
 title: "Creating Professional DSC Resources - Part 5"
 date: "2015-12-20"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -48,7 +48,7 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-\[gist\]8404c2dc72042e99bc2b\[/gist\]
+{{< gist PlagueHO 8404c2dc72042e99bc2b >}}
 
 This **context** will perform two tests:
 
@@ -71,7 +71,7 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return nothi
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-\[gist\]4f7a62a633c4cff41fac\[/gist\]
+{{< gist PlagueHO 4f7a62a633c4cff41fac >}}
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 
@@ -83,7 +83,7 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-\[gist\]83cd60cc22ef66cbb52f\[/gist\]
+{{< gist PlagueHO 83cd60cc22ef66cbb52f >}}
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 
@@ -95,7 +95,7 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-\[gist\]6b3e30de7326e908ad1e\[/gist\]
+{{< gist PlagueHO 6b3e30de7326e908ad1e >}}
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 

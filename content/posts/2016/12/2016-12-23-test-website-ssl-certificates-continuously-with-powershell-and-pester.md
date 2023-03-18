@@ -23,7 +23,7 @@ This seemed like a good task for Pester (or [Operation Validation Framework](htt
 
 Chris' post contained this PowerShell cmdlet:
 
-\[gist\]7247c2eb35d8e888d5845ce4f0ed5591\[/gist\]
+{{< gist PlagueHO 7247c2eb35d8e888d5845ce4f0ed5591 >}}
 
 So that was the hard part done, all I needed was to add this function to some [Pester](https://blogs.technet.microsoft.com/heyscriptingguy/2015/12/14/what-is-pester-and-why-should-i-care/) tests.
 
@@ -35,7 +35,7 @@ So after a little bit of tinkering I ended up with a set of tests that I combine
 
 > The tests are located at the bottom of the file below the Test-SslProtocol function.
 
-\[gist\]e63cb51d0c38fcb18b7c0d638fa7e81b\[/gist\]
+{{< gist PlagueHO e63cb51d0c38fcb18b7c0d638fa7e81b >}}
 
 So, now to test these SSL endpoints all I need to do is run in a PowerShell console with the current folder set to the folder containing my **SSL.tests.ps1** file:
 
@@ -50,7 +50,7 @@ This shows that all the SSL endpoint certificates being used by google.com, bing
 
 All I would then need to do is put this in a task to run every hour or so and perform some task when the tests fail:
 
-\[gist\]c461fca2f66fe0338e510ae8274a3761\[/gist\]
+{{< gist PlagueHO c461fca2f66fe0338e510ae8274a3761 >}}
 
 At this point you will still need to use some mechanism to notify someone when they fail. One method could be to write an event into the **Windows Event Log** and then use **Microsoft Operations Management Suite** (or **SCOM**) to monitor for this event and send an e-mail or other alert to the appropriate administrators.
 

@@ -21,11 +21,11 @@ I found the documentation for the API Management service resource [here](https:/
 
 But after a little bit of trial and error I managed to figure it out and get it working. What you need to do is add the following **customProperties** to the **properties** of the API Management service resource:
 
-\[gist\]54e3b84971a7be64859df62a881b8247\[/gist\]
+{{< gist PlagueHO 54e3b84971a7be64859df62a881b8247 >}}
 
 This is what the complete ARM template looks like:
 
-\[gist\]59c53066c53f5272488a95f9c27d3f23\[/gist\]
+{{< gist PlagueHO 59c53066c53f5272488a95f9c27d3f23 >}}
 
 > **Side note:** the template above is based off the [Azure Quickstart Template for API Management](https://github.com/Azure/azure-quickstart-templates/blob/master/101-azure-api-management-create/azuredeploy.json).
 

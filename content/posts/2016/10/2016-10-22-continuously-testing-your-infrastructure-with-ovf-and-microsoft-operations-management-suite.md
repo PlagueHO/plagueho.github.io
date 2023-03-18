@@ -35,7 +35,7 @@ The **OperationValidation** PowerShell module comes in-box with **Windows Server
 
 To download and install the **OperationValidation** PowerShell module on earlier operating systems enter the following cmdlet in an Administrator PowerShell console:
 
-\[gist\]4d3186660269842f841d21c18f8d0344\[/gist\]
+{{< gist PlagueHO 4d3186660269842f841d21c18f8d0344 >}}
 
 ![ss_ovfoms_installoperationvalidation](/images/ss_ovfoms_installoperationvalidation.png)
 
@@ -57,7 +57,7 @@ _Note: you can create the the OVF tests in a different location if that works fo
         - Comprehensive_\\_
 
     ![ss_ovfoms_folderstructure](/images/ss_ovfoms_folderstructure1.png)
-3. In the **Simple** folder create a file called **ValidateDNS.Simple.Tests.ps1** with the contents: \[gist\]51a96524896f2f38d592ef19590b10d0\[/gist\]
+3. In the **Simple** folder create a file called **ValidateDNS.Simple.Tests.ps1** with the contents: {{< gist PlagueHO 51a96524896f2f38d592ef19590b10d0 >}}
 4. Edit the tests and create any that are validate the things you want to test for.
 
 The OVF tests above just check some basic settings of a DNS Server and so would normally be run on a Windows DNS Server. As noted above, you could write tests for almost anything, including validating things on other systems. I intentionally have setup one of the tests to fail for demonstration purposes (a gold star for anyone who can tell which test will fail).
@@ -69,7 +69,7 @@ _In a future article I'll cover how to test components on remote machines so you
 Although we could just run the tests as is, the output will just end up in the console, which is not what we want here. We want any failed tests to be put into the **Application Event Log****.**
 
 1. Create a file called **ValidateDNS.psm1** in the **ValidateDNS** folder created earlier.
-2. Add the following code to this **ValidateDNS.psm1** file: \[gist\]5ce7d041fcde3e0702c63729ca6567d1\[/gist\]
+2. Add the following code to this **ValidateDNS.psm1** file: {{< gist PlagueHO 5ce7d041fcde3e0702c63729ca6567d1 >}}
 3. Save the **ValidateDNS.psm1**
 
 The above file is a PowerShell Module will make available a single cmdlet called **Invoke-ValidateDNS**. We can now just run **Invoke-ValidateDNS** in a PowerShell console and the following tasks will be performed:
@@ -82,7 +82,7 @@ The above file is a PowerShell Module will make available a single cmdlet called
 
 This step we will create a Scheduled Task to run the cmdlet we created in Step 3. You could use the **Task Scheduler UI** to do this, but this is a PowerShell blog after all, so here is a script you can run that will create the scheduled task:
 
-\[gist\]f3215ef69a5bacbace96bc6600e36831\[/gist\]
+{{< gist PlagueHO f3215ef69a5bacbace96bc6600e36831 >}}
 
 ![ss_ovfoms_scheduletask](/images/ss_ovfoms_scheduletask2.png)
 

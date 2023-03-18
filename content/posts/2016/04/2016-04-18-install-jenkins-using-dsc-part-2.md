@@ -1,11 +1,11 @@
 ---
 title: "Install Jenkins using DSC – Part 2"
 date: "2016-04-18"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
   - "jenkins"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -96,7 +96,7 @@ Start-DscConfiguration -Path .\\JENKINS\_CI -Wait -Verbose \[/sourcecode\]
 
 Here is the complete DSC Configuration file. You just need to copy it to the Server and run it. It will compile the configuration into a MOF and tell the LCM to apply it. Just remember to ensure required DSC Resource modules are installed.
 
-\[gist\]c883691c32c04e8404f2354910e86f47\[/gist\]
+{{< gist PlagueHO c883691c32c04e8404f2354910e86f47 >}}
 
 Within five to ten minutes the Jenkins server will be configured and ready to go.
 

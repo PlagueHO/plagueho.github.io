@@ -60,13 +60,13 @@ Before you get down to the process of working with Cosmos DB resources, you'll n
 
 To create the **connection variable** we just use the **New-CosmosDbContext**:
 
-\[gist\]5f180a93ed0d3fa6df523c8b75fa9544\[/gist\]
+{{< gist PlagueHO 5f180a93ed0d3fa6df523c8b75fa9544 >}}
 
 ![ss_cdb_cosmosdbnewconnection](/images/ss_cdb_cosmosdbnewconnection.png)
 
 If you do not wish to specify your **master key**, you can have the **New-CosmosDbContext** function pull your **master key** from the **Azure Management Portal** directly:
 
-\[gist\]dffd4a47a2f9a2f4f51ffddee5433fec\[/gist\]
+{{< gist PlagueHO dffd4a47a2f9a2f4f51ffddee5433fec >}}
 
 ![ss_cdb_cosmosdbnewconnectionviaportal](/images/ss_cdb_cosmosdbnewconnectionviaportal.png)
 
@@ -111,7 +111,7 @@ To grant a permission you need to provide four pieces of information:
 
 In the following example, we'll grant the user **daniel** _all_ access to the **TestCollection**:
 
-\[gist\]262c087f1e4fb4d6bfd3cf0db314c0f6\[/gist\]
+{{< gist PlagueHO 262c087f1e4fb4d6bfd3cf0db314c0f6 >}}
 
 ![ss_cdb_cosmosdbnewpermission](/images/ss_cdb_cosmosdbnewpermission.png)
 

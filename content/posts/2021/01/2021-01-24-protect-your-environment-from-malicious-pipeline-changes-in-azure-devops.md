@@ -55,7 +55,7 @@ However, the branch policy specifics aren't actually important here.
 
 The problem is that **any user** may create a new branch off **main** and add malicious (or accidental) code to the **azure-pipelines.yml**. For example, if I create a new branch called _malicious-change_ with **azure-pipelines.yml** changed to:
 
-\[gist\]071546891c5cd2636226ef94df2230c6\[/gist\]
+{{< gist PlagueHO 071546891c5cd2636226ef94df2230c6 >}}
 
 [![](/images/ss_azdopipelinecontrols_gitmaliciousbranch.png?w=1024)](/images/ss_azdopipelinecontrols_gitmaliciousbranch.png)
 
@@ -239,7 +239,7 @@ Finally, we need to update the **azure-pipeline.yml** to make use of the **envir
 
 Setting the environment to PRODUCTION in a deployment job.
 
-\[gist\]b3739eda14b635e2593dbafcc6a7d937\[/gist\]
+{{< gist PlagueHO b3739eda14b635e2593dbafcc6a7d937 >}}
 
 We can now get now also get a single view of all deployments to an environment:
 

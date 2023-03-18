@@ -34,7 +34,7 @@ Before getting started there is a few things that will be needed:
 
 The first task is to customize and install the Azure Key Vault using the following **PowerShell script**.
 
-\[gist\]24bcab61df4741a0c388d3d0467d192a\[/gist\]
+{{< gist PlagueHO 24bcab61df4741a0c388d3d0467d192a >}}
 
 But first, the variables in the **PowerShell script** need to be customized to suit. The variables in the **PowerShell script** that needs to be set are:
 
@@ -56,19 +56,19 @@ Once the **Azure Key Vault** is setup and an administrator or two have been assi
 
 To create an **access policy** to allow a **user** to _get_ and _list_ **cryptographic key****s**, **certificates** and **secrets** if you know the **User Principal Name**:
 
-\[gist\]c430d4f9eafbe4c6d753613365c6b6aa\[/gist\]
+{{< gist PlagueHO c430d4f9eafbe4c6d753613365c6b6aa >}}
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
 If you only have the **full name** of the **user** then you'll need to look up the **Object Id** for the user in the **Azure AD**:
 
-\[gist\]5900d92a9b97e947bc60ff7fe721fefe\[/gist\]
+{{< gist PlagueHO 5900d92a9b97e947bc60ff7fe721fefe >}}
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
 To create an **access policy** to allow a **service principal** or **application** to _get_ and _list_ **cryptographic key****s** if you know the **Application Id** (a GUID):
 
-\[gist\]e079674f79ed6cf87b877d6829735917\[/gist\]
+{{< gist PlagueHO e079674f79ed6cf87b877d6829735917 >}}
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -80,7 +80,7 @@ The available permissions for **certificates**, **keys** and **secrets** are:
 
 An **access policy** can be removed from **users** or **service principals** using the **Remove-AzureRmKeyVaultAccessPolicy** cmdet:
 
-\[gist\]058455310cdff17b8bdba6ba6db74f6c\[/gist\]
+{{< gist PlagueHO 058455310cdff17b8bdba6ba6db74f6c >}}
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -92,7 +92,7 @@ _Note: the above code assumes you still have the variables set from the 'Install
 
 To create a new secret, use the **Set-AzureKeyVaultSecret** cmdlet:
 
-\[gist\]45d281e3f6dc58107fbb6f982c27b4e8\[/gist\]
+{{< gist PlagueHO 45d281e3f6dc58107fbb6f982c27b4e8 >}}
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -100,7 +100,7 @@ This will create a secret called **MyAdminPassword** with the value **P@ssword!1
 
 The secret can be updated to a new value using the same cmdlet:
 
-\[gist\]fe8da3ca6a0ac7e543e2f9c1de1339f9\[/gist\]
+{{< gist PlagueHO fe8da3ca6a0ac7e543e2f9c1de1339f9 >}}
 
 **Additional parameters** can also be assigned to each version of a secret to control how it can be used:
 
@@ -112,7 +112,7 @@ The secret can be updated to a new value using the same cmdlet:
 
 For example:
 
-\[gist\]20e433002d73a69e2b7ef9318d9b4b9b\[/gist\]
+{{< gist PlagueHO 20e433002d73a69e2b7ef9318d9b4b9b >}}
 
 ![ss_akv_secretupdatewithparameters](/images/ss_akv_secretupdatewithparameters.png)
 
@@ -120,25 +120,25 @@ For example:
 
 To retrieve the **latest (current) version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet:
 
-\[gist\]335c7a9420ccdf1c2c0c7559b5d01db9\[/gist\]
+{{< gist PlagueHO 335c7a9420ccdf1c2c0c7559b5d01db9 >}}
 
 This will assign the stored secret to the variable **$secretText** as a **SecureString**. This can then be passed to any other cmdlets that require a **SecureString**.
 
 To list **all** the versions of a secret, add the **IncludeVersions** parameter:
 
-\[gist\]82cc3c622a43673c5b35e9eb5ed0710b\[/gist\]
+{{< gist PlagueHO 82cc3c622a43673c5b35e9eb5ed0710b >}}
 
 ![ss_akv_secretallhistory](/images/ss_akv_secretallhistory.png)
 
 To retrieve a **specific version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet with the **Version** parameter specified:
 
-\[gist\]12b88cde2f6c67cefd2c1a17710b4936\[/gist\]
+{{< gist PlagueHO 12b88cde2f6c67cefd2c1a17710b4936 >}}
 
 ## Removing Secrets
 
 Finally, to remove a secret use the **Remove-AzureKeyVaultSecret** cmdlet:
 
-\[gist\]5892377f9952506199c1d3843a028cd8\[/gist\]
+{{< gist PlagueHO 5892377f9952506199c1d3843a028cd8 >}}
 
 That pretty much covers managing and using **secrets** in **Azure Key Vault** using **PowerShell****.**
 

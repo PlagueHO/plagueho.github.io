@@ -1,11 +1,11 @@
 ---
 title: "Creating Professional DSC Resources – Part 6"
 date: "2015-12-23"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
   - "pester"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -56,7 +56,7 @@ The bottom four of these tests are very similar. So I'll only show examples of t
 
 In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the object we defined in the **Pester Test Initialization** section. This is the behavior we'd expect if the _resource being configured_ does exist:
 
-\[gist\]782db99150f72e90f0b5\[/gist\]
+{{< gist PlagueHO 782db99150f72e90f0b5 >}}
 
 This **context** will perform two tests:
 
@@ -73,7 +73,7 @@ You should expect to repeat this **context** for each parameter that might be di
 
 In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return nothing. This is the behavior we'd expect if the _resource being configured_ does **not** exist:
 
-\[gist\]d1f47fba25efc2a6afb9\[/gist\]
+{{< gist PlagueHO d1f47fba25efc2a6afb9 >}}
 
 As you can see, there is not too much different with these tests and you shouldn't have any problems figuring out the remaining ones. Just remember, the goal is always to get 100% code coverage.
 
@@ -88,7 +88,7 @@ It is quite common that you might have implemented some _supporting_ functions i
 
 The first item is fairly self explanatory. For example, I often implement a **get-\*** function in my **DSC Resources** which is used to pull the actual objects that will be used by the **\*-TargetResource** functions (e.g. **Get-VirtualDisk**):
 
-\[gist\]374958535d7308925ac4\[/gist\]
+{{< gist PlagueHO 374958535d7308925ac4 >}}
 
 To **unit test** this function I'd write **unit tests** that tested the following contexts:
 
@@ -97,7 +97,7 @@ To **unit test** this function I'd write **unit tests** that tested the followin
 
 For example:
 
-\[gist\]593cdfc77c63d5fe19b4\[/gist\]
+{{< gist PlagueHO 593cdfc77c63d5fe19b4 >}}
 
 As you can see, there isn't much to it.
 
@@ -113,7 +113,7 @@ _In case you're wondering, the **Get-iSCSIVirtualDisk** function throws a **\[Mi
 
 When creating **unit tests** you'll often need to test a scenario where the function that is being tested is **expected** to throw an exception. If you read the **Pester** documentation, you'd might write a test for an exception like this:
 
-\[gist\]83a33073d9e29ccf35af\[/gist\]
+{{< gist PlagueHO 83a33073d9e29ccf35af >}}
 
 This would of course will work. It will ensure that the code throws an exception in this situation. The problem is we aren't really sure if it is the exception that we expected it to throw. It could have been thrown by some other part of our code.
 
@@ -128,7 +128,7 @@ So to improve on this we need to do things:
 
 To create a custom exception we need to create a new **exception object** containing our **custom error message**. The **exception object** is then used to create a custom **Error Record**:
 
-\[gist\]1e9f3d8e8d885c3dfecc\[/gist\]
+{{< gist PlagueHO 1e9f3d8e8d885c3dfecc >}}
 
 In the above code, you just need to customize the **$errorId** and **$errorMessage** variables. The **$errorId** should just contain a simply string identifier for this particular type of error, but the **$errorMessage** can contain a full description of the error, including related parameters.
 
@@ -142,7 +142,7 @@ _**Important:** the **$PSCmdLet** object is only available in **Functions** that
 
 To test for the custom exception object we need to create an identical object in the **unit test** and test for it:
 
-\[gist\]ab32cf7c028dfb0c0f87\[/gist\]
+{{< gist PlagueHO ab32cf7c028dfb0c0f87 >}}
 
 The above code creates an identical **exception object** to the one produced by the exception in our **DSC Resource** code. The **exception object** can then be passed to the **should** **throw** cmdlet. If a different exception is thrown by the code then the test will fail - it will only pass if the exception object is **exactly** the same.
 

@@ -1,9 +1,9 @@
 ---
 title: "Get an Array of Localized Hyper-V Integration Service Names"
 date: "2016-04-19"
-categories: 
+categories:
   - "hyper-v"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -13,7 +13,7 @@ It does this using the Integration Service names configured in the configuration
 
 So, after a lot of digging around in the WMI/CIM I managed to locate the various classes I need and converted them into a simple function:
 
-\[gist\]2281e18279d78aceb7db283681ebd95b\[/gist\]
+{{< gist PlagueHO 2281e18279d78aceb7db283681ebd95b >}}
 
 The output of the function looks like this for English US:
 

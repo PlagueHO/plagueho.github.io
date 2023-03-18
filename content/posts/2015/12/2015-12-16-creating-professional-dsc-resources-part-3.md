@@ -49,13 +49,13 @@ Adding support for language localization to your **DSC Resources** is trivial, b
 
 To ensure language support, create a new file in the same folder as your **DSC Resource** with the same name as the **DSC Resource** but with a **psd1** extension. In that file  create a **Data** section named **LocalizedData** containing the messages for your default **culture**. For example:
 
-\[gist\]dd005b6d3aa1c885b322\[/gist\]
+{{< gist PlagueHO dd005b6d3aa1c885b322 >}}
 
 Each line contains a localized message - in this case for the **culture en-us**. You could of course use a different default **culture** if you wanted to.
 
 At the beginning of your **DSC Resource** you would the following command to ensure the appropriate localization strings are imported:
 
-\[gist\]87af9c3719c81e2cf9ef\[/gist\]
+{{< gist PlagueHO 87af9c3719c81e2cf9ef >}}
 
 Alternately, if you want to support **Message Localization** but don't want to have to supply your default messages in a separate file, you can place the **LocalizedData** section for your default culture at the top of your **DSC Resource** and exclude the **Import-LocalizedData** command.
 
@@ -65,7 +65,7 @@ Alternately, if you want to support **Message Localization** but don't want to h
 
 Once you've got the messages in, using them is extremely easy:
 
-\[gist\]82042370aa15377039fb\[/gist\]
+{{< gist PlagueHO 82042370aa15377039fb >}}
 
 You can of course consume the messages anyway you like, but all of your localized messages are just properties of the **LocalizedData** object.
 
@@ -93,7 +93,7 @@ Each **example** should contain a **DSC Configuration** in a form that it could 
 
 For example:
 
-\[gist\]a5aeabe9928fa130ca08\[/gist\]
+{{< gist PlagueHO a5aeabe9928fa130ca08 >}}
 
 The above **DSC Resource** example will ensure the **MSiSCSI** service is running before configuring an **iSCSI Initiator**.
 

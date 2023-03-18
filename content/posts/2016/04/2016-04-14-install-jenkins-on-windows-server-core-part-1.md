@@ -1,10 +1,10 @@
 ---
 title: "Install Jenkins on Windows Server Core - Part 1"
 date: "2016-04-14"
-categories: 
+categories:
   - "desired-state-configuration"
   - "jenkins"
-tags: 
+tags:
   - "powershell"
   - "windows-server-core"
 ---
@@ -61,7 +61,7 @@ That's all there is to it**.**
 
 Here is the complete script. You can just fire up PowerShell on the Core server and copy/paste this directly into the PowerShell console, or use some other method of running it:
 
-\[gist\]0691483fa1be4b9e79cc7d078b3e1bb2\[/gist\]
+{{< gist PlagueHO 0691483fa1be4b9e79cc7d078b3e1bb2 >}}
 
 Tomorrow I'll improve on this process by converting it into a **DSC configuration**, which will ensure the Jenkins Server maintains it's state and makes provisioning them even easier.
 

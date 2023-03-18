@@ -55,14 +55,14 @@ These instructions assumes you have the following:
 
 The first step is to connect our Linux host to Azure Arc so that we can use it to perform all the other steps directly from the Azure Portal. We are going to use a [service principal for onboarding the machine](https://docs.microsoft.com/en-us/azure/azure-arc/servers/onboard-service-principal) as this will make it easier to automate.
 
-We are going to run [this Azure Arc Onboarding script generator PowerShell script](https://gist.github.com/PlagueHO/64a2fd67489ea22b3ca09cd5bf3a0782) in **Azure Cloud Shell** to create the **Service Principal** and generate the Linux Shell script for us. It can also generate a PowerShell script for onboarding **Windows machines** to Azure Arc.
+We are going to run [this Azure Arc Onboarding script generator PowerShell script](64a2fd67489ea22b3ca09cd5bf3a0782) in **Azure Cloud Shell** to create the **Service Principal** and generate the Linux Shell script for us. It can also generate a PowerShell script for onboarding **Windows machines** to Azure Arc.
 
 1. Open Azure Cloud Shell and ensure you're [using PowerShell](https://docs.microsoft.com/en-us/azure/cloud-shell/using-the-shell-window#swap-between-bash-and-powershell-environments).
 2. Download the script by running:
-    \[gist\]f22218a7e72d80b4c65116b5ae278295\[/gist\]
+    {{< gist PlagueHO f22218a7e72d80b4c65116b5ae278295 >}}
     ![](/images/ss_containermonitoring_cloudshelldownloadscriptgenerator.png?w=1024)
 3. Run the script by executing the following command and setting the `TenantId`, `SubscriptionId`, `Location` and `ResourceGroup` parameters:
-    \[gist\]79c07e2ca153335798bdf2c5290d3221\[/gist\]
+    {{< gist PlagueHO 79c07e2ca153335798bdf2c5290d3221 >}}
     ![](/images/ss_containermonitoring_cloudshellgeneratescript.png?w=1024)
     You will need to [get your Tenant ID from the Azure Portal](https://microsoft.github.io/AzureTipsAndTricks/blog/tip153.html). The **Subscription Id** and **Resource Group** is the subscription and resource group respectively to register the machine in. The **Location** is the Azure region that the machine metadata will be stored.
 4. Copy the script that was produced. We will execute it on any Linux machine we want to onboard.
@@ -83,16 +83,16 @@ _**Further Improvements:** we could easily have used something like [PowerShell 
 
 At the time of writing this blog post, there wasn't an Azure PowerShell module or AzCLI extension for Azure Arc. So automating this process right now will require the use of an ARM template:
 
-\[gist\]74c5035543c454daf3d28f33ea91cde0\[/gist\]
+{{< gist PlagueHO 74c5035543c454daf3d28f33ea91cde0 >}}
 
 **Important:** Before you attempt this step, make sure the machine you are deploying MMA to has Python installed on it. If it is not installed you will receive an "_Install failed with exit code 52 Installation failed due to missing dependencies._" error when you install the MMA Agent.
 
 To apply the ARM Template in **Azure Cloud Shell**:
 
 1. Run this command to download the ARM Template:
-    \[gist\]1030cd3c6dfa07205a22b4d41ae312e5\[/gist\]
+    {{< gist PlagueHO 1030cd3c6dfa07205a22b4d41ae312e5 >}}
 2. Apply the ARM Template to an Azure Arc machine by running this command (replacing the values in the strings):
-    \[gist\]782c67cc6647bf3b77783a15d1b887b3\[/gist\]
+    {{< gist PlagueHO 782c67cc6647bf3b77783a15d1b887b3 >}}
     ![](/images/ss_containermonitoring_installingmmaextension.png?w=1024)
     You can get the `WorkspaceId` and `WorkspaceKey` values by locating your Log Anayltics Workspace in the Azure Portal and clicking **Agents Management** in the side bar.
 
@@ -108,18 +108,18 @@ To apply the ARM Template in **Azure Cloud Shell**:
 
 So far, so good. We've onboarded the machine to Azure Arc and enabled host logging to a Azure Monitor Log Analytics workspace. However, we're only getting telemetry data from the host, not any of the containers. So the next thing we need to do is execute the following command on the host:
 
-\[gist\]3bab648221f7189d9af56bd2155c964b\[/gist\]
+{{< gist PlagueHO 3bab648221f7189d9af56bd2155c964b >}}
 
 This will download and run the [microsoft/oms container image](https://hub.docker.com/r/microsoft/oms) on the host and configure it to send telemetry for all containers running on this host to your **Azure Monitor Log Analytics workspace**.
 
 _**Important:** If you are installing onto Ubuntu server, you can avoid problems in this stage by making sure you've installed Docker using the [official Docker repository and instructions](https://docs.docker.com/engine/install/ubuntu/). I had used Snap on Ubuntu 18.05, which resulted in this error '**Error response from daemon: error while creating mount source path '/var/lib/docker/containers': mkdir /var/lib/docker: read-only file system.**' when running the script._
 
-The way to automate the installation of this on the host is to again use an ARM Template, but this time use the [Linux Custom Script extension](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux) to execute the above command. You can see the [ARM Template here](https://gist.github.com/PlagueHO/c3f09056cace496dded18da8bc1ed589). This ARM template could easily be combined into the ARM template from the preceding stage, but I kept them separate for the purposes of showing the process.
+The way to automate the installation of this on the host is to again use an ARM Template, but this time use the [Linux Custom Script extension](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux) to execute the above command. You can see the [ARM Template here](c3f09056cace496dded18da8bc1ed589). This ARM template could easily be combined into the ARM template from the preceding stage, but I kept them separate for the purposes of showing the process.
 
 1. Run this command to download the ARM Template:
-    \[gist\]ef555302440f4492bec089d098009e9b\[/gist\]
+    {{< gist PlagueHO ef555302440f4492bec089d098009e9b >}}
 2. Apply the ARM Template to an Azure Arc machine by running this command (replacing the values in the strings with the same ones as before):
-    \[gist\]48e3339513f5a6479dabc8affaecea42\[/gist\]
+    {{< gist PlagueHO 48e3339513f5a6479dabc8affaecea42 >}}
     ![](/images/ss_containermonitoring_customscriptcreating-1.png?w=1024)
 3. After a few minutes installation of the **CustomScript** extension should have completed and should show **Succeeded** in the Azure Portal.
     ![](/images/ss_containermonitoring_customscriptsucceeded.png?w=868)

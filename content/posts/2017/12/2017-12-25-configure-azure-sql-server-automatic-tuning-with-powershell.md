@@ -34,7 +34,7 @@ The following script can be executed in PowerShell (of course) and requires a nu
 
 _**Requirements:** You need to have the [installed](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps) the **AzureRM.Profile PowerShell** module (part of the AzureRM PowerShell Modules) to use this script. The script also requires you to have logged into your Azure Subscription using **Add-AzureRmAccount** (as a user or [Service Principal](https://docs.microsoft.com/en-us/powershell/azure/create-azure-service-principal-azureps))._
 
-\[gist\]f6538d555788ef35c14cbe14ff4790b1\[/gist\]
+{{< gist PlagueHO f6538d555788ef35c14cbe14ff4790b1 >}}
 
 # Example Usage
 

@@ -1,11 +1,11 @@
 ---
 title: "Configuring iSCSI and iSNS with DSC"
 date: "2016-04-04"
-categories: 
+categories:
   - "dsc"
   - "iscsi"
   - "isns"
-tags: 
+tags:
   - "desired-state-configuration"
   - "powershell"
 ---
@@ -55,7 +55,7 @@ A DSC configuration that creates an **iSCSI Server Target** requires the followi
 
 Here is the DSC Configuration:
 
-\[gist\]4aa6938ac6531971444f131f41a46cfe\[/gist\]
+{{< gist PlagueHO 4aa6938ac6531971444f131f41a46cfe >}}
 
 _**Important:** Note that the **TargetName** is set to 'FS1-Server-Target', which will automatically configure the **Target IQN** to 'iqn.1991-05.com.microsoft:FS1-FS1-Server-Target-Target'. This is because the **Microsoft iSCSI Server Target** cmdlets automatically name the **Server Target** for you using the following format:_
 
@@ -75,7 +75,7 @@ A DSC configuration for each of the iSCSI Initiators that will connect to the iS
 
 Here is the DSC Configuration for **CLUS1.CONTOSO.COM** (the configuration for the other nodes would be similar except with different InitiatorPortalAddress values):
 
-\[gist\]29d181c47e1d0f752629904618c93e43\[/gist\]
+{{< gist PlagueHO 29d181c47e1d0f752629904618c93e43 >}}
 
 _**Important:** We need to make sure the **NodeAddress** is set to the the **Target IQN** from the **iSCSI Server Target** - in this case 'iqn.1991-05.com.microsoft:FS1-FS1-Server-Target-Target'._
 

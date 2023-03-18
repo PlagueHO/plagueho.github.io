@@ -19,7 +19,7 @@ The [Cosmos DB PowerShell module](https://www.powershellgallery.com/packages/Cos
 
 The first thing you need to do is install the [CosmosDB PowerShell](https://www.powershellgallery.com/packages/CosmosDB) module from the PowerShell Gallery by running this in a PowerShell console:
 
-\[gist\]3eeed8b49d04218487e828426cd38413\[/gist\]
+{{< gist PlagueHO 3eeed8b49d04218487e828426cd38413 >}}
 
 ![ss_cosmosdbcors_installmodule](/images/ss_cosmosdbcors_installmodule.png)
 
@@ -41,7 +41,7 @@ But if you're just doing a little bit of experimentation then you can just use a
 
 To use the interactive authentication process just enter into your PowerShell console:
 
-\[gist\]1e6a4c0e9361fe359ed06cd087f69408\[/gist\]
+{{< gist PlagueHO 1e6a4c0e9361fe359ed06cd087f69408 >}}
 
 then follow the instructions.
 
@@ -51,7 +51,7 @@ then follow the instructions.
 
 Once you have authenticated to Azure, you can use the **New-CosmosDbAccount** function to create a new account:
 
-\[gist\]a9d50502fbf22aac340590d64dfa8844\[/gist\]
+{{< gist PlagueHO a9d50502fbf22aac340590d64dfa8844 >}}
 
 ![ss_cosmosdbcors_newcosmosdbaccount](/images/ss_cosmosdbcors_newcosmosdbaccount.png)This will create a new Cosmos DB account with the name **dsrcosmosdbtest** in the resource group **dsrcosmosdbtest-rgp** in the **West US** location and with CORS allowed origins of **https://www.fabrikam.com** and **https://www.contoso.com**.
 
@@ -71,7 +71,7 @@ If you look in the Azure Portal, you will find the new Cosmos DB account with th
 
 Getting the current CORS Allowed Origins value on an account is easy too. Just run the following PowerShell command:
 
-\[gist\]ff77e3dd09df9522e8707b13a147a4c0\[/gist\]
+{{< gist PlagueHO ff77e3dd09df9522e8707b13a147a4c0 >}}
 
 ![ss_cosmosdbcors_getcosmosdbcors](/images/ss_cosmosdbcors_getcosmosdbcors.png)
 
@@ -79,7 +79,7 @@ This will return a string containing all the CORS Allowed Origins for the Cosmos
 
 You could easily split this string into an array variable by using:
 
-\[gist\]66896d43438aabee136c81c3c65dc2d3\[/gist\]
+{{< gist PlagueHO 66896d43438aabee136c81c3c65dc2d3 >}}
 
 ![ss_cosmosdbcors_getcosmosdbcorssplit](/images/ss_cosmosdbcors_getcosmosdbcorssplit.png)
 
@@ -87,7 +87,7 @@ You could easily split this string into an array variable by using:
 
 To set the CORS Allowed Origins on an existing account use the **Set-CosmosDbAccount** function:
 
-\[gist\]1e4c55cf9f53f8e92de4b00c3d006bec\[/gist\]
+{{< gist PlagueHO 1e4c55cf9f53f8e92de4b00c3d006bec >}}
 
 ![ss_cosmosdbcors_setcosmosdbcors](/images/ss_cosmosdbcors_setcosmosdbcors.png)
 
@@ -97,7 +97,7 @@ This will take a few minutes to update. So you can use the **\-AsJob** parameter
 
 You can remove the CORS Allowed Origins setting by setting using the **Set-CosmosDbAccount** function but passing in an empty string to the **AllowedOrigin** parameter:
 
-\[gist\]7c1f73da2955f87fe35e5aea93ec182b\[/gist\]
+{{< gist PlagueHO 7c1f73da2955f87fe35e5aea93ec182b >}}
 
 ![ss_cosmosdbcors_removecosmosdbcors](/images/ss_cosmosdbcors_removecosmosdbcors.png)
 

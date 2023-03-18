@@ -13,7 +13,7 @@ tags:
 
 You might have noticed that instances of certain types of classes are created, a method called **Clone** is available that will create a ([shallow](http://stackoverflow.com/questions/184710/what-is-the-difference-between-a-deep-copy-and-a-shallow-copy)) copy of the object. A PowerShell **Hashtable** object is a classic example of a class that supports the **Clone** method:
 
-\[gist\]db460dffa44c6e82372f\[/gist\]
+{{< gist PlagueHO db460dffa44c6e82372f >}}
 
 This is nothing new to developers, but for most Ops people it might be something they're not that familiar with. But if you are an Ops person who is implementing more advanced PowerShell modules or scripts in WMF 5.0 that require custom classes, then this might be something you need to do.
 
@@ -33,7 +33,7 @@ _Note: You don't really need to know what an interface is to use it, but if you 
 
 Creating a class that implements the **ICloneable** interface just requires that we add the name of the interface to implement after a colon following the class name:
 
-\[gist\]3caddac4f0644587f681\[/gist\]
+{{< gist PlagueHO 3caddac4f0644587f681 >}}
 
 However, if we try to define this class as is we'll get an error:
 
@@ -43,7 +43,7 @@ The problem is that we've told PowerShell that the **Car** class implements **IC
 
 To do this we need to add the method to our class definition:
 
-\[gist\]47be0d4ad65dd76a06d7\[/gist\]
+{{< gist PlagueHO 47be0d4ad65dd76a06d7 >}}
 
 The above code first creates a new Car object, then gets a list of the **properties** on the existing (**$This**) object and uses a **foreach** loop to copy the content of each property to the new Car object (**$NewCar**). The **$NewCar** object is returned to the calling code.
 

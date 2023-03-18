@@ -34,7 +34,7 @@ The best places to look for DSC resources is to search on [PowerShell Gallery](h
 
 If you have **WMF 5.0** installed (or have installed the [PowerShell Package Modules](https://www.microsoft.com/en-us/download/details.aspx?id=49186) installed) then you can search the **PowerShell Gallery** for DSC resources using **PowerShell** cmdlets:
 
-\[gist\]ea7e54b197f4e85afd2d\[/gist\]
+{{< gist PlagueHO ea7e54b197f4e85afd2d >}}
 
 ![ss_powershell_findmoduletagdsc](/images/ss_powershell_findmoduletagdsc.png)
 
@@ -42,11 +42,11 @@ If you have **WMF 5.0** installed (or have installed the [PowerShell Package Mod
 
 If you find a resource you want to examine, you can install it using:
 
-\[gist\]5e5080e5132655ca71e7\[/gist\]
+{{< gist PlagueHO 5e5080e5132655ca71e7 >}}
 
 Or if you're not sure you want to trust it you can use the **save-module** cmdlet to save a copy to a folder so you can open and examine the resource code:
 
-\[gist\]270fa0b326e0c74506b1\[/gist\]
+{{< gist PlagueHO 270fa0b326e0c74506b1 >}}
 
 If you find the DSC resource module else where you'll need to download and install it manually - the same way install any other module.
 
