@@ -1,9 +1,9 @@
 ---
 title: "Creating a Cloneable Class in WMF 5.0"
 date: "2016-03-11"
-categories: 
+categories:
   - "wmf-5-0"
-tags: 
+tags:
   - "classes"
   - "powershell"
   - "wmf5-0"
@@ -23,7 +23,7 @@ For this post, I'm assuming you have a basic knowledge of how to create classes 
 
 If you just go and create a new class in PowerShell and try to call the clone method, an error with be thrown:
 
-![ss_cloneable_nolonemethoderror](images/ss_cloneable_nolonemethoderror.png)
+![ss_cloneable_nolonemethoderror](/images/ss_cloneable_nolonemethoderror.png)
 
 This is because by default a new class that is defined in PowerShell is based off the **System.Object** class which does not implement the **ICloneable** interface. The **ICloneable** interface is what gives us the **Clone** method on an object. So we need to tell PowerShell that we want our new class to implement the **ICloneable** interface.
 
@@ -37,7 +37,7 @@ Creating a class that implements the **ICloneable** interface just requires that
 
 However, if we try to define this class as is we'll get an error:
 
-![ss_cloneable_classclonemethodnotimplementederror](images/ss_cloneable_classclonemethodnotimplementederror.png)
+![ss_cloneable_classclonemethodnotimplementederror](/images/ss_cloneable_classclonemethodnotimplementederror.png)
 
 The problem is that we've told PowerShell that the **Car** class implements **ICloneable** and should therefore have a **Clone** method, but we haven't actually created the **Clone** method in the class.
 
@@ -52,3 +52,4 @@ _Note: This performs a [shallow copy](http://stackoverflow.com/questions/184710/
 You've now created an class that implements an interface. The .NET framework provides hundreds (if not thousands) of interfaces that you potentially could implement on your PowerShell classes. Of course, you could have cloned the Car object without implementing the **ICloneable** interface at all, but this post is intended to be a general introduction to implementing interfaces in WMF 5.0 as well as the **ICloneable** interface.
 
 Thanks for reading.
+

@@ -1,9 +1,9 @@
 ---
 title: "Configure Azure SQL Server Automatic Tuning with PowerShell"
 date: "2017-12-25"
-categories: 
+categories:
   - "azure-sql-server"
-tags: 
+tags:
   - "azure"
   - "powershell"
 coverImage: "ss_sqlserver_databaseautotuning.png"
@@ -42,16 +42,17 @@ To apply custom automatic tuning to an Azure SQL Server:
 
 .\\Set-AzureRMSqlServerAutotuning.ps1 -SubscriptionId '<Subscription Id>' -ResourceGroupName '<Resource Group name>' -ServerName '<Azure SQL server name>' -Mode Custom -CreateIndex On -DropIndex On -ForceLastGoodPlan Off
 
-![ss_sqlserver_serverautotuning](images/ss_sqlserver_serverautotuning1.png)
+![ss_sqlserver_serverautotuning](/images/ss_sqlserver_serverautotuning1.png)
 
 To apply custom automatic tuning to an Azure SQL Database:
 
 .\\Set-AzureRMSqlServerAutotuning.ps1 -SubscriptionId '<Subscription Id>' -ResourceGroupName '<Resource Group name>' -ServerName '<Azure SQL server name>' -DatabaseName '<Azure SQL database name>' -Mode Custom -CreateIndex On -DropIndex On -ForceLastGoodPlan Off
 
-![ss_sqlserver_databaseautotuning](images/ss_sqlserver_databaseautotuning.png)
+![ss_sqlserver_databaseautotuning](/images/ss_sqlserver_databaseautotuning.png)
 
 # Conclusion
 
 I've not yet encountered something in Azure that I can't configure via the Azure REST APIs. This is because the Azure Management Portal uses the same APIs - so if it is available in the portal then you can do it via the Azure REST APIs. The biggest challenge is determining the body, header and methods available if the APIs are not yet documented.
 
 If the API you need is not documented then you can raise a question in the [Microsoft Azure Forums](https://azure.microsoft.com/en-in/support/forums/) or on [Stack Overflow](https://stackoverflow.com/). Failing that you can use the developer tools in your browser of choice to watch the API calls being made to the portal - I've had to resort to this many times, but documenting that process is something I'll save for another day.
+

@@ -1,14 +1,14 @@
 ---
 title: "Clear All Windows Event Logs"
 date: "2015-04-09"
-tags: 
+tags:
   - "event-log"
   - "powershell"
 ---
 
 Just a quick one this time.
 
-One thing I often like to do on my lab machines (servers and clients) is clear out all event logs. Not just the older style Windows Logs, but the newer Applications and Services Logs as well: [![Event Viewer Logs](https://dscottraynsford.files.wordpress.com/2015/04/ss_eventviewer.png?w=646)](https://dscottraynsford.files.wordpress.com/2015/04/ss_eventviewer.png)
+One thing I often like to do on my lab machines (servers and clients) is clear out all event logs. Not just the older style Windows Logs, but the newer Applications and Services Logs as well: [![Event Viewer Logs](/images/ss_eventviewer.png?w=646)](/images/ss_eventviewer.png)
 
 The easiest way I've found to do this is just run the following PowerShell command in an Administrator PowerShell console:
 
@@ -24,8 +24,9 @@ get-winevent -ListLog \* | % { \[System.Diagnostics.Eventing.Reader.EventLogSess
 
 You'll want to configure the **d:\\ArchiveLog** to set the path you want the old events saved to. All the events will be saved into this folder with one file for each event log:
 
-[![Events after they've been archived](https://dscottraynsford.files.wordpress.com/2015/04/ss_events_archived.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/04/ss_events_archived.png)
+[![Events after they've been archived](/images/ss_events_archived.png?w=660)](/images/ss_events_archived.png)
 
 Simple as that!
 
 \\m/
+

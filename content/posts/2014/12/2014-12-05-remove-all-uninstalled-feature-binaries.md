@@ -1,10 +1,10 @@
 ---
 title: "Remove all Uninstalled Feature Binaries"
 date: "2014-12-05"
-categories: 
+categories:
   - "features-on-demand"
   - "windows-server-2012"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -18,9 +18,11 @@ The following command will remove the binaries for any non-installed features on
 
 get-windowsfeature | where-object -FilterScript { $\_.InstallState -eq 'Available' } | remove-windowsfeature -remove
 
-\[caption id="attachment\_53" align="alignnone" width="646"\][![Features on Demand Removal Progress](https://dscottraynsford.files.wordpress.com/2014/12/ss_psfeaturesondemandremovalprogress.png?w=646)](https://dscottraynsford.files.wordpress.com/2014/12/ss_psfeaturesondemandremovalprogress.png) Features on Demand Removal Progress\[/caption\]
+[![Features on Demand Removal Progress](/images/ss_psfeaturesondemandremovalprogress.png?w=646)](/images/ss_psfeaturesondemandremovalprogress.png)
+Features on Demand Removal Progress
 
-\[caption id="attachment\_52" align="alignnone" width="646"\][![Features on Demand Removal Complete ](https://dscottraynsford.files.wordpress.com/2014/12/ss_psfeaturesondemandremovalcomplete.png?w=646)](https://dscottraynsford.files.wordpress.com/2014/12/ss_psfeaturesondemandremovalcomplete.png) Features on Demand Removal Complete\[/caption\]
+[![Features on Demand Removal Complete ](/images/ss_psfeaturesondemandremovalcomplete.png?w=646)](/images/ss_psfeaturesondemandremovalcomplete.png)
+Features on Demand Removal Complete
 
 After you've run this command you'll need to have your windows install source available if you want to install any additional features. You might also need to specify an alternate source location when installing any future features. For more information on installing windows features from an alternate source, see this article on TechNet:
 

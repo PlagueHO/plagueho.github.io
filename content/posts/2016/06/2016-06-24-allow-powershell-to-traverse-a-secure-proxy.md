@@ -34,3 +34,4 @@ If you don't pass any credentials, you will be prompted to enter them. I also ad
 Finally, I also added the proxy reset code into the **finally** block of a **try**...**catch** to ensure that if the code in the script block throws an error the proxy will be reset. In my case I also loaded this function into a PowerShell module that can be distributed to other team members.
 
 Happy proxy traversing!
+

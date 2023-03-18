@@ -1,12 +1,12 @@
 ---
 title: "Easily Create a Hyper-V Windows Server 2016 AD &amp; Nano Server Lab"
 date: "2016-10-04"
-categories: 
+categories:
   - "labbuilder"
   - "nano-server"
   - "powershell"
   - "windows-server-2016"
-tags: 
+tags:
   - "hyper-v"
 ---
 
@@ -74,7 +74,7 @@ The first thing you'll need to do is install the LabBuilder Module. Execute this
 
 \[gist\]7113b802a227a166ce1df229e4036d17\[/gist\]
 
-![ss_labbuilder_installmodule](images/ss_labbuilder_installmodule.png)
+![ss_labbuilder_installmodule](/images/ss_labbuilder_installmodule.png)
 
 **Note: If you have an older version of LabBuilder** **installed****, I'd recommend you update it to at least 0.8.3.1081 because this was the version I was using to write this guide.**
 
@@ -88,7 +88,7 @@ Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
 \[gist\]5933ce33b74b16fe5d63298bf66aa071\[/gist\]
 
-![ss_labbuilder_createisosandvhdsfolders](images/ss_labbuilder_createisosandvhdsfolders.png)
+![ss_labbuilder_createisosandvhdsfolders](/images/ss_labbuilder_createisosandvhdsfolders.png)
 
 ### Step 3 - Create a Folder to Contain the Lab
 
@@ -108,13 +108,13 @@ We're going to build the Lab using the sample Lab found in the **samples** folde
 
 If you changed the paths in **Step 2** or **Step 3** then you'll need to change the paths shown in this screenshot:
 
-### ![ss_labbuilder_nanodomainconfig](images/ss_labbuilder_nanodomainconfig.png)
+### ![ss_labbuilder_nanodomainconfig](/images/ss_labbuilder_nanodomainconfig.png)
 
 You may also change other items in the **Settings** section, but be aware that some changes (such as changing the domain name) will also need to be changed elsewhere in the file.
 
 If you already have an **External Switch** configured in **Hyper-V** that you'd like to use for this Lab to communicate externally, then you should set the name of the switch here:
 
-![ss_labbuilder_nanodomainconfigexternalswitch](images/ss_labbuilder_nanodomainconfigexternalswitch.png)
+![ss_labbuilder_nanodomainconfigexternalswitch](/images/ss_labbuilder_nanodomainconfigexternalswitch.png)
 
 If you don't already have an **External Switch** defined in **Hyper-V** then one called **General Purpose External** will be created for you. It will use the first **Network Adapter** (physical or team) that is not already assigned to an External Switch. You can control this behavior in the LabBuilder configuration file but it is beyond the scope of this guide.
 
@@ -130,7 +130,7 @@ The ISO file must be name:
 
 If it is named anything else then you will either need to rename it or go back to **Step 4** and adjust the sample Lab configuration file.
 
-![ss_labbuilder_isofoldercontents](images/ss_labbuilder_isofoldercontents.png)
+![ss_labbuilder_isofoldercontents](/images/ss_labbuilder_isofoldercontents.png)
 
 ### Step 6 - Build the Lab
 
@@ -142,7 +142,7 @@ Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
 This will begin the task of building out your Lab. The commands just determine the location of your LabBuilder sample file and then call the **Install-Lab** cmdlet. I could have specified the path to the sample file manually, and you can if you prefer.
 
-![ss_labbuilder_installlabbuilding](images/ss_labbuilder_installlabbuilding.png)
+![ss_labbuilder_installlabbuilding](/images/ss_labbuilder_installlabbuilding.png)
 
 So sit back and grab a tea or coffee (or beer), because this will take a little while.
 
@@ -150,9 +150,9 @@ So sit back and grab a tea or coffee (or beer), because this will take a little 
 
 # Using the Lab
 
-Once you've built the Lab, you can log into the VMs like any other Hyper-V VM. Just double click the Virtual Machine and enter your login details: ![ss_labbuilder_installlab_hypervvms](images/ss_labbuilder_installlab_hypervvms.png)
+Once you've built the Lab, you can log into the VMs like any other Hyper-V VM. Just double click the Virtual Machine and enter your login details: ![ss_labbuilder_installlab_hypervvms](/images/ss_labbuilder_installlab_hypervvms.png)
 
-![ss_labbuilder_installlab_domainlogin](images/ss_labbuilder_installlab_domainlogin.png)
+![ss_labbuilder_installlab_domainlogin](/images/ss_labbuilder_installlab_domainlogin.png)
 
 For the sample Lab the Domain **Administrator** account password is configured as **P@ssword!1**. This is set in the Lab Sample configuration and you can change it if you like.
 
@@ -185,3 +185,4 @@ If you want to completely remove a Lab, use the **Uninstall-Lab** command. You w
 # Wrapping Up
 
 This article has hopefully given you a basic understanding of how to use LabBuilder to stand up a Hyper-V Lab in relatively short order and without a lot of commands and clicks. This project is still in Beta and so there may be bugs as well as some incomplete features. If you want to raise an issue with this project (or even submit a PR), head on over to the [GitHub repository](https://github.com/PlagueHO/LabBuilder).
+

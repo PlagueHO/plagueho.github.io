@@ -105,3 +105,4 @@ However, we can't assign **scriptblocks** to the values in an **enumerated typ
 This post is all about looking at different ways of writing the same code. It isn't trying to say which way is better or worse. If you have a preference and it works for you, by all means, keep on using it. This is simply to provide alternative methods that may or may not make code more readable and maintainable.
 
 Feel free to comment with alternative methods of refactoring switch statements.
+

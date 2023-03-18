@@ -1,7 +1,7 @@
 ---
 title: "A Minor Irritation with VHDs and Dynamic Disks"
 date: "2015-07-14"
-tags: 
+tags:
   - "diskpart"
   - "dynamic-disks"
   - "powershell"
@@ -25,6 +25,7 @@ Whereas in **PowerShell** the equivalent would be:
 However, I ran into two situations where PowerShell can't be used when doing mapping:
 
 1. **Dynamic** disks can't be created using **PowerShell**. Therefore spanned, striped, mirrored or parity volumes can't be created without using DISKPART. However, **Storage Spaces** could be used instead if you're using Windows Server 2012/Windows 8 and above.
-2. The **PowerShell** cmdlets to create and mount **Virtual Hard Disk** files (VHD/VHDx) can't be used if Hyper-V is not installed:[![VHD cmdlets without Hyper-V](https://dscottraynsford.files.wordpress.com/2015/07/ss_vhdcmdleterror_hypervrolemissing.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/07/ss_vhdcmdleterror_hypervrolemissing.png) This is a little bit annoying because the **Hyper-V** role can't always be installed. For example, it can't be installed on a guest VM. Of course it is probably a bit unusual to be working with VHD/VHDx files within a guest VM (you're more likely to be working with them on the host), but with the amount of stuff moving to the cloud this might be a problem that you run into.
+2. The **PowerShell** cmdlets to create and mount **Virtual Hard Disk** files (VHD/VHDx) can't be used if Hyper-V is not installed:[![VHD cmdlets without Hyper-V](/images/ss_vhdcmdleterror_hypervrolemissing.png?w=660)](/images/ss_vhdcmdleterror_hypervrolemissing.png) This is a little bit annoying because the **Hyper-V** role can't always be installed. For example, it can't be installed on a guest VM. Of course it is probably a bit unusual to be working with VHD/VHDx files within a guest VM (you're more likely to be working with them on the host), but with the amount of stuff moving to the cloud this might be a problem that you run into.
 
 That's it for tonight!
+

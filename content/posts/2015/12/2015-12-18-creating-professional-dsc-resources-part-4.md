@@ -1,10 +1,10 @@
 ---
 title: "Creating Professional DSC Resources - Part 4"
 date: "2015-12-18"
-categories: 
+categories:
   - "distributed-file-system"
   - "dsc"
-tags: 
+tags:
   - "desired-state-configuration"
   - "powershell"
 ---
@@ -54,7 +54,7 @@ For every **DSC Resource** in your **DSC Resource Module** you should ensure tha
 
 You should place all tests inside a **Tests** folder in the root of your **DSC Module** folder:
 
-![ss_dsc_testfolders](images/ss_dsc_testfolders.png)
+![ss_dsc_testfolders](/images/ss_dsc_testfolders.png)
 
 **Unit** tests should be placed in a **Unit** folder within **Tests** and ... I'm sure you get where I'm going here.
 
@@ -64,7 +64,7 @@ You should place all tests inside a **Tests** folder in the root of your **DSC M
 
 **Unit tests** are a good place to start when creating **automated tests** for your **DSC Resources** because they're u sually quite straight forward. Each **DSC Resource** in your **DSC Module** should contain it's own unit test file. For example, here are the **unit tests** that are included with the [xNetworking](https://github.com/PowerShell/xNetworking) **DSC Resource** **module**:
 
-![ss_dsc_xnetworkingunittests](images/ss_dsc_xnetworkingunittests.png)
+![ss_dsc_xnetworkingunittests](/images/ss_dsc_xnetworkingunittests.png)
 
 _**A note about code coverage:** A **unit test** script will contain lots of **individual tests**. The purpose of each **individual** **unit test** is usually to test a **single path** through a function that the computer might take when running that function. The goal therefore is to add as many tests as needed to make sure each code path is **covered**. This is called **code coverage**. The goal is to have 100% **code coverage** for your **DSC Resource**._
 
@@ -80,21 +80,21 @@ The easiest way to do this is to **clone** the repository containing the **test 
 
 \[gist\]ebbfb03f731265d61eaf\[/gist\]
 
-![ss_dsc_createnewunittestfromtemplate](images/ss_dsc_createnewunittestfromtemplate3.png)
+![ss_dsc_createnewunittestfromtemplate](/images/ss_dsc_createnewunittestfromtemplate3.png)
 
 You'll now have a new **unit test** file that you can open in your PowerShell editor of choice:
 
-![ss_dsc_editingnewunittest](images/ss_dsc_editingnewunittest1.png)
+![ss_dsc_editingnewunittest](/images/ss_dsc_editingnewunittest1.png)
 
 Next, customize the **TODO** area in the **header** with the your **DSC Resource Name** and **DSC Module Name**:
 
-![ss_dsc_customizeunittestheader](images/ss_dsc_customizeunittestheader.png)
+![ss_dsc_customizeunittestheader](/images/ss_dsc_customizeunittestheader.png)
 
 Feel free to remove the **TODO** comments if you want (I always do).
 
 Now, onto the job of actually adding our **Pester** tests. You'll want to locate the **Pester Tests** **region**:
 
-![ss_dsc_unittestspestertestsregion](images/ss_dsc_unittestspestertestsregion.png)
+![ss_dsc_unittestspestertestsregion](/images/ss_dsc_unittestspestertestsregion.png)
 
 This is _usually_ the only area of code in this file you need edit. There are several areas you need to customize here:
 
@@ -164,3 +164,4 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+

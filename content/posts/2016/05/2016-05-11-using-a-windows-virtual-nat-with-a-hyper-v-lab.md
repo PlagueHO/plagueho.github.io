@@ -1,10 +1,10 @@
 ---
 title: "Using a Windows Virtual NAT with a Hyper-V Lab"
 date: "2016-05-11"
-categories: 
+categories:
   - "hyper-v"
   - "windows-server-2016"
-tags: 
+tags:
   - "nat"
 ---
 
@@ -26,7 +26,7 @@ Each of these approaches had some drawbacks:
 
 But using the **Virtual NAT device** allows us to configure Labs with complete network isolation but still being connected to the internet without the use of a **guest NAT**.
 
-[![ss_virtualnat_diagram](images/ss_virtualnat_diagram3.png)](https://dscottraynsford.files.wordpress.com/2016/05/ss_virtualnat_diagram3.png)
+[![ss_virtualnat_diagram](/images/ss_virtualnat_diagram3.png)](/images/ss_virtualnat_diagram3.png)
 
 So, to configure a pair of Labs like in the diagram above all we need is to execute a few **PowerShell Cmdlets**.
 
@@ -46,3 +46,4 @@ To configure a Hyper-V Lab with NAT, perform the following steps, executing any 
 That's it - all machines in the Lab should have access to the internet and be completely isolated as well. Naturally I have updated the [LabBuilder](https://github.com/PlagueHO/LabBuilder) system to support this new functionality as well.
 
 I hope this was useful and happy NATing.
+

@@ -1,9 +1,9 @@
 ---
 title: "Publish an Azure RM Web App using a Service Principal in PowerShell"
 date: "2017-07-12"
-categories: 
+categories:
   - "azure-web-app"
-tags: 
+tags:
   - "azure"
   - "powershell"
   - "service-principal"
@@ -55,7 +55,7 @@ Once you have got all this information you can call the script above like this:
 
 When everything is done correctly this is what happens when you run it (with -Verbose enabled):
 
-![ss_webappdeploy_publishazurermwebappproject](images/ss_webappdeploy_publishazurermwebappproject.png)
+![ss_webappdeploy_publishazurermwebappproject](/images/ss_webappdeploy_publishazurermwebappproject.png)
 
 > **Note**: in the case above I was installing to a deployment staging slot called **offline**, so the new version of my website wouldn't have been visible in my **production** slot until I called the [Swap-AzureRmWebAppSlot](https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/switch-azurermwebappslot?view=azurermps-4.1.0) cmdlet to swap the **offline** slot with my **production** slot.
 
@@ -64,3 +64,4 @@ All in all, this is fairly robust and allows our **development teams** and our *
 If you're interested in more details about the code/process, please feel free to ask questions.
 
 Thanks for reading.
+

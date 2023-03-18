@@ -1,10 +1,10 @@
 ---
 title: "Creating Professional DSC Resources - Part 3"
 date: "2015-12-16"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -81,11 +81,11 @@ You put **LocalizedData** for other languages in separate PowerShell files in su
 
 Another element of any easy to use **DSC Resource** are example **DSC Configuration** files. These can usually be found in the **Examples** folder in the root of the **DSC Module**:
 
-![ss_dsc_examplesfolder](images/ss_dsc_examplesfolder.png)
+![ss_dsc_examplesfolder](/images/ss_dsc_examplesfolder.png)
 
 There should usually be a number of different **DSC Configuration** files in this folder, showing common scenarios for using your **DSC Resources**:
 
-![ss_dsc_examples](images/ss_dsc_examples.png)
+![ss_dsc_examples](/images/ss_dsc_examples.png)
 
 The **file name** of any **example** files should be prefixed with **Sample** or **Example** so that they can be easily identified and differentiated from types of **DSC Module** files. The summary of the purpose of the configuration should also be included in the **file name**. This is fairly obvious I realize, but I have seen public **DSC Resources** named Example\_1, Example\_2, Example\_3 etc - which reduces usability of the examples.
 
@@ -112,3 +112,4 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 4](https://dscottraynsford.wordpress.com/2015/12/18/creating-professional-dsc-resources-part-4/)
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
+

@@ -1,11 +1,11 @@
 ---
 title: "How To use Containers on Windows Nano Server"
 date: "2015-08-26"
-categories: 
+categories:
   - "containers"
   - "docker"
   - "windows-server-nano"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -15,7 +15,7 @@ If you're looking for instructions on installing and using **containers** on **W
 
 These instructions are more focused on setting up a container host on **Windows Server Core TP4**, but I have managed to get them working on **Windows Nano Server TP4** just fine:
 
-![ss_nano_containerhostworking](images/ss_nano_containerhostworking.png)
+![ss_nano_containerhostworking](/images/ss_nano_containerhostworking.png)
 
 I do plan to document this process over the next week or so.
 
@@ -98,10 +98,12 @@ If you try to use the NanoServer.WIM file from the Windows Server 2016 ISO as th
 
 I did try putting the Core WIM file downloaded above onto the Nano Server. I could then create a container OK, but an error would occur starting it up:
 
-\[caption id="attachment\_295" align="alignnone" width="660"\][![Nope - can't use the Core WIM with a Nano Server Container Host!](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containerfromcore.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containerfromcore.png) Nope - can't use the Core WIM with a Nano Server Container Host!\[/caption\]
+[![Nope - can't use the Core WIM with a Nano Server Container Host!](/images/ss_nano_containerfromcore.png?w=660)](/images/ss_nano_containerfromcore.png)
+Nope - can't use the Core WIM with a Nano Server Container Host!
 
 **Update 2015-10-29:** There is a new video available online from Microsoft of Mark Russinovich (Azure CTO) doing a container demonstration using a Nano Server. It clearly shows that the **NanoServer Base Container Image** does exist. So perhaps we'll see this in the **TP4** release.
 
 The video can be seen [here](https://youtu.be/YoA_MMlGPRc).
 
 Feel free to let me know if you can solve any of these issues! Any help is appreciated. I'll continue to work on this and post any additional results.
+

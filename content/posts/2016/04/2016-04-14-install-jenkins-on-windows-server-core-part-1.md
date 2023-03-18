@@ -66,3 +66,4 @@ Here is the complete script. You can just fire up PowerShell on the Core server 
 Tomorrow I'll improve on this process by converting it into a **DSC configuration**, which will ensure the Jenkins Server maintains it's state and makes provisioning them even easier.
 
 Thanks for reading.
+

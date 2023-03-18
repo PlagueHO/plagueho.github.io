@@ -1,9 +1,9 @@
 ---
 title: "How to fix \"Your account settings are out of date\" in Windows 10 Universal Mail App"
 date: "2015-07-31"
-categories: 
+categories:
   - "windows-10"
-tags: 
+tags:
   - "powershell"
   - "wndows-10"
 ---
@@ -23,7 +23,8 @@ The Solution
 
 \[sourcecode language="powershell"\] Get-AppxPackage | Where-Object -Property Name -eq 'microsoft.windowscommunicationsapps' | Remove-AppxPackage \[/sourcecode\]
 
-\[caption id="attachment\_249" align="alignnone" width="660"\][![Uninstall the Windows 10 Universal Mail and Calendar App](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_uninstallcomms.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_uninstallcomms.png) Uninstall the Windows 10 Universal Mail and Calendar App\[/caption\]
+[![Uninstall the Windows 10 Universal Mail and Calendar App](/images/ss_powershell_uninstallcomms.png?w=660)](/images/ss_powershell_uninstallcomms.png)
+Uninstall the Windows 10 Universal Mail and Calendar App
 
 3a. **@Stephen** has suggested that restarting your computer at this point allows the next step to proceed with better success. So restart your computer.
 
@@ -31,16 +32,19 @@ The Solution
 
 \[sourcecode language="powershell"\] Remove-Item -Path "$Home\\AppData\\Local\\Comms\\" -Recurse -Force \[/sourcecode\]
 
-\[caption id="attachment\_250" align="alignnone" width="660"\][![Deleting the Comms folder - some files can't be deleted - this is OK](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_uninstallcommsdeletefiles.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_uninstallcommsdeletefiles.png) Deleting the Comms folder - some files can't be deleted - this is OK\[/caption\]
+[![Deleting the Comms folder - some files can't be deleted - this is OK](/images/ss_powershell_uninstallcommsdeletefiles.png?w=660)](/images/ss_powershell_uninstallcommsdeletefiles.png)
+Deleting the Comms folder - some files can't be deleted - this is OK
 
 _Note: You'll probably find that some of the files are in use and can't be deleted - this is OK._
 
 4\. Reinstall the [**Windows 10 Universal Mail and Calendar app**](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) from the app store (click [here](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) to open the app up in the store or search for it).
 
-\[caption id="attachment\_251" align="alignnone" width="660"\][![Reinstall the Windwos 10 Universal Mail and Calendar app from the windows store.](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_reinstallcomms.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/07/ss_powershell_reinstallcomms.png) Reinstall the Windows 10 Universal Mail and Calendar app from the Windows store.\[/caption\]
+[![Reinstall the Windwos 10 Universal Mail and Calendar app from the windows store.](/images/ss_powershell_reinstallcomms.png?w=660)](/images/ss_powershell_reinstallcomms.png)
+Reinstall the Windows 10 Universal Mail and Calendar app from the Windows store.
 
 Once this had all been done I loaded the Mail up and it asked me to configure all my mail accounts again (and authorize them with the providers). After this the error message had gone away and all my accounts worked normally. I did also however have to re-enter my credentials for both Google Drive and One Drive.
 
 For more information, suggestions and discussion about this issue, take a look at [this](http://answers.microsoft.com/en-us/insider/forum/insider_apps-insider_mail/universal-mail-app-your-account-settings-are-out/562f4fad-c60a-4204-a8c3-94fa1d05bf65) discussion on the Microsoft Community boards.
 
 I hope this works for someone else as well.
+

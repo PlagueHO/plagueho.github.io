@@ -1,14 +1,15 @@
 ---
 title: "NanoServer Container Base Image - It does Exist...Somewhere!"
 date: "2015-10-29"
-categories: 
+categories:
   - "containers"
   - "windows-server-nano"
 ---
 
 A really interesting video from Microsoft was just released with Mark Russinovich (CTO of Azure if you don't already know) [demonstrating Windows Server Containers](https://youtu.be/YoA_MMlGPRc). What is really interesting about this demo is that he is demonstrating containers using a **Windows NanoServer Base Image:**
 
-\[caption id="attachment\_560" align="alignnone" width="660"\][![Nano Server Containers Base Image - it does exist.](https://dscottraynsford.files.wordpress.com/2015/10/ss_video_nanoservercontainers.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/10/ss_video_nanoservercontainers.png) Nano Server Containers Base Image - it does exist.\[/caption\]
+[![Nano Server Containers Base Image - it does exist.](/images/ss_video_nanoservercontainers.png?w=660)](/images/ss_video_nanoservercontainers.png)
+Nano Server Containers Base Image - it does exist.
 
 If you've read any of my previous posts [here](https://dscottraynsford.wordpress.com/2015/08/26/how-to-use-containers-on-windows-nano-server/) and [here](https://dscottraynsford.wordpress.com/2015/08/27/docker-and-containers-on-nano-server-continued/) you'll know I spent quite some time looking at this and trying to get it going with TP3. I deduced it was not possible yet without the Windows **NanoServer Base Image for containers** - which had not been provided by Microsoft.
 
@@ -19,3 +20,4 @@ Other eagle eyed viewers will also note that he appears to be running a _Nano Se
 I also notice that he demos **Hyper-V Containers**, which as far as I am aware aren't working on TP3. So this would indicate a more recent build than TP3.
 
 So perhaps we'll see this image being made available in the Windows Server 2016 TP4 release?
+

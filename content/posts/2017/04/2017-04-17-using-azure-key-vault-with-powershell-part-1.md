@@ -1,9 +1,9 @@
 ---
 title: "Using Azure Key Vault with PowerShell - Part 1"
 date: "2017-04-17"
-categories: 
+categories:
   - "azure-key-vault"
-tags: 
+tags:
   - "azure"
   - "powershell"
 coverImage: "ss_akv_createcompleteportal.png"
@@ -44,11 +44,11 @@ But first, the variables in the **PowerShell script** need to be customized to s
 - **$location** - the Azure data center to install the Key Vault to (use **Get-AzureRMLocation** to get a list of available Azure data centers).
 - **$keyVaultAdminUsers** - an array of users that will be given administrator (full control over **cryptographic keys**, **certificates** and **secrets**). The user names specified must match the full name of users found in the **Azure AD** assigned to the Azure tenancy.
 
-![ss_akv_create](images/ss_akv_create.gif)
+![ss_akv_create](/images/ss_akv_create.gif)
 
 It will take about 30 seconds for the Azure Key Vault to be installed. It will then show up in the Azure Subscription:
 
-![ss_akv_createcompleteportal](images/ss_akv_createcompleteportal.png)
+![ss_akv_createcompleteportal](/images/ss_akv_createcompleteportal.png)
 
 # Assigning Permissions
 
@@ -114,7 +114,7 @@ For example:
 
 \[gist\]20e433002d73a69e2b7ef9318d9b4b9b\[/gist\]
 
-![ss_akv_secretupdatewithparameters](images/ss_akv_secretupdatewithparameters.png)
+![ss_akv_secretupdatewithparameters](/images/ss_akv_secretupdatewithparameters.png)
 
 ## Retrieving Secrets
 
@@ -128,7 +128,7 @@ To list **all** the versions of a secret, add the **IncludeVersions** parameter:
 
 \[gist\]82cc3c622a43673c5b35e9eb5ed0710b\[/gist\]
 
-![ss_akv_secretallhistory](images/ss_akv_secretallhistory.png)
+![ss_akv_secretallhistory](/images/ss_akv_secretallhistory.png)
 
 To retrieve a **specific version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet with the **Version** parameter specified:
 
@@ -145,3 +145,4 @@ That pretty much covers managing and using **secrets** in **Azure Key Vault** us
 # C**ryptographic keys** and C**ertificates**
 
 In the next part of this series I'll cover using **Azure Key Vault** to use and manage **cryptographic keys** and **certificates**. Thanks for sticking with me this far.
+

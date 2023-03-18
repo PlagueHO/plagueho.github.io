@@ -1,9 +1,9 @@
 ---
 title: "Downloading GitHub .GitIgnore templates with PowerShell"
 date: "2017-02-24"
-categories: 
+categories:
   - "github"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -17,7 +17,7 @@ First up, lets get the list of available _.gitIgnore templates:_
 
 This will get the list of _.GitIgnore templates_ to an array variable called **$templateList**. I could then display the list to a user:
 
-![ss_ghgi_getgitignoretemplates](images/ss_ghgi_getgitignoretemplates.png)
+![ss_ghgi_getgitignoretemplates](/images/ss_ghgi_getgitignoretemplates.png)
 
 Now, all I need to do is to download the named _.gitIgnore Template_ to a folder:
 
@@ -25,7 +25,7 @@ Now, all I need to do is to download the named _.gitIgnore Template_ to a folder
 
 This will download the **VisualStudio** _.giIgnore_ template and save it with the filename **.gitignore** to the current folder.
 
-![ss_ghgi_getgitignorefile](images/ss_ghgi_getgitignorefile.png)
+![ss_ghgi_getgitignorefile](/images/ss_ghgi_getgitignorefile.png)
 
 I could have specified a different _.gitIgnore template_ by changing the **VisualStudio** in the URL to another template that appears in the **$templateList**.
 
@@ -34,3 +34,4 @@ You might have noticed that I included the **\-UseBasicParsing** parameter in th
 The next steps for this code might be to get these included as some new cmdlets in [Trevor Sullivan's](https://twitter.com/pcgeek86) [PSGitHub PowerShell Module](https://github.com/pcgeek86/PSGitHub). You can download his module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PSGitHub) if you're not familiar with it.
 
 Thanks for reading.
+

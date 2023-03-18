@@ -1,11 +1,11 @@
 ---
 title: "Creating a Chocolatey Package in AppVeyor CI"
 date: "2016-02-21"
-categories: 
+categories:
   - "appveyor"
   - "chocolatey"
   - "continuous-integration"
-tags: 
+tags:
   - "devops"
 coverImage: "fi_chocolatey.jpg"
 ---
@@ -34,7 +34,7 @@ The package is fairly simple. It just contains a few files:
 4. **devcon.portable\\DevCon64.exe** - a 64-bit version of the **DevCon.exe** copied straight out of the **WDK**.
 5. **devcon.portable\\devcon.portable.nuspec** - this is the [nuspec package manifest](https://docs.nuget.org/create/nuspec-reference) file I created for this package.
 
-![ss_devconchoco_filestructure](images/ss_devconchoco_filestructure.png)
+![ss_devconchoco_filestructure](/images/ss_devconchoco_filestructure.png)
 
 The really important files here are **AppVeyor.yml** and **devcon.portable.nuspec**. So I'll cover those in a bit more detail.
 
@@ -96,7 +96,7 @@ The third line creates the package using the **cpack** tool.
 
 The last line pushes the completed package to AppVeyor CI as an **artifact** that we can then download and submit to **Chocolatey**:
 
-![ss_devconchoco_appveyorciartifacts](images/ss_devconchoco_appveyorciartifacts.png)
+![ss_devconchoco_appveyorciartifacts](/images/ss_devconchoco_appveyorciartifacts.png)
 
 It is probably possible to have AppVeyor CI automatically submit the package to **Chocolatey** on my behalf, but I didn't want that in this case. But if you're planning on doing that, you'll want to ensure you use the AppVeyor **Encrypt Data** tool to encrypt any **Chocolatey** credentials that your AppVeyor.yml file might use - otherwise your **Chocolatey** credentials are available for the world to see and **abuse**. This would be very bad indeed!
 
@@ -113,3 +113,4 @@ I have left in the original commands that pull the **DevCon** repository from Gi
 Hopefully this post might help you package up some of your own tools to use distribute with **Chocolatey** for easy installation or for use with CI services such as AppVeyor.
 
 If you want some more information on using **Chocolatey** with PowerShell, check out [this blog post](https://blogs.technet.microsoft.com/heyscriptingguy/2014/08/23/weekend-scripter-powershell-and-chocolatey/).
+

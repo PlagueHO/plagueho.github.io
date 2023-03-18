@@ -1,9 +1,9 @@
 ---
 title: "Sonatype Nexus Containers with Persistent Storage in Azure Container Instances"
 date: "2017-08-06"
-categories: 
+categories:
   - "azure-container-instance"
-tags: 
+tags:
   - "azure"
 coverImage: "ss_aci_sonatypenexus3.png"
 ---
@@ -24,7 +24,7 @@ And here are the results of my tests:
 
 Works perfectly and the container starts up quickly (under 10 seconds):
 
-![ss_aci_sonatypenexus2](images/ss_aci_sonatypenexus2.png)
+![ss_aci_sonatypenexus2](/images/ss_aci_sonatypenexus2.png)
 
 I passed the following parameters to the script:
 
@@ -36,7 +36,7 @@ _**Note: The Nexus 2 server is only accessible on the path /nexus/.**_
 
 Works perfectly but after takes at least a minute to be accessible after the container starts. But this is normal behavior for Nexus 3.
 
-![ss_aci_sonatypenexus3](images/ss_aci_sonatypenexus3.png)
+![ss_aci_sonatypenexus3](/images/ss_aci_sonatypenexus3.png)
 
 I passed the following parameters to the script:
 
@@ -46,10 +46,11 @@ I passed the following parameters to the script:
 
 Unfortunately Jenkins does not work with a persistent storage volume from an Azure Share. It seems to be trying to set the timestamp of the file that will contain the InitialAdminPassword, which is failing:
 
-![ss_aci_jenkins](images/ss_aci_jenkins.png)
+![ss_aci_jenkins](/images/ss_aci_jenkins.png)
 
 I passed the following parameters to the script:
 
 \[gist\]a8bfee04c9b2f5dd607bf400990bf6a2\[/gist\]
 
 So, this is still a little bit hit and miss, but in general Azure Container Instances look like a very promising way to run different types of services in containers without a lot of overhead. With a bit of automation, this could turn out to be a cost effective way to quickly and easily run some common services.
+

@@ -1,18 +1,18 @@
 ---
 title: "Create a Scheduled Task with unlimited Execution Time Limit in PowerShell"
 date: "2017-12-16"
-categories: 
+categories:
   - "task-scheduler"
   - "windows-server-2012"
   - "windows-server-2016"
-tags: 
+tags:
   - "execution-time-limit"
   - "powershell"
 ---
 
 When creating a scheduled task in PowerShell you may wish to set the **Execution Time Limit** of the task to be **unlimited** (no time limit).
 
-![ss_scheduledtask_executiontimelimit](images/ss_scheduledtask_executiontimelimit.png)
+![ss_scheduledtask_executiontimelimit](/images/ss_scheduledtask_executiontimelimit.png)
 
 This will prevent the task from being terminated if it is still running after a specific period of time.
 
@@ -41,3 +41,4 @@ To create a scheduled task with unlimited **Execution Time Limit** on Windows Se
 This method is a more elegant approach and arguably how the Scheduled Task cmdlets are intended to be used. But you would only use this method if your task does not need to created on an operating system earlier than Windows Server 2016/Windows 10.
 
 So, hopefully this will help anyone else out there who has struggled with this.
+

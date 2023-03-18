@@ -12,3 +12,4 @@ So what I needed was a command that could I fire on the **host** that would tell
 \[sourcecode language="powershell"\] $IPAddress = (Get-VMNetworkAdapter -VMName 'Server01').Where({$\_.SwitchName -eq (Get-VMSwitch -SwitchType External).Name}).IPAddresses.Where({$\_.Contains('.')}) \[/sourcecode\]
 
 **Note**: this wouldn't be required at all, and I wouldn't need to have the Guest VM connected to the Host via an External switch if **PowerShell Direct** was integrated into the **New-PSSession** cmdlet. But unfortunately it isn't yet. But if you'd like to see this happen too, please go and vote for this [PowerShell Connect feedback item](https://connect.microsoft.com/PowerShell/Feedback/Details/1761123). If you heard of **PowerShell Direct**, see [this](http://blogs.technet.com/b/virtualization/archive/2015/05/14/powershell-direct-running-powershell-inside-a-virtual-machine-from-the-hyper-v-host.aspx) post.
+

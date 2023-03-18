@@ -14,3 +14,4 @@ But what if I want to know if a variable is **not** declared at all? The method 
 \[sourcecode language="powershell"\] if (Test-Path -Path Variable:\\MyVariable) { Write-Host -Message '$MyVariable is declared' } else { Write-Host -Message '$MyVariable is not declared' } \[/sourcecode\]
 
 If there is a cleaner or officially recommended way of doing this I'd be most keen to hear about it.
+

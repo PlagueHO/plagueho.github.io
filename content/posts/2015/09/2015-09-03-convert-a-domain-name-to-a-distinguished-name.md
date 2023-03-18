@@ -22,3 +22,4 @@ An even easier way would be to use the Replace method on a string object:
 \# Assemble the DN by replacing $DN = 'CN=' + $Domain.Replace('.',',CN=') \[/sourcecode\]
 
 That is all!
+

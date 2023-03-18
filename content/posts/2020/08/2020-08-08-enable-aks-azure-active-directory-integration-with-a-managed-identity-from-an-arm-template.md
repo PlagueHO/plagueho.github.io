@@ -1,9 +1,9 @@
 ---
 title: "Enable AKS Azure Active Directory integration with a Managed Identity from an ARM template"
 date: "2020-08-08"
-categories: 
+categories:
   - "azure-kubernetes-service"
-tags: 
+tags:
   - "aks"
   - "azure"
 coverImage: "ss_aksaadintegration_aadprofile.png"
@@ -17,17 +17,17 @@ More recently an improved method of integrating your AKS cluster into AAD was an
 
 You can easily do this integration by running PowerShell or Bash scripts, but if you'd prefer to use an ARM template, here is what you need to know.
 
-1. You will need to have an `object id` of an **Azure Active Directory group** to use as your Cluster Admins.  
-    \[gist\]fa54c4e08386eea626fac7d9e3d7112a\[/gist\]  
-    
-    ![ss_aksaadintegration_createaadgroup](images/ss_aksaadintegration_createaadgroup.png)
-    
+1. You will need to have an `object id` of an **Azure Active Directory group** to use as your Cluster Admins.
+    \[gist\]fa54c4e08386eea626fac7d9e3d7112a\[/gist\]
+
+    ![ss_aksaadintegration_createaadgroup](/images/ss_aksaadintegration_createaadgroup.png)
+
     This will return the object Id for the newly create group in the variable `$clusterAdminGroupObjectIds`. You will need to pass this variable into your ARM template.
-2. You need to add an `aadProfile` block into the `properties` of your AKS cluster deployment definition:  
-    ![](images/ss_aksaadintegration_aadprofile.png)  
-    For example:  
+2. You need to add an `aadProfile` block into the `properties` of your AKS cluster deployment definition:
+    ![](/images/ss_aksaadintegration_aadprofile.png)
+    For example:
     \[gist\]6da009d41c531164fdb8f86c62a49906\[/gist\]
-3. When you deploy the ARM template (using whatever method you choose), you'll need to pass the `$clusterAdminGroupObjectIds`​as a parameter. For example:  
+3. When you deploy the ARM template (using whatever method you choose), you'll need to pass the `$clusterAdminGroupObjectIds`​as a parameter. For example:
     \[gist\]5c395cc533880098b16d8e16ca3b2c05\[/gist\]
 
 That is all you really need to get AKS-managed AAD integration going with your AKS cluster.
@@ -43,3 +43,4 @@ For a fully formed ARM template for that will deploy an AKS cluster with AKS-man
     - A Windows node pool including automatic node scaler and taints.
 
 Thanks for reading.
+

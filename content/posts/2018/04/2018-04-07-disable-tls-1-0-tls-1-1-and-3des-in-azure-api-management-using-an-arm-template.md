@@ -1,9 +1,9 @@
 ---
 title: "Disable TLS 1.0, TLS 1.1 and 3DES in Azure API Management using an ARM Template"
 date: "2018-04-07"
-categories: 
+categories:
   - "azure-api-management"
-tags: 
+tags:
   - "api-management"
   - "arm-template"
 coverImage: "ss_apim_disabletls3des.png"
@@ -11,7 +11,7 @@ coverImage: "ss_apim_disabletls3des.png"
 
 Recently, I've been putting together a continuous delivery pipeline (using VSTS) for our [Azure API Management service](https://azure.microsoft.com/en-us/services/api-management/) using **Azure Resource Manager** (ARM) templates. One of the things I needed to be able to do to _secure this service properly_ is to disable **TLS 1.0**, **TLS 1.1** and **3DES**. This is pretty easy to do in the portal:
 
-![ss_apim_disabletls3des](images/ss_apim_disabletls3des.png)
+![ss_apim_disabletls3des](/images/ss_apim_disabletls3des.png)
 
 However, we only allow changes to be made via our continuous delivery pipeline (a good thing by the way) then I had to change the ARM template.
 
@@ -30,3 +30,4 @@ This is what the complete ARM template looks like:
 > **Side note:** the template above is based off the [Azure Quickstart Template for API Management](https://github.com/Azure/azure-quickstart-templates/blob/master/101-azure-api-management-create/azuredeploy.json).
 
 Hopefully you find this if you're looking for an example of how to do this and it saves you some time.
+

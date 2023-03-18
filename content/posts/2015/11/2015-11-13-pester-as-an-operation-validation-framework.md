@@ -11,3 +11,4 @@ In [this](https://channel9.msdn.com/Shows/about-it/Episode-003-Jeffrey-on-Nano-C
 Of course there does feel like there is a little bit of an overlap here with DSC, but I'm sure the implementation will play well with DSC. All of these new ideas technologies (Nano, Containers, DSC, Operational Pester tests etc) are just more tools in the "Infrastructure as Code" tool belt. So I'm very happy.
 
 I suggest watching the whole video (found [here](https://channel9.msdn.com/Shows/about-it/Episode-003-Jeffrey-on-Nano-Containers-and-the-Modern-App-Platform)) as it is really interesting, but if you want to just jump to the bit about Pester, it starts at about 11:48. I am really eager to see where Microsoft is going with this stuff in Windows Server 2016. Roll on TP4!
+

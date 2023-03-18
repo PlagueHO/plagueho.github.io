@@ -1,10 +1,10 @@
 ---
 title: "Tips for HQRM DSC Resources"
 date: "2016-08-14"
-categories: 
+categories:
   - "dsc"
   - "hqrm"
-tags: 
+tags:
   - "powershell"
 coverImage: "ss_hqrmreview_codeofconductgood.png"
 ---
@@ -31,11 +31,11 @@ Every function (public or private) within the DSC resource module must contain a
 
 This will get rejected:
 
-![ss_hqrmreview_gethelpbad](images/ss_hqrmreview_gethelpbad.png)
+![ss_hqrmreview_gethelpbad](/images/ss_hqrmreview_gethelpbad.png)
 
 This is good:
 
-![ss_hqrmreview_gethelpgood](images/ss_hqrmreview_gethelpgood.png)
+![ss_hqrmreview_gethelpgood](/images/ss_hqrmreview_gethelpgood.png)
 
 ### Examples Missing Explanation
 
@@ -43,11 +43,11 @@ All examples in the **Examples** folder and the **Readme.md** must contain an ex
 
 This is bad:
 
-![ss_hqrmreview_exampledescriptionbad](images/ss_hqrmreview_exampledescriptionbad.png)
+![ss_hqrmreview_exampledescriptionbad](/images/ss_hqrmreview_exampledescriptionbad.png)
 
 This is good:
 
-![ss_hqrmreview_exampledescriptiongood](images/ss_hqrmreview_exampledescriptiongood.png)
+![ss_hqrmreview_exampledescriptiongood](/images/ss_hqrmreview_exampledescriptiongood.png)
 
 ### Old or Incorrect Unit/Integration Test Headers
 
@@ -57,11 +57,11 @@ _This is probably the hardest thing to get right if you're not paying close atte
 
 This is bad:
 
-![ss_hqrmreview_testheaderbad](images/ss_hqrmreview_testheaderbad.png)
+![ss_hqrmreview_testheaderbad](/images/ss_hqrmreview_testheaderbad.png)
 
 This is good:
 
-![ss_hqrmreview_testheadergood](images/ss_hqrmreview_testheadergood.png)
+![ss_hqrmreview_testheadergood](/images/ss_hqrmreview_testheadergood.png)
 
 ### Incorrect Capitalization of Local Variables
 
@@ -71,11 +71,11 @@ _Note: this is for local variables. Parameter names should start with Uppercase.
 
 This is bad:
 
-![ss_hqrmreview_localparameterbad](images/ss_hqrmreview_localparameterbad.png)
+![ss_hqrmreview_localparameterbad](/images/ss_hqrmreview_localparameterbad.png)
 
 This is good:
 
-![ss_hqrmreview_localparametergood](images/ss_hqrmreview_localparametergood.png)
+![ss_hqrmreview_localparametergood](/images/ss_hqrmreview_localparametergood.png)
 
 ### Spaces around = in Localization Files
 
@@ -83,11 +83,11 @@ In any localization files you should make sure there is a space on either side o
 
 This is bad:
 
-![ss_hqrmreview_localizationbad.png](images/ss_hqrmreview_localizationbad.png)
+![ss_hqrmreview_localizationbad.png](/images/ss_hqrmreview_localizationbad.png)
 
 This is good:
 
-![ss_hqrmreview_localizationgood](images/ss_hqrmreview_localizationgood.png)
+![ss_hqrmreview_localizationgood](/images/ss_hqrmreview_localizationgood.png)
 
 ### Missing code of Conduct in Readme.md
 
@@ -98,11 +98,11 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 This is bad:
 
-![ss_hqrmreview_codeofconductbad](images/ss_hqrmreview_codeofconductbad.png)
+![ss_hqrmreview_codeofconductbad](/images/ss_hqrmreview_codeofconductbad.png)
 
 This is good:
 
-![ss_hqrmreview_codeofconductgood](images/ss_hqrmreview_codeofconductgood.png)
+![ss_hqrmreview_codeofconductgood](/images/ss_hqrmreview_codeofconductgood.png)
 
 ### Missing Localization file indent
 
@@ -110,11 +110,11 @@ All strings in localization files should be indented.
 
 This is bad:
 
-![ss_hqrmreview_localizationdatabad](images/ss_hqrmreview_localizationdatabad.png)
+![ss_hqrmreview_localizationdatabad](/images/ss_hqrmreview_localizationdatabad.png)
 
 This is good:
 
-### ![ss_hqrmreview_localizationdatagood](images/ss_hqrmreview_localizationdatagood.png)
+### ![ss_hqrmreview_localizationdatagood](/images/ss_hqrmreview_localizationdatagood.png)
 
  
 
@@ -125,3 +125,4 @@ There were some other issues raised which I will also document, however I am sti
 The main thing you can do to help speed this process up and reduce the load on the reviewers however is to implement all the [best practices](https://github.com/PowerShell/DscResources/blob/master/BestPractices.md) and [guidelines](https://github.com/PowerShell/DscResources/blob/master/StyleGuidelines.md) listed.
 
 I hope this helps someone out there.
+

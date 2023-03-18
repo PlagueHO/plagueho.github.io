@@ -1,10 +1,10 @@
 ---
 title: "VisualStudio and ISE Steroids Vertical Guides"
 date: "2016-05-20"
-categories: 
+categories:
   - "ise-steroids"
   - "visual-studio-code"
-tags: 
+tags:
   - "powershell"
 coverImage: "ss_verticalruler_visualstudiocodesettingsrulers.png"
 ---
@@ -15,26 +15,27 @@ However, one of the most common issues I run into when reviewing (or writing my 
 
 But there is an easy way to help identify this problem if you're using Visual Studio Code or PowerShell ISE Steroids: _Setup a vertical guide/ruler at 100 characters_.
 
-\[caption id="attachment\_3746" align="alignnone" width="1498"\]![ss_verticalruler_visualstudiocode](images/ss_verticalruler_visualstudiocode.png) A nice easy to see vertical ruler/guide tells us when our lines get too long... oh dear this line is too long.\[/caption\]
+![ss_verticalruler_visualstudiocode](/images/ss_verticalruler_visualstudiocode.png)
+A nice easy to see vertical ruler/guide tells us when our lines get too long... oh dear this line is too long.
 
 ## To Set up a Vertical Ruler in Visual Studio Code
 
-1. Select **User Settings** (you can use **Workspace Settings** if you want) from **Preferences** in the **File** menu: ![ss_verticalruler_visualstudiocodemenu](images/ss_verticalruler_visualstudiocodemenu.png)
-2. Your user **settings.json** file will load on the right, with the **Default Settings** on the left: ![ss_verticalruler_visualstudiocodesettings.png](images/ss_verticalruler_visualstudiocodesettings.png)
+1. Select **User Settings** (you can use **Workspace Settings** if you want) from **Preferences** in the **File** menu: ![ss_verticalruler_visualstudiocodemenu](/images/ss_verticalruler_visualstudiocodemenu.png)
+2. Your user **settings.json** file will load on the right, with the **Default Settings** on the left: ![ss_verticalruler_visualstudiocodesettings.png](/images/ss_verticalruler_visualstudiocodesettings.png)
 3. Add the following line to your settings.json file in between the braces:
-    
+
     "editor.rulers": \[100\]
-    
-    ![ss_verticalruler_visualstudiocodesettingsrulers](images/ss_verticalruler_visualstudiocodesettingsrulers.png)
+
+    ![ss_verticalruler_visualstudiocodesettingsrulers](/images/ss_verticalruler_visualstudiocodesettingsrulers.png)
 4. Save the file and restart **Visual Studio Code**.
 
 ## To Set up a Vertical Ruler in ISE Steroids
 
-1. Select **Show** **Secondary Toolbar** from the **View** menu.![ss_verticalruler_isesteroidsmenu](images/ss_verticalruler_isesteroidsmenu.png)
-2. Click the **Vertical Guides** button and select **Global Guide...**![ss_verticalruler_isesteroidsverticalguidebutton](images/ss_verticalruler_isesteroidsverticalguidebutton.png)
+1. Select **Show** **Secondary Toolbar** from the **View** menu.![ss_verticalruler_isesteroidsmenu](/images/ss_verticalruler_isesteroidsmenu.png)
+2. Click the **Vertical Guides** button and select **Global Guide...**![ss_verticalruler_isesteroidsverticalguidebutton](/images/ss_verticalruler_isesteroidsverticalguidebutton.png)
 3. Enter **100** in the input box and press enter.
-    
-    \[caption id="attachment\_3791" align="alignnone" width="1457"\]![ss_verticalruler_isesteroidsruleradded](images/ss_verticalruler_isesteroidsruleradded.png) The vertical guide is added - better fix that long line!\[/caption\]
+
+    ![ss_verticalruler_isesteroidsruleradded](/images/ss_verticalruler_isesteroidsruleradded.png) The vertical guide is added - better fix that long line!
 
 That is all there is to using vertical guides. Having them setup if you're planning on committing code to a community project might save you some extra commits and help the community reviewers merge your code faster.
 

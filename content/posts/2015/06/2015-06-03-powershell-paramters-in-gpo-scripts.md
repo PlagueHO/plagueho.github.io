@@ -1,7 +1,7 @@
 ---
 title: "PowerShell Paramters in GPO Scripts"
 date: "2015-06-03"
-tags: 
+tags:
   - "group-policy"
   - "powershell"
 ---
@@ -10,7 +10,8 @@ tags:
 
 This morning I decided I wanted to update all my lab servers to Windows Management Framework 5.0 so I could do some work on the new DSC features that come with it. To do this, I though I'd use a GPO with a startup PowerShell script that would perform the installation of the WMF 5.0 April hotfix (available [here)](https://www.microsoft.com/en-us/download/details.aspx?id=46889 "Windows Management Framework 5.0 Preview April 2015").
 
-\[caption id="attachment\_197" align="alignnone" width="660"\][![A GPO Startup PowerShell script with parameters.](https://dscottraynsford.files.wordpress.com/2015/06/ss_gpo_startuppowershellscriptparametersexample.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/06/ss_gpo_startuppowershellscriptparametersexample.png) A GPO Startup PowerShell script with parameters.\[/caption\]
+[![A GPO Startup PowerShell script with parameters.](/images/ss_gpo_startuppowershellscriptparametersexample.png?w=660)](/images/ss_gpo_startuppowershellscriptparametersexample.png)
+A GPO Startup PowerShell script with parameters.
 
 On thinking about this I decided it might also be a good idea to modify the PowerShell script designed to install Microsoft Office 2013 products via GPO (see the post [here](https://dscottraynsford.wordpress.com/2015/04/06/using-powershell-to-installuninstall-microsoft-office-products-by-group-policy/ "Using PowerShell to Install/Uninstall Microsoft Office Products by Group Policy")). After producing the new scripts and testing them by manually running them to ensure they worked correctly, I put them into some GPOs.  And that is when things started to go wrong!
 
@@ -40,3 +41,4 @@ There is also some odd behaviour passing parameters with quotes (single or doubl
 In short, if you stick to the above when calling PowerShell scripts with parameters from GPO then you might save yourself a lot of time scratching your head.
 
 As a quick aside, the scripts I wrote as part of this (for installing Windows QFE Hotfixes and Applications via GPO) are available on Microsoft Script Center [here](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-to-Install-70009e38 "PowerShell Scripts to Install Application (EXE) or Update (MSU) using GPO"). I will be writing a full post on these scripts later in the week.
+

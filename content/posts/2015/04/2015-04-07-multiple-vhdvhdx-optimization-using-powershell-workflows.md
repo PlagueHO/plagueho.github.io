@@ -1,9 +1,9 @@
 ---
 title: "Multiple VHD/VHDx Optimization using PowerShell Workflows"
 date: "2015-04-07"
-categories: 
+categories:
   - "hyper-v"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -13,7 +13,7 @@ I also like to run my heavily used VMs on fast SSD drives to keep them "snappy".
 
 Keeping VHD/VHDx files trim is can easily be performed inside the Hyper-V management tool by clicking the **Edit Disk...** button and using the **Edit Virtual Hard Disk Wizard** to **Compact** the desired VHD/VHDx file:
 
-[![Compact a VHD using the Edit Virtual Hard Disk wizard](https://dscottraynsford.files.wordpress.com/2015/04/ss_hyperv_compactvhd.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/04/ss_hyperv_compactvhd.png)
+[![Compact a VHD using the Edit Virtual Hard Disk wizard](/images/ss_hyperv_compactvhd.png?w=660)](/images/ss_hyperv_compactvhd.png)
 
 This of course is all a bit manual and can be really time-consuming when performing this on lots of virtual hard disks. This sounds like it could be performed by a PowerShell command.
 
@@ -45,8 +45,9 @@ The **AllowRestart** switch will allow a guests that are in a running state to b
 
 You can also use the **Verbose** switch to show more information about the workflow process:
 
-[![The Optimize Verbose Process](https://dscottraynsford.files.wordpress.com/2015/04/ss_hyperv_optimize-vhdsworkflow_process.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/04/ss_hyperv_optimize-vhdsworkflow_process.png)
+[![The Optimize Verbose Process](/images/ss_hyperv_optimize-vhdsworkflow_process.png?w=660)](/images/ss_hyperv_optimize-vhdsworkflow_process.png)
 
 There really isn't much to the process and it could even be scheduled via Task Manager to be performed automatically. If anyone has any comments or feature requests, please let me know - I'm always enjoy a challenge!
 
 \\m/ \\m/
+

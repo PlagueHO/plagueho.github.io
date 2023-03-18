@@ -161,3 +161,4 @@ In the next article, I'll cover the **integration tests**. There are often the m
 Further parts in this series:
 
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+

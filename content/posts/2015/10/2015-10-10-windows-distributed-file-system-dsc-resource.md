@@ -1,10 +1,10 @@
 ---
 title: "Windows Distributed File System DSC Resource"
 date: "2015-10-10"
-categories: 
+categories:
   - "desired-state-configuration"
   - "distributed-file-system"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -26,7 +26,8 @@ This means that a DSC Resource for configuring **Windows DFS** could be run on a
 
 The first problem I ran into when implementing this DSC Resource is that you **can't** install the DFS Replication (DFSR) PowerShell module onto a **Windows Server Core** installation. This is because the **PowerShell DFSR** **module** is _only_ installed with the **DFS Management Tools** feature, which requires a **Full Server install** (or at least the _Graphical Management Tools and Infrastructure feature_).
 
-\[caption id="attachment\_510" align="alignnone" width="660"\][![This feature is required to enable the DFSR PowerShell Module.](https://dscottraynsford.files.wordpress.com/2015/10/ss_dfs_installmanagementtools.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/10/ss_dfs_installmanagementtools.png) This feature is required to enable the DFSR PowerShell Module.\[/caption\]
+[![This feature is required to enable the DFSR PowerShell Module.](/images/ss_dfs_installmanagementtools.png?w=660)](/images/ss_dfs_installmanagementtools.png)
+This feature is required to enable the DFSR PowerShell Module.
 
 This isn't the end of the world, but it is annoying because all my file servers are Server Core. Therefore I'd need to run this resource on a **node** with a **Full Server** **install** that is also **part of the AD Domain.** So it is great that this resource can be run on any Full Server install (or even a Desktop with RSAT).
 
@@ -114,3 +115,4 @@ Well, there is not much more to say about this. Hopefully someone finds it usefu
 ### Feedback
 
 If you're interested in contributing to this resource, providing feedback or raising issues or requesting features, please feel free (anything is appreciated). You'll find the resource GitHub repository [here](https://github.com/PlagueHO/cDFS) where you can fork, issue pull requests and raise issues/feature requests.
+

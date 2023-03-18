@@ -14,3 +14,4 @@ So I came up with this little snippet of code:
 \[gist\]40c20a6cc143d3856c9c23da88843642\[/gist\]
 
 Hope someone finds it useful.
+

@@ -1,10 +1,10 @@
 ---
 title: "Use Pester to Test Azure Resource Manager Templates for Best Practices"
 date: "2018-10-13"
-categories: 
+categories:
   - "azsk"
   - "pester"
-tags: 
+tags:
   - "azure"
   - "powershell"
 ---
@@ -21,7 +21,7 @@ To install the module, open a PowerShell Window and run:
 
 The cmdlet we're most interested in is the **Get-AzSKARMTemplateSecurityStatus**. It can be used to scan one or more ARM templates or entire folders of ARM templates for best practice violations:
 
-![ss_azsk_scanning](images/ss_azsk_scanning.png)
+![ss_azsk_scanning](/images/ss_azsk_scanning.png)
 
 This will scan the ARM templates and produce a **CSV report** in a folder **Microsoft\\AzSKLogs\\ARMChecker** within your **$ENV:LOCALAPPDATA** folder and open the folder in Explorer. This isn't ideal for automation scenarios or using during Continuous Integration or Continuous Delivery pipelines. I've raised [an issue](https://github.com/azsk/DevOpsKit/issues/267) with the AzSK team on GitHub to see if this can be improved.
 
@@ -45,7 +45,7 @@ Once that is done, you can use **Invoke-Pester** and pass in the **TemplatePath*
 
 This will execute the Pester tests in the file above on the specified ARM template. The tests will fail when there are any best practice violations with the specified **Severity** or above. If you didn't pass in a **Severity** then it will default to failing on **Medium** and **High**.
 
-![ss_azsk_invokepester](images/ss_azsk_invokepester.png)
+![ss_azsk_invokepester](/images/ss_azsk_invokepester.png)
 
 If you use the **OutputFile** and **OutputFormat** parameters to cause Pester to output an NUnit format file that most Continuous Integration tools will happily accept and use to display the output of the tests.
 
@@ -56,3 +56,4 @@ AzSKARMTemplateSecurityStatus.Test -TemplatePath D:\\101-webapp-basic-windows\\a
 Finally, if you're using Azure DevOps, you can also get this function as part Secure DevOps Kit (AzSK) CICD Extensions for Azure in the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items?itemName=azsdktm.AzSDK-task).
 
 Which ever way you choose to consume AzSK, it is a great module and well worth including in your CI/CD pipelines to ensure your ARM templates meet best practices.
+

@@ -1,7 +1,7 @@
 ---
 title: "Install Windows Server Nano the Easy Way"
 date: "2015-05-08"
-categories: 
+categories:
   - "windows-server-2016"
   - "windows-server-nano"
 ---
@@ -38,7 +38,8 @@ It is fairly straight forward to install and use:
 
 **Note**: If you run this in the PowerShell ISE, a pop-up message appears during the execution of the above command:
 
-\[caption id="attachment\_179" align="alignnone" width="410"\][![This error can be ignored without it causing a problem.](images/ss_nano_building_error_wrong_volume.png)](https://dscottraynsford.files.wordpress.com/2015/05/ss_nano_building_error_wrong_volume.png) This error can be ignored without it causing a problem.\[/caption\]
+[![This error can be ignored without it causing a problem.](/images/ss_nano_building_error_wrong_volume.png)](/images/ss_nano_building_error_wrong_volume.png)
+This error can be ignored without it causing a problem.
 
 If this happens, just click **Continue**. I'm not sure why this happens in the ISE, but the script still functions fine if it occurs. I tried to get a screenshot of this but I couldn't get it to happen.
 
@@ -48,7 +49,7 @@ Once you've the VHD has been created, just create a new or Gen-2 (or Gen-1) Hype
 
 Remember, Server Nano is completely headless (which just sounds cool), so if you try to connect to it using the Hyper-V Console you will see the recovery console:
 
-![ss_nano_login](images/ss_nano_login.png)
+![ss_nano_login](/images/ss_nano_login.png)
 
 ## Observations
 
@@ -56,7 +57,8 @@ _**Edit - 14 May 2016:** These "issues" have been resolved in more recent versio
 
 One thing I have noted though, is that if you watch the machine with the Hyper-V Console while it is booting it will show the nice little Windows Start up screen for up to 5 minutes - even though the machine appears to be completely booted and can be connected to. I'm not sure why this is, but I'm sure MS will sort it out.
 
-\[caption id="attachment\_175" align="alignnone" width="660"\][![Nano booting up - on my system it can be connected to and used even while the boot screen is showing.](https://dscottraynsford.files.wordpress.com/2015/05/ss_hyperv_nano_booting.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/05/ss_hyperv_nano_booting.png) Nano booting up - on my system it can be connected to and used even while the boot screen is showing.\[/caption\]
+[![Nano booting up - on my system it can be connected to and used even while the boot screen is showing.](/images/ss_hyperv_nano_booting.png?w=660)](/images/ss_hyperv_nano_booting.png)
+Nano booting up - on my system it can be connected to and used even while the boot screen is showing.
 
 A second thing I found while writing this script was that in the _Unattend.xml_ file the **ComputerName** is supposed to be set in the _offlineServicing_ phase (according to the MS instructions). But this didn't seem to work for me so my script sets it in both the _offlineServicing_ phase and the _Specialize_ phase. This actually doubles the first boot time from 5 seconds to 10 seconds because it needs to reboot to apply the **ComputerName**.
 

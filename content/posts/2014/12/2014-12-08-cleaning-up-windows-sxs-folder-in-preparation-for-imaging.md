@@ -1,11 +1,11 @@
 ---
 title: "Cleaning Up Windows SxS Folder in Preparation for Imaging"
 date: "2014-12-08"
-categories: 
+categories:
   - "dism"
   - "features-on-demand"
   - "windows-server-2012"
-tags: 
+tags:
   - "windows-server-core"
 ---
 
@@ -23,7 +23,8 @@ The following command removes any files that were backed up as part of installin
 
 DISM /online /cleanup-image /SPSuperseded
 
-\[caption id="attachment\_60" align="alignnone" width="660"\][![DISM /online /cleanup-image /SPSuperseded](https://dscottraynsford.files.wordpress.com/2014/12/ss_dism_spsuperseded.png?w=660)](https://dscottraynsford.files.wordpress.com/2014/12/ss_dism_spsuperseded.png) DISM /online /cleanup-image /SPSuperseded\[/caption\]
+[![DISM /online /cleanup-image /SPSuperseded](/images/ss_dism_spsuperseded.png?w=660)](/images/ss_dism_spsuperseded.png)
+DISM /online /cleanup-image /SPSuperseded
 
 ### Remove Superceeded Components
 
@@ -37,4 +38,6 @@ Windows Server 2012 R2 and Windows 8.1 (performs some additional optimization):
 
 DISM /online /cleanup-image /StartComponentCleanup /ResetBase
 
-\[caption id="attachment\_58" align="alignnone" width="660"\][![DISM /online /cleanup-image /StartComponentCleanup /ResetBase](https://dscottraynsford.files.wordpress.com/2014/12/ss_dism_startcomponentcleanup_resetbase.png?w=660)](https://dscottraynsford.files.wordpress.com/2014/12/ss_dism_startcomponentcleanup_resetbase.png) DISM /online /cleanup-image /StartComponentCleanup /ResetBase\[/caption\]
+[![DISM /online /cleanup-image /StartComponentCleanup /ResetBase](/images/ss_dism_startcomponentcleanup_resetbase.png?w=660)](/images/ss_dism_startcomponentcleanup_resetbase.png)
+DISM /online /cleanup-image /StartComponentCleanup /ResetBase
+

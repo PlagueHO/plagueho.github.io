@@ -1,10 +1,10 @@
 ---
 title: "Creating Professional DSC Resources -Part 1"
 date: "2015-12-14"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -36,7 +36,7 @@ If you have **WMF 5.0** installed (or have installed the [PowerShell Package Mod
 
 \[gist\]ea7e54b197f4e85afd2d\[/gist\]
 
-![ss_powershell_findmoduletagdsc](images/ss_powershell_findmoduletagdsc.png)
+![ss_powershell_findmoduletagdsc](/images/ss_powershell_findmoduletagdsc.png)
 
 **Note**: this will only find modules tagged with **DSC**. Some resources may not be tagged with this so they will not appear in this search. Therefore you may need to tweak the search.
 
@@ -93,3 +93,4 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+

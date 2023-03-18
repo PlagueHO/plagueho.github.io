@@ -14,3 +14,4 @@ Here is an example showing how to create a Nano Server VHDx for a Gen 2 VM:
 \[sourcecode language="powershell"\] .\\New-NanoServerVHD.ps1 \` -ServerISO 'c:\\nano\\10074.0.150424-1350.fbl\_impressive\_SERVER\_OEMRET\_X64FRE\_EN-US.ISO' \` -DestVHD c:\\nano\\NanoServer02.vhdx \` -VHDFormat VHDx \` -ComputerName NANOTEST02 \` -AdministratorPassword 'P@ssword!1' \` -Packages 'Storage','OEM-Drivers','Guest' \` -IPAddress '192.168.1.66' \[/sourcecode\]
 
 The updated **New-NanoServerVHD.ps1** script can be downloaded [here](https://gallery.technet.microsoft.com/scriptcenter/Create-a-New-Nano-Server-61f674f1).
+

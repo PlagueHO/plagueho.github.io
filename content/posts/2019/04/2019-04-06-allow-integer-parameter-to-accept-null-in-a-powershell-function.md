@@ -27,3 +27,4 @@ $VlanId
 The **\[AllowNull()\]** attribute allows the **$VlanId** parameter to accept a Null even though it is mandatory, and the **\[Nullable\[System.Int32\]\]** allows **$VlanId** to be assigned a null value.
 
 This isn't something I use often, but thought it was worth sharing.
+

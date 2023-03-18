@@ -1,10 +1,10 @@
 ---
 title: "Creating WS-Man Listeners with DSC"
 date: "2015-10-05"
-categories: 
+categories:
   - "desired-state-configuration"
   - "ws-management"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -14,7 +14,8 @@ After my last post showing [how to create an SSL/HTTPS listener using GPO](https
 
 You might ask "what is the point of adding HTTPS/SSL WS-Man Listeners when HTTP WS-Man Listeners are usually enabled by default"? Well, first off, it ensures you're going to be connecting to the server you actually think you're connecting to. This is pretty important and helps protect against _DNS poisoning_ and _man-in-the-middle_ attacks. It also means you don't have to set the WS-Man client trusted hosts setting on your client machines to bypass host name checking for your servers:
 
-\[caption id="attachment\_498" align="alignnone" width="660"\][![No more of this!](https://dscottraynsford.files.wordpress.com/2015/10/ss_wsman_nomoretrustedhosts.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/10/ss_wsman_nomoretrustedhosts.png) No more of this!\[/caption\]
+[![No more of this!](/images/ss_wsman_nomoretrustedhosts.png?w=660)](/images/ss_wsman_nomoretrustedhosts.png)
+No more of this!
 
 ### HTTPS/SSL and Certificates
 
@@ -59,3 +60,4 @@ Node Server01 { cWSManListener HTTP { Transport = 'HTTP' Ensure = 'Absent' } # E
 ### Feedback
 
 If you're interested in contributing to this resource, providing feedback or raising issues or requesting features, please feel free (anything is appreciated). You'll find the resource GitHub repository [here](https://github.com/PlagueHO/cWSMan) where you can fork, issue pull requests and raise issues/feature requests.
+

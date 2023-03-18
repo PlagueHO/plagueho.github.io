@@ -1,10 +1,10 @@
 ---
 title: "Continuously Testing your Infrastructure with OVF and Microsoft Operations Management Suite"
 date: "2016-10-22"
-categories: 
+categories:
   - "oms"
   - "ovf"
-tags: 
+tags:
   - "powershell"
 coverImage: "ss_ovfoms_omslogsearchevents.png"
 ---
@@ -37,7 +37,7 @@ To download and install the **OperationValidation** PowerShell module on earlier
 
 \[gist\]4d3186660269842f841d21c18f8d0344\[/gist\]
 
-![ss_ovfoms_installoperationvalidation](images/ss_ovfoms_installoperationvalidation.png)
+![ss_ovfoms_installoperationvalidation](/images/ss_ovfoms_installoperationvalidation.png)
 
 This will download the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/OperationValidation).
 
@@ -51,12 +51,12 @@ _Note: you can create the the OVF tests in a different location if that works fo
 
 1. Create a folder in your PowerShell Modules folder (c:\\program files\\WindowsPowerShell\\Modules) with the name of your tests. I used **ValidateDNS**.
 2. In the **ValidateDNS** folder create the following folder structure:
-    
+
     - Diagnostics\\
         - Simple_\\_
         - Comprehensive_\\_
-    
-    ![ss_ovfoms_folderstructure](images/ss_ovfoms_folderstructure1.png)
+
+    ![ss_ovfoms_folderstructure](/images/ss_ovfoms_folderstructure1.png)
 3. In the **Simple** folder create a file called **ValidateDNS.Simple.Tests.ps1** with the contents: \[gist\]51a96524896f2f38d592ef19590b10d0\[/gist\]
 4. Edit the tests and create any that are validate the things you want to test for.
 
@@ -84,17 +84,17 @@ This step we will create a Scheduled Task to run the cmdlet we created in Step 3
 
 \[gist\]f3215ef69a5bacbace96bc6600e36831\[/gist\]
 
-![ss_ovfoms_scheduletask](images/ss_ovfoms_scheduletask2.png)
+![ss_ovfoms_scheduletask](/images/ss_ovfoms_scheduletask2.png)
 
 You will be prompted for the account details to run the task under, so enter **valid credentials** for this machine _that give the task the correct access to run the tests_. E.g. if the tests need Local Administrator access to the machine to run correctly, then ensure the account assigned is a Local Administrator.
 
 This will run the script every 60 minutes. You could adjust it easily to run more or less frequently if you want to. This is what the Task Scheduler UI will show:
 
-![ss_ovfoms_scheduletaskui.png](images/ss_ovfoms_scheduletaskui1.png)
+![ss_ovfoms_scheduletaskui.png](/images/ss_ovfoms_scheduletaskui1.png)
 
 Every time the tests run and a test failure occurs the Application Event Log will show:
 
-![ss_ovfoms_errorevent](images/ss_ovfoms_errorevent.png)
+![ss_ovfoms_errorevent](/images/ss_ovfoms_errorevent.png)
 
 Now that we have any test failures appearing in the Event Log, we can move onto Microsoft Operations Management Suite.
 
@@ -102,30 +102,30 @@ Now that we have any test failures appearing in the Event Log, we can move onto 
 
 As noted earlier, I'm assuming you have already set up the computer running your OVF tests to your OMS account as a data source:
 
-![ss_ovfoms_omsagent](images/ss_ovfoms_omsagent1.png)
+![ss_ovfoms_omsagent](/images/ss_ovfoms_omsagent1.png)
 
 What we need to do now is create and save a new Log Search that will select our OVF test failures. To do this:
 
 1. In OMS, click the **Log Search** button.
 2. In the **Search** box enter (adjust the Source= if you used a different name for your tests in earlier tests):
-    
+
     (Type=Event) (EventLevelName=error) (Source=ValidateDNS)
-    
-    ![ss_ovfoms_omslogsearch](images/ss_ovfoms_omslogsearch.png)
-3. You will now be shown all the events on **all** **computers** matching these criteria: ![ss_ovfoms_omslogsearchevents](images/ss_ovfoms_omslogsearchevents.png)_From here you could further refine your search if you want, for example, I could have added additional filters on Computer or EventId. But for me this is all I needed._
+
+    ![ss_ovfoms_omslogsearch](/images/ss_ovfoms_omslogsearch.png)
+3. You will now be shown all the events on **all** **computers** matching these criteria: ![ss_ovfoms_omslogsearchevents](/images/ss_ovfoms_omslogsearchevents.png)_From here you could further refine your search if you want, for example, I could have added additional filters on Computer or EventId. But for me this is all I needed._
 4. Click **Save** to save the **Log Search**.
-5. In the **Name** enter 'Validate DNS Events' and in the **Category** enter 'OVF': ![ss_ovfoms_omslogsearchsave](images/ss_ovfoms_omslogsearchsave.png)
+5. In the **Name** enter 'Validate DNS Events' and in the **Category** enter 'OVF': ![ss_ovfoms_omslogsearchsave](/images/ss_ovfoms_omslogsearchsave.png)
 6. You can actually enter whatever works for you here.
 7. Click **Save**.
 8. Click the **Alert** button to add a new **Alert Rule**.
-9. Configure the Alert Rule as follows (customizing to suit you): ![ss_ovfoms_omslogsearchalert](images/ss_ovfoms_omslogsearchalert.png)
+9. Configure the Alert Rule as follows (customizing to suit you): ![ss_ovfoms_omslogsearchalert](/images/ss_ovfoms_omslogsearchalert.png)
 10. Click **Save** to save the Alert.
 
 You're now done!
 
 The DNS Admins will now receive an e-mail whenever any of the DNS validation tests fail:
 
-![ss_ovfoms_omserroremail](images/ss_ovfoms_omserroremail.png)
+![ss_ovfoms_omserroremail](/images/ss_ovfoms_omserroremail.png)
 
 If you look down in the **ParamaterXML** section you can even see the test that failed. So the DNS Admins can dive straight to the root of the problem.
 
@@ -148,3 +148,4 @@ Although I've focused on the technology and methods here, if you take away one t
 > **Continuous Testing** of your infrastructure is something that is **really easy** to implement and **has so many benefits**. It will allow **you** and **your stakeholders** to feel **more confident** that **problems are** **not going unnoticed** and **allow them to sleep better**. It will also ensure that **when things do go wrong** (and they always do) that the **first people to notice are the people who can do something about it**!
 
 Happy infrastructure testing!
+

@@ -97,3 +97,4 @@ That is all there is to using this resource to configure a Windows Server 2012 i
 _**Note**: I have submitted this DSC Resource to be included in the [Microsoft Community DSC Resources project](https://github.com/PowerShell/DscResources). If it is accepted then the name of the DSC Resource will change from **ciSCSI** to **iSCSI**. The resource hasn't yet been reviewed and I'm not aware of an ETA for it. The old 'c' and 'x' nomenclature used by DSC Resources is being phased out._
 
 If you need some additional guidance or other specific examples, please feel free to drop a comment on this blog post (or the [GitHub repository](https://github.com/PlagueHO/ciSCSI)) and I'll do my best to help you out.
+

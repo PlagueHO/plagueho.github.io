@@ -1,9 +1,9 @@
 ---
 title: "Managing Users &amp; Permissions in Cosmos DB with PowerShell"
 date: "2018-01-14"
-categories: 
+categories:
   - "cosmosdb"
-tags: 
+tags:
   - "azure"
   - "documentdb"
   - "powershell"
@@ -18,7 +18,7 @@ The most common usage scenario for users and permissions is if you're implementi
 
 But if you go hunting through the Azure Management Portal **Cosmos DB data explorer** (or [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)) you won't find any way to configure or even view **users** and **permissions**.
 
-![ss_cdb_cosmosdbdataexplorer](images/ss_cdb_cosmosdbdataexplorer.png)
+![ss_cdb_cosmosdbdataexplorer](/images/ss_cdb_cosmosdbdataexplorer.png)
 
 To manage **users** and **permissions** you need to use the [Cosmos DB API](https://docs.microsoft.com/en-us/rest/api/documentdb/users) directly or one of the [SDKs](https://docs.microsoft.com/en-us/azure/cosmos-db/sql-api-sdk-dotnet).
 
@@ -36,20 +36,20 @@ The best way to install the [Cosmos DB PowerShell module](https://www.powershell
 
 Install-Module -Name CosmosDB -Scope CurrentUser
 
-![ss_cdb_cosmosdbinstallmodulecurrentuser](images/ss_cdb_cosmosdbinstallmodulecurrentuser.png)
+![ss_cdb_cosmosdbinstallmodulecurrentuser](/images/ss_cdb_cosmosdbinstallmodulecurrentuser.png)
 
 Or to install it for all users on the machine (requires administrator permissions):
 
 Install-Module -Name CosmosDB
 
-![ss_cdb_cosmosdbinstallmoduleallusers](images/ss_cdb_cosmosdbinstallmoduleallusers.png)
+![ss_cdb_cosmosdbinstallmoduleallusers](/images/ss_cdb_cosmosdbinstallmoduleallusers.png)
 
 # Context Variable
 
 > ### Update 2018-03-06
-> 
+>
 > As of Cosmos DB module v2.0.1, the **connection** parameter has been renamed to **context** and the **New-CosmosDbConnection** function has been renamed **New-CosmosDbContext**. This was to be more inline with naming adopted by the Azure PowerShell project. The old **connection** parameters and **New-CosmosDbConnection** function is still available as an alias, so older scripts won't break. But these should be changed to use the new naming if possible as I plan to deprecate the **connection** version at some point in the future.
-> 
+>
 > This post was updated to specify the new naming, but screenshots still show the **Connection** aliases.
 
 Before you get down to the process of working with Cosmos DB resources, you'll need to create a **context** variable containing the information required to connect. This requires the following information:
@@ -62,13 +62,13 @@ To create the **connection variable** we just use the **New-CosmosDbContext**:
 
 \[gist\]5f180a93ed0d3fa6df523c8b75fa9544\[/gist\]
 
-![ss_cdb_cosmosdbnewconnection](images/ss_cdb_cosmosdbnewconnection.png)
+![ss_cdb_cosmosdbnewconnection](/images/ss_cdb_cosmosdbnewconnection.png)
 
 If you do not wish to specify your **master key**, you can have the **New-CosmosDbContext** function pull your **master key** from the **Azure Management Portal** directly:
 
 \[gist\]dffd4a47a2f9a2f4f51ffddee5433fec\[/gist\]
 
-![ss_cdb_cosmosdbnewconnectionviaportal](images/ss_cdb_cosmosdbnewconnectionviaportal.png)
+![ss_cdb_cosmosdbnewconnectionviaportal](/images/ss_cdb_cosmosdbnewconnectionviaportal.png)
 
 _Note: This requires the **AzureRM.Profile** and **AzureRM.Resoures** module on **Windows PowerShell 5.x** or **AzureRM.Profile.NetCore** and **AzureRM.Resources.NetCore** on **PoweShell Core 6.0.0**._
 
@@ -78,25 +78,25 @@ To **add a user** to the Cosmos DB Database use the **New-CosmosDBUser** functio
 
 New-CosmosDbUser -Context $context -Id 'daniel'
 
-![ss_cdb_cosmosdbnewuser](images/ss_cdb_cosmosdbnewuser.png)
+![ss_cdb_cosmosdbnewuser](/images/ss_cdb_cosmosdbnewuser.png)
 
 To **get a list of users** in the database:
 
 Get-CosmosDbUser -Context $context
 
-![ss_cdb_cosmosdbgetusers](images/ss_cdb_cosmosdbgetusers.png)
+![ss_cdb_cosmosdbgetusers](/images/ss_cdb_cosmosdbgetusers.png)
 
 To **get a specific** user:
 
 Get-CosmosDbUser -Context $context -Id 'daniel'
 
-![ss_cdb_cosmosdbgetuser](images/ss_cdb_cosmosdbgetuser1.png)
+![ss_cdb_cosmosdbgetuser](/images/ss_cdb_cosmosdbgetuser1.png)
 
 To **remove a user** (this will also remove all permissions assigned to the user):
 
 Remove-CosmosDbUser -Context $context -Id 'daniel'
 
-![ss_cdb_cosmosdbremoveuser](images/ss_cdb_cosmosdbremoveuser.png)
+![ss_cdb_cosmosdbremoveuser](/images/ss_cdb_cosmosdbremoveuser.png)
 
 # Managing Permissions
 
@@ -113,7 +113,7 @@ In the following example, we'll grant the user **daniel** _all_ access to the **
 
 \[gist\]262c087f1e4fb4d6bfd3cf0db314c0f6\[/gist\]
 
-![ss_cdb_cosmosdbnewpermission](images/ss_cdb_cosmosdbnewpermission.png)
+![ss_cdb_cosmosdbnewpermission](/images/ss_cdb_cosmosdbnewpermission.png)
 
 Once a **permission** has been **granted**, you can use the **Get-CosmosDbPermission** function to retrieve the permission _and with it_ the **Resource Token** that can be used to access the resource for a limited amount of time (between 10 minutes and 5 hours).
 
@@ -124,13 +124,13 @@ For example, to retrieve all permissions for the user with **Id** daniel and a r
 Get-CosmosDbPermission -Context $context -UserId 'daniel' -TokenExpiry '600' |
 fl \*
 
-![ss_cdb_cosmosdbgetpermission](images/ss_cdb_cosmosdbgetpermission.png)
+![ss_cdb_cosmosdbgetpermission](/images/ss_cdb_cosmosdbgetpermission.png)
 
 You can as expected delete a permission by using the **Remove-CosmosDbPermission** function:
 
 Remove-CosmosDbPermission -Context $context -UserId 'daniel' -Id 'AccessTestCollection'
 
-![ss_cdb_cosmosdbremovepermission](images/ss_cdb_cosmosdbremovepermission.png)
+![ss_cdb_cosmosdbremovepermission](/images/ss_cdb_cosmosdbremovepermission.png)
 
 # Final Thoughts
 
@@ -148,3 +148,4 @@ So this is pretty much all there is to managing **users** and **permissions** us
 You can find additional documentation and examples of how to manage these resources over in the [Cosmos DB PowerShell module readme file](https://github.com/PlagueHO/CosmosDB/blob/dev/README.md) on GitHub.
 
 Hopefully this will help you in any **Cosmos DB** automation tasks you might need to implement.
+

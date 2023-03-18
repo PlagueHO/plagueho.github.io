@@ -1,9 +1,9 @@
 ---
 title: "Test Website SSL Certificates Continuously with PowerShell and Pester"
 date: "2016-12-23"
-categories: 
+categories:
   - "pester"
-tags: 
+tags:
   - "certificates"
   - "powershell"
   - "ssl"
@@ -28,7 +28,7 @@ Chris' post contained this PowerShell cmdlet:
 So that was the hard part done, all I needed was to add this function to some [Pester](https://blogs.technet.microsoft.com/heyscriptingguy/2015/12/14/what-is-pester-and-why-should-i-care/) tests.
 
 > **Note:** If you are running these tests on an operating system older than Windows 10 or Windows Server 2016 then you will need to install the PowerShell Pester module by running this command in an Administrator PowerShell console:
-> 
+>
 > Install-Module -Name Pester
 
 So after a little bit of tinkering I ended up with a set of tests that I combined into the same file as Chris' function from earlier. I called the file **SSL.tests.ps1**. I used the file extension **.tests.ps1** because that is the file extension **Pester** looks for when it runs.
@@ -44,7 +44,7 @@ Invoke-Pester
 
 This is the result:
 
-![ss_testssl_pesteroutput](images/ss_testssl_pesteroutput.png)
+![ss_testssl_pesteroutput](/images/ss_testssl_pesteroutput.png)
 
 This shows that all the SSL endpoint certificates being used by google.com, bing.com and yahoo.com are all valid SHA-256 certificates and aren't going to expire in 14 days.
 
@@ -77,3 +77,4 @@ At the end of the day, the goal here should be:
 So, in this holiday season, I hope this post helps you ensure your certificates won't expire in the next two weeks and you won't get called into fix a certificate problem when you should be lying on a beach in the sun (in the southern hemisphere anyway).
 
 Have a good one!
+

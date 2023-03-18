@@ -18,3 +18,4 @@ You can uninstall SMB 1.0 on a **Windows Desktop**:
 \[sourcecode language="powershell"\] Disable-WindowsOptionalFeature -FeatureName SMB1Protocol -Online \[/sourcecode\]
 
 Warning! Don't do this if you have any older type devices (or OS's) that can only use SMB 1.0.
+

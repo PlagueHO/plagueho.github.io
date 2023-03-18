@@ -1,7 +1,7 @@
 ---
 title: "12 Things you Should Know when Implementing Azure DevOps in your Organization"
 date: "2020-09-19"
-categories: 
+categories:
   - "azure-devops"
 coverImage: "fi_azuredevopstips.jpg"
 ---
@@ -16,7 +16,7 @@ So, let's get into it:
 
 ## 1\. Projects: less is better.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-4.png?w=893)
+![](/images/ss_azure_devops_12_things_1.png?w=893)
 
 Less projects are better
 
@@ -28,7 +28,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 2\. Area Paths: Organize work.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-2.png?w=784)
+![](/images/ss_azure_devops_12_things_2.png?w=784)
 
 Organizing Area Paths
 
@@ -42,7 +42,7 @@ Documentation Reference: [Define area paths for your project](https://docs.micro
 
 ## 3\. Identity: Integrate with Azure AD.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-5.png?w=339)
+![](/images/ss_azure_devops_12_things_5.png?w=339)
 
 Connect AAD.
 
@@ -58,7 +58,7 @@ Documentation Reference: [Connect organization to Azure Active Directory](https:
 
 ## 4\. Git or TFVC?
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image.png?w=480)
+![](/images/ss_azure_devops_12_things_4a.png?w=480)
 
 Importing a TFVC repository as Git
 
@@ -72,7 +72,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 5\. Create a Sandbox Project.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-3.png?w=462)
+![](/images/ss_azure_devops_12_things_3.png?w=462)
 
 Create a Sandbox Project
 
@@ -86,7 +86,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 6\. Install extensions... wisely
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-6.png?w=1024)
+![](/images/ss_azure_devops_12_things_6.png?w=1024)
 
 The Azure DevOps Extensions Marketplace
 
@@ -102,7 +102,7 @@ Documentation Reference: [](https://docs.microsoft.com/en-us/azure/devops/organi
 
 ## 7\. Use Multi-stage YAML Pipelines.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-7.png?w=699)
+![](/images/ss_azure_devops_12_things_7.png?w=699)
 
 Do NOT use "Classic Editor" and create pipelines without YAML
 
@@ -110,7 +110,7 @@ Early on the evolution of Azure DevOps pipelines, all pipelines had to created u
 
 You should always create new **build pipelines** using YAML and store them in your repository with your source code (pipeline as code). You can still use the **assistant** to help you design your YAML:
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-9.png?w=941)
+![](/images/ss_azure_devops_12_things_9.png?w=941)
 
 Click Show Assistant to edit your YAML.
 
@@ -121,8 +121,6 @@ The exception is **release pipelines** which don't support YAML and being stored
 Documentation Reference: [Define pipelines using YAML syntax](https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/pipelines-get-started?view=azure-devops#define-pipelines-using-yaml-syntax)
 
 ## 9\. Release Pipelines... in code?
-
-![The CTO drought and the broken pipeline | by Dmitri Grabov | HackerNoon.com  | Medium](images/84218-1mle6qlu2nacrg2q620y-ca.jpeg)
 
 Release Pipelines are awesome, but are they worth missing out on pipeline as code?
 
@@ -136,7 +134,7 @@ Documentation Reference: [Deployment Job](https://docs.microsoft.com/en-us/azure
 
 ## 10\. Deployment Group Agents?
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-10.png?w=1024)
+![](/images/ss_azure_devops_12_things_10.png?w=1024)
 
 Add a machine to a Deployment Group.
 
@@ -152,7 +150,7 @@ Documentation Reference: [Deployment Group agent](https://docs.microsoft.com/en-
 
 ## 11\. Automate. Automate.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-13.png?w=1024)
+![](/images/ss_azure_devops_12_things_13.png?w=1024)
 
 Get a list of Azure DevOps projects using Azure DevOps CLI
 
@@ -168,7 +166,7 @@ Documentation Reference: [Azure DevOps CLI](https://docs.microsoft.com/en-us/azu
 
 ## 12\. Get Practical Experience.
 
-![](https://dscottraynsford.files.wordpress.com/2020/09/image-12.png?w=1024)
+![](/images/ss_azure_devops_12_things_12.png?w=1024)
 
 The best way to learn Azure DevOps is to get hands-on practical experience. [Azure DevOps Labs](https://www.azuredevopslabs.com/) provides **free hands-on labs environments** (via your own DevOps organization) and covers practically everything you could ever want to know. The [Azure DevOps content on Microsoft Learn](https://docs.microsoft.com/en-us/learn/browse/?products=azure-devops) also has detailed walk throughs of the product and processes.
 
@@ -176,10 +174,11 @@ Making sure everyone in your organization has the skills/knowledge to work with 
 
 **Recommendation: Do some of the hands-on labs and complete some Microsoft Learn learning pathways.**
 
-Documentation Reference: [](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/deployment-groups/howto-provision-deployment-group-agents)[Azure DevOps Labs](https://www.azuredevopslabs.com/), [Azure DevOps content on Microsoft Learn](https://docs.microsoft.com/en-us/learn/browse/?products=azure-devops)  
+Documentation Reference: [](https://docs.microsoft.com/en-us/azure/devops/pipelines/release/deployment-groups/howto-provision-deployment-group-agents)[Azure DevOps Labs](https://www.azuredevopslabs.com/), [Azure DevOps content on Microsoft Learn](https://docs.microsoft.com/en-us/learn/browse/?products=azure-devops)
 
 ## Wrapping Up
 
 There are definitely lots more recommendations and considerations I could suggest, especially security and DevOps best-practices but to keep this (reasonably) short, I'll leave them for another post.
 
 I hope you find this useful and it helps you avoid some of my mistakes.
+

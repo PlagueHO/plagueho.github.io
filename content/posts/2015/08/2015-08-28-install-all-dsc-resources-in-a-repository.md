@@ -24,3 +24,4 @@ If you would like to limit this to only using a specific repository use:
 To trust a repository:
 
 \[sourcecode language="powershell"\] Set-PSRepository -Name PSGallery -InstallationPolicy Trusted \[/sourcecode\]
+

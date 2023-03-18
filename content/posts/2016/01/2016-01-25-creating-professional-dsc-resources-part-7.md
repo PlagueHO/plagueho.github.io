@@ -1,10 +1,10 @@
 ---
 title: "Creating Professional DSC Resources – Part 7"
 date: "2016-01-25"
-categories: 
+categories:
   - "desired-state-configuration"
   - "dsc"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -68,14 +68,14 @@ However, many people also run any **integration tests** on their local machines 
 
 **Integration tests** for a DSC resource actually consist of two different files:
 
-![ss_dsc_inttestfiles](images/ss_dsc_inttestfiles1.png)
+![ss_dsc_inttestfiles](/images/ss_dsc_inttestfiles1.png)
 
 1. **\*.config.ps1** - The DSC Configuration file that will use the DSC Resource being tested.
 2. **\*.Integration.Tests.ps1** - The Integration Test script file containing the **Pester** tests.
 
 These files should be stored in the **Tests\\Integration** folder in the DSC Resource module:
 
-![ss_dsc_inttestfolders](images/ss_dsc_inttestfolders.png)
+![ss_dsc_inttestfolders](/images/ss_dsc_inttestfolders.png)
 
 You must also ensure that the names of these files exactly matches the name of the resource itself. For example, if your **DSC Resource** is called **BMD\_MyResource** then these files must be called:
 
@@ -92,7 +92,7 @@ You must also ensure that the names of these files exactly matches the name of t
 
 Luckily, a good amount of the work in implementing **integration tests** is already done for you. Like **unit tests**, templates for the two integration files are available in the [DscResources repository](https://github.com/PowerShell/DscResources/tree/master/Tests.Template) in GitHub:
 
-![ss_dsc_inttesttemplatesrepo](images/ss_dsc_inttesttemplatesrepo.png)
+![ss_dsc_inttesttemplatesrepo](/images/ss_dsc_inttesttemplatesrepo.png)
 
 You need to copy the **integration test template** files and rename them to match your **DSC Resource**.
 
@@ -100,7 +100,7 @@ The easiest way to do this is to **clone** the repository containing the **test 
 
 \[gist\]9e6244d25c241e5dc995\[/gist\]
 
-![ss_dsc_createnewinttestfromtemplate](images/ss_dsc_createnewinttestfromtemplate.png)
+![ss_dsc_createnewinttestfromtemplate](/images/ss_dsc_createnewinttestfromtemplate.png)
 
 You'll now have two new **integration test** files that you can open in your PowerShell editor of choice.
 
@@ -110,7 +110,7 @@ You'll now have two new **integration test** files that you can open in your Pow
 
 The first file I usually edit is the \*.**config.ps1** file:
 
-![ss_dsc_newinttestconfigtemplate](images/ss_dsc_newinttestconfigtemplate1.png)
+![ss_dsc_newinttestconfigtemplate](/images/ss_dsc_newinttestconfigtemplate1.png)
 
 Next, you'll want to change any **<ResourceName>** occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed: \[gist\]2fa06a8c28f64b7966dc\[/gist\]
 
@@ -128,11 +128,11 @@ As you can see in the example above, I create a **$VirtualDisk** hash table that
 
 Now that the **integration tests config** file has been completed it is time to move on to the **integration test script (\*.Integration.Tests.ps1)** itself, so open it in your editor of choice:
 
-![ss_dsc_newinttesttemplate](images/ss_dsc_newinttesttemplate1.png)
+![ss_dsc_newinttesttemplate](/images/ss_dsc_newinttesttemplate1.png)
 
 Next, customize the **TODO** area in the **header** with the your **DSC Resource Name** and **DSC Module Name**:
 
-![ss_dsc_inttestsheader](images/ss_dsc_inttestsheader.png)
+![ss_dsc_inttestsheader](/images/ss_dsc_inttestsheader.png)
 
 Feel free to remove the **TODO** comments if you want (I always do).
 
@@ -158,7 +158,7 @@ Next, we need to add the tests that check that after the **DSC Configuration** h
 
 To do this, we complete this section:
 
-![ss_dsc_inttestsvalidate](images/ss_dsc_inttestsvalidate.png)
+![ss_dsc_inttestsvalidate](/images/ss_dsc_inttestsvalidate.png)
 
 In this case, I've changed it to:
 
@@ -189,3 +189,4 @@ This series actually ended up being a bit longer than I intended, but hopefully 
 If you have an idea for a new resource in an existing module, raise an issue in the DSC Resource Module repository and offer to create the new resource. You may find that someone is already working on one, but if not, then this is a great opportunity to get started. It is quite a rewarding feeling the first time one of your contributions gets published in the official community DSC Resources!
 
 So, thanks again for reading.
+

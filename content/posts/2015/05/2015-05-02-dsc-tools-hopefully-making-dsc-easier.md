@@ -95,3 +95,4 @@ Over the next few weeks I am planning to update the module so that some of the f
 After creating this module it occurred to me that there might be an even better way to implement a DSC set up: using a basic DSC system XML configuration file that could define all the pull servers and nodes. This XML file could be passed to a cmdlet that could configure all the applicable servers and nodes from the content. So this is the next long-term goal I have for this module.
 
 If anyone out there finds this module useful and has a request for additional features or finds a (shudder) bug, please let me know!
+

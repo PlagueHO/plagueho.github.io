@@ -26,3 +26,4 @@ All in all this was much easier than the eternal clicking I would have to have u
 \[sourcecode language="powershell"\] Get-VM | Update-VMVersion -Passthru | Where-Object -Property VirtualMachineSubType -eq 'Generation2' |  Get-VMNetworkAdapter | Set-VMNetworkAdapte r -DeviceNaming On \[/sourcecode\]
 
  So now it's off to try some of the other new Hyper-V features.
+

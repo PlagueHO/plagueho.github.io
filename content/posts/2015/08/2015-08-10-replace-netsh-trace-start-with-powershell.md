@@ -40,3 +40,4 @@ Will cause the trace to capture only IPv4 traffic to/from 192.168.178.3 for TCP 
 ### Remote Capture via RPC
 
 Looking at the documentation for the **New-EventSession** cmdlet, it seems that it is possible to have the trace output sent to a remote host via RPC and then captured directly by Network Analyzer. I haven't been able to get this to work as yet. Figuring out how this works and getting it going is going to be my next project (between studying for the next exam).
+

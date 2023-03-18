@@ -1,7 +1,7 @@
 ---
 title: "Install Nightly Build of Azure CLI 2.0 on Windows"
 date: "2017-10-06"
-tags: 
+tags:
   - "azure"
   - "azure-cli-2-0"
   - "powershell"
@@ -28,11 +28,11 @@ Next, download and run this PowerShell script in a PowerShell Administrator Cons
 
 You could save the content of this script into a PS1 file and then execute it like this:
 
-![ss_azurecli_installnightlybuild](images/ss_azurecli_installnightlybuild.png)
+![ss_azurecli_installnightlybuild](/images/ss_azurecli_installnightlybuild.png)
 
 It will then download and install Python, then use PIP to install the current nightly build packages. After a few minutes the installation will complete:
 
-![ss_azurecli_installnightlybuildcompete](images/ss_azurecli_installnightlybuildcompete.png)
+![ss_azurecli_installnightlybuildcompete](/images/ss_azurecli_installnightlybuildcompete.png)
 
 You can then run:
 
@@ -44,7 +44,7 @@ If you're a bit new to Azure CLI 2.0, then another great way is to use Azure CLI
 
 Az Interactive
 
-![ss_azurecli_interactive](images/ss_azurecli_interactive.png)
+![ss_azurecli_interactive](/images/ss_azurecli_interactive.png)
 
 If you need to update to a newer nightly build, just run the script again and it will update your packages.
 
@@ -63,3 +63,4 @@ To:
 https://azurecliprod.blob.core.windows.net/edge
 
 Thanks for reading!
+

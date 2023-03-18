@@ -1,9 +1,9 @@
 ---
 title: "Get the BIOS GUID of a Hyper-V VM"
 date: "2015-11-29"
-categories: 
+categories:
   - "hyper-v"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -15,6 +15,7 @@ So after a fair bit of hunting all I could turn up was an older [VBS script](htt
 
 It uses WMI/CIM, but does seem to work nicely (don't forget to set the name of the VM):
 
-![ss_ps_getbiosguid](images/ss_ps_getbiosguid.png)
+![ss_ps_getbiosguid](/images/ss_ps_getbiosguid.png)
 
 Good night!
+

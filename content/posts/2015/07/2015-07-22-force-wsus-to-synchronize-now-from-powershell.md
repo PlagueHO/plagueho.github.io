@@ -20,3 +20,4 @@ To get the result of the last synchronization:
 \[sourcecode language="powershell"\] (Get-WsusServer).GetSubscription().GetLastSynchronizationInfo() \[/sourcecode\]
 
 Pretty simple! I'm sure additional functions will crop up and I'll try to post any useful ones here as well.
+

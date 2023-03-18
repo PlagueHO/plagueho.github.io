@@ -105,3 +105,4 @@ Step 3 in would be exactly the same as in the Folder scenario.
 ## Final Word
 
 What started as a simple script actually ended up turning into quite a large module that taught me a huge amount about PowerShell. So I hope someone else out there is also able to find a use for this and it helps track down some of those 'Permission Elves'.
+

@@ -1,9 +1,9 @@
 ---
 title: "Persistent Storage in Azure Container Instances"
 date: "2017-08-05"
-categories: 
+categories:
   - "azure-container-instance"
-tags: 
+tags:
   - "azure"
   - "gocd"
 coverImage: "ss_aci_logo.png"
@@ -106,21 +106,22 @@ This file is called **aci-azuredeploy.parameters.json** and should be downloade
 
 To use the script the following steps need to be followed:
 
-1. Download the three files above (the script and the two ARM template files) and put them into the same folder:![ss_aci_filesrequires](images/ss_aci_filesrequires1.png)
+1. Download the three files above (the script and the two ARM template files) and put them into the same folder:![ss_aci_filesrequires](/images/ss_aci_filesrequires1.png)
 2. Open a **PowerShell** window.
 3. Change directory to the folder you place the files into by executing:
 4. CD <folder location>
-5. Execute the script like this (passing in the variables):\[gist\]1bab27a8a7d5f8f81bb9712c50a3152f\[/gist\]![ss_aci_executingscript](images/ss_aci_executingscript.png)
-6. The process will then begin and make take a few minutes to complete:![ss_aci_creategocd](images/ss_aci_creategocd.gif)**Note:** I've changed the keys to this service principal and deleted this storage account, so I using these Service Principal or Storage Account keys won't work!
-7. Once completed you will be able to log in to the Azure Portal and find the newly created Resource Groups:![ss_aci_resourcegroup](images/ss_aci_resourcegroup.png)
-8. Open the resource group **\*gocdacirg** and then select the container group **\*gocdaci****:**![ss_aci_getcontainerip](images/ss_aci_getcontainerip.png)
-9. The IP Address of the container is displayed. You can copy this and paste it into a browser window along with the port the container exposed. In the case of Go CD it is 8153:![ss_aci_runninggocdserver](images/ss_aci_runninggocdserver.png)
+5. Execute the script like this (passing in the variables):\[gist\]1bab27a8a7d5f8f81bb9712c50a3152f\[/gist\]![ss_aci_executingscript](/images/ss_aci_executingscript.png)
+6. The process will then begin and make take a few minutes to complete:![ss_aci_creategocd](/images/ss_aci_creategocd.gif)**Note:** I've changed the keys to this service principal and deleted this storage account, so I using these Service Principal or Storage Account keys won't work!
+7. Once completed you will be able to log in to the Azure Portal and find the newly created Resource Groups:![ss_aci_resourcegroup](/images/ss_aci_resourcegroup.png)
+8. Open the resource group **\*gocdacirg** and then select the container group **\*gocdaci****:**![ss_aci_getcontainerip](/images/ss_aci_getcontainerip.png)
+9. The IP Address of the container is displayed. You can copy this and paste it into a browser window along with the port the container exposed. In the case of Go CD it is 8153:![ss_aci_runninggocdserver](/images/ss_aci_runninggocdserver.png)
 10. The process is now completed.
 
 The Azure Container Instance can now be **deleted** and **recreated** at will, to reduce cost or simply upgrade to a new version. The **Azure File Share** will persist the data stored by the container into the mounted volume:
 
-![ss_aci_storageexplorerfileshare](images/ss_aci_storageexplorerfileshare.png)
+![ss_aci_storageexplorerfileshare](/images/ss_aci_storageexplorerfileshare.png)
 
 Hopefully this process will help you implement persisted storage containers in Azure Container Instances more easily and quickly.
 
 Thanks for reading!
+

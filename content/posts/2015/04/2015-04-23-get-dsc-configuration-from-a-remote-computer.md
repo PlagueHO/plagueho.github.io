@@ -13,3 +13,4 @@ I've spent the last day or so working on a module to help with managing DSC Pull
 Normally, if you want to pull the DSC configuration for a remote computer that won't require credentials or SSL WSMan then you can just execute: \[sourcecode language="powershell"\] Get-DSCConfiguration -CimSession 'DSCSVR01' \[/sourcecode\] This cmdlet just pulls the DSC configuration from the remote host using any existing credentials and using HTTP instead of HTTPS.
 
 But if you want to use any alternative connection information - such as forcing the use of SSL WSMan - you need to add some CIM Options: \[sourcecode language="powershell"\] $cimOption = New-CimSessionOption -UseSsl  $cimSession = New-CimSession -ComputerName 'DSCSVR01' -Credential (Get-Credential) -SessionOption $cimOption  Get-DSCConfiguration -CimSession $cimSession  Remove-CimSession -CimSession $cimSession \[/sourcecode\] That is about all I've got for today. Hope this helps someone.
+

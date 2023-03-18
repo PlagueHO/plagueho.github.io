@@ -1,10 +1,10 @@
 ---
 title: "PowerShell CmdLets available in the Containers Module on a Nano Server"
 date: "2015-08-23"
-categories: 
+categories:
   - "containers"
   - "windows-server-nano"
-tags: 
+tags:
   - "powershell"
 ---
 
@@ -12,7 +12,8 @@ Just a Monday morning quickie:
 
 Here is a list of all the cmdlets available in the PowerShell containers module on a Nano Server with the containers package installed:
 
-\[caption id="attachment\_281" align="alignnone" width="660"\][![Containers - the next big thing!](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers.png) Containers - the next big thing!\[/caption\]
+[![Containers - the next big thing!](/images/ss_nano_containers.png?w=660)](/images/ss_nano_containers.png)
+Containers - the next big thing!
 
 And here is the text version:
 
@@ -37,3 +38,4 @@ Cmdlet          Set-ContainerNetworkAdapter              
 Cmdlet          Start-Container                                    1.0.0.0    Containers
 Cmdlet          Stop-Container                                     1.0.0.0    Containers
 Cmdlet          Test-ContainerImage                                1.0.0.0    Containers
+

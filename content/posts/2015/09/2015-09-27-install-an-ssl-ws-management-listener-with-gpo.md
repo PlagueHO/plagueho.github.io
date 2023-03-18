@@ -1,10 +1,10 @@
 ---
 title: "Install an SSL WS-Management Listener with GPO"
 date: "2015-09-27"
-categories: 
+categories:
   - "certificate-services"
   - "ws-management"
-tags: 
+tags:
   - "group-policy"
   - "powershell"
 ---
@@ -47,7 +47,8 @@ All you'd need to set was the Issuer to whatever the _Distinguished Name_ of you
 
 The next step was to put it into a script where you could just pass the _Distinguished Name_ of the **issuing CA** as a parameters. I did this and also added some other optional parameters and uploaded the result to [Microsoft Script Center](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-used-to-easily-22067907). So you can download this script and put it into a GPO Startup Script:
 
-\[caption id="attachment\_484" align="alignnone" width="660"\][![Installing an HTTPS WS-Management Listener with GPO](https://dscottraynsford.files.wordpress.com/2015/09/ss_gpo_httpswsmanlistener.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/09/ss_gpo_httpswsmanlistener.png) Installing an HTTPS WS-Management Listener with GPO\[/caption\]
+[![Installing an HTTPS WS-Management Listener with GPO](/images/ss_gpo_httpswsmanlistener.png?w=660)](/images/ss_gpo_httpswsmanlistener.png)
+Installing an HTTPS WS-Management Listener with GPO
 
 The script is actually a little bit smarter than the above command. If a certificate with a subject can't be found that matches the **FQDN** of the computer it will automatically look for one that just uses the flat computer name. You can control this behavior by setting the **DNSNameType** parameter.
 
@@ -80,3 +81,4 @@ If you want to make a copy of the repository, you'll find it here:
 [https://github.com/PlagueHO/WSManGPOTools](https://github.com/PlagueHO/WSManGPOTools)
 
 Right, that is me out for another Sunday. Thanks for reading.
+

@@ -1,16 +1,16 @@
 ---
 title: "WSUS - Declining all Superceded Updates - NOW!"
 date: "2015-05-13"
-categories: 
+categories:
   - "windows-server-update-services"
   - "wsus"
-tags: 
+tags:
   - "powershell"
 ---
 
 Just a quick snippet today. I wrote this because I was didn't want to have to wait for **30** days before unusused superceded updates in my **WSUS** server were automatically _declined_ - especially those daily "Definition Update for Windows Defender".
 
-[![ss_wsus_definitionupdates](https://dscottraynsford.files.wordpress.com/2015/05/ss_wsus_definitionupdates.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/05/ss_wsus_definitionupdates.png)
+[![ss_wsus_definitionupdates](/images/ss_wsus_definitionupdates.png?w=660)](/images/ss_wsus_definitionupdates.png)
 
 If you're happy waiting for these _unused superceded updates_ to be _declined_ after **30** days then you can just use the following cmdlet:
 
@@ -25,3 +25,4 @@ The command will take a few minutes to run (depending on how many updates your W
 \[sourcecode language="powershell"\] Invoke-WsusServerCleanup -CleanupObsoleteUpdates -CleanupUnneededContentFiles \[/sourcecode\]
 
 That is about it for today!
+

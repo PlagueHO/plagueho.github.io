@@ -1,11 +1,11 @@
 ---
 title: "Docker and Containers on Nano Server Continued"
 date: "2015-08-27"
-categories: 
+categories:
   - "containers"
   - "windows-server-2016"
   - "windows-server-nano"
-tags: 
+tags:
   - "powershell"
 coverImage: "ss_nano_containers_firstcontainer.png"
 ---
@@ -40,7 +40,7 @@ Creating a **NAT** **VM Switch** on Nano Server actually works. But the command 
 
 ##### DHCP
 
-[![Creating a standard External VM Switch on Nano Server](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_creatingadhcpswitch.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_creatingadhcpswitch.png)
+[![Creating a standard External VM Switch on Nano Server](/images/ss_nano_containers_creatingadhcpswitch.png?w=660)](/images/ss_nano_containers_creatingadhcpswitch.png)
 
 Creating a **DHCP/External VM Switch** on Nano Server just fails with a cryptic error message. The same error occurs when creating a _Private_ or _Internal_ VM Switch, so I expect Hyper-V on Nano Server isn't working so well (or at all). Not much point pursuing this method of networking.
 
@@ -54,21 +54,21 @@ To install a **Base OS Image** from a **WIM File** to the **Container Host** usi
 
 \[sourcecode language="powershell"\] Install-ContainerOSImage -WimPath CoreServer.wim -Verbose \[/sourcecode\]
 
-[![Installing a Base OS Image](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containerinstallingos.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containerinstallingos.png)
+[![Installing a Base OS Image](/images/ss_nano_containerinstallingos.png?w=660)](/images/ss_nano_containerinstallingos.png)
 
 This **function** does several things:
 
-1. Creates a new folder in **c:\\programdata\\microsoft\\windows\\images** with _Canonical Name_ of the new **Base OS Image**: [![Contents of the Images folder](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_images_content.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_images_content.png)
-2. Inside the _Canonical Name_ folder a subfolder called **files** is created where the **Base OS Image** file is extracted to:[![The contents of an Image Files](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_files.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_files.png)
-3. Another subfolder called **hives** is also created in the _Canonical Name_ folder which contains the _default registry hives_ for the **Base OS Image**: [![The Image Registry Hives](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_hives.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_hives.png)
-4. Two additional files are created in the _Canonical Name_ folder that contain metadata about the image: **Metadata.json** **Version.wcx**[![Image Metadata](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_metadata.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_container_image_metadata.png)
-5. Adds the **Base OS Image** into the list of **Image Containers** that are available to create new **Containers** from: [![All Base OS Images installed](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_installedall.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_installedall.png)
+1. Creates a new folder in **c:\\programdata\\microsoft\\windows\\images** with _Canonical Name_ of the new **Base OS Image**: [![Contents of the Images folder](/images/ss_nano_container_images_content.png?w=660)](/images/ss_nano_container_images_content.png)
+2. Inside the _Canonical Name_ folder a subfolder called **files** is created where the **Base OS Image** file is extracted to:[![The contents of an Image Files](/images/ss_nano_container_image_files.png?w=660)](/images/ss_nano_container_image_files.png)
+3. Another subfolder called **hives** is also created in the _Canonical Name_ folder which contains the _default registry hives_ for the **Base OS Image**: [![The Image Registry Hives](/images/ss_nano_container_image_hives.png?w=660)](/images/ss_nano_container_image_hives.png)
+4. Two additional files are created in the _Canonical Name_ folder that contain metadata about the image: **Metadata.json** **Version.wcx**[![Image Metadata](/images/ss_nano_container_image_metadata.png?w=660)](/images/ss_nano_container_image_metadata.png)
+5. Adds the **Base OS Image** into the list of **Image Containers** that are available to create new **Containers** from: [![All Base OS Images installed](/images/ss_nano_containers_installedall.png?w=660)](/images/ss_nano_containers_installedall.png)
 
 I have tried using the Install.wim from the ISO, the NanoServer.wim from the ISO and the Core.wim downloaded using the Core Edition Containers install script. Also note, the INSTALL.WIM file on the TP3 ISO still refers to **Windows Server 2012 R2 SERVERSTANDARDCORE** (I double checked this and you can confirm by the Version number in the OS Image).
 
 The **Test-ContainerImage** cmdlet can be used to identify "problems" with container images:
 
-[![Testing Containers](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_testcontainers.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_testcontainers.png)
+[![Testing Containers](/images/ss_nano_containers_testcontainers.png?w=660)](/images/ss_nano_containers_testcontainers.png)
 
 None of the container images report any problems which is nice to know.
 
@@ -76,11 +76,11 @@ None of the container images report any problems which is nice to know.
 
 This is obviously where things should start to get exciting! The next step is to create a shiny new container using one of our **Base OS Images**. However, if you try and create a new container at this point a cryptic error message will occur:
 
-[![New Container? Nope!](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_newcontainerfailure.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_newcontainerfailure.png)
+[![New Container? Nope!](/images/ss_nano_containers_newcontainerfailure.png?w=660)](/images/ss_nano_containers_newcontainerfailure.png)
 
 I don't know what causes this, but if you reboot your Nano Server VM the error goes away and you should be able to successfully create the container:
 
-[![First Container - making progress](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_firstcontainer.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_firstcontainer.png)
+[![First Container - making progress](/images/ss_nano_containers_firstcontainer.png?w=660)](/images/ss_nano_containers_firstcontainer.png)
 
 Unfortunately only the Base OS Image downloaded from Microsoft and used with Containers for **Windows Server 2016 Core** results in a valid _Container._ So it would seem there are some things that are done to a WIM file to make it able to be _Containerized_ (is that a wo_rd_?).
 
@@ -88,7 +88,7 @@ Unfortunately only the Base OS Image downloaded from Microsoft and used with Con
 
 I'm not holding my breath here. This is what happens when the container is started:
 
-[![Starting up the Container - nope!](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_startupfailure.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_startupfailure.png)
+[![Starting up the Container - nope!](/images/ss_nano_containers_startupfailure.png?w=660)](/images/ss_nano_containers_startupfailure.png)
 
 Looking closely at the text of the error it would appear that there was a mismatch between the **Container Host OS version** and that of the **Base OS version** that the container was using. This is probably because the _Container Host_ is a **Nano Server** and the **Base OS** that was downloaded was for a **Core Server**.
 
@@ -100,8 +100,9 @@ However, it may still be possible to get the Docker Engine working under Nano Se
 
 Also, it is interesting to dig around into the files that are created when the new container was created:
 
-[![Files Created with a Container](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_containerfiles.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/08/ss_nano_containers_containerfiles.png)
+[![Files Created with a Container](/images/ss_nano_containers_containerfiles.png?w=660)](/images/ss_nano_containers_containerfiles.png)
 
 When a container is created the container files are stored in the **C:\\ProgramData\\Microsoft\\Windows\\Hyper-V\\containers** folder. Unfortunately the files all binary so we aren't able to dig around in them to glean any other information.
 
 Well, that is enough for today.
+

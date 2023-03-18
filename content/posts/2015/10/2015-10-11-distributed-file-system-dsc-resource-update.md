@@ -50,3 +50,4 @@ Using the **ContentPaths** or **Topology** parameters _is_ optional. You can sti
 **Important**: It is not recommended that you define a **ContentPath** for a folder in the **cDFSRepGroup ContentPaths** parameter if you are also setting it in a **cDFSRepGroupMembership** resource. The same applies to defining and automatic **Topology** and using the **cDFSRepGroupConnection** resource.
 
 And again, in case you missed it, the post covering the original resource is [here](https://dscottraynsford.wordpress.com/2015/10/10/windows-distributed-file-system-dsc-resource/).
+

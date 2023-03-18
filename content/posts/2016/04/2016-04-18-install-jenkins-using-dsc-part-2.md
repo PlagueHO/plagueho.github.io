@@ -99,3 +99,4 @@ Here is the complete DSC Configuration file. You just need to copy it to the Ser
 \[gist\]c883691c32c04e8404f2354910e86f47\[/gist\]
 
 Within five to ten minutes the Jenkins server will be configured and ready to go.
+

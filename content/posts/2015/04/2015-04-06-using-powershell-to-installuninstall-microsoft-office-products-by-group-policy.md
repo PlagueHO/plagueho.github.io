@@ -1,7 +1,7 @@
 ---
 title: "Using PowerShell to Install/Uninstall Microsoft Office Products by Group Policy"
 date: "2015-04-06"
-tags: 
+tags:
   - "group-policy"
   - "microsoft-office"
   - "powershell"
@@ -18,7 +18,7 @@ As a side note - I wonder why Microsoft doesn't support installing Office 2013 p
 
 These PowerShell scripts accept parameters that allow key elements of the installation process (product, source folder, config file, log file location) to be specified in the GPO Script parameters themselves:
 
-[![GPO PowerShell Startup Script](images/ss_gpo_startupscript_ps_install_msoffice.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpo_startupscript_ps_install_msoffice.png)
+[![GPO PowerShell Startup Script](/images/ss_gpo_startupscript_ps_install_msoffice.png)](/images/ss_gpo_startupscript_ps_install_msoffice.png)
 
 For example, to install a copy of Microsoft Office 2013 Pro Plus from the \\\\server\\software$\\Office15.ProPlus\\ share using the file \\\\server\\software$\\Office15.ProPlus\\ProPlus.ww\\SilentInstall.xml to control the configuration the following parameters could be used:
 
@@ -28,17 +28,17 @@ The full script parameters are documented in the PowerShell scripts as well as o
 
 ## Creating a GPO using the PowerShell Scripts
 
-1. In Group Policy Management Console, create a new GPO:[![ss_gpmc_new_gpo](images/ss_gpmc_new_gpo.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_new_gpo.png)
-2. Enter a name for the installation policy and click **OK**.[![ss_gpmc_new_gpo_name](images/ss_gpmc_new_gpo_name.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_new_gpo_name.png)
-3. Right click on the new policy and select **Edit**:[![ss_gpmc_gpo_edit](images/ss_gpmc_gpo_edit.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_gpo_edit.png)
-4. Select the **Computer Configuration\\Policies\\Windows Settings\\Scripts (Startup/Shutdown)** node:[![ss_gpmc_edit_startup_script](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_edit_startup_script.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_edit_startup_script.png)
-5. Double click the **Startup** item:[![ss_gpmc_startup_properties_scripts](images/ss_gpmc_startup_properties_scripts.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_properties_scripts.png)
-6. Select the **PowerShell Scripts** tab:[![ss_gpmc_startup_powershell_scripts](images/ss_gpmc_startup_powershell_scripts.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_powershell_scripts.png)
-7. Click **Add** to add a new startup script:[![ss_gpmc_startup_powershell_addascript](images/ss_gpmc_startup_powershell_addascript.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_powershell_addascript.png)
-8. Click the **Browse** button to locate the folder where the policies scripts should be stored:[![ss_gpmc_startup_scripts_location](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_scripts_location.png?w=660)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_scripts_location.png)
+1. In Group Policy Management Console, create a new GPO:[![ss_gpmc_new_gpo](/images/ss_gpmc_new_gpo.png)](/images/ss_gpmc_new_gpo.png)
+2. Enter a name for the installation policy and click **OK**.[![ss_gpmc_new_gpo_name](/images/ss_gpmc_new_gpo_name.png)](/images/ss_gpmc_new_gpo_name.png)
+3. Right click on the new policy and select **Edit**:[![ss_gpmc_gpo_edit](/images/ss_gpmc_gpo_edit.png)](/images/ss_gpmc_gpo_edit.png)
+4. Select the **Computer Configuration\\Policies\\Windows Settings\\Scripts (Startup/Shutdown)** node:[![ss_gpmc_edit_startup_script](/images/ss_gpmc_edit_startup_script.png?w=660)](/images/ss_gpmc_edit_startup_script.png)
+5. Double click the **Startup** item:[![ss_gpmc_startup_properties_scripts](/images/ss_gpmc_startup_properties_scripts.png)](/images/ss_gpmc_startup_properties_scripts.png)
+6. Select the **PowerShell Scripts** tab:[![ss_gpmc_startup_powershell_scripts](/images/ss_gpmc_startup_powershell_scripts.png)](/images/ss_gpmc_startup_powershell_scripts.png)
+7. Click **Add** to add a new startup script:[![ss_gpmc_startup_powershell_addascript](/images/ss_gpmc_startup_powershell_addascript.png)](/images/ss_gpmc_startup_powershell_addascript.png)
+8. Click the **Browse** button to locate the folder where the policies scripts should be stored:[![ss_gpmc_startup_scripts_location](/images/ss_gpmc_startup_scripts_location.png?w=660)](/images/ss_gpmc_startup_scripts_location.png)
 9. You will need to copy the PowerShell scripts downloaded from the [Microsoft Script Repository](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-to-InstallUninst-0536b17b "PowerShell Scripts to Install/Uninstall Office 2013 products using GPO") into this folder and select the one that should be used with this policy.
-10. Enter the PowerShell script parameters into the **Script Parameters** box:[![ss_gpmc_startup_powershell_script_properties](images/ss_gpmc_startup_powershell_script_properties.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_powershell_script_properties.png)
-11. Click **OK** to save the PowerShell startup script:[![ss_gpmc_startup_powershell_scrpts_configured](images/ss_gpmc_startup_powershell_scrpts_configured.png)](https://dscottraynsford.files.wordpress.com/2015/04/ss_gpmc_startup_powershell_scrpts_configured.png)
+10. Enter the PowerShell script parameters into the **Script Parameters** box:[![ss_gpmc_startup_powershell_script_properties](/images/ss_gpmc_startup_powershell_script_properties.png)](/images/ss_gpmc_startup_powershell_script_properties.png)
+11. Click **OK** to save the PowerShell startup script:[![ss_gpmc_startup_powershell_scrpts_configured](/images/ss_gpmc_startup_powershell_scrpts_configured.png)](/images/ss_gpmc_startup_powershell_scrpts_configured.png)
 12. Click **OK** to save the Startup Properties.
 13. Close the GPME and apply the new GPO.
 
@@ -49,3 +49,4 @@ There appears to be a limit to the maximum number of characters supported in the
 If you do encounter this limit, but still need additional parameters passed, you could use positional parameters to reduce the overhead or create another script that calls these scripts with the defined parameters.
 
 Hopefully, someone will find this useful. If you have any comments or requests for improvements of the scripts, don't hesitate to let me know.
+

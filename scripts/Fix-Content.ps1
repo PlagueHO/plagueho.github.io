@@ -15,7 +15,11 @@ function Start-DownloadImagesFromMarkdownAndFix {
         $Content,
 
         [System.String]
-        $ImagesPath
+        $ImagesPath,
+
+        [System.String]
+        $ImagesRelativePath
+
     )
 
     $images = [regex]::Matches($Content,'\[!\[.*\]\((.*)\)\]\((.*)\)')
@@ -28,7 +32,8 @@ function Start-DownloadImagesFromMarkdownAndFix {
         # Remove everything after the end of the ?
 
         $imageUri = ($imageUri -Split "\?")[0]
-        $imageDestination = Join-Path -Path $ImagesPath -ChildPath (Split-Path -Path $imageUri -Leaf)
+        $imageFilename = Split-Path -Path $imageUri -Leaf
+        $imageDestination = Join-Path -Path $ImagesPath -ChildPath $imageFilename
 
         Write-Verbose -Message "Downloading image uri: $imageUri to image: $imageDestination"
         if (Test-Path -Path $imageDestination) {
@@ -39,6 +44,9 @@ function Start-DownloadImagesFromMarkdownAndFix {
             Invoke-WebRequest -Uri $imageUri -OutFile $imageDestination
             Start-Sleep -Seconds 0.5
         }
+
+        Write-Verbose -Message "Replacing $imageUri with $ImagesRelativePath\$imageFilename in content"
+        $Content = $Content -replace $imageUri, "$ImagesRelativePath\$imageFilename"
     }
 
     return $Content
@@ -50,9 +58,10 @@ $posts = Get-ChildItem -Path (Join-Path -Path $Path -ChildPath '\**\*.md') -Recu
 foreach ($post in $posts) {
     $postPath = Split-Path -Path $post.FullName -Parent
     $postName = Split-Path -Path $post.FullName -Leaf
-    $imagesPath = Join-Path -Path $postPath -ChildPath 'Images'
+    $imagesPath = Join-Path -Path $postPath -ChildPath 'images'
     Write-Verbose -Message "Processing post path: $postPath, name: $postName, imagesPath: $imagesPath"
 
     $content = Get-Content -Path $post -Raw
-    $content = Start-DownloadImagesFromMarkdownAndFix -Content $content -ImagesPath $imagesPath
+    $content = Start-DownloadImagesFromMarkdownAndFix -Content $content -ImagesPath $imagesPath -ImagesRelativePath 'images'
+    Set-Content -Path $post -Value $content -Force -Encoding UTF8
 }

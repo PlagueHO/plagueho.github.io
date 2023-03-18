@@ -10,3 +10,4 @@ coverImage: "ss_win10_console.png"
 Well for me, it has to be the proper standard support for text selection, copy (CTRL+C), cut (CTRL+X) and paste (CTRL+V) in the Command and PowerShell windows. Finally, Microsoft has gotten rid of the completely unintuitive and non-standard method employed for the last 20 or so years. What took them so long?
 
 Although I still don't like the fact that copying text in a console window de-selects it. This is not standard behaviour anywhere else. Perhaps they'll fix this too?
+
