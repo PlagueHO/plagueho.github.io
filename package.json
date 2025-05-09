@@ -1,0 +1,12 @@
+{
+  "name": "plagueho-blog",
+  "version": "1.0.0",
+  "description": "Eleventy version of danielscottraynsford.com",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve --port 8080"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^2.0.0"
+  }
+}
