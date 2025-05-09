@@ -1,6 +1,6 @@
 baseURL = 'http://plagueho.github.io/'
 languageCode = 'en-us'
-title = 'Code Frenzy'
+title = 'Cognitive Coding'
 theme = "hugo-geekblog"
 
 paginate = 5

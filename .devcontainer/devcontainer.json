@@ -1,0 +1,22 @@
+{
+  "name": "Hugo Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+      },
+      "extensions": [
+        "golang.go",
+        "ms-azuretools.vscode-docker",
+        "HugoExtensions.hugo"
+      ]
+    }
+  },
+  "postCreateCommand": "hugo version",
+  "forwardPorts": [1313],
+  "remoteUser": "vscode"
+}
