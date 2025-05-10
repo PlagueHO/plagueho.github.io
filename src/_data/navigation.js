@@ -5,6 +5,18 @@ export default {
       url: '/blog/'
     },
     {
+      text: 'Archive',
+      url: '/archive/'
+    },
+    {
+      text: 'Projects',
+      url: '/projects/'
+    },
+    {
+      text: 'Community',
+      url: '/community/'
+    },
+    {
       text: 'About',
       url: '/about/'
     }
