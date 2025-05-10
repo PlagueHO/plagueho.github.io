@@ -37,21 +37,21 @@ h3 {
 }
 
 h1 {
-  font-size: var(--size-step-3);
-}
-
-h2 {
   font-size: var(--size-step-2);
 }
 
-h3 {
+h2 {
   font-size: var(--size-step-1);
+}
+
+h3 {
+  font-size: var(--size-step-0);
 }
 
 blockquote {
   padding: var(--space-m-l);
   border-inline-start: 0.5rem solid var(--color-primary);
-  font-size: var(--size-step-2);
+  font-size: var(--size-step-1);
 }
 
 blockquote > * + * {

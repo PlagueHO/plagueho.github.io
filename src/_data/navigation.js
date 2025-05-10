@@ -13,8 +13,8 @@ export default {
       url: '/projects/'
     },
     {
-      text: 'Community',
-      url: '/community/'
+      text: 'Communities',
+      url: '/Communities/'
     },
     {
       text: 'About',

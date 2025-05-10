@@ -61,6 +61,94 @@
     {
       "name": "Gold Subdued",
       "value": "#f1c15b"
-    }
+    },
+    {
+      "name": "Purple",
+      "value": "#9b5ed4"
+    },
+    {
+      "name": "Purple Subdued",
+      "value": "#a76bc2"
+    },
+    {
+      "name": "Green",
+      "value": "#4caf50"
+    },
+    {
+      "name": "Green Subdued",
+      "value": "#5cbf6c"
+    },
+    {
+      "name": "Red",
+      "value": "#f44336"
+    },
+    {
+      "name": "Red Subdued",
+      "value": "#f56b6b"
+    },
+    {
+      "name": "Orange",
+      "value": "#ff9800"
+    },
+    {
+      "name": "Orange Subdued",
+      "value": "#ffb74d"
+    },
+    {
+      "name": "Teal",
+      "value": "#009688"
+    },
+    {
+      "name": "Teal Subdued",
+      "value": "#26a69a"
+    },
+    {
+      "name": "Yellow",
+      "value": "#ffeb3b"
+    },
+    {
+      "name": "Yellow Subdued",
+      "value": "#fff176"
+    },
+    {
+      "name": "Anomalous Aqua",
+      "value": "#08E8DE"
+    },
+    {
+      "name": "Cosmic Coral",
+      "value": "#FF6F61"
+    },
+    {
+      "name": "Electric Tangerine",
+      "value": "#FF7300"
+    },
+    {
+      "name": "Phantom Lime",
+      "value": "#D0FF14"
+    },
+    {
+      "name": "Iridescent Teal",
+      "value": "#00A89C"
+    },
+    {
+      "name": "Mysterious Mauve",
+      "value": "#A3989D"
+    },
+    {
+      "name": "Starry Amber",
+      "value": "#FFB300"
+    },
+    {
+      "name": "Celestial Cerise",
+      "value": "#E6208C"
+    },
+    {
+      "name": "Nebula Navy",
+      "value": "#1A3D6C"
+    },
+    {
+      "name": "Opalescent Olive",
+      "value": "#8F9779"
+    } 
   ]
 }

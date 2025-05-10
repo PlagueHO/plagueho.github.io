@@ -1,15 +1,15 @@
 ---
 layout: base
-title: Blog
-description: 'Most recent and relevant blog posts'
+title: Archive
+description: 'Older archived blog posts'
 pagination:
   data: collections.allPosts
   size: 8
-permalink: 'blog/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
+permalink: 'archive/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
 ---
 
 <div class="wrapper">
-  <header class="full | section" style="--spot-color: var(--color-secondary)">
+  <header class="full | section" style="--spot-color: var(--color-tertiary)">
     <div class="section__inner flow region">
       <h1 class="text-center" style="color: var(--color-light);">{{ title }}</h1>
     </div>
