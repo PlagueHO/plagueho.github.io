@@ -11,7 +11,7 @@
 code,
 pre {
   font-family: var(--font-mono);
-  font-size: var(--size-step-min-1);
+  font-size: var(--size-step-min-2); /* Reduced from var(--size-step-min-1) */
   background-color: var(--color-code-bg);
 
   border-radius: var(--border-radius-medium);

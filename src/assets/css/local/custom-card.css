@@ -49,11 +49,12 @@ custom-card > .meta {
 
 custom-card > p {
   grid-row: desc;
+  font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-1) */
 }
 
 custom-card > footer {
   grid-row: footer;
-  font-size: var(--size-step-min-2);
+  font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-2) */
 }
 
 /* avoid overflow of long words */
