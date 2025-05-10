@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Cache npm
+      - name: Cache NPM
         uses: actions/cache@v3
         with:
           path: ~/.npm
@@ -33,9 +33,16 @@ jobs:
           path: ./.cache
           key: ${{ runner.os }}-eleventy-fetch-cache
 
+      - name: Install dependencies
+        run: npm install
+      - name: Build
+        run: npm run build
 
-      - run: npm install
-      - run: npm run build
+      - name: Publish dist as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: ./dist
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
