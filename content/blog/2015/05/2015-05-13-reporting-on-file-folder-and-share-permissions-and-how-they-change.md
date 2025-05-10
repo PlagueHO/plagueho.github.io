@@ -60,7 +60,9 @@ Ensure that you **unblock** all files in the _NTFS Security Module_ folder befor
 2. This will create a folder called **ACLReportTools** containing all the files required for this module.
 3. In PowerShell execute:
 
-\[sourcecode language="powershell"\] Import-Module ACLReportTools \[/sourcecode\]
+```powershell
+Import-Module ACLReportTools
+```
 
 ## How to Use It
 
@@ -76,29 +78,55 @@ In the for following examples, the **e:\\work** and **d:\\profiles** are being u
 
 The first step is to create _Baseline ACL Report_ on the folders **e:\\work** and **d:\\profiles** and store it in the b_aseline.acl_ file in the current users **documents** folder:
 
-\[sourcecode language="powershell"\] Import-Module ACLReportTools New-ACLPathFileReport -Path "e:\\Work","d:\\Profiles" | Export-ACLReport -Path "$HOME\\Documents\\Baseline.acl" -Force \[/sourcecode\]
+```powershell
+Import-Module ACLReportTools
+New-ACLPathFileReport -Path "e:\Work","d:\Profiles" |
+    Export-ACLReport -Path "$HOME\Documents\Baseline.acl" -Force
+```
 
 ### Step 2: Compare the Baseline ACL Report file with the current ACLs for the same set of Folders
 
 This step is usually performed a few days or weeks after step 1. In this step the _Baseline ACL Report_ created in step 1 is compared with the _current ACL's_ for the same set of folders used in step 1. The output is put into the variable **$DiffReport** which can then be exported as a file using the **Export-ACLDiffReport** cmdlet or saved as HTML using **Export-ACLPermissionDiffHTML** for easier review.
 
-\[sourcecode language="powershell"\] Import-Module ACLReportTools $DiffReport = Compare-ACLReports -Baseline (Import-ACLReport -Path "$HOME\\Documents\\Baseline.acl") -Path "e:\\Work","d:\\Profiles" \[/sourcecode\]
+```powershell
+Import-Module ACLReportTools
+$DiffReport = Compare-ACLReports `
+    -Baseline (Import-ACLReport -Path "$HOME\Documents\Baseline.acl") `
+    -Path "e:\Work","d:\Profiles"
+```
 
-### Step 3: Convert the ACL Comparisson Report into an HTML Report File
+### Step 3: Convert the ACL Comparison Report into an HTML Report File
 
 Once the _ACL Difference Report_ has been produced, it could be simply dumped straight into the pipeline or converted into an HTML using the **Export-ACLPermissionDiffHTML** cmdlet. The title that will appear on the HTML page is also provided.
 
-\[sourcecode language="powershell"\] $DiffReport | Export-ACLPermissionDiffHtml -Title 'ACL Diff Report for e:\\work and d:\\profile' \[/sourcecode\]
+```powershell
+$DiffReport | Export-ACLPermissionDiffHtml `
+    -Title 'ACL Diff Report for e:\work and d:\profile'
+```
 
 ### Reporting on Shares Instead of Folders
 
 Instead of specifying a set of folders it is also possible to specify a list of computers and/or SMB shares to pull the _ACL Reports_ from. For example if we wanted to report on the shares **Share1** and **Share2** on computer **Client** the following commands could be used for step 1:
 
-\[sourcecode language="powershell"\] Import-Module ACLReportTools Compare-ACLReports -Baseline (Import-ACLReport -Path "$HOME\\Documents\\Baseline.acl") -ComputerName Client -Include Share1,Share2 \[/sourcecode\]
+```powershell
+# Baseline for Share1 and Share2 on CLIENT
+Import-Module ACLReportTools
+Compare-ACLReports `
+    -Baseline (Import-ACLReport -Path "$HOME\Documents\Baseline.acl") `
+    -ComputerName Client `
+    -Include Share1,Share2
+```
 
 Then for step 2 we would use:
 
-\[sourcecode language="powershell"\] Import-Module ACLReportTools $DiffReport = Compare-ACLReports -Baseline (Import-ACLReport -Path "$HOME\\Documents\\Baseline.acl") -ComputerName Client -Include Share1,Share2 \[/sourcecode\]
+```powershell
+# Later, create the difference report
+Import-Module ACLReportTools
+$DiffReport = Compare-ACLReports `
+    -Baseline (Import-ACLReport -Path "$HOME\Documents\Baseline.acl") `
+    -ComputerName Client `
+    -Include Share1,Share2
+```
 
 Step 3 in would be exactly the same as in the Folder scenario.
 

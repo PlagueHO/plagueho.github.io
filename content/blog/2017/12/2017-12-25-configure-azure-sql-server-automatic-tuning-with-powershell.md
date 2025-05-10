@@ -34,7 +34,168 @@ The following script can be executed in PowerShell (of course) and requires a nu
 
 _**Requirements:** You need to have the [installed](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps) the **AzureRM.Profile PowerShell** module (part of the AzureRM PowerShell Modules) to use this script. The script also requires you to have logged into your Azure Subscription using **Add-AzureRmAccount** (as a user or [Service Principal](https://docs.microsoft.com/en-us/powershell/azure/create-azure-service-principal-azureps))._
 
-{{< gist PlagueHO f6538d555788ef35c14cbe14ff4790b1 >}}
+
+```powershell
+#Requires -Modules 'AzureRM.Profile' 
+
+<#
+.SYNOPSIS
+Configure Azure SQL Autotuning on an Azure SQL server
+or database.
+
+.DESCRIPTION
+This function will retrieve a current access token from
+the Azure RM PowerShell context and use it to make a direct
+request to the Azure management portal endpoint for the
+SQL Server or database. It will configure the Autotuning
+parameters for the server.
+
+Requires AzureRM PowerShell Modules 5.1.1 or above*.
+* May work on lower versions but untested
+
+.PARAMETER SubscriptionId
+The Azure subscription Id of the subscription containing
+SQL Server or database.
+
+.PARAMETER ResourceGroupName
+The name of the resource grou containing SQL Server or
+database.
+
+.PARAMETER ServerName
+The name of the Azure SQL Server to set the autotuning
+options on.
+
+.PARAMETER DatabaseName
+The name of the Azure SQL Database to set the autotuning
+options on.
+
+.PARAMETER Mode
+This defines where the settings for the Autotuning are
+obtained from.
+
+Inherit is only valid if the DatabaseName is specified.
+
+.PARAMETER CreateIndex
+Enable autotuning for creating an index.
+
+.PARAMETER DropIndex
+Enable autotuning for dropping an index.
+
+.PARAMETER ForceLastGoodPlan
+Enable autotuning for forcing last good plan.
+#>
+param (
+    [Parameter(Mandatory = $true)]
+    [System.String]
+    $SubscriptionId,
+
+    [Parameter(Mandatory = $true)]
+    [System.String]
+    $ResourceGroupName,
+
+    [Parameter(Mandatory = $true)]
+    [System.String]
+    $ServerName,
+
+    [Parameter()]
+    [System.String]
+    $DatabaseName,
+
+    [Parameter()]
+    [ValidateSet('Auto', 'Custom', 'Inherit')]
+    [System.String]
+    $Mode = 'Auto',
+
+    [Parameter()]
+    [ValidateSet('On', 'Off', 'Default')]
+    [System.String]
+    $CreateIndex = 'Default',
+
+    [Parameter()]
+    [ValidateSet('On', 'Off', 'Default')]
+    [System.String]
+    $DropIndex = 'Default',
+
+    [Parameter()]
+    [ValidateSet('On', 'Off', 'Default')]
+    [System.String]
+    $ForceLastGoodPlan = 'Default'
+)
+
+# Get an access token from the Auzre RM PowerShell token cache for accessing the Azure Management Portal
+$context = Get-AzureRmContext
+$cache = $context.TokenCache
+
+if (-not $cache)
+{
+    # Use an older method of accessing the Token Cache (for old versions of AzureRM.Profile)
+    $cache = [Microsoft.IdentityModel.Clients.ActiveDirectory.TokenCache]::DefaultShared
+}
+
+$cacheItems = $cache.ReadItems()
+$cacheItem = $cacheItems |
+    Where-Object -FilterScript { $_.TenantId -eq $context.Tenant.TenantId } |
+    Select-Object -First 1
+
+if (-not $cacheItem)
+{
+    Throw ('A current access token could not be found for the tenant Id {0}.' -f $context.Tenant.TenantId)
+}
+
+$accessToken = $cacheItem.AccessToken
+    
+# Generate the Body of the request
+$body = @{
+    properties = @{
+        desiredState = $Mode
+        options      = @{
+            createIndex       = @{
+                desiredState = $CreateIndex
+            }
+            dropIndex         = @{
+                desiredState = $DropIndex
+            }
+            forceLastGoodPlan = @{
+                desiredState = $ForceLastGoodPlan
+            }
+        }
+    }
+}
+
+# Generate the URI to the endpoint
+$uri = ('https://management.azure.com/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Sql/servers/{2}' -f $SubscriptionId, $ResourceGroupName, $ServerName )
+
+if ($PSBoundParameters.ContainsKey('DatabaseName'))
+{
+    $uri = ('{0}/databases/{1}' -f $uri, $DatabaseName)
+}
+else
+{
+    if ($Mode -eq 'Inherit')
+    {
+        Throw 'Inherit mode is only valid for a SQL database. Either use a different not or specify a database name.'
+    }
+}
+
+$uri = ('{0}/automaticTuning/current?api-version=2017-03-01-preview' -f $uri)
+
+$bodyText = ConvertTo-Json -InputObject $body -Depth 10
+
+$headers = @{
+    'Authorization' = ('Bearer {0}' -f $accessToken)
+    'Cache-Control' = 'no-cache'
+}
+
+$invokeRestMethodParameters = @{
+    Uri         = $Uri
+    Method      = 'PATCH'
+    Headers     = $headers
+    ContentType = 'application/json'
+    Body        = $bodyText
+}
+
+return Invoke-RestMethod @invokeRestMethodParameters
+```
 
 # Example Usage
 
@@ -55,4 +216,5 @@ To apply custom automatic tuning to an Azure SQL Database:
 I've not yet encountered something in Azure that I can't configure via the Azure REST APIs. This is because the Azure Management Portal uses the same APIs - so if it is available in the portal then you can do it via the Azure REST APIs. The biggest challenge is determining the body, header and methods available if the APIs are not yet documented.
 
 If the API you need is not documented then you can raise a question in the [Microsoft Azure Forums](https://azure.microsoft.com/en-in/support/forums/) or on [Stack Overflow](https://stackoverflow.com/). Failing that you can use the developer tools in your browser of choice to watch the API calls being made to the portal - I've had to resort to this many times, but documenting that process is something I'll save for another day.
+
 

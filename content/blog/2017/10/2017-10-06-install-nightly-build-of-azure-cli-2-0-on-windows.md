@@ -24,7 +24,45 @@ Make sure you've got [Chocolatey installed](https://chocolatey.org/install). If 
 
 Next, download and run this PowerShell script in a PowerShell Administrator Console:
 
-{{< gist PlagueHO cf9ed6c3fcadb4db6152ef1e1f18f791 >}}
+
+```powershell
+<#
+    .SYNOPSIS
+        Install Azure CLI 2.0 Nightly Build on Windows using Chocolatey and PowerShell
+#>
+if (-not (Get-Command -Name Choco -ErrorAction SilentlyContinue))
+{
+    Throw 'Chocolatey is not installed. Please install it. See https://chocolatey.org/install for instructions.'
+}
+
+Write-Host -Object 'Installing Python 3 with Chocolatey...'
+& choco @('install','python3','-y')
+
+Update-SessionEnvironment
+
+$pyhtonScriptsPath = Join-Path -Path $ENV:APPDATA -ChildPath 'Python\Python36\Scripts'
+$currentPath = [System.Environment]::GetEnvironmentVariable('Path',[System.EnvironmentVariableTarget]::User) -split ';'
+if ($currentPath -notcontains $pyhtonScriptsPath)
+{
+    Write-Host -Object 'Adding Python Scripts to User Environment Path...'
+    $newPath = @()
+    $newPath += $currentPath
+    $newPath += $pyhtonScriptsPath
+    $newPathJoined = $newPath -join ';'
+    [System.Environment]::SetEnvironmentVariable('Path',$newPathJoined,[System.EnvironmentVariableTarget]::User)
+}
+
+if (-not $currentPath.Contains($pyhtonScriptsPath))
+{
+    Write-Host -Object 'Adding Python Scripts to Current PowerShell session path...'
+    $ENV:Path = "$($ENV:Path);$pyhtonScriptsPath"
+}
+
+Write-Host -Object 'Installing nightly build of Az CLI 2.0...'
+& pip @('install','--no-cache-dir','--user','--upgrade','--pre','azure-cli','--extra-index-url','https://azureclinightly.blob.core.windows.net/packages')
+
+Write-Host -Object 'Installation of nightly build of Az CLI 2.0 complete. Execute "az" to start.'
+```
 
 You could save the content of this script into a PS1 file and then execute it like this:
 
@@ -63,4 +101,5 @@ To:
 https://azurecliprod.blob.core.windows.net/edge
 
 Thanks for reading!
+
 

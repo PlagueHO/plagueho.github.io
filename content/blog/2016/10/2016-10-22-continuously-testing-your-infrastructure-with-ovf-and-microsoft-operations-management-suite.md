@@ -35,7 +35,10 @@ The **OperationValidation** PowerShell module comes in-box with **Windows Server
 
 To download and install the **OperationValidation** PowerShell module on earlier operating systems enter the following cmdlet in an Administrator PowerShell console:
 
-{{< gist PlagueHO 4d3186660269842f841d21c18f8d0344 >}}
+
+```powershell
+Install-Module -Name OperationValidation
+```
 
 ![ss_ovfoms_installoperationvalidation](/images/ss_ovfoms_installoperationvalidation.png)
 
@@ -57,7 +60,28 @@ _Note: you can create the the OVF tests in a different location if that works fo
         - Comprehensive_\\_
 
     ![ss_ovfoms_folderstructure](/images/ss_ovfoms_folderstructure1.png)
-3. In the **Simple** folder create a file called **ValidateDNS.Simple.Tests.ps1** with the contents: {{< gist PlagueHO 51a96524896f2f38d592ef19590b10d0 >}}
+3. In the **Simple** folder create a file called **ValidateDNS.Simple.Tests.ps1** with the contents: 
+```powershell
+Describe 'DNS' {
+    It 'Should be running' {
+        (Get-Service -Name DNS).Status | Should Be Running
+    }
+        
+    $Forwarders = Get-DnsServerForwarder
+        
+    It 'First forwarder should be 8.8.8.8' {
+        $Forwarders.IPAddress[0] | Should Be '8.8.8.8'
+    }
+
+    It 'Second forwarder should be 4.4.4.4' {
+        $Forwarders.IPAddress[1] | Should Be '4.4.4.4'
+    }
+
+    It 'Should resolve microsoft.com' {
+        { Resolve-DnsName -Server LocalHost -Name microsoft.com } | Should Not Throw
+    }
+}
+```
 4. Edit the tests and create any that are validate the things you want to test for.
 
 The OVF tests above just check some basic settings of a DNS Server and so would normally be run on a Windows DNS Server. As noted above, you could write tests for almost anything, including validating things on other systems. I intentionally have setup one of the tests to fail for demonstration purposes (a gold star for anyone who can tell which test will fail).
@@ -69,7 +93,43 @@ _In a future article I'll cover how to test components on remote machines so you
 Although we could just run the tests as is, the output will just end up in the console, which is not what we want here. We want any failed tests to be put into the **Application Event Log****.**
 
 1. Create a file called **ValidateDNS.psm1** in the **ValidateDNS** folder created earlier.
-2. Add the following code to this **ValidateDNS.psm1** file: {{< gist PlagueHO 5ce7d041fcde3e0702c63729ca6567d1 >}}
+2. Add the following code to this **ValidateDNS.psm1** file: 
+```powershell
+function Invoke-ValidateDNS {
+    [cmdletbinding()]
+    param (
+        [String] $EventSource = 'ValidateDNS',
+
+        [Int32] $EventId = 10000,
+
+        [ValidateSet('Simple','Comprehensive')]
+        [String] $TestType = 'Simple'
+    )
+
+    # Edit these settings
+
+    # Add the Event Source if it doesn't exist
+    if (-not [system.diagnostics.eventlog]::SourceExists($EventSource)) {
+        [system.diagnostics.EventLog]::CreateEventSource($EventSource, 'Application')
+    } # if
+
+    # Execute the tests
+    $FailedTests = Invoke-OperationValidation -ModuleName ValidateDNS -TestType $TestType |
+        Where-Object -Property Result -EQ -Value 'Failed'
+
+    # Add the Failed tests to the Event Log
+    foreach ($FailedTest in $FailedTests) {
+        Write-EventLog `
+            -LogName Application `
+            -Source $EventSource `
+            -EntryType Error `
+            -Message $FailedTest.Name `
+            -EventId $EventId `
+            -Category 0
+        $EventId++
+    } # foreach
+}
+```
 3. Save the **ValidateDNS.psm1**
 
 The above file is a PowerShell Module will make available a single cmdlet called **Invoke-ValidateDNS**. We can now just run **Invoke-ValidateDNS** in a PowerShell console and the following tasks will be performed:
@@ -82,7 +142,27 @@ The above file is a PowerShell Module will make available a single cmdlet called
 
 This step we will create a Scheduled Task to run the cmdlet we created in Step 3. You could use the **Task Scheduler UI** to do this, but this is a PowerShell blog after all, so here is a script you can run that will create the scheduled task:
 
-{{< gist PlagueHO f3215ef69a5bacbace96bc6600e36831 >}}
+
+```powershell
+$Cred = Get-Credential -Message 'User to run task as'
+$Action = New-ScheduledTaskAction `
+    –Execute 'PowerShell.exe' `
+    -Argument '-WindowStyle Hidden -Command "Import-Module ValidateDNS; Invoke-ValidateDNS;"'
+$Trigger = New-ScheduledTaskTrigger `
+    -Once `
+    -At (Get-Date -Hour 0 -Minute 0 -Second 0) `
+    -RepetitionInterval (New-TimeSpan -Minutes 60) `
+    -RepetitionDuration ([System.TimeSpan]::MaxValue)
+$Task = New-ScheduledTask `
+    -Description 'Validate DNS' `
+    -Action $Action `
+    -Trigger $Trigger
+Register-ScheduledTask `
+    -TaskName 'Validate DNS' `
+    -InputObject $Task `
+    -User $Cred.UserName `
+    -Password $Cred.GetNetworkCredential().Password
+```
 
 ![ss_ovfoms_scheduletask](/images/ss_ovfoms_scheduletask2.png)
 
@@ -148,4 +228,5 @@ Although I've focused on the technology and methods here, if you take away one t
 > **Continuous Testing** of your infrastructure is something that is **really easy** to implement and **has so many benefits**. It will allow **you** and **your stakeholders** to feel **more confident** that **problems are** **not going unnoticed** and **allow them to sleep better**. It will also ensure that **when things do go wrong** (and they always do) that the **first people to notice are the people who can do something about it**!
 
 Happy infrastructure testing!
+
 

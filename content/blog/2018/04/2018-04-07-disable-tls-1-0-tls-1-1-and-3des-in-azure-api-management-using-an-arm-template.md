@@ -21,13 +21,91 @@ I found the documentation for the API Management service resource [here](https:/
 
 But after a little bit of trial and error I managed to figure it out and get it working. What you need to do is add the following **customProperties** to the **properties** of the API Management service resource:
 
-{{< gist PlagueHO 54e3b84971a7be64859df62a881b8247 >}}
+
+```json
+"customProperties": {
+  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168": "false",
+  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false",
+  "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false"
+}
+```
 
 This is what the complete ARM template looks like:
 
-{{< gist PlagueHO 59c53066c53f5272488a95f9c27d3f23 >}}
+
+```json
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "publisherEmail": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "The email address of the owner of the service"
+            }
+        },
+        "publisherName": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "The name of the owner of the service"
+            }
+        },
+        "sku": {
+            "type": "string",
+            "allowedValues": [
+                "Developer",
+                "Standard",
+                "Premium"
+            ],
+            "defaultValue": "Developer",
+            "metadata": {
+                "description": "The pricing tier of this API Management service"
+            }
+        },
+        "skuCount": {
+            "type": "string",
+            "allowedValues": [
+                "1",
+                "2"
+            ],
+            "defaultValue": "1",
+            "metadata": {
+                "description": "The instance size of this API Management service."
+            }
+        }
+    },
+    "variables": {
+        "apiManagementServiceName": "[concat('apiservice', uniqueString(resourceGroup().id))]"
+    },
+    "resources": [
+        {
+            "apiVersion": "2017-03-01",
+            "name": "[variables('apiManagementServiceName')]",
+            "type": "Microsoft.ApiManagement/service",
+            "location": "West US",
+            "tags": {},
+            "sku": {
+                "name": "[parameters('sku')]",
+                "capacity": "[parameters('skuCount')]"
+            },
+            "properties": {
+                "publisherEmail": "[parameters('publisherEmail')]",
+                "publisherName": "[parameters('publisherName')]",
+                "customProperties": {
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168": "false",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11": "false",
+                    "Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10": "false"
+                }
+            }
+        }
+    ]
+}
+```
 
 > **Side note:** the template above is based off the [Azure Quickstart Template for API Management](https://github.com/Azure/azure-quickstart-templates/blob/master/101-azure-api-management-create/azuredeploy.json).
 
 Hopefully you find this if you're looking for an example of how to do this and it saves you some time.
+
 

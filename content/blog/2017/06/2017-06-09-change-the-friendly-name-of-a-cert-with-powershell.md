@@ -11,11 +11,15 @@ While working on adding a new feature in the certificate request DSC resource, I
 
 All you need to do is identify the certificate using Get-ChildItem and then assign the new FriendlyName to it.
 
-{{< gist PlagueHO ab6ed6e6e9f38a286608ffda6b9aca0c >}}
+
+```powershell
+(Get-ChildItem -Path Cert:\LocalMachine\My\97CB2928C7AC163A750BF16CF1D2CF1A3DDAAA8E).FriendlyName = 'New Cert Name'
+```
 
 ![ss_cert_changefriendlyname](/images/ss_cert_changefriendlyname.png)
 
 ![ss_cert_changefriendlynamecertlm](/images/ss_cert_changefriendlynamecertlm.png)
 
 Sometimes PowerShell still surprises me at how easy it can make things. I didn't need to search help or the internet - just typed it in and it worked!
+
 

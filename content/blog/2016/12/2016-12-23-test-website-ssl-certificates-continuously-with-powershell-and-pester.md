@@ -23,7 +23,93 @@ This seemed like a good task for Pester (or [Operation Validation Framework](htt
 
 Chris' post contained this PowerShell cmdlet:
 
-{{< gist PlagueHO 7247c2eb35d8e888d5845ce4f0ed5591 >}}
+
+```powershell
+<#
+    .DESCRIPTION
+    Outputs the SSL protocols that the client is able to successfully use to connect to a server.
+
+    .PARAMETER ComputerName
+    The name of the remote computer to connect to.
+
+    .PARAMETER Port
+    The remote port to connect to. The default is 443.
+
+    .EXAMPLE
+    Test-SslProtocol -ComputerName "www.google.com"
+
+    ComputerName       : www.google.com
+    Port               : 443
+    KeyLength          : 2048
+    SignatureAlgorithm : rsa-sha1
+    Ssl2               : False
+    Ssl3               : True
+    Tls                : True
+    Tls11              : True
+    Tls12              : True
+
+    .NOTES
+    Copyright 2014 Chris Duck
+    http://blog.whatsupduck.net
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+#>
+function Test-SslProtocol {
+    param(
+        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true)]
+        $ComputerName,
+
+        [Parameter(ValueFromPipelineByPropertyName=$true)]
+        [int]$Port = 443
+    )
+    begin {
+        $ProtocolNames = [System.Security.Authentication.SslProtocols] |
+            Get-Member -Static -MemberType Property |
+            Where-Object -Filter { $_.Name -notin @("Default","None") } |
+            Foreach-Object { $_.Name }
+    }
+    process {
+        $ProtocolStatus = [Ordered]@{}
+        $ProtocolStatus.Add("ComputerName", $ComputerName)
+        $ProtocolStatus.Add("Port", $Port)
+        $ProtocolStatus.Add("KeyLength", $null)
+        $ProtocolStatus.Add("SignatureAlgorithm", $null)
+
+        $ProtocolNames | %{
+            $ProtocolName = $_
+            $Socket = New-Object System.Net.Sockets.Socket( `
+                [System.Net.Sockets.SocketType]::Stream,
+                [System.Net.Sockets.ProtocolType]::Tcp)
+            $Socket.Connect($ComputerName, $Port)
+            try {
+                $NetStream = New-Object System.Net.Sockets.NetworkStream($Socket, $true)
+                $SslStream = New-Object System.Net.Security.SslStream($NetStream, $true)
+                $SslStream.AuthenticateAsClient($ComputerName,  $null, $ProtocolName, $false )
+                $RemoteCertificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]$SslStream.RemoteCertificate
+                $ProtocolStatus["KeyLength"] = $RemoteCertificate.PublicKey.Key.KeySize
+                $ProtocolStatus["SignatureAlgorithm"] = $RemoteCertificate.SignatureAlgorithm.FriendlyName
+                $ProtocolStatus["Certificate"] = $RemoteCertificate
+                $ProtocolStatus.Add($ProtocolName, $true)
+            } catch  {
+                $ProtocolStatus.Add($ProtocolName, $false)
+            } finally {
+                $SslStream.Close()
+            }
+        }
+        [PSCustomObject]$ProtocolStatus
+    }
+} # function Test-SslProtocol
+```
 
 So that was the hard part done, all I needed was to add this function to some [Pester](https://blogs.technet.microsoft.com/heyscriptingguy/2015/12/14/what-is-pester-and-why-should-i-care/) tests.
 
@@ -35,7 +121,123 @@ So after a little bit of tinkering I ended up with a set of tests that I combine
 
 > The tests are located at the bottom of the file below the Test-SslProtocol function.
 
-{{< gist PlagueHO e63cb51d0c38fcb18b7c0d638fa7e81b >}}
+
+```powershell
+<#
+    .DESCRIPTION
+    Outputs the SSL protocols that the client is able to successfully use to connect to a server.
+
+    .PARAMETER ComputerName
+    The name of the remote computer to connect to.
+
+    .PARAMETER Port
+    The remote port to connect to. The default is 443.
+
+    .EXAMPLE
+    Test-SslProtocol -ComputerName "www.google.com"
+
+    ComputerName       : www.google.com
+    Port               : 443
+    KeyLength          : 2048
+    SignatureAlgorithm : rsa-sha1
+    Ssl2               : False
+    Ssl3               : True
+    Tls                : True
+    Tls11              : True
+    Tls12              : True
+
+    .NOTES
+    Copyright 2014 Chris Duck
+    http://blog.whatsupduck.net
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+#>
+function Test-SslProtocol {
+    param(
+        [Parameter(Mandatory=$true,ValueFromPipelineByPropertyName=$true,ValueFromPipeline=$true)]
+        $ComputerName,
+
+        [Parameter(ValueFromPipelineByPropertyName=$true)]
+        [int]$Port = 443
+    )
+    begin {
+        $ProtocolNames = [System.Security.Authentication.SslProtocols] |
+            Get-Member -Static -MemberType Property |
+            Where-Object -Filter { $_.Name -notin @("Default","None") } |
+            Foreach-Object { $_.Name }
+    }
+    process {
+        $ProtocolStatus = [Ordered]@{}
+        $ProtocolStatus.Add("ComputerName", $ComputerName)
+        $ProtocolStatus.Add("Port", $Port)
+        $ProtocolStatus.Add("KeyLength", $null)
+        $ProtocolStatus.Add("SignatureAlgorithm", $null)
+
+        $ProtocolNames | %{
+            $ProtocolName = $_
+            $Socket = New-Object System.Net.Sockets.Socket( `
+                [System.Net.Sockets.SocketType]::Stream,
+                [System.Net.Sockets.ProtocolType]::Tcp)
+            $Socket.Connect($ComputerName, $Port)
+            try {
+                $NetStream = New-Object System.Net.Sockets.NetworkStream($Socket, $true)
+                $SslStream = New-Object System.Net.Security.SslStream($NetStream, $true)
+                $SslStream.AuthenticateAsClient($ComputerName,  $null, $ProtocolName, $false )
+                $RemoteCertificate = [System.Security.Cryptography.X509Certificates.X509Certificate2]$SslStream.RemoteCertificate
+                $ProtocolStatus["KeyLength"] = $RemoteCertificate.PublicKey.Key.KeySize
+                $ProtocolStatus["SignatureAlgorithm"] = $RemoteCertificate.SignatureAlgorithm.FriendlyName
+                $ProtocolStatus["Certificate"] = $RemoteCertificate
+                $ProtocolStatus.Add($ProtocolName, $true)
+            } catch  {
+                $ProtocolStatus.Add($ProtocolName, $false)
+            } finally {
+                $SslStream.Close()
+            }
+        }
+        [PSCustomObject]$ProtocolStatus
+    }
+} # function Test-SslProtocol
+
+# List of Web sites that we want to check the SSL on
+$WebSitesToTest = @(
+    'www.google.com'
+    'www.bing.com'
+    'www.yahoo.com'    
+)
+
+# Number of days out to warn about certificate expiration
+$WarningThreshold = 14
+
+Describe 'SSL endpoints' {
+    foreach ($WebSite in $WebSitesToTest) {
+        Context $WebSite {
+            $script:SSLResult = Test-SslProtocol -ComputerName $WebSite -Port 443
+            
+            It 'Should have Signature Algorithm of sha256RSA' {
+                $script:SSLResult.SignatureAlgorithm | Should -Be 'sha256RSA'
+            }
+            
+            It 'Should support TLS1.2' {
+                $script:SSLResult.TLS12 | Should -BeTrue
+            }
+            
+            It "Should not going to expire in $WarningThreshold days" {
+                ($script:SSLResult.Certificate.NotAfter -gt (Get-Date).AddDays($WarningThreshold))| Should -BeTrue
+            }
+        }
+    }
+}
+```
 
 So, now to test these SSL endpoints all I need to do is run in a PowerShell console with the current folder set to the folder containing my **SSL.tests.ps1** file:
 
@@ -50,7 +252,13 @@ This shows that all the SSL endpoint certificates being used by google.com, bing
 
 All I would then need to do is put this in a task to run every hour or so and perform some task when the tests fail:
 
-{{< gist PlagueHO c461fca2f66fe0338e510ae8274a3761 >}}
+
+```powershell
+cd c:\
+if ((Invoke-Pester -PassThru).FailedCount -gt 0) {
+  Write-Host "An SSL Endpoint test failed. Notify someone here!"
+}
+```
 
 At this point you will still need to use some mechanism to notify someone when they fail. One method could be to write an event into the **Windows Event Log** and then use **Microsoft Operations Management Suite** (or **SCOM**) to monitor for this event and send an e-mail or other alert to the appropriate administrators.
 
@@ -77,4 +285,5 @@ At the end of the day, the goal here should be:
 So, in this holiday season, I hope this post helps you ensure your certificates won't expire in the next two weeks and you won't get called into fix a certificate problem when you should be lying on a beach in the sun (in the southern hemisphere anyway).
 
 Have a good one!
+
 

@@ -56,7 +56,24 @@ The bottom four of these tests are very similar. So I'll only show examples of t
 
 In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the object we defined in the **Pester Test Initialization** section. This is the behavior we'd expect if the _resource being configured_ does exist:
 
-{{< gist PlagueHO 782db99150f72e90f0b5 >}}
+
+```powershell
+Context 'Virtual Disk exists and should but has a different Description' {
+	
+	Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+
+	It 'should return false' {
+		{ 
+			$Splat = $TestVirtualDisk.Clone()
+			$Splat.Description = 'Different'
+			Test-TargetResource @Splat | Should Be $False
+		} | Should Not Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+	}
+}
+```
 
 This **context** will perform two tests:
 
@@ -73,7 +90,22 @@ You should expect to repeat this **context** for each parameter that might be di
 
 In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return nothing. This is the behavior we'd expect if the _resource being configured_ does **not** exist:
 
-{{< gist PlagueHO d1f47fba25efc2a6afb9 >}}
+
+```powershell
+Context 'Virtual Disk does not exist but should' {
+	
+	Mock Get-iSCSIVirtualDisk
+
+	It 'should return false' {
+		$Splat = $TestVirtualDisk.Clone()
+		Test-TargetResource @Splat | Should Be $False
+		
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+	}
+}
+```
 
 As you can see, there is not too much different with these tests and you shouldn't have any problems figuring out the remaining ones. Just remember, the goal is always to get 100% code coverage.
 
@@ -88,7 +120,32 @@ It is quite common that you might have implemented some _supporting_ functions i
 
 The first item is fairly self explanatory. For example, I often implement a **get-\*** function in my **DSC Resources** which is used to pull the actual objects that will be used by the **\*-TargetResource** functions (e.g. **Get-VirtualDisk**):
 
-{{< gist PlagueHO 374958535d7308925ac4 >}}
+
+```powershell
+Function Get-VirtualDisk {
+    param
+    (
+        [parameter(Mandatory = $true)]
+        [System.String]
+        $Path
+    )
+    try
+    {
+        $VirtualDisk = Get-iSCSIVirtualDisk `
+            -Path $Path `
+            -ErrorAction Stop
+    }
+    catch [Microsoft.Iscsi.Target.Commands.IscsiCmdException]
+    {
+        $VirtualDisk = $null
+    }
+    catch
+    {
+        Throw $_
+    }
+    Return $VirtualDisk
+}
+```
 
 To **unit test** this function I'd write **unit tests** that tested the following contexts:
 
@@ -97,7 +154,43 @@ To **unit test** this function I'd write **unit tests** that tested the followin
 
 For example:
 
-{{< gist PlagueHO 593cdfc77c63d5fe19b4 >}}
+
+```powershell
+Describe "$($Global:DSCResourceName)\Get-VirtualDisk" {
+
+	Context 'Virtual Disk does not exist' {
+		
+		Mock Get-iSCSIVirtualDisk
+
+		It 'should return null' {
+			$Splat = $TestVirtualDisk.Clone()
+			$Result = Get-VirtualDisk -Path $Splat.Path 
+			$Result | Should Be $null             
+		}
+		It 'should call expected Mocks' {
+			Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		}
+	}
+
+	Context 'Virtual Disk does exist' {
+		
+		Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+
+		It 'should return expected parameters' {
+			$Splat = $TestVirtualDisk.Clone()
+			$Result = Get-VirtualDisk -Path $Splat.Path 
+			$Result.Path                    | Should Be $MockVirtualDisk.Path
+			$Result.DiskType                | Should Be $MockVirtualDisk.DiskType
+			$Result.Size                    | Should Be $MockVirtualDisk.Size
+			$Result.Description             | Should Be $MockVirtualDisk.Description
+			$Result.ParentPath              | Should Be $MockVirtualDisk.ParentPath
+		}
+		It 'should call expected Mocks' {
+			Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		}
+	}
+}
+```
 
 As you can see, there isn't much to it.
 
@@ -113,7 +206,20 @@ _In case you're wondering, the **Get-iSCSIVirtualDisk** function throws a **\[Mi
 
 When creating **unit tests** you'll often need to test a scenario where the function that is being tested is **expected** to throw an exception. If you read the **Pester** documentation, you'd might write a test for an exception like this:
 
-{{< gist PlagueHO 83a33073d9e29ccf35af >}}
+
+```powershell
+Context 'Virtual Disk exists and should but has a different ParentPath' {
+	
+	Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+
+	It 'should throw an exception' {
+		{ Test-TargetResource @Splat } | Should Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+	}
+}
+```
 
 This would of course will work. It will ensure that the code throws an exception in this situation. The problem is we aren't really sure if it is the exception that we expected it to throw. It could have been thrown by some other part of our code.
 
@@ -128,7 +234,18 @@ So to improve on this we need to do things:
 
 To create a custom exception we need to create a new **exception object** containing our **custom error message**. The **exception object** is then used to create a custom **Error Record**:
 
-{{< gist PlagueHO 1e9f3d8e8d885c3dfecc >}}
+
+```powershell
+$errorId = 'iSCSIVirtualDiskRequiresRecreateError'
+$errorCategory = [System.Management.Automation.ErrorCategory]::InvalidArgument
+$errorMessage = $($LocalizedData.iSCSIVirtualDiskRequiresRecreateError) -f $Path
+$exception = New-Object -TypeName System.InvalidOperationException `
+	-ArgumentList $errorMessage
+$errorRecord = New-Object -TypeName System.Management.Automation.ErrorRecord `
+	-ArgumentList $exception, $errorId, $errorCategory, $null
+
+$PSCmdlet.ThrowTerminatingError($errorRecord)
+```
 
 In the above code, you just need to customize the **$errorId** and **$errorMessage** variables. The **$errorId** should just contain a simply string identifier for this particular type of error, but the **$errorMessage** can contain a full description of the error, including related parameters.
 
@@ -142,7 +259,31 @@ _**Important:** the **$PSCmdLet** object is only available in **Functions** that
 
 To test for the custom exception object we need to create an identical object in the **unit test** and test for it:
 
-{{< gist PlagueHO ab32cf7c028dfb0c0f87 >}}
+
+```powershell
+Context 'Virtual Disk exists and should but has a different ParentPath' {
+	
+	Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+
+	It 'should throw an iSCSIVirtualDiskRequiresRecreateError exception' {
+		$Splat = $TestVirtualDisk.Clone()
+		$Splat.ParentPath = 'c:\NewParent.vhdx'
+
+		$errorId = 'iSCSIVirtualDiskRequiresRecreateError'
+		$errorCategory = [System.Management.Automation.ErrorCategory]::InvalidArgument
+		$errorMessage = $($LocalizedData.iSCSIVirtualDiskRequiresRecreateError) -f $Splat.Path
+		$exception = New-Object -TypeName System.InvalidOperationException `
+			-ArgumentList $errorMessage
+		$errorRecord = New-Object -TypeName System.Management.Automation.ErrorRecord `
+			-ArgumentList $exception, $errorId, $errorCategory, $null
+			
+		{ Test-TargetResource @Splat } | Should Throw $errorRecord
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+	}
+}
+```
 
 The above code creates an identical **exception object** to the one produced by the exception in our **DSC Resource** code. The **exception object** can then be passed to the **should** **throw** cmdlet. If a different exception is thrown by the code then the test will fail - it will only pass if the exception object is **exactly** the same.
 
@@ -161,4 +302,5 @@ In the next article, I'll cover the **integration tests**. There are often the m
 Further parts in this series:
 
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+
 

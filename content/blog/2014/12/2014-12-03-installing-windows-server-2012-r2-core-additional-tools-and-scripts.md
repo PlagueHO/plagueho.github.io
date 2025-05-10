@@ -37,6 +37,7 @@ When installing a new copy of one of the Windows Server Core versions it's quite
     [Corefig](https://corefig.codeplex.com/ "Corefig for Windows Server 2012 Core and Hyper-V Server 2012") allows you to configure some of the main settings of a Windows Server Core installation as well as installing updates and windows features and roles.
 
     [![Corefig PowerShell Application](/images/ss_corefig1.png?w=300)](/images/ss_corefig1.png)
+
 2. #### Windows Update PowerShell Module
 
     The [Windows Update PowerShell module](https://gallery.technet.microsoft.com/scriptcenter/2d191bcd-3308-4edd-9de2-88dff796b0bc "Windows Update PowerShell Module") allows you to install windows updates from a PowerShell command line by executing (after installing the module onto the server):
@@ -60,4 +61,3 @@ When installing a new copy of one of the Windows Server Core versions it's quite
     c:\\Program Files\\WindowsPowerShell\\Modules
 
     This makes the PSCX module available by the import-module command in PowerShell.
-

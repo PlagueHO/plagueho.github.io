@@ -61,4 +61,3 @@ This Visual Studio Code extension enables developers to use AKS periscope and AK
 There may indeed been more, and I'll update them as they come to hand. Hope this roll up helps.
 
 Head over to [https://myignite.microsoft.com](https://myignite.microsoft.com) and watch some of the AKS content to get even an even better view of the updates.
-

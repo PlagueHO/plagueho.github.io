@@ -13,7 +13,11 @@ So, today's post shows how you can use some simple PowerShell code to pull down 
 
 First up, lets get the list of available _.gitIgnore templates:_
 
-{{< gist PlagueHO 55330104b449cd78c4d1a00450cccffb >}}
+
+```powershell
+$templateList = (Invoke-WebRequest -URI 'https://api.github.com/gitignore/templates' -UseBasicParsing).Content |
+    ConvertFrom-JSON
+```
 
 This will get the list of _.GitIgnore templates_ to an array variable called **$templateList**. I could then display the list to a user:
 
@@ -21,7 +25,14 @@ This will get the list of _.GitIgnore templates_ to an array variable called **$
 
 Now, all I need to do is to download the named _.gitIgnore Template_ to a folder:
 
-{{< gist PlagueHO f9e6ba57407f7974063c48a20d65fe88 >}}
+
+```powershell
+Invoke-WebRequest -URI 'https://api.github.com/gitignore/templates/VisualStudio' -UseBasicParsing |
+  Select-Object -ExpandProperty Content |
+  ConvertFrom-JSON |
+  Select-Object -ExpandProperty Source |
+  Out-File -FilePath .\.gitignore
+```
 
 This will download the **VisualStudio** _.giIgnore_ template and save it with the filename **.gitignore** to the current folder.
 
@@ -34,4 +45,5 @@ You might have noticed that I included the **\-UseBasicParsing** parameter in th
 The next steps for this code might be to get these included as some new cmdlets in [Trevor Sullivan's](https://twitter.com/pcgeek86) [PSGitHub PowerShell Module](https://github.com/pcgeek86/PSGitHub). You can download his module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/PSGitHub) if you're not familiar with it.
 
 Thanks for reading.
+
 

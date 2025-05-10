@@ -15,7 +15,10 @@ Pretend you have an **iSCSI Target Portal** configured with a **Target Portal Ad
 
 You might therefore expect that you could remove this **Target Portal** with the command:
 
-{{< gist PlagueHO ccb54927f4ae1d7a7f43 >}}
+
+```powershell
+Remove-IscsiTargetPortal -TargetPortalAddress 192.168.129.24
+```
 
 Unfortunately this won't work:
 
@@ -27,9 +30,13 @@ And neither does this:
 
 What you actually have to do is specify both the **Target Portal Address** and the **Initiator Portal Address** when deleting an **iSCSI** **Target Portal**:
 
-{{< gist PlagueHO e41f596f6e5a575aa4f2 >}}
+
+```powershell
+Remove-IscsiTargetPortal -TargetPortalAddress 192.168.129.24 -InitiatorPortalAddress 192.168.129.30
+```
 
 ![ss_iscsi_removetargetportalcorrect](/images/ss_iscsi_removetargetportalcorrect.png)
 
 Over and out.
+
 

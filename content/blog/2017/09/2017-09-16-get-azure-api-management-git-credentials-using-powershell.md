@@ -52,13 +52,27 @@ You can also optionally supply which of the two _internal API Management keys_, 
 
 ### Download the Script
 
-1. Download the script [Get-AzureRMApiManagementGitCredential.ps1](70ae184e1c8d22848ade6a7bc0f8255d) using the PowerShell command:{{< gist PlagueHO 939f71f3ff4acd2d31b0b350148c403a >}}
-2. Unblock the script using the PowerShell command:{{< gist PlagueHO 9b7a1d053b93931adb117131f659ef4c >}}
+1. Download the script [Get-AzureRMApiManagementGitCredential.ps1](70ae184e1c8d22848ade6a7bc0f8255d) using the PowerShell command:
+```powershell
+iwr https://gist.githubusercontent.com/PlagueHO/70ae184e1c8d22848ade6a7bc0f8255d/raw/a9ca51e690c04654dfcb934ccbc7ca9358c97f08/Get-AzureRMApiManagementGitCredential.ps1 -OutFile Get-AzureRMApiManagementGitCredential.ps1
+```
+2. Unblock the script using the PowerShell command:
+```powershell
+Unblock-File -Path .\Get-AzureRMApiManagementGitCredential.ps1
+```
 
 ### Using the Script
 
 1. Use the **Login-AzureRMAccount** cmdlet to authenticate to Azure. This would normally be done using a **Service Principal** if using an automated process, but could be done interactively when testing.
-2. Execute the script providing the **SubscriptionId**, **ResourceGroup** and **ServiceName** parameters (and optionally the **KeyType** and **ExpiryTimespan**) using the following PowerShell command:{{< gist PlagueHO 68ef820fa3b0a7aa23fa0d290417deb6 >}}
+2. Execute the script providing the **SubscriptionId**, **ResourceGroup** and **ServiceName** parameters (and optionally the **KeyType** and **ExpiryTimespan**) using the following PowerShell command:
+```powershell
+.\Get-AzureRMApiManagementGitCredential.ps1 `
+  -SubscriptionId '605e2ba7-056b-4982-a48b-12ff1da3c038' `
+  -ResourceGroup 'apimanagement-shrp-p-rgp' `
+  -ServiceName 'ApiManagementdsrshrpp' `
+  -KeyType 'primary' `
+  -ExpiryTimespan '4:00:00'
+```
 
 ![ss_apim_gitrepositoryinvoke](/images/ss_apim_gitrepositoryinvoke.png)
 
@@ -82,7 +96,53 @@ Typically you'd assign the output of this script to a variable and use the prope
 
 If you wish to review the script itself, here it is:
 
-{{< gist PlagueHO 70ae184e1c8d22848ade6a7bc0f8255d >}}
+
+```powershell
+param
+(
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $SubscriptionId,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $ResourceGroup,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $ServiceName,
+
+    [Parameter()]
+    [ValidateSet('primary','secondary')]
+    [System.String]
+    $KeyType = 'primary',
+
+    [Parameter()]
+    [timespan]
+    $ExpiryTimespan = (New-Timespan -Hours 2)
+    
+)
+
+$context = New-AzureRmApiManagementContext -ResourceGroupName $ResourceGroup -ServiceName $ServiceName
+
+// Correction thanks to @Shaun Titus
+$expiry = (Get-Date).ToUniversalTime() + $ExpiryTimespan
+$parameters = @{
+    "keyType"= $KeyType
+    "expiry"= ('{0:yyyy-MM-ddTHH:mm:ss.000Z}' -f $expiry)
+}
+
+$resourceId = '/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ApiManagement/service/{2}/users/git' -f $SubscriptionId,$ResourceGroup,$ServiceName
+
+$gitUsername = 'apim'
+$gitPassword = (Invoke-AzureRmResourceAction -Action 'token' -ResourceId $resourceId -Parameters $parameters -ApiVersion '2016-10-10' -Force).Value
+
+return @{
+    GitUsername = $gitUsername
+    GitPassword = $gitPassword
+}
+```
 
 So, hopefully that will be enough information to get anyone else started on building a CI/CD pipeline for deploying **Azure API Management** configurations.
+
 

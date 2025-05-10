@@ -32,7 +32,121 @@ So, to work around this limitation I determined I had to use [Web Deploy/MSDeplo
 
 So, I'll start by just pasting the function that does performs the task:
 
-{{< gist PlagueHO c028ce068df16c3afa68eaa810bcb9f6 >}}
+
+```powershell
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory = $True)]
+    [pscredential]
+    $Credential,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $TenantId,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $SubscriptionId,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $WebAppPath,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $ResourceGroupName,
+
+    [Parameter(Mandatory = $True)]
+    [System.String]
+    $WebAppServiceName,
+
+    [Parameter()]
+    [System.String]
+    $SlotName,
+
+    [Parameter()]
+    [System.String]
+    $MSDeployPath = "$env:ProgramFiles\IIS\Microsoft Web Deploy V3\msdeploy.exe"
+)
+
+if (-not (Test-Path -Path $MSDeployPath))
+{
+    Throw "MSDeploy.exe not found at '$MSDeployPath'. Please install MSDeploy or specify the path to MSDeploy.exe on this system."
+}
+
+# Connect to Azure using SP
+$connectParameters = @{
+    Credential     = $Credential
+    TenantId       = $TenantId
+    SubscriptionId = $SubscriptionId
+}
+
+Write-Verbose -Message 'Connecting to Azure.'
+
+$null = Add-AzureRmAccount @connectParameters -ServicePrincipal
+  
+# If a slot name is passed ensure all cmdlets use it
+if ([String]::IsNullOrEmpty($SlotName)) {
+    $slotParameters = $null
+} else {
+    $slotParameters = @{ Slot = $SlotName }
+}
+
+# Get the Publishing profile from Azure
+$publishProfilePath = Join-Path -Path $ENV:Temp -ChildPath 'publishprofile.xml'
+
+Write-Verbose -Message 'Getting publishing profile for web app'
+$null = Get-AzureRmWebAppSlotPublishingProfile `
+    -OutputFile $publishProfilePath `
+    -Format WebDeploy `
+    -ResourceGroupName $ResourceGroupName `
+    -Name $WebAppServiceName `
+    @slotParameters
+
+# Stop the web app slot to make sure deployment is possible.
+Write-Verbose -Message 'Stopping web app.'
+
+$null = Stop-AzureRmWebAppSlot `
+    -ResourceGroupName $ResourceGroupName `
+    -Name $WebAppServiceName `
+    @slotParameters
+
+# Deploy the web site
+$source = "-source:contentPath=$WebAppPath"
+$dest = "-dest:contentPath=d:\home\site\wwwroot\,publishSettings=$publishProfilePath"
+
+Write-Verbose -Message 'Publising web app content.'
+& $MSDeployPath @('-verb:sync', $source, $dest)
+
+# Start the web app back up
+Write-Verbose -Message 'Starting web app.'
+
+$null = Start-AzureRmWebAppSlot `
+    -ResourceGroupName $ResourceGroupName `
+    -Name $WebAppServiceName `
+    @slotParameters
+
+Write-Verbose -Message 'Waiting for web app to start up...'
+
+$webappSlot = Get-AzureRmWebAppSlot `
+    -ResourceGroupName $ResourceGroupName `
+    -Name $WebAppServiceName `
+    @slotParameters
+
+# Wait for the site to report that it has started (optional)
+while ($webappSlot.state -ne 'Running')
+{
+    Start-Sleep -Seconds 1
+
+    Write-Verbose -Message 'Waiting for web app to start up...'
+    $webappSlot = Get-AzureRmWebAppSlot `
+        -ResourceGroupName $ResourceGroupName `
+        -Name $WebAppServiceName `
+        @slotParameters
+}
+
+Write-Verbose -Message 'Web app deployment complete.'
+```
 
 Just save this file as **Publish-AzureRMWebappProject.ps1** and you're ready to start publishing (almost).
 
@@ -49,7 +163,25 @@ Before you can use this function you'll need to get a few things sorted:
 
 Once you have got all this information you can call the script above like this:
 
-{{< gist PlagueHO aa3604e4d820768a7ec79164187adbb2 >}}
+
+```powershell
+$SubscriptionId = '3a54931f-5351-4ec4-9cf8-518e03257eff' # Not real
+$TenantId = 'eef4615a-8a57-4519-99ea-e2a8bad20f82' # Not real
+$Password = 'MyP@ssword99' # Not real
+$Username = 'a3716a34-ae63-4ab8-8fb7-1e5f15ec3975' # Not real
+$passwordSecure = ConvertTo-SecureString -String $Password -AsPlainText -Force
+$Credential = New-Object -TypeName PSCredential ($Username, $passwordSecure)
+
+.\Publish-AzureRMWebappProject `
+    -Credential $Credential `
+    -SubscriptionId $SubscriptionId `
+    -TenantId $TenantId `
+    -WebAppPath 'C:\Users\Dan\Source\MyAwesomeWebApp\debug\netcoreapp1.1\publish' `
+    -ResourceGroupName 'MyAwesomeWebApp' `
+    -WebAppServiceName 'WebApp' `
+    -SlotName 'offline' `
+    -Verbose
+```
 
 > **Note:** You'll need to make sure to replace the variables $SubscriptionId, $TenantId, $Password and $Username with the values for **your Azure Subscription**, **Tenancy** and **Service Principal**.
 
@@ -64,4 +196,5 @@ All in all, this is fairly robust and allows our **development teams** and our *
 If you're interested in more details about the code/process, please feel free to ask questions.
 
 Thanks for reading.
+
 

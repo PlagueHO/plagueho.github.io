@@ -72,7 +72,10 @@ Most Labs use DSC to configure each VM once it has been provisioned, so the abil
 
 The first thing you'll need to do is install the LabBuilder Module. Execute this PowerShell command at an Administrator PowerShell prompt:
 
-{{< gist PlagueHO 7113b802a227a166ce1df229e4036d17 >}}
+
+```powershell
+Install-Module -Name LabBuilder
+```
 
 ![ss_labbuilder_installmodule](/images/ss_labbuilder_installmodule.png)
 
@@ -86,7 +89,11 @@ By default all sample Labs expect these folders to be D:\\ISOs and D:\\VHDs. If 
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-{{< gist PlagueHO 5933ce33b74b16fe5d63298bf66aa071 >}}
+
+```powershell
+New-Item -Path 'd:\ISOs' -ItemType Directory
+New-Item -Path 'd:\VHDs' -ItemType Directory
+```
 
 ![ss_labbuilder_createisosandvhdsfolders](/images/ss_labbuilder_createisosandvhdsfolders.png)
 
@@ -100,7 +107,10 @@ For all sample LabBuilder configurations, this folder defaults to a folder in C:
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-{{< gist PlagueHO 62b7fbba3576d8172ce5e71556ec826a >}}
+
+```
+New-Item -Path 'c:\VM' -ItemType Directory
+```
 
 ### Step 4 - Customize the Sample Lab file
 
@@ -138,7 +148,13 @@ We're now ready to build the lab from the sample configuration.
 
 Execute the following PowerShell commands at an Administrator PowerShell prompt:
 
-{{< gist PlagueHO 180c7c66c2768fb9316d4e2891241853 >}}
+
+```powershell
+$ConfigPath = Join-Path `
+  -Path (Split-Path -Path (Get-Module -Name LabBuilder -ListAvailable).Path -Parent) `
+  -ChildPath 'Samples\Sample_WS2016_NanoDomain.xml'
+Install-Lab -ConfigPath $ConfigPath -Verbose
+```
 
 This will begin the task of building out your Lab. The commands just determine the location of your LabBuilder sample file and then call the **Install-Lab** cmdlet. I could have specified the path to the sample file manually, and you can if you prefer.
 
@@ -162,7 +178,13 @@ For the sample Lab the Domain **Administrator** account password is configured a
 
 Once the Lab has been completely built, you can shut it down with the **Stop-Lab** command. You need to pass the path to the Lab Configuration file to shut it down:
 
-{{< gist PlagueHO bfdc23cbf4a9166ef21610976376df8b >}}
+
+```powershell
+$ConfigPath = Join-Path `
+  -Path (Split-Path -Path (Get-Module -Name LabBuilder -ListAvailable).Path -Parent) `
+  -ChildPath 'Samples\Sample_WS2016_NanoDomain.xml'
+Stop-Lab -ConfigPath $ConfigPath -Verbose
+```
 
 The Virtual Machines in the Lab will be shut down in an order defined in the Lab Configuration file. This will ensure that the VMs are shut down in the correct order (e.g. shut down the domain controllers last).
 
@@ -170,7 +192,13 @@ The Virtual Machines in the Lab will be shut down in an order defined in the Lab
 
 If you need to start up a previously created Lab, use the **Start-Lab** command. You will again need to provide the path to the Lab Configuration file of the Lab you want to shut down:
 
-{{< gist PlagueHO 3431605d673745726c758d68f5417678 >}}
+
+```
+$ConfigPath = Join-Path `
+  -Path (Split-Path -Path (Get-Module -Name LabBuilder -ListAvailable).Path -Parent) `
+  -ChildPath 'Samples\Sample_WS2016_NanoDomain.xml'
+Start-Lab -ConfigPath $ConfigPath -Verbose
+```
 
 The Virtual Machines in the Lab will be started up in an order defined in the Lab Configuration file. This will ensure that the VMs are started up in the correct order.
 
@@ -178,11 +206,18 @@ The Virtual Machines in the Lab will be started up in an order defined in the La
 
 If you want to completely remove a Lab, use the **Uninstall-Lab** command. You will again need to provide the path to the Lab Configuration file of the Lab you want to unisntall:
 
-{{< gist PlagueHO 7f50968b19708099519b88db80a5829a >}}
+
+```
+$ConfigPath = Join-Path `
+  -Path (Split-Path -Path (Get-Module -Name LabBuilder -ListAvailable).Path -Parent) `
+  -ChildPath 'Samples\Sample_WS2016_NanoDomain.xml'
+Uninstall-Lab -ConfigPath $ConfigPath -Verbose
+```
 
 **Note: You will be asked to confirm the removals**.
 
 # Wrapping Up
 
 This article has hopefully given you a basic understanding of how to use LabBuilder to stand up a Hyper-V Lab in relatively short order and without a lot of commands and clicks. This project is still in Beta and so there may be bugs as well as some incomplete features. If you want to raise an issue with this project (or even submit a PR), head on over to the [GitHub repository](https://github.com/PlagueHO/LabBuilder).
+
 

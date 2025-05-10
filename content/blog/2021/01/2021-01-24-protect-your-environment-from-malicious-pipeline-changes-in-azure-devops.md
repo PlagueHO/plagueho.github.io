@@ -25,7 +25,65 @@ The reason I decided to write this post is that it is not as straight to protect
 
 By way of example, consider you have a Git repository with a [multi-stage Azure DevOps YAML pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started/pipelines-get-started?view=azure-devops#define-pipelines-using-yaml-syntax) defined in it:
 
-{{< gist PlagueHO ddc66b26a3d314fc3c2666d1c4a39e8d >}}
+
+```yaml
+trigger:
+  branches:
+    include:
+    - 'main'
+pr: none
+
+stages:
+  - stage: Build
+    jobs:
+      - template: templates/build.yml
+
+  - stage: QA
+    displayName: 'Quality Assurance'
+    jobs:
+      - deployment: deploy_qa
+        displayName: 'Deploy to QA'
+        pool:
+          vmImage: 'Ubuntu-16.04'
+        variables:
+          - group: 'QA Secrets'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                  displayName: 'Deploy Azure Resources'
+                  inputs:
+                    azureResourceManagerConnection: 'Azure QA'
+                    subscriptionId: '<redacted>'
+                    resourceGroupName: 'dsr-qa-rg'
+                    location: 'East US'
+                    csmFile: '$(Pipeline.Workspace)/arm/azuredeploy.json'
+                    overrideParameters: '-sqlServerName dsr-qa-sql -sqlDatabaseName dsrqadb -sqlAdministratorLoginUsername $(SQLAdministratorLoginUsername) -sqlAdministratorLoginPassword $(SQLAdministratorLoginPassword) -hostingPlanName "dsr-qa-asp" -webSiteName "dsrqaapp"'
+
+  - stage: Production
+    displayName: 'Release to Production'
+    jobs:
+      - deployment: deploy_production
+        displayName: 'Deploy to Production'
+        pool:
+          vmImage: 'Ubuntu-16.04'
+        variables:
+          - group: 'PRODUCTION Secrets'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                  displayName: 'Deploy Azure Resources'
+                  inputs:
+                    azureResourceManagerConnection: 'Azure PRODUCTION'
+                    subscriptionId: '<redacted>'
+                    resourceGroupName: 'dsr-production-rg'
+                    location: 'East US'
+                    csmFile: '$(Pipeline.Workspace)/arm/azuredeploy.json'
+                    overrideParameters: '-sqlServerName dsr-production-sql -sqlDatabaseName dsrproductiondb -sqlAdministratorLoginUsername $(SQLAdministratorLoginUsername) -sqlAdministratorLoginPassword $(SQLAdministratorLoginPassword) -hostingPlanName "dsr-production-asp" -webSiteName "dsrproductionapp"'
+```
 
 This definition is **triggered** to only run on 'main' branch and never from a pull request. The pipeline also references [Variable Groups](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups) and [Service Connections](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints), which should be considered protected resources, especially for the Production environment.
 
@@ -55,7 +113,34 @@ However, the branch policy specifics aren't actually important here.
 
 The problem is that **any user** may create a new branch off **main** and add malicious (or accidental) code to the **azure-pipelines.yml**. For example, if I create a new branch called _malicious-change_ with **azure-pipelines.yml** changed to:
 
-{{< gist PlagueHO 071546891c5cd2636226ef94df2230c6 >}}
+
+```yaml
+trigger:
+  branches:
+    include:
+    - 'main'
+    - 'malicious-change'
+pr: none
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Malicious_Activities
+        pool:
+          vmImage: 'Ubuntu-16.04'
+        continueOnError: true
+        variables:
+          - group: 'PRODUCTION Secrets'
+        steps:
+          - script: echo 'Send $(SQLAdministratorLoginUsername) to Pastebin or some external location'
+          - task: AzurePowerShell@5
+            displayName: 'Run malicious code in Azure Production envrionment'
+            inputs:
+              azureSubscription: 'Azure PRODUCTION'
+              ScriptType: InlineScript
+              Inline: '# Run some malicious code with access to Azure Production'
+              azurePowerShellVersion: latestVersion
+```
 
 [![](/images/ss_azdopipelinecontrols_gitmaliciousbranch.png?w=1024)](/images/ss_azdopipelinecontrols_gitmaliciousbranch.png)
 
@@ -239,7 +324,66 @@ Finally, we need to update the **azure-pipeline.yml** to make use of the **envir
 
 Setting the environment to PRODUCTION in a deployment job.
 
-{{< gist PlagueHO b3739eda14b635e2593dbafcc6a7d937 >}}
+```yaml
+trigger:
+  branches:
+    include:
+    - 'main'
+pr: none
+
+stages:
+  - stage: Build
+    jobs:
+      - template: templates/build.yml
+
+  - stage: QA
+    displayName: 'Quality Assurance'
+    jobs:
+      - deployment: deploy_qa
+        displayName: 'Deploy to QA'
+        pool:
+          vmImage: 'Ubuntu-16.04'
+        environment: 'QA'
+        variables:
+          - group: 'QA Secrets'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                  displayName: 'Deploy Azure Resources'
+                  inputs:
+                    azureResourceManagerConnection: 'Azure QA'
+                    subscriptionId: '72ad9153-ecab-48c9-8a7a-d61f2390df78'
+                    resourceGroupName: 'dsr-qa-rg'
+                    location: 'East US'
+                    csmFile: '$(Pipeline.Workspace)/arm/azuredeploy.json'
+                    overrideParameters: '-sqlServerName dsr-qa-sql -sqlDatabaseName dsrqadb -sqlAdministratorLoginUsername $(SQLAdministratorLoginUsername) -sqlAdministratorLoginPassword $(SQLAdministratorLoginPassword) -hostingPlanName "dsr-qa-asp" -webSiteName "dsrqaapp"'
+
+  - stage: Production
+    displayName: 'Release to Production'
+    jobs:
+      - deployment: deploy_production
+        displayName: 'Deploy to Production'
+        pool:
+          vmImage: 'Ubuntu-16.04'
+        environment: 'PRODUCTION'
+        variables:
+          - group: 'PRODUCTION Secrets'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - task: AzureResourceManagerTemplateDeployment@3
+                  displayName: 'Deploy Azure Resources'
+                  inputs:
+                    azureResourceManagerConnection: 'Azure PRODUCTION'
+                    subscriptionId: '72ad9153-ecab-48c9-8a7a-d61f2390df78'
+                    resourceGroupName: 'dsr-production-rg'
+                    location: 'East US'
+                    csmFile: '$(Pipeline.Workspace)/arm/azuredeploy.json'
+                    overrideParameters: '-sqlServerName dsr-production-sql -sqlDatabaseName dsrproductiondb -sqlAdministratorLoginUsername $(SQLAdministratorLoginUsername) -sqlAdministratorLoginPassword $(SQLAdministratorLoginPassword) -hostingPlanName "dsr-production-asp" -webSiteName "dsrproductionapp"'
+```
 
 We can now get now also get a single view of all deployments to an environment:
 
@@ -292,4 +436,3 @@ You can also choose to have [notifications delivered to you in Microsoft Teams](
 It is important to remember that all of these controls and methods are **optional**. If you don't need this level of control and governance over your environments then you shouldn't add the complexity that goes with it. That said, it is always good to know what you can do with the tools, even if you don't need to use it.
 
 I hope you found this (long, but hopefully not too long) post useful.
-

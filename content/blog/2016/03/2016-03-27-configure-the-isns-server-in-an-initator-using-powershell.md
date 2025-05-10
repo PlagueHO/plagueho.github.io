@@ -18,7 +18,10 @@ But lets face it, that's no fun and it really doesn't fit well when when we have
 
 It is [easy enough](https://blogs.technet.microsoft.com/filecab/2012/06/08/iscsi-target-cmdlet-reference/) to configure **iSCSI Targets** to register with an **iSNS Server**:
 
-{{< gist PlagueHO de9d5068d11d135eb9b1 >}}
+
+```powershell
+Set-WmiInstance -Namespace root\wmi -Class WT_iSNSServer –Arguments @{ServerName="ISNSSERVER.CONTOSO.COM"}
+```
 
 But unfortunately I couldn't find any documentation on how to do this on an **iSCSI Initiator**. But after a little bit of digging around WMI I found the appropriate class:
 
@@ -26,23 +29,41 @@ _**MSiSCSIInitiator\_iSNSServerClass**_
 
 So, to add the **iSNS Server** to the **iSCSI Initiator**:
 
-{{< gist PlagueHO 17975238e03fb1db3f87 >}}
+
+```powershell
+Set-WmiInstance `
+  -Namespace root\wmi `
+  -Class MSiSCSIInitiator_iSNSServerClass `
+  -Arguments @{iSNSServerAddress="ISNSSERVER.CONTOSO.COM"}
+```
 
 Notice that the WMI Class **argument** **name** for the setting the **iSNS Server** name in an **iSCSI Initiator** is different (iSNSServerAddress) compared to setting it for an **iSCSI Target** (ServerName).
 
 To list the currently set iSNS Servers:
 
-{{< gist PlagueHO 76f89aa26791188cac5c >}}
+
+```powershell
+Get-WmiObject `
+  -Class MSiSCSIInitiator_iSNSServerClass `
+  -Namespace root\wmi
+```
 
 ![ss_isns_getlistservers](/images/ss_isns_getlistservers.png)
 
 And if you need to remove an **iSNS Server** from the **iSCSI Initiator**:
 
-{{< gist PlagueHO b5cac574910ae8d9a1e7 >}}
+
+```powershell
+Get-WmiObject `
+  -Class MSiSCSIInitiator_iSNSServerClass `
+  -Namespace root\wmi `
+  -Filter "iSNSServerAddress='ISNSSERVER.CONTOSO.COM'" | Remove-WmiObject -Verbose
+```
 
 Pretty easy right?
 
 In a few weeks I plan to integrate iSNS registration with my [iSCSI DSC Resources](https://github.com/PlagueHO/ciSCSI) (also available on [PowerShell Gallery](https://www.powershellgallery.com/packages/ciSCSI/1.0.0.14)) so that the whole process of registering iSCSI Initiators and Targets with iSNS is just a little bit easier.
 
 Thanks for reading.
+
 

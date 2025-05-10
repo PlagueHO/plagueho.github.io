@@ -98,7 +98,12 @@ You need to copy the **integration test template** files and rename them to matc
 
 The easiest way to do this is to **clone** the repository containing the **test template** files and copy the **integration\_template.ps1** and **integration\_config\_template.ps1** files to your **Tests/Integration** folder:
 
-{{< gist PlagueHO 9e6244d25c241e5dc995 >}}
+
+```powershell
+git clone https://github.com/PowerShell/DSCResources.git
+Copy-Item .\DSCResources\Tests.Template\integration_config_template.ps1 .\ciSCSI\Tests\Integration\BMD_ciSCSIVirtualDisk.config.ps1
+Copy-Item .\DSCResources\Tests.Template\integration_template.ps1 .\ciSCSI\Tests\Integration\BMD_ciSCSIVirtualDisk.Integration.Tests.ps1
+```
 
 ![ss_dsc_createnewinttestfromtemplate](/images/ss_dsc_createnewinttestfromtemplate.png)
 
@@ -112,13 +117,45 @@ The first file I usually edit is the \*.**config.ps1** file:
 
 ![ss_dsc_newinttestconfigtemplate](/images/ss_dsc_newinttestconfigtemplate1.png)
 
-Next, you'll want to change any **<ResourceName>** occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed: {{< gist PlagueHO 2fa06a8c28f64b7966dc >}}
+Next, you'll want to change any **<ResourceName>** occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed: 
+```powershell
+configuration 'BMD_ciSCSIVirtualDisk_config' {
+    Import-DscResource -Name 'BMD_ciSCSIVirtualDisk'
+    node localhost {
+       BMD_ciSCSIVirtualDisk Integration_Test {
+            # TODO: Fill Configuration Code Here
+       }
+    }
+}
+```
 
 Next, we need to configure the **config** file with the parameters we want to use as tests of the resource.
 
 The best way of doing this is actually to create a **hash table** object at the beginning of the file with the parameters that we're going to set. This is so that we can use this **hash table** object in the other **integration file** (\*.Integration.Tests.ps1) when we're comparing the values that are expected to be set.
 
-{{< gist PlagueHO 2c854c65a6ff6500d78c >}}
+
+```powershell
+$VirtualDisk = @{
+    Path            = Join-Path -Path $ENV:Temp -ChildPath 'TestiSCSIVirtualDisk.vhdx'
+    Ensure          = 'Present'
+    DiskType        = 'Dynamic'
+    Size            = 100MB
+    Description     = 'Integration Test iSCSI Virtual Disk'
+}
+
+Configuration BMD_ciSCSIVirtualDisk_Config {
+    Import-DscResource -Name BMD_ciSCSIVirtualDisk_Config
+    node localhost {
+        BMD_ciSCSIVirtualDis Ikntegration_Test {
+            Path            = $VirtualDisk.Path
+            Ensure          = $VirtualDisk.Ensure
+            DiskType        = $VirtualDisk.DiskType
+            SizeBytes       = $VirtualDisk.Size
+            Description     = $VirtualDisk.Description
+        }
+    }
+}
+```
 
 As you can see in the example above, I create a **$VirtualDisk** hash table that contains all the parameters and values that will be used to test this DSC Resource. The **$VirtualDisk** object is then also accessible in the **\*.Integration.Tests.ps1** file.
 
@@ -142,7 +179,35 @@ Feel free to remove the **TODO** comments if you want (I always do).
 
 After customizing the header we need to add any code that might be required to set this machine up to actually perform these **integration tests**. The first thing I like to do is add code to check that these integration tests can actually be performed on this machine. In my example resource, the **iSCSI Virtual Disk** resource will require the **iSCSI Target Server** feature to be installed, which also means the OS must be a Server OS. So, first thing in the **try/catch** block I add these checks:
 
-{{< gist PlagueHO e3d943ebd95fb4156ea2 >}}
+
+```powershell
+# Ensure that the tests can be performed on this computer
+$ProductType = (Get-CimInstance Win32_OperatingSystem).ProductType
+Describe 'Environment' {
+    Context 'Operating System' {
+        It 'Should be a Server OS' {
+            $ProductType | Should Be 3
+        }
+    }
+}
+if ($ProductType -ne 3)
+{
+    Break
+}
+
+$Installed = (Get-WindowsFeature -Name FS-iSCSITarget-Server).Installed
+Describe 'Environment' {
+    Context 'Windows Features' {
+        It 'Should have the iSCSI Target Feature Installed' {
+            $Installed | Should Be $true
+        }
+    }   
+}
+if ($Installed -eq $false)
+{
+    Break
+}
+```
 
 This will cause the **try/catch** block to be **exited** straight away if these tests can't actually be performed on this machine.
 
@@ -162,7 +227,17 @@ To do this, we complete this section:
 
 In this case, I've changed it to:
 
-{{< gist PlagueHO 33ff449f92ed9242c96d >}}
+
+```powershell
+It 'Should have set the resource and all the parameters should match' {
+  # Get the Rule details
+  $virtualDiskNew = Get-iSCSIVirtualDisk -Path $VirtualDisk.Path
+  $VirtualDisk.Path               | Should Be $virtualDiskNew.Path
+  $VirtualDisk.DiskType           | Should Be $virtualDiskNew.DiskType
+  $VirtualDisk.Size               | Should Be $virtualDiskNew.Size
+  $VirtualDisk.Description        | Should Be $virtualDiskNew.Description
+}
+```
 
 What this code does is gets the iSCSI Virtual Disk that is at the path specified in the **$VirtualDisk.path** into a variable **$VirtualDiskNew**.
 
@@ -174,7 +249,15 @@ The parameters in **$VirtualDiskNew** are then matched to ensure they are the sa
 
 It is important that after the tests have been run that any changes that were made to the testing computer are reverted. So, after the end of the last test I add any clean up code. In my case, I want to remove the **iSCSI Virtual Disk** that was created:
 
-{{< gist PlagueHO e2e30a66d466a488941d >}}
+
+```powershell
+# Clean up
+Remove-iSCSIVirtualDisk `
+  -Path $VirtualDisk.Path
+Remove-Item `
+  -Path $VirtualDisk.Path `
+  -Force
+```
 
 The above code just removes the **iSCSI Virtual Disk** and then also makes sure that the **VHD** file was also deleted. This is also very important because if the clean up does not occur and the tests are run again on the same computer they may fail.
 
@@ -189,4 +272,5 @@ This series actually ended up being a bit longer than I intended, but hopefully 
 If you have an idea for a new resource in an existing module, raise an issue in the DSC Resource Module repository and offer to create the new resource. You may find that someone is already working on one, but if not, then this is a great opportunity to get started. It is quite a rewarding feeling the first time one of your contributions gets published in the official community DSC Resources!
 
 So, thanks again for reading.
+
 

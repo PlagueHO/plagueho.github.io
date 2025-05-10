@@ -32,7 +32,83 @@ In Windows Nano Server TP4 Microsoft included CIM cmdlets. This enabled us to us
 
 However, I have lots of Nano Servers and updating them one at a time would be a real pain. So I decided to write a short PowerShell snippet to update all of them at once. This snippet should actually work with any Windows Server 2016 TP4 (or greater) version.
 
-{{< gist PlagueHO 3dd091d45db5800775321fbacfeaf479 >}}
+
+```powershell
+function Get-AvailableUpdates {
+    [CmdletBinding()]
+    param (
+        [PSCredential] $Credential = (Get-Credential -Message 'Credentials to use to update Servers'),
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [String[]] $Servers,
+
+        [Switch] $Install,
+        
+        [Switch] $Restart
+    )
+    $servers | foreach-object {
+        $session = New-CimSession `
+            -ComputerName $_ `
+            -Credential $credential
+        $instance =  New-CimInstance `
+            -Namespace root/Microsoft/Windows/WindowsUpdate `
+            -ClassName MSFT_WUOperationsSession `
+            -CimSession $session
+        # Due to a bug in CIM on Nano Server (TP4 and TP5) an error is returned when
+        # there are no available updates.
+        # We use ErrorAction SilentlyContinue to ignore this (DON'T do this in a production script!!!!)
+        $scanResults = @($Instance | Invoke-CimMethod `
+            -MethodName ScanForUpdates `
+            -Arguments @{SearchCriteria="IsInstalled=0";OnlineScan=$true} `
+            -CimSession $session `
+            -errorAction SilentlyContinue)
+        if ($scanResults)
+        {
+            "$_ has $($scanResults.Count) updates to be installed:"
+            if ($install)
+            {
+                $installResult = $Instance | Invoke-CimMethod `
+                    -MethodName ApplyApplicableUpdates `
+                    -CimSession $Session
+                if ($installResult.ReturnValue -eq 0)
+                {
+                    'Updates were installed successfully:'
+                    $scanResults.Updates
+                    if ($Restart)
+                    {
+                        "Restarting $_"
+                        Invoke-Command `
+                            -ComputerName $_ `
+                            -Credential $credential `
+                            -ScriptBlock { Restart-Computer }
+                    }
+                    else
+                    {
+                        'You may need to reboot this server for update installation to complete.'
+                    }
+                }
+                else
+                {
+                    'An error occurred installing updates:'
+                    $installResult
+                }
+            }
+            else
+            {
+                'Set -Install flag to install updates'
+                $scanResults.Updates
+            } # if
+        }
+        else
+        {
+            "$_ has no updates to be installed."
+        } # if
+        Remove-CimSession `
+            -CimSession $session
+    } # foreach-object
+} # function Get-AvailableUpdates
+```
 
 This snippet contains a simple function that takes three parameters:
 
@@ -74,4 +150,5 @@ _Note: I really haven't put much work into error checking or reporting on this p
 This function would be a definite candidate for a **PowerShell Workflow** - allowing complete parallelization of the process.
 
 I hope this is useful and have a great weekend!
+
 

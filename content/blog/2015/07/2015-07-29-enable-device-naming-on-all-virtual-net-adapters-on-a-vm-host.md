@@ -13,17 +13,29 @@ But having a number of VM's running on this Hyper-V host I couldn't be bothered 
 
 First up, to upgrade the configuration of all the VMs on this host so the new features can be used I ran the following command:
 
-\[sourcecode language="powershell"\] Get-VM  | Update-VMVersion \[/sourcecode\]
+```powershell
+Get-VM | Update-VMVersion
+```
 
-Once that was completed (which took about 10 seconds) I could then enable the **Device Naming** feature of all the Virtual Network Adapters on all _Generation 2_ VM's(this feature isn't supported on _Generation 1_ VM's). The **Device Naming** feature will label the Network Adapter in the guest OS (for supported operating systems) with the name of the Virtual Network Adapter set in the host.
+Once that was completed (it took about 10 seconds) I could enable the **Device Naming** feature of all the Virtual Network Adapters on all *Generation 2* VMs (this feature isn’t supported on *Generation 1* VMs). The feature labels the NIC inside the guest OS (when supported) with the name you assign in the host.
 
-To enable **Device Naming** on all _Generation 2_ Network Adapters on all VM's on the host:
+To enable **Device Naming** on all *Generation 2* virtual NICs:
 
-\[sourcecode language="powershell"\] Get-VM | Where-Object -Property VirtualMachineSubType -eq 'Generation2' | Get-VMNetworkAdapter | Set-VMNetworkAdapter -DeviceNaming On \[/sourcecode\]
+```powershell
+Get-VM |
+    Where-Object  -Property VirtualMachineSubType -eq 'Generation2' |
+    Get-VMNetworkAdapter |
+    Set-VMNetworkAdapter -DeviceNaming On
+```
 
-All in all this was much easier than the eternal clicking I would have to have used in the UI. I could have even combined the two steps into one command:
+All in all this was much easier than the endless clicking I would have had to do in the UI. You can even combine the two steps into a single command:
 
-\[sourcecode language="powershell"\] Get-VM | Update-VMVersion -Passthru | Where-Object -Property VirtualMachineSubType -eq 'Generation2' |  Get-VMNetworkAdapter | Set-VMNetworkAdapte r -DeviceNaming On \[/sourcecode\]
+```powershell
+Get-VM |
+    Update-VMVersion -Passthru |
+    Where-Object -Property VirtualMachineSubType -eq 'Generation2' |
+    Get-VMNetworkAdapter |
+    Set-VMNetworkAdapter -DeviceNaming On
+```
 
- So now it's off to try some of the other new Hyper-V features.
-
+So now it’s off to try some of the other new Hyper-V features.

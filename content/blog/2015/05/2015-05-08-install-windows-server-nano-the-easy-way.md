@@ -34,9 +34,18 @@ It is fairly straight forward to install and use:
 4. Change directory to the **Working Folder** (cd c:\\nano).
 5. Execute the following command (customizing the parameters to your needs):
 
-\[sourcecode language="powershell"\] .\\New-NanoServerVHD.ps1 \` -ServerISO 'c:\\nano\\14300.1000.160324-1723.RS1\_RELEASE\_SVC\_SERVER\_OEMRET\_X64FRE\_EN-US.ISO'' \` -DestVHD c:\\nano\\NanoServer01.vhdx \` -VHDFormat 'VHDx' \` -ComputerName NANOTEST01 \` -AdministratorPassword 'P@ssword!1' \` -Packages 'Storage','OEM-Drivers','Guest' \` -IPAddress '192.168.1.65' \[/sourcecode\]
+```powershell
+.\New-NanoServerVHD.ps1 `
+    -ServerISO 'c:\nano\14300.1000.160324-1723.RS1_RELEASE_SVC_SERVER_OEMRET_X64FRE_EN-US.ISO' `
+    -DestVHD   'c:\nano\NanoServer01.vhdx' `
+    -VHDFormat 'VHDx' `
+    -ComputerName 'NANOTEST01' `
+    -AdministratorPassword 'P@ssword!1' `
+    -Packages 'Storage','OEM-Drivers','Guest' `
+    -IPAddress '192.168.1.65'
+```
 
-**Note**: If you run this in the PowerShell ISE, a pop-up message appears during the execution of the above command:
+**Note**: If you run this in the PowerShell ISE, a pop-up message appears during execution:
 
 [![This error can be ignored without it causing a problem.](/images/ss_nano_building_error_wrong_volume.png)](/images/ss_nano_building_error_wrong_volume.png)
 This error can be ignored without it causing a problem.

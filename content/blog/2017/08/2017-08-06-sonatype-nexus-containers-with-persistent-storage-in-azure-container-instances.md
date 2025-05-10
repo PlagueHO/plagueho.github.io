@@ -28,7 +28,21 @@ Works perfectly and the container starts up quickly (under 10 seconds):
 
 I passed the following parameters to the script:
 
-{{< gist PlagueHO 18b8545abe2a1bf555a33dd01fbb1454 >}}
+
+```powershell
+.\Install-AzureContainerInstancePersistStorage.ps1 `
+    -ServicePrincipalUsername 'ce6fca5e-a22d-44b2-a75a-f3b20fcd1b16' `
+    -ServicePrincipalPassword (ConvertTo-SecureString -String 'JUJfenwe89hwNNF723ibw2YBybf238ybflA=' -AsPlainText -Force) `
+    -TenancyId '8871b1ba-7d3d-45f3-8ee0-bb60c0e4733e' `
+    -SubscriptionName 'Visual Studio Enterprise' `
+    -AppCode 'nexus' `
+    -UniqueCode 'mine' `
+    -ContainerImage 'sonatype/nexus:oss' `
+    -ContainerPort '8081' `
+    -VolumeName 'nexus' `
+    -MountPoint '/sonatype-work/' `
+    -Verbose
+```
 
 _**Note: The Nexus 2 server is only accessible on the path /nexus/.**_
 
@@ -40,7 +54,21 @@ Works perfectly but after takes at least a minute to be accessible after the con
 
 I passed the following parameters to the script:
 
-{{< gist PlagueHO 70f06115c4a764f23711fe483d85d9dc >}}
+
+```powershell
+.\Install-AzureContainerInstancePersistStorage.ps1 `
+    -ServicePrincipalUsername 'ce6fca5e-a22d-44b2-a75a-f3b20fcd1b16' `
+    -ServicePrincipalPassword (ConvertTo-SecureString -String 'JUJfenwe89hwNNF723ibw2YBybf238ybflA=' -AsPlainText -Force) `
+    -TenancyId '8871b1ba-7d3d-45f3-8ee0-bb60c0e4733e' `
+    -SubscriptionName 'Visual Studio Enterprise' `
+    -AppCode 'nexus3' `
+    -UniqueCode 'mine' `
+    -ContainerImage 'sonatype/nexus3:latest' `
+    -ContainerPort '8081' `
+    -VolumeName 'nexus3' `
+    -MountPoint '/nexus-data/' `
+    -Verbose
+```
 
 ## Jenkins
 
@@ -50,7 +78,22 @@ Unfortunately Jenkins does not work with a persistent storage volume from an Azu
 
 I passed the following parameters to the script:
 
-{{< gist PlagueHO a8bfee04c9b2f5dd607bf400990bf6a2 >}}
+
+```powershell
+.\Install-AzureContainerInstancePersistStorage.ps1 `
+    -ServicePrincipalUsername 'ce6fca5e-a22d-44b2-a75a-f3b20fcd1b16' `
+    -ServicePrincipalPassword (ConvertTo-SecureString -String 'JUJfenwe89hwNNF723ibw2YBybf238ybflA=' -AsPlainText -Force) `
+    -TenancyId '8871b1ba-7d3d-45f3-8ee0-bb60c0e4733e' `
+    -SubscriptionName 'Visual Studio Enterprise' `
+    -AppCode 'jenkinshome' `
+    -UniqueCode 'dsr' `
+    -ContainerImage 'jenkins/jenkins:lts' `
+    -ContainerPort '8080' `
+    -VolumeName 'jenkinshome' `
+    -MountPoint '/var/jenkins_home/' `
+    -Verbose
+```
 
 So, this is still a little bit hit and miss, but in general Azure Container Instances look like a very promising way to run different types of services in containers without a lot of overhead. With a bit of automation, this could turn out to be a cost effective way to quickly and easily run some common services.
+
 

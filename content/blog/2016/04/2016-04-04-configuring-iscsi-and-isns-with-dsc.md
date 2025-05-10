@@ -55,7 +55,98 @@ A DSC configuration that creates an **iSCSI Server Target** requires the followi
 
 Here is the DSC Configuration:
 
-{{< gist PlagueHO 4aa6938ac6531971444f131f41a46cfe >}}
+
+```powershell
+Configuration ISCSI_SERVER_TARGET
+{
+    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName xStorage
+    Import-DscResource -ModuleName ciSCSI
+    Node 'FS1' {
+
+        # Step 1 - Install the iSCSI Target Server Windows Feature (FS-iSCSITarget-Server).
+        WindowsFeature ISCSITargetServerInstall 
+        { 
+            Ensure = "Present" 
+            Name = "FS-iSCSITarget-Server" 
+        }
+
+        # Step 2 - Initialize and physical disks that will be used to store the iSCSI Virtual Disks (optional).
+        xWaitforDisk Disk2
+        {
+            DiskNumber = 1
+            RetryIntervalSec = 60
+            RetryCount = 60
+        }
+        xDisk DVolume
+        {
+            DiskNumber = 1
+            DriveLetter = 'D'
+            DependsOn = "[xWaitforDisk]Disk2" 
+        }
+        File VirtualDisksFolder
+        {
+            Ensure = 'Present'
+            DestinationPath = 'D:\iSCSIVirtualDisks'
+            Type = 'Directory'
+            DependsOn = '[xDisk]DVolume'
+        }
+
+        # Step 3 - Create the iSCSI Virtual Disks that will be used by the iSCSI Server Target
+        ciSCSIVirtualDisk VDisk1
+        {
+            Ensure = 'Present'
+            Path = 'D:\iSCSIVirtualDisks\VDisk1.vhdx'
+            DiskType = 'Dynamic'
+            SizeBytes = 128GB
+            DependsOn = "[File]VirtualDisksFolder"
+        }
+        ciSCSIVirtualDisk VDisk2
+        {
+            Ensure = 'Present'
+            Path = 'D:\iSCSIVirtualDisks\VDisk2.vhdx'
+            DiskType = 'Dynamic'
+            SizeBytes = 128GB
+            DependsOn = "[File]VirtualDisksFolder"
+        }
+        ciSCSIVirtualDisk VDisk3
+        {
+            Ensure = 'Present'
+            Path = 'D:\iSCSIVirtualDisks\VDisk3.vhdx'
+            DiskType = 'Dynamic'
+            SizeBytes = 128GB
+            DependsOn = "[File]VirtualDisksFolder"
+        }
+        ciSCSIVirtualDisk VDisk4
+        {
+            Ensure = 'Present'
+            Path = 'D:\iSCSIVirtualDisks\VDisk4.vhdx'
+            DiskType = 'Dynamic'
+            SizeBytes = 128GB
+            DependsOn = "[File]VirtualDisksFolder"
+        }
+
+        # Step 4 - Create the iSCSI Server Target and optionally register it with an iSNS Server.
+        ciSCSIServerTarget iSCSIServerTarget
+        {
+            Ensure = 'Present'
+            TargetName = 'FS1-Server-Target'
+            InitiatorIds = @(
+              'Iqn:iqn.1991-05.com.microsoft:CLUS1.CONTOSO.COM'
+              'Iqn:iqn.1991-05.com.microsoft:CLUS2.CONTOSO.COM'
+              'Iqn:iqn.1991-05.com.microsoft:CLUS3.CONTOSO.COM'
+            )
+            Paths = @(
+              'D:\iSCSIVirtualDisks\VDisk1.vhdx'
+              'D:\iSCSIVirtualDisks\VDisk2.vhdx'
+              'D:\iSCSIVirtualDisks\VDisk3.vhdx'
+              'D:\iSCSIVirtualDisks\VDisk4.vhdx'
+            )
+            iSNSServer = 'isns1.contoso.com'
+        }
+    }
+}
+```
 
 _**Important:** Note that the **TargetName** is set to 'FS1-Server-Target', which will automatically configure the **Target IQN** to 'iqn.1991-05.com.microsoft:FS1-FS1-Server-Target-Target'. This is because the **Microsoft iSCSI Server Target** cmdlets automatically name the **Server Target** for you using the following format:_
 
@@ -75,7 +166,47 @@ A DSC configuration for each of the iSCSI Initiators that will connect to the iS
 
 Here is the DSC Configuration for **CLUS1.CONTOSO.COM** (the configuration for the other nodes would be similar except with different InitiatorPortalAddress values):
 
-{{< gist PlagueHO 29d181c47e1d0f752629904618c93e43 >}}
+
+```powershell
+Configuration ISCSI_INITIATOR
+{
+    Import-DscResource -ModuleName PSDesiredStateConfiguration
+    Import-DscResource -ModuleName xPSDesiredStateConfiguration
+    Import-DscResource -ModuleName ciSCSI
+    Node 'CLUS1' {
+        
+        # Step 1 - Start the Microsoft iSCSI Initiator Service service (MSiSCSI)
+        Service iSCSIService 
+        { 
+            Name = 'MSiSCSI'
+            StartupType = 'Automatic'
+            State = 'Running'
+        }
+
+        # Step 2 - Use the WaitForAny WMF 5.0 DSC Resource to wait for the iSCSI Server Target to be created (optional).
+        WaitForAny WaitForiSCSIServerTarget
+        {
+            ResourceName = "[ciSCSIServerTarget]ClusterServerTarget"
+            NodeName = 'FS1'
+            RetryIntervalSec = 30
+            RetryCount = 30
+            DependsOn = "[Service]iSCSIService"
+        }
+
+        # Step 3 - Connect the iSCSI Initiator to the iSCSI Server Target and optionally register it with an iSNS Server.
+        ciSCSIInitiator iSCSIInitiator
+        {
+            Ensure = 'Present'
+            NodeAddress = 'iqn.1991-05.com.microsoft:fs1-fs1-server-target-target'
+            TargetPortalAddress = '192.168.129.10'
+            InitiatorPortalAddress = '192.168.129.24'
+            IsPersistent = $true
+            iSNSServer = 'isns1.contoso.com'
+            DependsOn = "[WaitForAny]WaitForiSCSIServerTarget" 
+        } # End of ciSCSITarget Resource
+    }
+}
+```
 
 _**Important:** We need to make sure the **NodeAddress** is set to the the **Target IQN** from the **iSCSI Server Target** - in this case 'iqn.1991-05.com.microsoft:FS1-FS1-Server-Target-Target'._
 
@@ -97,4 +228,5 @@ That is all there is to using this resource to configure a Windows Server 2012 i
 _**Note**: I have submitted this DSC Resource to be included in the [Microsoft Community DSC Resources project](https://github.com/PowerShell/DscResources). If it is accepted then the name of the DSC Resource will change from **ciSCSI** to **iSCSI**. The resource hasn't yet been reviewed and I'm not aware of an ETA for it. The old 'c' and 'x' nomenclature used by DSC Resources is being phased out._
 
 If you need some additional guidance or other specific examples, please feel free to drop a comment on this blog post (or the [GitHub repository](https://github.com/PlagueHO/ciSCSI)) and I'll do my best to help you out.
+
 

@@ -40,4 +40,3 @@ DISM /online /cleanup-image /StartComponentCleanup /ResetBase
 
 [![DISM /online /cleanup-image /StartComponentCleanup /ResetBase](/images/ss_dism_startcomponentcleanup_resetbase.png?w=660)](/images/ss_dism_startcomponentcleanup_resetbase.png)
 DISM /online /cleanup-image /StartComponentCleanup /ResetBase
-

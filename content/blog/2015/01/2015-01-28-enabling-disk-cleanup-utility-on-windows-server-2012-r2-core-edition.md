@@ -57,7 +57,7 @@ Install-Windowsfeature: The request to add or remove features on the specified s
 Installation of one or more roles, role services, or features failed.
 The source files could not be downloaded.
 Use the "source" option to specify the location of the files that are required to restore the feature. For more
-information on specifying a source location, see http://go.microsoft.com/fwlink/?LinkId=243077. Error: 0x800f0906
+information on specifying a source location, see [http://go.microsoft.com/fwlink/?LinkId=243077](http://go.microsoft.com/fwlink/?LinkId=243077). Error: 0x800f0906
 
 I also tried installing the feature using _PowerShell,_ using no alternative source, using a WIM source and using a Windows folder source:
 
@@ -102,4 +102,3 @@ Also, I did try _DISM_ without specifying a source as well, and it failed with t
 Install Feature using DISM fails with no Source specified.
 
 At first I actually thought the soution was using _DISM_ with the _/LimitAccess_ switch to prevent _DISM_ from using the internet to download the packages, but after further tests it doesn't seem to make any difference - _DISM_ works with and without this switch. The equivelent to the _/LimitAccess_ switch also doesn't appear to be available in the _PowerShell Install-WindowsFeature_ cmdlet.
-

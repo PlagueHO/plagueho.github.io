@@ -12,7 +12,11 @@ One thing I often like to do on my lab machines (servers and clients) is clear o
 
 The easiest way I've found to do this is just run the following PowerShell command in an Administrator PowerShell console:
 
-get-winevent -ListLog \* | % { \[System.Diagnostics.Eventing.Reader.EventLogSession\]::GlobalSession.ClearLog($\_.LogName) }
+```powershell
+Get-WinEvent -ListLog * | ForEach-Object {
+    [System.Diagnostics.Eventing.Reader.EventLogSession]::GlobalSession.ClearLog($_.LogName)
+}
+```
 
 This will dump the content of every Windows Log and Applications and Services log in one go.
 
@@ -20,7 +24,14 @@ Be aware, this is a one-way ticket - you can't recover the content of these logs
 
 So if you're a bit concerned and want to archive the content before it gets deleted use this command instead:
 
-get-winevent -ListLog \* | % { \[System.Diagnostics.Eventing.Reader.EventLogSession\]::GlobalSession.ClearLog($\_.LogName,"d:\\LogArchive\\$($\_.LogName -replace '/','.').evtx") }
+```powershell
+Get-WinEvent -ListLog * | ForEach-Object {
+    [System.Diagnostics.Eventing.Reader.EventLogSession]::GlobalSession.ClearLog(
+        $_.LogName,
+        "d:\LogArchive\$($_.LogName -replace '/','.').evtx"
+    )
+}
+```
 
 You'll want to configure the **d:\\ArchiveLog** to set the path you want the old events saved to. All the events will be saved into this folder with one file for each event log:
 
@@ -29,4 +40,3 @@ You'll want to configure the **d:\\ArchiveLog** to set the path you want the old
 Simple as that!
 
 \\m/
-

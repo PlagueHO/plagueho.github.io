@@ -24,19 +24,30 @@ Instead, we need to use the [Get-AzureADUser](https://docs.microsoft.com/en-us/p
 
 If you don't have the AzureAD module installed, use **Install-Module** cmdlet to install it from the PowerShell Gallery:
 
-{{< gist PlagueHO c86942259470983b0e3f2833e2549a8f >}}
+
+```powershell
+Install-Module -Name AzureAD
+```
 
 Then connect to the AzureAD using the **Connect-AzureAD** cmdlet. Once connected you can run the following command to get the user object and show only the appropriate property (**ForceChangePasswordNextLogin** of the **PasswordProfile** object):
 
-{{< gist PlagueHO 844b4febf8f89d863e1e2f5c6680221b >}}
+
+```powershell
+Connect-AzureAD
+(Get-AzureADUser -SearchString 'williammurderface@contoso.onmicrosoft.com').PasswordProfile.ForceChangePasswordNextLogin
+```
 
 ![ss_o365_getazureaduser](/images/ss_o365_getazureaduser1.png)
 
 If you wanted to get a list of all users with the **ForceChangePasswordNextLogin** property set to **true** then you could use:
 
-{{< gist PlagueHO c679486a599b2fb18f3149669bfca4af >}}
+
+```powershell
+Get-AzureADUser | Where-Object -FilterScript { $_.PasswordProfile.ForceChangePasswordNextLogin }
+```
 
 ![ss_o365_getazureadallforcechangepasswordnextlogin](/images/ss_o365_getazureadallforcechangepasswordnextlogin.png)
 
 This is all fairly straight forward once you figure out which object in Azure AD contains the information required.
+
 

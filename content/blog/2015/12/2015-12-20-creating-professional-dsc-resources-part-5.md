@@ -48,7 +48,30 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-{{< gist PlagueHO 8404c2dc72042e99bc2b >}}
+
+```powershell
+Context 'Virtual Disk exists and should but has a different Description' {
+	
+	Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+	Mock New-iSCSIVirtualDisk
+	Mock Set-iSCSIVirtualDisk
+	Mock Remove-iSCSIVirtualDisk
+
+	It 'should not throw error' {
+		{ 
+			$Splat = $TestVirtualDisk.Clone()
+			$Splat.Description = 'Different'
+			Set-TargetResource @Splat
+		} | Should Not Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName New-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Set-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName Remove-iSCSIVirtualDisk -Exactly 0
+	}
+}
+```
 
 This **context** will perform two tests:
 
@@ -71,7 +94,29 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return nothi
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-{{< gist PlagueHO 4f7a62a633c4cff41fac >}}
+
+```powershell
+Context 'Virtual Disk does not exist but should' {
+	
+	Mock Get-iSCSIVirtualDisk
+	Mock New-iSCSIVirtualDisk
+	Mock Set-iSCSIVirtualDisk
+	Mock Remove-iSCSIVirtualDisk
+
+	It 'should not throw error' {
+		{ 
+			$Splat = $TestVirtualDisk.Clone()
+			Set-TargetResource @Splat
+		} | Should Not Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName New-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName Set-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Remove-iSCSIVirtualDisk -Exactly 0
+	}
+}
+```
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 
@@ -83,7 +128,30 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-{{< gist PlagueHO 83cd60cc22ef66cbb52f >}}
+
+```powershell
+Context 'Virtual Disk exists but should not' {
+	
+	Mock Get-iSCSIVirtualDisk -MockWith { return @($MockVirtualDisk) }
+	Mock New-iSCSIVirtualDisk
+	Mock Set-iSCSIVirtualDisk
+	Mock Remove-iSCSIVirtualDisk
+
+	It 'should not throw error' {
+		{ 
+			$Splat = $TestVirtualDisk.Clone()
+			$Splat.Ensure = 'Absent'
+			Set-TargetResource @Splat
+		} | Should Not Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName New-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Set-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Remove-iSCSIVirtualDisk -Exactly 1
+	}
+}
+```
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 
@@ -95,7 +163,30 @@ In this scenario we **Mock** the **Get-iSCSIVirtualDisk** cmdlet to return the o
 
 We are also going to **Mock** the **Set-iSCSIVirtualDisk**, **New-iSCSIVirtualDisk** and **Remove-iSCSIVirtual****Disk**. This is so we can ensure the expected cmdlets are called as well as preventing the _real_ cmdlets from being run:
 
-{{< gist PlagueHO 6b3e30de7326e908ad1e >}}
+
+```powershell
+Context 'Virtual Disk does not exist and should not' {
+	
+	Mock Get-iSCSIVirtualDisk
+	Mock New-iSCSIVirtualDisk
+	Mock Set-iSCSIVirtualDisk
+	Mock Remove-iSCSIVirtualDisk
+		
+	It 'should not throw error' {
+		{ 
+			$Splat = $TestVirtualDisk.Clone()
+			$Splat.Ensure = 'Absent'
+			Set-TargetResource @Splat
+		} | Should Not Throw
+	}
+	It 'should call expected Mocks' {
+		Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		Assert-MockCalled -commandName New-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Set-iSCSIVirtualDisk -Exactly 0
+		Assert-MockCalled -commandName Remove-iSCSIVirtualDisk -Exactly 0
+	}
+}
+```
 
 The **context** tests are very similar to all the other tests so I won't go into detail on them here. It is important to note that the expected **Mocks** will be different.
 
@@ -109,4 +200,5 @@ Further parts in this series:
 
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+
 

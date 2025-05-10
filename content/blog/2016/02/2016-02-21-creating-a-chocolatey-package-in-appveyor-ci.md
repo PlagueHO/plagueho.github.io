@@ -58,13 +58,46 @@ This is the **Chocolatey** manifest file for the package. It is really just an X
 
 Alternately, if you have **Chocolatey** installed, you can run (from PowerShell or CMD):
 
-{{< gist PlagueHO fe0c3c1e2f91c16a2818 >}}
+
+```batchfile
+choco new devcon.portable
+```
 
 This will create a new folder called **devcon.portable** with a file **devcon.portable**.**nuspec** in it. You can then just customize the **devcon.portable**.**nuspec** with the details of the package. I also deleted the **tools** folder that was created as I had no need for that.
 
 In my case I ended up with this:
 
-{{< gist PlagueHO 360ae5e7d0b82d651158 >}}
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>devcon.portable</id>
+    <title>DevCon (Portable)</title>
+    <version>1.0</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <summary>Device Console (DevCon) Tool (Portable)</summary>
+    <description>
+[DevCon](http://msdn.microsoft.com/en-us/library/windows/hardware/ff544707) is a command-line tool that displays detailed information about devices, and lets you search for and manipulate devices from the command line. DevCon enables, disables, installs, configures, and removes devices on the local computer and displays detailed information about devices on local and remote computers. DevCon is included in the WDK.
+
+This pacakge includes both an x86 and an x64 version of the DevCon application:
+* DevCon32.exe
+* DevCon64.exe
+
+Please use the version applicable to your Operating System.
+    </description>
+    <projectUrl>https://msdn.microsoft.com/en-us/windows/hardware/hh852365</projectUrl>
+    <packageSourceUrl>https://github.com/PlagueHO/devcon-choco-package</packageSourceUrl>
+    <projectSourceUrl>https://github.com/Microsoft/Windows-driver-samples/tree/master/setup/devcon</projectSourceUrl>
+    <tags>DevCon DeviceConsole WDK WindowsDriverKit</tags>
+    <copyright>Copyright (c) 2015 Microsoft</copyright>
+    <licenseUrl>https://github.com/Microsoft/Windows-driver-samples/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+  </metadata>
+</package>
+```
 
  
 
@@ -82,11 +115,66 @@ For more information on .portable packages, see [this page](https://github.com/c
 
 The **AppVeyor.yml** file looks like this:
 
-{{< gist PlagueHO 46b8f4e4d87b5c42b205 >}}
+
+```yaml
+#---------------------------------#
+#      environment configuration  #
+#---------------------------------#
+os: WMF 5
+
+version: 10.0.10586.{build}
+
+configuration: Release
+
+platform: Any CPU
+
+install:
+   - git clone https://github.com/Microsoft/Windows-driver-samples.git
+
+#---------------------------------#
+#      build configuration        #
+#---------------------------------#
+
+build_script:
+   - cmd: msbuild "Windows-driver-samples\setup\devcon\devcon.vcxproj" /p:Configuration=Release;Platform=Win32 /t:Clean;Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+   - cmd: msbuild "Windows-driver-samples\setup\devcon\devcon.vcxproj" /p:Configuration=Release;Platform=x64 /t:Clean;Build /verbosity:normal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+
+#---------------------------------#
+#      test configuration         #
+#---------------------------------#
+
+#---------------------------------#
+#      deployment configuration   #
+#---------------------------------#
+
+deploy_script:
+  - ps: |
+      # Create Chocolately Package
+
+      # Because the bits need to be signed by MSFT, we are no longer using
+      # the compiled version, but instead we'll use the one from the WDK.
+      # The only problem is that the WDK versions aren't signed by MSFT either.
+      
+      # Copy-Item -Path .\Windows-driver-samples\setup\devcon\Release\devcon.exe `
+      #  -Destination .\devcon.portable\Devcon32.exe
+      # Copy-Item -Path .\Windows-driver-samples\setup\devcon\x64\Release\devcon.exe `
+      #  -Destination .\devcon.portable\Devcon64.exe
+
+      Set-Location -Path .\devcon.portable\
+      (Get-Content '.\devcon.portable.nuspec' -Raw).Replace("<version>1.0</version>", "<version>$($env:APPVEYOR_BUILD_VERSION)</version>") | Out-File '.\devcon.portable.nuspec'
+      cpack
+      Push-AppveyorArtifact ".\devcon.portable.$($ENV:APPVEYOR_BUILD_VERSION).nupkg"
+```
 
 The key part of this file is in the **deploy\_script** section:
 
-{{< gist PlagueHO 3da1dec0d56d7e1e3650 >}}
+
+```powershell
+Set-Location -Path .\devcon.portable\
+(Get-Content '.\devcon.portable.nuspec' -Raw).Replace("<version>1.0</version>", "<version>$($env:APPVEYOR_BUILD_VERSION)</version>") | Out-File '.\devcon.portable.nuspec'
+cpack
+Push-AppveyorArtifact ".\devcon.portable.$($ENV:APPVEYOR_BUILD_VERSION).nupkg"
+```
 
 The first line changes to the folder containing the **devcon.portable.nuspec** and **devcon\*.exe** files.
 
@@ -113,4 +201,5 @@ I have left in the original commands that pull the **DevCon** repository from Gi
 Hopefully this post might help you package up some of your own tools to use distribute with **Chocolatey** for easy installation or for use with CI services such as AppVeyor.
 
 If you want some more information on using **Chocolatey** with PowerShell, check out [this blog post](https://blogs.technet.microsoft.com/heyscriptingguy/2014/08/23/weekend-scripter-powershell-and-chocolatey/).
+
 

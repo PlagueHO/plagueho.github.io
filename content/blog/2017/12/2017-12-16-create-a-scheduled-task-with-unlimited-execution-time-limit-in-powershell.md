@@ -28,7 +28,16 @@ I'll also show the method that works only on Windows Server 2016.
 
 To create a scheduled task with unlimited **Execution Time Limit** on Windows Server 2012 R2 and Windows Server 2016.
 
-{{< gist PlagueHO c04396780617eb85b41652e5ec8a11dc >}}
+
+```powershell
+$trigger = New-ScheduledTaskTrigger -Once -At '13:00:00'
+$action = New-ScheduledTaskAction -Execute 'powershell.exe'
+$settingsSet = New-ScheduledTaskSettingsSet
+# Set the Execution Time Limit to unlimited on all versions of Windows Server
+$settingsSet.ExecutionTimeLimit = 'PT0S'
+$task = New-ScheduledTask -Trigger $trigger -Action $action -Settings $settingsSet
+Register-ScheduledTask -TaskName 'MyTask' -InputObject $task
+```
 
 This should also work on Windows Server 2012, but I have not confirmed this. It will NOT work on Windows Server 2008 R2. It should also work on Windows 8/8.1/10.
 
@@ -36,9 +45,18 @@ This should also work on Windows Server 2012, but I have not confirmed this. It 
 
 To create a scheduled task with unlimited **Execution Time Limit** on Windows Server 2016 only:
 
-{{< gist PlagueHO 15120718e869c0f5f281e43f378bc5b0 >}}
+
+```powershell
+$trigger = New-ScheduledTaskTrigger -Once -At '13:00:00'
+$action = New-ScheduledTaskAction -Execute 'powershell.exe'
+# Set the Execution Time Limit to unlimited on Windows Server 2016
+$settingsSet = New-ScheduledTaskSettingsSet -ExecutionTimeLimit '00:00:00'
+$task = New-ScheduledTask -Trigger $trigger -Action $action -Settings $settingsSet
+Register-ScheduledTask -TaskName 'MyTask' -InputObject $task
+```
 
 This method is a more elegant approach and arguably how the Scheduled Task cmdlets are intended to be used. But you would only use this method if your task does not need to created on an operating system earlier than Windows Server 2016/Windows 10.
 
 So, hopefully this will help anyone else out there who has struggled with this.
+
 

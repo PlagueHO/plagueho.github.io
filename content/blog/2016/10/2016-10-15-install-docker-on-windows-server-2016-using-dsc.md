@@ -33,8 +33,14 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
 
 1. Log on as a user with **Local Administrator** privileges.
 2. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/images/ss_dockerdsc_console.png)
-3. Install the **Install-DockerOnWS2016UsingDSC.ps1** script from the PowerShell Gallery using this command: {{< gist PlagueHO a0ccbc56725089e48aa5822ad0189b07 >}} _You may be asked to confirm installation of these modules, answer yes to any confirmations._ ![ss_dockerdsc_consolegetscript](/images/ss_dockerdsc_consolegetscript.png)
-4. Run the **Install-DockerOnWS2016UsingDSC.ps1** script using: {{< gist PlagueHO b41364b4ce52ee9c08186ccfa24ae5e6 >}} ![ss_dockerdsc_consolerunscriptfromgallery](/images/ss_dockerdsc_consolerunscriptfromgallery.png)
+3. Install the **Install-DockerOnWS2016UsingDSC.ps1** script from the PowerShell Gallery using this command: 
+```powershell
+Install-Script -Name Install-DockerOnWs2016UsingDSC
+``` _You may be asked to confirm installation of these modules, answer yes to any confirmations._ ![ss_dockerdsc_consolegetscript](/images/ss_dockerdsc_consolegetscript.png)
+4. Run the **Install-DockerOnWS2016UsingDSC.ps1** script using: 
+```powershell
+Install-DockerOnWs2016UsingDSC.ps1
+``` ![ss_dockerdsc_consolerunscriptfromgallery](/images/ss_dockerdsc_consolerunscriptfromgallery.png)
 
 The script will run and reboot the server once. Not long after the reboot the Docker service will start up and you can get working with containers:
 
@@ -48,9 +54,19 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
 
 1. Log on as a user with **Local Administrator** privileges.
 2. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/images/ss_dockerdsc_console.png)
-3. **Install the DSC Resources** required for the DSC configuration by executing these commands: {{< gist PlagueHO 71a8cf84d6d13e96a91a2c3ba5209a24 >}} _You may be asked to confirm installation of these modules, answer yes to any confirmations._ ![ss_dockerdsc_consoleinstallresources](/images/ss_dockerdsc_consoleinstallresources.png)
-4. **Download the Docker installation DSC script** by executing this command: {{< gist PlagueHO 00f302a9299702cebbbd2b40de264f55 >}} ![ss_dockerdsc_consoledownloadscript](/images/ss_dockerdsc_consoledownloadscript.png)
-5. **Run the Docker installation DSC script** by executing this command: {{< gist PlagueHO ef200c931094aa19e752c0429df417bc >}} ![ss_dockerdsc_consolerunscript](/images/ss_dockerdsc_consolerunscript.png)
+3. **Install the DSC Resources** required for the DSC configuration by executing these commands: 
+```powershell
+Install-Module -Name xPSDesiredStateConfiguration
+Install-Module -Name xPendingReboot
+``` _You may be asked to confirm installation of these modules, answer yes to any confirmations._ ![ss_dockerdsc_consoleinstallresources](/images/ss_dockerdsc_consoleinstallresources.png)
+4. **Download the Docker installation DSC script** by executing this command: 
+```powershell
+Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/PlagueHO/d9595cae1788f436b97bd4c90d50d72e/raw/1146baa2b1e0c8b3869004074b4c97bf71ce9c3c/Install-DockerOnWS2016ByDSC.ps1' -OutFile 'Install-DockerOnWS2016ByDSC.ps1'
+``` ![ss_dockerdsc_consoledownloadscript](/images/ss_dockerdsc_consoledownloadscript.png)
+5. **Run the Docker installation DSC script** by executing this command: 
+```powershell
+.\Install-DockerOnWS2016ByDSC.ps1
+``` ![ss_dockerdsc_consolerunscript](/images/ss_dockerdsc_consolerunscript.png)
 
 The script will run and reboot the server once. Not long after the reboot the Docker service will start up and you can get working with containers:
 
@@ -79,4 +95,5 @@ If you're looking for a DSC configuration that does the same thing for _Windows 
  
 
 Happy containering!
+
 

@@ -15,7 +15,7 @@ I also modified it slightly to have some of the configuration items, such as whe
 
 This is the script to run on the Host OS that will install Hyper-V, create the VM, create the test VHDXs and start it up:
 
-```powershel
+```powershell
 # -------------------------------------------------------------------------- # Execute on HOST OS # -------------------------------------------------------------------------- # Configure these paths and names # Path to store the VM SSDs $SSD\_VHD\_Path = "F:\\VM\\VHD" # Path to store the VM HDDs $HDD\_VHD\_Path = "E:\\VM\\VHD" # Name of the VM To create/use $VMName = 'Windows Server 2012' # Path to the VM OS disk (if creating a VM). $VM\_OS\_Path = "F:\\VM\\OS\\Windows Server 2012.VHDX" # --------------------------------------------------------------------------
 
 \# Preparation steps: Install Window Server 2012 R2 Preview # Install required roles and features, restart at the end # If Hyper-V is already installed comment out this line: Install-WindowsFeature Hyper-V -IncludeManagementTools –Restart

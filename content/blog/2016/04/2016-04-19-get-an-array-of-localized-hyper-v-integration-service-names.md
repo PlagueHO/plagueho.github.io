@@ -13,7 +13,36 @@ It does this using the Integration Service names configured in the configuration
 
 So, after a lot of digging around in the WMI/CIM I managed to locate the various classes I need and converted them into a simple function:
 
-{{< gist PlagueHO 2281e18279d78aceb7db283681ebd95b >}}
+
+```powershell
+function GetIntegrationServiceNames {
+    [CmdLetBinding()]
+    param
+    (
+    )
+    $Captions = @()
+    $Classes = @(
+        'Msvm_VssComponentSettingData'
+        'Msvm_ShutdownComponentSettingData'
+        'Msvm_TimeSyncComponentSettingData'
+        'Msvm_HeartbeatComponentSettingData'
+        'Msvm_GuestServiceInterfaceComponentSettingData'
+        'Msvm_KvpExchangeComponentSettingData'
+    )
+    foreach ($Class in $Classes)
+    {
+        $Captions += (Get-CimInstance `
+            -Class $Class `
+            -Namespace Root\Virtualization\V2 `
+            -Property Caption | Select-Object -First 1).Caption
+    } # foreach
+    # This Integration Service is registered in CIM but are not exposed in Hyper-V
+    # 'Msvm_RdvComponentSettingData'
+    return $Captions
+} # GetIntegrationServiceNames
+
+GetIntegrationServiceNames
+```
 
 The output of the function looks like this for English US:
 
@@ -25,4 +54,5 @@ Guest Service Interface
 Key-Value Pair Exchange
 
 Hopefully someone will find it handy.
+
 

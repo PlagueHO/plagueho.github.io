@@ -30,7 +30,20 @@ Because refactoring requires changing code, how can we be sure that we're not br
 
 One of the common patterns I've come across is [PowerShell switch statements](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_switch?view=powershell-6) being used is to map from one values to another set of values. For example:
 
-{{< gist PlagueHO e6c2ab0bb956b300d1969c3be06b5f3f >}}
+
+```powershell
+$colourName = 'green'
+
+$colourValue = switch ($colourName) {
+    'red' { 0xFF0000; break }
+    'green' { 0x00FF00; break }
+    'blue' { 0x0000FF; break }
+    'white' { 0xFFFFFF; break }
+    default { 0x0 }
+}
+
+return $colourValue
+```
 
 This converts a colour name (e.g. _red_, _green_, _blue_, _white_) to a colour value. If a colour name can not be matched then it returns _0x0_ (_black_). Admittedly, this is a bit of an unlikely example, but it demonstrates the pattern.
 
@@ -40,7 +53,20 @@ This is by no means incorrect or "bad code". It is completely valid and solves t
 
 An alternative to using a switch statement is to use a [hash table](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_hash_tables?view=powershell-6):
 
-{{< gist PlagueHO 56eaf0542ae584e21e1c189c26623594 >}}
+
+```powershell
+$colourName = 'green'
+
+$colourMap = @{
+    red = 0xFF0000
+    green = 0x00FF00
+    blue = 0x0000FF
+    white = 0xFFFFFF
+}
+$colourValue = $colourMap[$colourName]
+
+return $colourValue
+```
 
 This can simplify the code slightly by removing the **break** **statement** and **braces**.
 
@@ -48,41 +74,144 @@ Note: The break statement is not strictly required _in this example_ from a func
 
 You may have noticed that the hash table above does not quite match the behavior of the switch statement: the default mapping to _0x0_ is not handled. So, in this case, we'd need to include additional code to handle this:
 
-{{< gist PlagueHO aad6a07f51c4eb789bb36a5dd729c05e >}}
+```powershell
+$colourName = 'green'
+
+$colourMap = @{
+    red = 0xFF0000
+    green = 0x00FF00
+    blue = 0x0000FF
+    white = 0xFFFFFF
+}
+$colourValue = ($colourMap[$colourName], 0x0, 1 -ne $null)[0] # Null Coalescing
+
+return $colourValue
+```
 
 To handle the default we're using a quasi [null coalescing operator](https://en.wikipedia.org/wiki/Null_coalescing_operator). PowerShell doesn't have a native null coalescing operator like many languages, but it does have a way of simulating it using the line:
 
-{{< gist PlagueHO e450a6814e7c5881fd7552f2c9a86b14 >}}
+```powershell
+$notNull = ($x, $y, 1 -ne $null)[0] # Null Coalescing in PowerShell
+```
 
 You could definitely argue that using a **hash table** mapping with a **null coalescing operator** does not make the code easier to read or maintain. But the purpose here is not to define which approach is best, rather to offer alternative patterns.
 
 One other benefit of using a **hash table** for mapping is that it can be separated out into a separate **psd1** file. This allows editing of the mapping table elements without having to edit the code itself:
 
-{{< gist PlagueHO b5f50f639ca3cf6c3d7f8f5a21a1cfbb >}}
+```powershell
+$colourName = 'green'
+$colourMap = Import-LocalizedData -FileName mapping.psd1
+$colourValue = ($colourMap[$colourName], 0x0, 1 -ne $null)[0] # Null Coalescing
+return $colourValue
+```
 
 The **psd1** file containing the mapping data (mapping.psd1):
 
-{{< gist PlagueHO 27ac60e242f85354a1577f8bd985ebe3 >}}
+```powershell
+@{
+    red = 0xFF0000
+    green = 0x00FF00
+    blue = 0x0000FF
+    white = 0xFFFFFF
+}
+```
 
 ### Reversing the Mapping
 
 How do we use a similar pattern to reverse the mapping? For example, mapping a colour value back to a colour name:
 
-{{< gist PlagueHO 096c9308898a0f63fe684ee79c0d798c >}}
+```powershell
+$colourValue = 0x00FF00
+
+$colourName = switch ($colourValue) {
+    0xFF0000 { 'red'; break }
+    0x00FF00 { 'green' ; break }
+    0x0000FF { 'blue'; break }
+    0xFFFFFF { 'white'; break }
+    default { 'none' }
+}
+
+return $colourName
+```
 
 To implement the same functionality using a **hash table** also including the **null coalescing operator** you could use:
 
-{{< gist PlagueHO d9f91dedaf5cce5424097df03b43cff1 >}}
+```powershell
+$colourValue = 0x00FF00
+
+$colourMap = @{
+    0xFF0000 = 'red'
+    0x00FF00 = 'green'
+    0x0000FF = 'blue'
+    0xFFFFFF = 'white'
+}
+$colourName = ($colourMap[$colourValue], 0x0, 1 -ne $null)[0] # Null Coalescing
+
+return $colourName
+```
 
 ### Using a Hash Table with Script Values
 
 Switch blocks may contain more than just a single statement. For example:
 
-{{< gist PlagueHO 6cd2cf662c57a7ef12e5e1da946b5272 >}}
+```powershell
+$VerbosePreference = 'Continue'
+$action = 'New'
+$path = 'c:\somefile.txt'
+
+$result = switch ($action) {
+    'New' {
+        Write-Verbose -Message 'Execute New-Item'
+        New-Item -Path $path
+        break
+    }
+
+    'Remove' {
+        Write-Verbose -Message 'Execute Remove-Item'
+        Remove-Item -Path $path
+        break
+    }
+
+    'Get' {
+        Write-Verbose -Message 'Execute Get-Item'
+        Get-Item -Path $path
+        break
+    }
+
+    Default {
+        Write-Verbose -Message 'Invalid Action'
+    }
+}
+
+return $result
+```
 
 If your switch blocks do more than just perform a mapping, you can assign **script blocks** to the **hash table** values instead:
 
-{{< gist PlagueHO a7e99e85236592099d1d8e33fc532ab6 >}}
+```powershell
+$VerbosePreference = 'Continue'
+$action = 'New'
+$path = 'c:\somefile.txt'
+
+$actions = @{
+    'New' = {
+        Write-Verbose -Message 'Execute New-Item'
+        New-Item -Path $path
+    }
+
+    'Remove' = {
+        Write-Verbose -Message 'Execute Remove-Item'
+        Remove-Item -Path $path
+    }
+
+    'Get' = {
+        Write-Verbose -Message 'Execute Get-Item'
+        Get-Item -Path $path
+    }
+}
+
+return ($actions[$action], {Write-Verbose -Message 'Invalid Action'}, 1 -ne $null)[0].Invoke()
+```
 
 Instead of containing a value in each **hash table** item, a **script block** is specified. The **Invoke()** method can then be called on the **script block.**
 
@@ -90,13 +219,43 @@ Instead of containing a value in each **hash table** item, a **script block** is
 
 If you're using PowerShell 5.0 or above (you hopefully are), you're also able to use the **enum** keyword to define an **enumerated type** that can also be used to replace switch statements in some situations.
 
-{{< gist PlagueHO ff9b7e1c4258cfab13817b5fcd771203 >}}
+```powershell
+$colourName = 'green'
+
+# Only needs to be declared once
+enum colour {
+    red = 0xFF0000 
+    green = 0x00FF00
+    blue = 0x0000FF
+    white = 0xFFFFFF
+}
+
+return ([colour] $colourName).value__
+```
 
 The **enumerated type** only needs to be declared once.
 
 But what do we need to do if we want to have a default returned if the value is invalid in the mapping? In that case we need to use the **TryParse** method of the **enumerated type** to try and parse the value and return a default value if it is invalid:
 
-{{< gist PlagueHO 187ac2a5d13877f0d8732aab62cae0bd >}}
+```powershell
+$colourName = 'grey'
+
+# Only needs to be declared once
+enum colour {
+    red = 0xFF0000 
+    green = 0x00FF00
+    blue = 0x0000FF
+    white = 0xFFFFFF
+}
+
+$colourValue = [colour]::white
+
+if (-not [colour]::TryParse($colourName, $true, [ref] $colourValue)) {
+    return 0x0
+} else {
+    return $colourValue.value__
+}
+```
 
 However, we can't assign **scriptblocks** to the values in an **enumerated type** - only constant values may be assigned. This means we can't implement scenarios where we'd like to have the value contain more than one instruction. But this shouldn't be too much of a problem, because if you do find yourself being limited by this, then you should probably be looking to use more advanced **object oriented programming** patterns such as **polymorphism** \- which is well beyond the scope of this post. But if you're interested to know more, review [this article](https://refactoring.guru/replace-conditional-with-polymorphism) (not PowerShell specific).
 
@@ -105,4 +264,3 @@ However, we can't assign **scriptblocks** to the values in an **enumerated typ
 This post is all about looking at different ways of writing the same code. It isn't trying to say which way is better or worse. If you have a preference and it works for you, by all means, keep on using it. This is simply to provide alternative methods that may or may not make code more readable and maintainable.
 
 Feel free to comment with alternative methods of refactoring switch statements.
-

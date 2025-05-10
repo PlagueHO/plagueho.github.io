@@ -22,7 +22,7 @@ The following error message appears when connecting to this page from Internet E
 [![The page requires an HTTPS connection - but it is connected via HTTPS!](/images/ss_cs_advancedcertificateqrequest_sslerror.png?w=660)](/images/ss_cs_advancedcertificateqrequest_sslerror.png)
 The page requires an HTTPS connection - but it is connected via HTTPS!
 
-"In order to complete certificte enrollment, the Web site for the CA must be configured to use HTTPS authentication."
+"In order to complete certificate enrollment, the Web site for the CA must be configured to use HTTPS authentication."
 
 Clearly, Internet Explorer was using HTTPS to communicate with this web site. Clicking OK on the error message and hoping to just ignore it wasn't possible because most of the drop down boxes on the form were not being populated - preventing it from being submitted:
 
@@ -36,7 +36,7 @@ The certificate and certificate chain - nothing wrong here.
 
 Of course if the certificate or the chain was bad then SSL wouldn't be being used - which it clearly was.
 
-Eventually I identified the cause of the problem. The Active X was being prevented from being run properly because of IE security. This is probably a good thing on a Server operating system, but the error mesage being presented in this case was very misleading.
+Eventually I identified the cause of the problem. The Active X was being prevented from being run properly because of IE security. This is probably a good thing on a Server operating system, but the error message being presented in this case was very misleading.
 
 The way to fix this is to add the web site to the trusted sites list in Internet Explorer:
 

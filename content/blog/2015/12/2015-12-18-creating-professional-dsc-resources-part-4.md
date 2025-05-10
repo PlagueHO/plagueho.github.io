@@ -33,7 +33,34 @@ _**Important:** If you aren't familiar with **Pester** and **automated testing**
 
 An example of a **Pester** test on a **DSC Resource**:
 
-{{< gist PlagueHO 07f0914ce00ae8a963df >}}
+
+```powershell
+Describe 'MSFT_xFirewall\Get-TargetResource' {
+	Context 'Absent should return correctly' {
+		Mock Get-NetFirewallRule
+
+		It "Should return absent on firewall rule $($FirewallRule.Name)" {
+			$result = Get-TargetResource -Name 'FirewallRule'
+			$result.Name | Should Be 'FirewallRule'
+			$result.Ensure | Should Be 'Absent'
+		}
+	}
+
+	Context 'Present should return correctly' {
+		$result = Get-TargetResource -Name $FirewallRule.Name
+
+		# Looping these tests
+		foreach ($parameter in $ParameterList)
+		{
+			$ParameterSource = (Invoke-Expression -Command "`$($($parameter.source))")
+			$ParameterNew = (Invoke-Expression -Command "`$result.$($parameter.name)")
+			It "should have the correct $($parameter.Name) on firewall rule $($FirewallRule.Name)" {
+				$ParameterSource | Should Be $ParameterNew
+			}
+		}
+	}
+}
+```
 
 The above test is a **unit** test of the **xFirewall** resource in the **xNetworking** module. the Don't worry if you don't completely understand this yet, that is the purpose of this article - although you should understand the basic structure of the **Pester** test - if you don't, you'll definitely want to go and review [this series](http://blogs.technet.com/b/heyscriptingguy/archive/2015/12/14/what-is-pester-and-why-should-i-care.aspx).
 
@@ -78,7 +105,11 @@ You could just go ahead and create a new unit from scratch, but there is a much 
 
 The easiest way to do this is to **clone** the repository containing the **test template** files and copy the **unit\_template.ps1** file to your **Tests/Unit** folder:
 
-{{< gist PlagueHO ebbfb03f731265d61eaf >}}
+
+```powershell
+git clone https://github.com/PowerShell/DSCResources.git
+Copy-Item .\DSCResources\Tests.Template\unit_template.ps1 .\ciSCSI\Tests\Unit\BMD_ciSCSIVirtualDisk.Tests.ps1
+```
 
 ![ss_dsc_createnewunittestfromtemplate](/images/ss_dsc_createnewunittestfromtemplate3.png)
 
@@ -116,7 +147,29 @@ The purpose of this section is to initialize any variables or objects that you'r
 
 For example, if you were testing a resource that was for creating an **iSCSI** **Virtual Disk** you might define the parameters of the **iSCSI Virtual Disk** that you're going to use for testing:
 
-{{< gist PlagueHO a8c09c14ac3497b946cb >}}
+
+```powershell
+# Create the Mock Objects that will be used for running tests
+$TestVirtualDisk = [PSObject]@{
+	Path                    = Join-Path -Path $ENV:Temp -ChildPath 'TestiSCSIVirtualDisk.vhdx'
+	Ensure                  = 'Present'
+	DiskType                = 'Differencing'
+	SizeBytes               = 100MB
+	Description             = 'Unit Test iSCSI Virtual Disk'
+	BlockSizeBytes          = 2MB
+	PhysicalSectorSizeBytes = 4096
+	LogicalSectorSizeBytes  = 512
+	ParentPath              = 'c:\Parent.vhdx'
+}
+
+$MockVirtualDisk = [PSObject]@{
+	Path                    = $TestVirtualDisk.Path
+	DiskType                = $TestVirtualDisk.DiskType
+	Size                    = $TestVirtualDisk.SizeBytes
+	Description             = $TestVirtualDisk.Description
+	ParentPath              = $TestVirtualDisk.ParentPath
+}
+```
 
 The **$TestVirtualDisk object** is used to **@splat** onto the **Set-TargetResource** and **Test-TargetResource** functions and for comparison. It saves us lots of typing and therefore potential mistakes.
 
@@ -135,7 +188,45 @@ This area will contain the actual **Pester** tests that test the **Get-TargetRes
 
 For example:
 
-{{< gist PlagueHO 80684b9dae6d655fcdf8 >}}
+
+```powershell
+Describe "$($Global:DSCResourceName)\Get-TargetResource" {
+
+	Context 'Virtual Disk does not exist' {
+		
+		Mock Get-iSCSIVirtualDisk
+
+		It 'should return absent Virtual Disk' {
+			$Result = Get-TargetResource `
+				-Path $TestVirtualDisk.Path
+			$Result.Ensure                  | Should Be 'Absent'
+		}
+		It 'should call the expected mocks' {
+			Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		} 
+	}
+
+	Context 'Virtual Disk does exist' {
+		
+		Mock Get-iSCSIVirtualDisk -MockWith { return @($TestVirtualDisk) }
+
+		It 'should return correct Virtual Disk' {
+			$Result = Get-TargetResource `
+				-Path $TestVirtualDisk.Path
+			$Result.Ensure                  | Should Be 'Present'
+			$Result.Path                    | Should Be $TestVirtualDisk.Path
+			$Result.DiskType                | Should Be $TestVirtualDisk.DiskType
+			$Result.SizeBytes               | Should Be $TestVirtualDisk.SizeBytes
+			$Result.Description             | Should Be $TestVirtualDisk.Description
+			$Result.PhysicalSectorSizeBytes | Should Be $TestVirtualDisk.PhysicalSectorSizeBytes
+			$Result.LogicalSectorSizeBytes  | Should Be $TestVirtualDisk.LogicalSectorSizeBytes
+		}
+		It 'should call the expected mocks' {
+			Assert-MockCalled -commandName Get-iSCSIVirtualDisk -Exactly 1
+		}
+	}
+}
+```
 
 In the above code we have two **Context** blocks - one for each of our scenarios above.
 
@@ -164,4 +255,5 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+
 

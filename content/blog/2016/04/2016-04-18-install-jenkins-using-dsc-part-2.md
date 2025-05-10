@@ -96,7 +96,138 @@ Start-DscConfiguration -Path .\\JENKINS\_CI -Wait -Verbose \[/sourcecode\]
 
 Here is the complete DSC Configuration file. You just need to copy it to the Server and run it. It will compile the configuration into a MOF and tell the LCM to apply it. Just remember to ensure required DSC Resource modules are installed.
 
-{{< gist PlagueHO c883691c32c04e8404f2354910e86f47 >}}
+
+```powershell
+Configuration JENKINS_CI
+{
+    param (
+        $JenkinsPort = 8080
+    )
+    Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
+    Import-DscResource -ModuleName 'cChoco'
+    Import-DscResource -ModuleName 'xNetworking'
+    Node $AllNodes.NodeName {
+
+        # Configure networking (optional)
+        xIPAddress IPv4_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv4'
+            IPAddress      = '192.168.128.20'
+            SubnetMask     = '24'
+        }
+        xDefaultGatewayAddress IPv4G_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv4'
+            Address        = '192.168.128.19'
+        }
+        xDnsServerAddress IPv4D_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv4'
+            Address        = '192.168.128.10'
+        }
+        xIPAddress IPv6_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv6'
+            IPAddress      = 'fd53:ccc5:895a:bc00::14'
+            SubnetMask     = '64'
+        }
+        xDefaultGatewayAddress IPv6G_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv6'
+            Address        = 'fd53:ccc5:895a:bc00::13'
+        }
+        xDnsServerAddress IPv6D_1 {
+            InterfaceAlias = 'Ethernet'
+            AddressFamily  = 'IPv6'
+            Address        = 'fd53:ccc5:895a:bc00::a'
+        }
+        
+        # Install .NET 3.5
+        WindowsFeature NetFrameworkCore 
+        {
+            Ensure    = "Present" 
+            Name      = "NET-Framework-Core"
+        }
+
+        # Install Chocolatey
+        cChocoInstaller installChoco
+        {
+            InstallDir = "c:\choco"
+            DependsOn = "[WindowsFeature]NetFrameworkCore"
+        }
+
+        # Install JDK8
+        cChocoPackageInstaller installJdk8
+        {
+            Name = "jdk8"
+            DependsOn = "[cChocoInstaller]installChoco"
+        }
+
+        # Install Jenkins
+        cChocoPackageInstaller installJenkins
+        {
+            Name = "Jenkins"
+            DependsOn = "[cChocoInstaller]installChoco"
+        }
+
+        # Set the Jenkins Port
+        Script SetJenkinsPort
+        {
+            SetScript = {
+                Write-Verbose -Verbose "Setting Jenkins Port to $Using:JenkinsPort"
+                $Config = Get-Content `
+                    -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml"
+                $NewConfig = $Config `
+                    -replace '--httpPort=[0-9]*\s',"--httpPort=$Using:JenkinsPort "
+                Set-Content `
+                    -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml" `
+                    -Value $NewConfig `
+                    -Force
+                Write-Verbose -Verbose "Restarting Jenkins"
+                Restart-Service `
+                    -Name Jenkins
+            }
+            GetScript = {
+                $Config = Get-Content `
+                    -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml"
+                $Matches = @([regex]::matches($Config, "--httpPort=([0-9]*)\s", 'IgnoreCase'))
+                $CurrentPort = $Matches.Groups[1].Value
+                Return @{
+                    'JenkinsPort' = $CurrentPort
+                }
+            }
+            TestScript = { 
+                $Config = Get-Content `
+                    -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml"
+                $Matches = @([regex]::matches($Config, "--httpPort=([0-9]*)\s", 'IgnoreCase'))
+                $CurrentPort = $Matches.Groups[1].Value
+                
+                If ($Using:JenkinsPort -ne $CurrentPort) {
+                    # Jenkins port must be changed
+                    Return $False
+                }
+                # Jenkins is already on correct port
+                Return $True
+            }
+            DependsOn = "[cChocoPackageInstaller]installJenkins"
+        }
+    }
+}
+
+$ConfigData = @{
+    AllNodes = 
+    @(
+        @{
+            NodeName = "LocalHost"
+        }
+    )
+}
+
+JENKINS_CI -JenkinsPort 80 -ConfigurationData $ConfigData
+
+Start-DscConfiguration -Path .\JENKINS_CI -Wait -Verbose
+```
 
 Within five to ten minutes the Jenkins server will be configured and ready to go.
+
 

@@ -5,7 +5,7 @@ categories:
   - "windows-10"
 tags:
   - "powershell"
-  - "wndows-10"
+  - "windows-10"
 ---
 
 ### The Problem
@@ -16,35 +16,35 @@ Recently I noticed on my Windows 10 desktop that I have been using to test all t
 
 My Gmail account worked fine in the Mail app as well and my outlook account also worked fine in the **Windows 10 Universal Mail and Calendar** app on my laptop. Unfortunately I didn't think to screenshot the problem before I managed to resolve it so I can't post an image of the error message here. After a lot of investigation and lots of messing around I found out where the Windows Universal Mail app stores its account data - as I thought this is probably where the problem probably was. The **Windows 10 Universal Mail and Calendar** seems to store all information in the folder **%LOCALAPPDATA%\\Comms\\** I thought perhaps if I could get rid of (back it up just in case) this folder the app might recreate it.
 
-The Solution
+### The Solution
 
 1. Open an **Administrator PowerShell** prompt (enter "powershell" in the start menu search and then right click the **Windows PowerShell** icon and select **Run as Administrator,** you might need to confirm a UAC prompt).
-2. Uninstall the **Windows 10 Universal Mail and Calendar** app by entering the following command in the **PowerShell** window:
+1. Uninstall the **Windows 10 Universal Mail and Calendar** app:
 
-\[sourcecode language="powershell"\] Get-AppxPackage | Where-Object -Property Name -eq 'microsoft.windowscommunicationsapps' | Remove-AppxPackage \[/sourcecode\]
+    ```powershell
+    Get-AppxPackage |
+        Where-Object Name -eq 'microsoft.windowscommunicationsapps' |
+        Remove-AppxPackage
+    ```
 
-[![Uninstall the Windows 10 Universal Mail and Calendar App](/images/ss_powershell_uninstallcomms.png?w=660)](/images/ss_powershell_uninstallcomms.png)
-Uninstall the Windows 10 Universal Mail and Calendar App
+    ![Uninstall the Windows 10 Universal Mail and Calendar App](/images/ss_powershell_uninstallcomms.png?w=660)
 
-3a. **@Stephen** has suggested that restarting your computer at this point allows the next step to proceed with better success. So restart your computer.
+1. **@Stephen** suggests restarting your computer at this point.  
+1. **Delete** the **%LOCALAPPDATA%\Comms\\** folder (back it up first if you want):
 
-3. **Delete** the **%LOCALAPPDATA%\\Comms\\** folder by entering the following command in the **PowerShell** window (back the folder up first if you want):
+    ```powershell
+    Remove-Item -Path "$Home\AppData\Local\Comms" -Recurse -Force
+    ```
 
-\[sourcecode language="powershell"\] Remove-Item -Path "$Home\\AppData\\Local\\Comms\\" -Recurse -Force \[/sourcecode\]
+    ![Deleting the Comms folder – some files can't be deleted; this is OK](/images/ss_powershell_uninstallcommsdeletefiles.png?w=660)
 
-[![Deleting the Comms folder - some files can't be deleted - this is OK](/images/ss_powershell_uninstallcommsdeletefiles.png?w=660)](/images/ss_powershell_uninstallcommsdeletefiles.png)
-Deleting the Comms folder - some files can't be deleted - this is OK
+    _Note: you’ll probably find that some files are in use and can’t be deleted – this is OK._
 
-_Note: You'll probably find that some of the files are in use and can't be deleted - this is OK._
-
-4\. Reinstall the [**Windows 10 Universal Mail and Calendar app**](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) from the app store (click [here](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) to open the app up in the store or search for it).
-
-[![Reinstall the Windwos 10 Universal Mail and Calendar app from the windows store.](/images/ss_powershell_reinstallcomms.png?w=660)](/images/ss_powershell_reinstallcomms.png)
-Reinstall the Windows 10 Universal Mail and Calendar app from the Windows store.
+1. Reinstall the [**Windows 10 Universal Mail and Calendar app**](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) from the Microsoft Store.  
+    ![Reinstall the Windows 10 Universal Mail and Calendar app from the Windows Store](/images/ss_powershell_reinstallcomms.png?w=660)
 
 Once this had all been done I loaded the Mail up and it asked me to configure all my mail accounts again (and authorize them with the providers). After this the error message had gone away and all my accounts worked normally. I did also however have to re-enter my credentials for both Google Drive and One Drive.
 
 For more information, suggestions and discussion about this issue, take a look at [this](http://answers.microsoft.com/en-us/insider/forum/insider_apps-insider_mail/universal-mail-app-your-account-settings-are-out/562f4fad-c60a-4204-a8c3-94fa1d05bf65) discussion on the Microsoft Community boards.
 
 I hope this works for someone else as well.
-

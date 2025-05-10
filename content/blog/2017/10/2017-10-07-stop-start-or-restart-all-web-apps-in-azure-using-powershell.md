@@ -10,7 +10,10 @@ coverImage: "ss_azurecloudshell_restartallwebapps.png"
 
 Here is a short (and sometimes handy) single line of PowerShell code that can be used to **restart** all the Azure Web Apps in a subscription:
 
-{{< gist PlagueHO 4fd4960521eea680a6ac06f9fe5c7cc8 >}}
+
+```powershell
+(Get-AzureRmWebApp).GetEnumerator() | Restart-AzureRmWebApp
+```
 
 ![ss_azurecloudshell_restartallwebapps](/images/ss_azurecloudshell_restartallwebapps.png)
 
@@ -20,15 +23,22 @@ This would be a handy snippet to be able to run in the [Azure Cloud Shell](https
 
 To **stop** all Web Apps in a subscription use:
 
-{{< gist PlagueHO 4ff6e52c79be933c991e6655b6af4adc >}}
+
+```powershell
+(Get-AzureRmWebApp).GetEnumerator() | Stop-AzureRmWebApp
+```
 
 To **start** them all again:
 
-{{< gist PlagueHO 29e93a8b0f0f8b7d050f53f37dc61e6a >}}
+
+```powershell
+(Get-AzureRmWebApp).GetEnumerator() | Start-AzureRmWebApp
+```
 
 The key part of this command is the **GetEnumerator()** method because most Azure Cmdlets don't return an array of individual objects into the pipeline like typical PowerShell cmdlets. Instead returning a **System.Collections.Generic.List** object, which requires a slight adjustment to the code. This procedure can be used for most Azure Cmdlets to allow the results to be iterated through.
 
 ![ss_azurecloudshell_systemcollections](/images/ss_azurecloudshell_systemcollections.png)
 
 Thanks for reading.
+
 

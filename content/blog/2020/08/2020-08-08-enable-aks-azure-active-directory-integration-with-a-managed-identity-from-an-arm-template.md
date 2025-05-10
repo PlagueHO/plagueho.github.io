@@ -18,17 +18,67 @@ More recently an improved method of integrating your AKS cluster into AAD was an
 You can easily do this integration by running PowerShell or Bash scripts, but if you'd prefer to use an ARM template, here is what you need to know.
 
 1. You will need to have an `object id` of an **Azure Active Directory group** to use as your Cluster Admins.
-    {{< gist PlagueHO fa54c4e08386eea626fac7d9e3d7112a >}}
 
-    ![ss_aksaadintegration_createaadgroup](/images/ss_aksaadintegration_createaadgroup.png)
+   ```powershell
+   $clusterAdminGroupObjectIds = (New-AzADGroup `
+       -DisplayName "AksClusterAdmin" `
+       -MailNickname "AksClusterAdmin").Id
+   ```
 
-    This will return the object Id for the newly create group in the variable `$clusterAdminGroupObjectIds`. You will need to pass this variable into your ARM template.
-2. You need to add an `aadProfile` block into the `properties` of your AKS cluster deployment definition:
-    ![](/images/ss_aksaadintegration_aadprofile.png)
-    For example:
-    {{< gist PlagueHO 6da009d41c531164fdb8f86c62a49906 >}}
-3. When you deploy the ARM template (using whatever method you choose), you'll need to pass the `$clusterAdminGroupObjectIds`​as a parameter. For example:
-    {{< gist PlagueHO 5c395cc533880098b16d8e16ca3b2c05 >}}
+   ![ss_aksaadintegration_createaadgroup](/images/ss_aksaadintegration_createaadgroup.png)
+
+   This will return the object Id for the newly create group in the variable `$clusterAdminGroupObjectIds`. You will need to pass this variable into your ARM template.
+1. You need to add an `aadProfile` block into the `properties` of your AKS cluster deployment definition:
+   ![](/images/ss_aksaadintegration_aadprofile.png)
+   For example:
+
+    ```json
+    {
+        "$schema": "https://schema.management.azure.com/schemas/2019-08-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+            "clusterAdminGroupObjectIds": {
+                "defaultValue": [],
+                "type": "array",
+                "metadata": {
+                    "description": "Array of Azure AD Group object Ids to use for cluster administrators."
+                }
+            }
+        },
+        "resources": [
+            {
+                "name": "MyAksCluster",
+                "type": "Microsoft.ContainerService/managedClusters",
+                "apiVersion": "2020-04-01",
+                "location": "eastus",
+                "properties": {
+                    "kubernetesVersion": "1.18.4",
+                    "enableRBAC": true,
+                    "aadProfile": {
+                        "managed": true,
+                        "adminGroupObjectIds": "[parameters('clusterAdminGroupObjectIds')]",
+                        "tenantId": "[subscription().tenantId]"
+                    }
+                    // Other cluster properties here...
+                },
+                "identity": {
+                    "type": "SystemAssigned"
+                }
+            }
+        ]
+    }
+    ```
+
+1. When you deploy the ARM template (using whatever method you choose), you'll need to pass the `$clusterAdminGroupObjectIds`​as a parameter. For example:
+
+    ```powershell
+    New-AzResourceGroupDeployment `
+        -ResourceGroupName 'MyAksWithAad_RG `
+        -TemplateFile 'ArmTemplateAksClusterWithManagedAadIntegration.json' `
+        -TemplateParameterObject @{
+            clusterAdminGroupObjectIds = @( $clusterAdminGroupObjectIds )
+        }
+    ```
 
 That is all you really need to get AKS-managed AAD integration going with your AKS cluster.
 
@@ -38,9 +88,8 @@ For a fully formed ARM template for that will deploy an AKS cluster with AKS-man
 - A VNET for the cluster nodes.
 - An ACR integrated into the VNET with Private Link and Diagnostics into the Log Analytics Workspace.
 - Multiple node pools spanning availability zones:
-    - A system node pool including automatic node scaler.
-    - A Linux user node pool including automatic node scaler.
-    - A Windows node pool including automatic node scaler and taints.
+  - A system node pool including automatic node scaler.
+  - A Linux user node pool including automatic node scaler.
+  - A Windows node pool including automatic node scaler and taints.
 
 Thanks for reading.
-

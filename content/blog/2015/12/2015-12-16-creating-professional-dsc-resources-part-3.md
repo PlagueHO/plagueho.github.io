@@ -49,13 +49,37 @@ Adding support for language localization to your **DSC Resources** is trivial, b
 
 To ensure language support, create a new file in the same folder as your **DSC Resource** with the same name as the **DSC Resource** but with a **psd1** extension. In that file  create a **Data** section named **LocalizedData** containing the messages for your default **culture**. For example:
 
-{{< gist PlagueHO dd005b6d3aa1c885b322 >}}
+
+```powershell
+data LocalizedData
+{
+    # culture="en-US"
+    ConvertFrom-StringData -StringData @'
+GettingiSCSIVirtualDiskMessage=Getting iSCSI Virtual Disk "{0}".
+iSCSIVirtualDiskExistsMessage=iSCSI Virtual Disk "{0}" exists.
+iSCSIVirtualDiskDoesNotExistMessage=iSCSI Virtual Disk "{0}" does not exist.
+SettingiSCSIVirtualDiskMessage=Setting iSCSI Virtual Disk "{0}".
+EnsureiSCSIVirtualDiskExistsMessage=Ensuring iSCSI Virtual Disk "{0}" exists.
+EnsureiSCSIVirtualDiskDoesNotExistMessage=Ensuring iSCSI Virtual Disk "{0}" does not exist.
+iSCSIVirtualDiskCreatedMessage=iSCSI Virtual Disk "{0}" has been created.
+iSCSIVirtualDiskUpdatedMessage=iSCSI Virtual Disk "{0}" has been updated.
+iSCSIVirtualDiskRemovedMessage=iSCSI Virtual Disk "{0}" has been removed.
+TestingiSCSIVirtualDiskMessage=Testing iSCSI Virtual Disk "{0}".
+iSCSIVirtualDiskParameterNeedsUpdateMessage=iSCSI Virtual Disk "{0}" {1} is different. Change required.
+iSCSIVirtualDiskDoesNotExistAndShouldNotMessage=iSCSI Virtual Disk "{0}" does not exist and should not. Change not required.
+iSCSIVirtualDiskRequiresRecreateError=iSCSI Virtual Disk "{0}" needs to be deleted and recreated. Please perform this manually.
+'@
+}
+```
 
 Each line contains a localized message - in this case for the **culture en-us**. You could of course use a different default **culture** if you wanted to.
 
 At the beginning of your **DSC Resource** you would the following command to ensure the appropriate localization strings are imported:
 
-{{< gist PlagueHO 87af9c3719c81e2cf9ef >}}
+
+```powershell
+Import-LocalizedData -BindingVariable LocalizedData -Filename BMD_cMyNewResource.psd1
+```
 
 Alternately, if you want to support **Message Localization** but don't want to have to supply your default messages in a separate file, you can place the **LocalizedData** section for your default culture at the top of your **DSC Resource** and exclude the **Import-LocalizedData** command.
 
@@ -65,7 +89,10 @@ Alternately, if you want to support **Message Localization** but don't want to h
 
 Once you've got the messages in, using them is extremely easy:
 
-{{< gist PlagueHO 82042370aa15377039fb >}}
+
+```powershell
+Write-Verbose -Message ($LocalizedData.iSCSIVirtualDiskExistsMessage -f $Path)
+```
 
 You can of course consume the messages anyway you like, but all of your localized messages are just properties of the **LocalizedData** object.
 
@@ -93,7 +120,46 @@ Each **example** should contain a **DSC Configuration** in a form that it could 
 
 For example:
 
-{{< gist PlagueHO a5aeabe9928fa130ca08 >}}
+
+```powershell
+configuration Sample_ciSCSIInitiator
+{
+    Param
+    (
+         [String] $NodeName = 'LocalHost'
+    )
+
+    Import-DscResource -Module ciSCSI
+
+    Node $NodeName
+    {
+	Service iSCSIService 
+        { 
+            Name = 'MSiSCSI'
+            StartupType = 'Automatic'
+            State = 'Running'  
+        }
+
+        ciSCSITargetPortal iSCSITargetPortal
+        {
+            Ensure = 'Present'
+            TargetPortalAddress = '192.168.128.10' 
+            InitiatorPortalAddress = '192.168.128.20'
+            DependsOn = "[WindowsFeature]iSCSIService" 
+        } # End of ciSCSITargetPortal Resource
+
+        ciSCSITarget iSCSITarget
+        {
+            Ensure = 'Present'
+            NodeAddress = 'iqn.1991-05.com.microsoft:fileserver01-cluster-target'
+            TargetPortalAddress = '192.168.128.10'
+            InitiatorPortalAddress = '192.168.128.20' 
+            IsPersistent = $true 
+            DependsOn = "[ciSCSITargetPortal]iSCSITargetPortal" 
+        } # End of ciSCSITarget Resource
+    } # End of Node
+} # End of Configuration
+```
 
 The above **DSC Resource** example will ensure the **MSiSCSI** service is running before configuring an **iSCSI Initiator**.
 
@@ -112,4 +178,5 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 4](https://dscottraynsford.wordpress.com/2015/12/18/creating-professional-dsc-resources-part-4/)
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
+
 

@@ -49,4 +49,3 @@ There appears to be a limit to the maximum number of characters supported in the
 If you do encounter this limit, but still need additional parameters passed, you could use positional parameters to reduce the overhead or create another script that calls these scripts with the defined parameters.
 
 Hopefully, someone will find this useful. If you have any comments or requests for improvements of the scripts, don't hesitate to let me know.
-

@@ -34,7 +34,10 @@ The best places to look for DSC resources is to search on [PowerShell Gallery](h
 
 If you have **WMF 5.0** installed (or have installed the [PowerShell Package Modules](https://www.microsoft.com/en-us/download/details.aspx?id=49186) installed) then you can search the **PowerShell Gallery** for DSC resources using **PowerShell** cmdlets:
 
-{{< gist PlagueHO ea7e54b197f4e85afd2d >}}
+
+```powershell
+Find-Module -Tag DSC
+```
 
 ![ss_powershell_findmoduletagdsc](/images/ss_powershell_findmoduletagdsc.png)
 
@@ -42,11 +45,17 @@ If you have **WMF 5.0** installed (or have installed the [PowerShell Package Mod
 
 If you find a resource you want to examine, you can install it using:
 
-{{< gist PlagueHO 5e5080e5132655ca71e7 >}}
+
+```powershell
+Install-Module -Name cFSRM
+```
 
 Or if you're not sure you want to trust it you can use the **save-module** cmdlet to save a copy to a folder so you can open and examine the resource code:
 
-{{< gist PlagueHO 270fa0b326e0c74506b1 >}}
+
+```powershell
+Save-Module -Name cFSRM -Path c:\temp
+```
 
 If you find the DSC resource module else where you'll need to download and install it manually - the same way install any other module.
 
@@ -93,4 +102,5 @@ Further parts in this series:
 - [Creating Professional DSC Resources - Part 5](https://dscottraynsford.wordpress.com/2015/12/20/creating-professional-dsc-resources-part-5/)
 - [Creating Professional DSC Resources - Part 6](https://dscottraynsford.wordpress.com/2015/12/23/creating-professional-dsc-resources-part-6/)
 - [Creating Professional DSC Resources - Part 7](https://dscottraynsford.wordpress.com/2016/01/25/creating-professional-dsc-resources-part-7/)
+
 

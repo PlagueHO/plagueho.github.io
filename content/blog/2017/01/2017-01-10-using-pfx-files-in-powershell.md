@@ -20,7 +20,13 @@ System.Security.Cryptography.X509Certificates.X509Certificate2Collection
 
 So, to read the PFX in to a variable called $PFX all we need to do is this:
 
-{{< gist PlagueHO d24f6d97554fdcca90c798ce6830ab0e >}}
+
+```powershell
+$PFXPath = 'd:\Cert.pfx'
+$PFXPassword = 'pass'
+$PFX = New-Object -TypeName 'System.Security.Cryptography.X509Certificates.X509Certificate2Collection'
+$PFX.Import($PFXPath,$PFXPassword,[System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet)
+```
 
 The $PFXPath variable is set to the path to the PFX file we're going to read in. The $PFXPassword is a string (not SecureString) containing the password used to protect the PFX file when it was exported.
 
@@ -30,7 +36,10 @@ We now have all the certificates loaded into an array in the $PFX variable and w
 
 Now, that we have the #PFX array, we can identify the thumbprint of the certificate that was actually exported (as opposed to the certificates in the trust chain) by looking at the last array item:
 
-{{< gist PlagueHO 5fbf3a2acfe919238da851f96427063b >}}
+
+```
+$PFX[$PFX.Count-1] | fl *
+```
 
 I'm piping the output Format-List so we can see the entire x509 certificate details.
 
@@ -40,7 +49,10 @@ In the case of the DSC Resource we'll compare the certificate thumbprint of the 
 
 _Protip: You can actually verify the certificate and the entire trust chain is valid and not expired by calling the verify method on the last certificate:_
 
-{{< gist PlagueHO 5690ece2cf245c903c849cb2d679cc8f >}}
+
+```powershell
+foreach ($Cert in $PFX) { "$($Cert.Subject) is valid: $($Cert.Verify())" }
+```
 
 ![ss_readpfx_validateissuedcertificate](/images/ss_readpfx_validateissuedcertificate.png)
 
@@ -53,4 +65,5 @@ _So we could easily use the Validate method to test the certificates validity be
 So, finally this gives us the code required to implement the **xCertificateExport** Resource in the DSC Resource Kit. We can now perform a comparison of the certificates a PFX file to ensure that they are the same as the certificates that have already been exported.
 
 This information is not something that you might use every day, but hopefully it's information that someone might find useful. So thank you for taking the time to read this.
+
 

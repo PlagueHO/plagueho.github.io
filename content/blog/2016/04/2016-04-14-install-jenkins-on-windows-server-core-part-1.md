@@ -61,9 +61,53 @@ That's all there is to it**.**
 
 Here is the complete script. You can just fire up PowerShell on the Core server and copy/paste this directly into the PowerShell console, or use some other method of running it:
 
-{{< gist PlagueHO 0691483fa1be4b9e79cc7d078b3e1bb2 >}}
+
+```powershell
+# Configure the settings to use to setup this Jenkins Executor
+$Port = 80
+$IPAddress = '192.168.1.96'
+$SubnetPrefixLength = 24
+$DNSServers = @('192.168.1.1')
+$DefaultGateway = '192.168.1.1'
+
+# Install .NET Framework 3.5
+Install-WindowsFeature -Name NET-Framework-Core
+
+# Install Chocolatey
+iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+
+# Install JDK 8 
+choco install jdk8 -y
+
+# Install Jenkins using Chocolatey
+choco install Jenkins -y
+
+# Set the port Jenkins uses
+$Config = Get-Content `
+  -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml"
+$NewConfig = $Config `
+  -replace '--httpPort=[0-9]*\s',"--httpPort=$Port "
+Set-Content `
+  -Path "${ENV:ProgramFiles(x86)}\Jenkins\Jenkins.xml" `
+  -Value $NewConfig `
+  -Force
+Restart-Service `
+  -Name Jenkins
+
+# Set a static IP Address - optional
+New-NetIPAddress `
+  -IPAddress $IPAddress `
+  -InterfaceAlias Ethernet `
+  -DefaultGateway $DefaultGateway `
+  -AddressFamily IPv4 `
+  -PrefixLength $SubnetPrefixLength
+Set-DnsClientServerAddress `
+  -InterfaceAlias Ethernet `
+  -Addresses $DNSServers
+```
 
 Tomorrow I'll improve on this process by converting it into a **DSC configuration**, which will ensure the Jenkins Server maintains it's state and makes provisioning them even easier.
 
 Thanks for reading.
+
 

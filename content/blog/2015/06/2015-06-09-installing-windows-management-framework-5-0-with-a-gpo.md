@@ -32,17 +32,34 @@ The next problem was that I needed some sort of registry key that could be check
 
 So instead I just used a simple WMI query to find out if the update was installed:
 
-\[sourcecode language="powershell"\] get-wmiobject -Class win32\_QuickFixEngineering -Filter "HotfixID = 'KB2908075'" \[/sourcecode\]
+```powershell
+Get-WmiObject -Class Win32_QuickFixEngineering -Filter "HotfixID = 'KB2908075'"
+```
 
-The above command will return a list of KBs installed with a matching HotfixID. There will be 0 if the KB is not installed, so to use it I needed to count the objects returned:
+The above command will return a list of KBs installed with a matching **HotfixID**.  
+There will be zero results if the KB is not present, so to use it I needed to count the objects returned:
 
-\[sourcecode language="powershell"\] (get-wmiobject -Class win32\_QuickFixEngineering -Filter "HotfixID = 'KB2908075'" | Measure-Object).Count -gt 0 \[/sourcecode\]
+```powershell
+(Get-WmiObject -Class Win32_QuickFixEngineering -Filter "HotfixID = 'KB2908075'" |
+    Measure-Object).Count -gt 0
+```
 
-If the MSU or EXE (did I mention this script will work with hotfixes in EXE form) did indeed need installing the script just builds a command line and calls it:
+If the MSU or EXE (did I mention this script will work with hot-fixes in EXE form) does indeed need installing, the script just builds a command line and calls it:
 
-\[sourcecode language="powershell"\] If (\[io.path\]::GetExtension($InstallerPath) -eq '.msu') {    \[String\]$Command="WUSA.EXE $InstallerPath /quiet /norestart)"     \[String\]$Type="MSU $KBID" } else {     \[String\]$Command="$InstallerPath /quiet /norestart"     \[String\]$Type="EXE $KBID" }
+```powershell
+if ([IO.Path]::GetExtension($InstallerPath) -eq '.msu') {
+    $Command = "WUSA.EXE $InstallerPath /quiet /norestart"
+    $Type    = "MSU $KBID"
+}
+else {
+    $Command = "$InstallerPath /quiet /norestart"
+    $Type    = "EXE $KBID"
+}
 
-\# Call the product Install. & cmd.exe /c "$Command" \[Int\]$ErrorCode = $LASTEXITCODE \[/sourcecode\]
+# Call the installer
+& cmd.exe /c "$Command"
+$ErrorCode = $LASTEXITCODE
+```
 
 ## The Script
 
@@ -62,7 +79,7 @@ Before getting started, I strongly suggest you read my post about the problems e
 6. Click the **Show Files** button and copy the **Install-Update.ps1** file that was in the zip file downloaded from Microsoft Script Center into this location:[![GPO Folder containing script](/images/ss_gpo_installwmf5_startuppsscripts_folder.png?w=660)](/images/ss_gpo_installwmf5_startuppsscripts_folder.png)
 7. Close the folder and go back to the **Startup Properties** window and click the **Add** button.
 8. Set the **Script Name** to _Install-Update.ps1_.
-9. Set the **Script Parameters** to be the following (customized the **bold** sections to yourenviroment):
+9. Set the **Script Parameters** to be the following (customized the **bold** sections to your environment):
 
      -InstallerPath "**\\\\plague-pdc\\Software$\\Updates\\WindowsBlue-KB3055381-x64.msu**" -KBID "**KB3055381**" -LogPath **\\\\plague-pdc\\LogFiles$\\**
 
@@ -86,4 +103,3 @@ For example, for Notepad++ version 6.7.8.2 the registry key _HKLM:\\SOFTWARE\\Wo
 I also wrote a script, **Install-Application.ps1** to do all this as well, and it is available in the same package as the **Install-Update.ps1** script. I will write a separate blog post on using this one as it can be a little bit trickier thanks to the limitations with passing parameters to PS scripts in GPOs. So I'll leave this post till next week.
 
 Thanks for reading!
-

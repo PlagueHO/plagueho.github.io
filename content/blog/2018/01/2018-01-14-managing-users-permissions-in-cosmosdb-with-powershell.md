@@ -60,13 +60,26 @@ Before you get down to the process of working with Cosmos DB resources, you'll n
 
 To create the **connection variable** we just use the **New-CosmosDbContext**:
 
-{{< gist PlagueHO 5f180a93ed0d3fa6df523c8b75fa9544 >}}
+
+```powershell
+$account = 'MyCosmosDBAccount'
+$database = 'MyDatabase'
+$key = ConvertTo-SecureString -String 'this is your master key, get it from the Azure portal' -AsPlainText -Force
+$context = New-CosmosDbContext -Account $account -Database $database -Key $key
+```
 
 ![ss_cdb_cosmosdbnewconnection](/images/ss_cdb_cosmosdbnewconnection.png)
 
 If you do not wish to specify your **master key**, you can have the **New-CosmosDbContext** function pull your **master key** from the **Azure Management Portal** directly:
 
-{{< gist PlagueHO dffd4a47a2f9a2f4f51ffddee5433fec >}}
+
+```powershell
+Add-AzureRmAccount
+$account = 'MyCosmosDBAccount'
+$database = 'MyDatabase'
+$resourceGroup = 'MyCosmosDBResourceGroup'
+$context = New-CosmosDbContext -Account $account -Database $database -ResourceGroup $resourceGroup
+```
 
 ![ss_cdb_cosmosdbnewconnectionviaportal](/images/ss_cdb_cosmosdbnewconnectionviaportal.png)
 
@@ -111,7 +124,12 @@ To grant a permission you need to provide four pieces of information:
 
 In the following example, we'll grant the user **daniel** _all_ access to the **TestCollection**:
 
-{{< gist PlagueHO 262c087f1e4fb4d6bfd3cf0db314c0f6 >}}
+
+```powershell
+$userId = 'TestUserId'
+$resourcePath = Get-CosmosDbCollectionResourcePath -Database 'TestDatabase' -Id 'TestCollection'
+New-CosmosDbPermission -Context $context -Id 'AccessTestCollection' -UserId $userId -PermissionMode All -Resource $resourcePath
+```
 
 ![ss_cdb_cosmosdbnewpermission](/images/ss_cdb_cosmosdbnewpermission.png)
 
@@ -148,4 +166,5 @@ So this is pretty much all there is to managing **users** and **permissions** us
 You can find additional documentation and examples of how to manage these resources over in the [Cosmos DB PowerShell module readme file](https://github.com/PlagueHO/CosmosDB/blob/dev/README.md) on GitHub.
 
 Hopefully this will help you in any **Cosmos DB** automation tasks you might need to implement.
+
 

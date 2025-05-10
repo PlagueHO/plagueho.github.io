@@ -17,13 +17,61 @@ WAC really shines when being used to manage headless Windows Servers (e.g. Windo
 
 It is pretty easy to install WAC, but if you want to install it with PowerShell DSC, then here is a config for you to use:
 
-{{< gist PlagueHO e8120e1cc01b447d084322eb2ad14c95 >}}
+
+```powershell
+configuration WindowsAdminCenter
+{
+    param
+    (
+        [System.String]
+        $WacProductId = '{7019BE31-3389-46FB-A077-B813D53C1266}',
+        
+        [System.String]
+        $WacDownloadPath = 'https://download.microsoft.com/download/1/0/5/1059800B-F375-451C-B37E-758FFC7C8C8B/WindowsAdminCenter1809.5.msi',
+
+        [System.Int16]
+        $Port = 6516,
+        
+        [System.String]
+        $Thumbprint
+    )
+
+    Import-DscResource -ModuleName PSDscResources
+    
+    if ([System.String]::IsNullOrEmpty($Thumbprint))
+    {
+        $wacInstallArguments = "/qn /l*v c:\windows\temp\windowsadmincenter.msiinstall.log SME_PORT=$Port SSL_CERTIFICATE_OPTION=generate"
+    }
+    else
+    {
+        $wacInstallArguments = "/qn /l*v c:\windows\temp\windowsadmincenter.msiinstall.log SME_PORT=$Port SME_THUMBPRINT=$Thumbprint"
+    }
+    
+    Node localhost
+    {
+        MsiPackage InstallWindowsAdminCenter
+        {
+            ProductId = $WacProductId
+            Path      = $WacDownloadPath
+            Arguments = $wacInstallArguments
+            Ensure    = 'Present'
+        }
+    }
+}
+```
 
 The config is parameterized and supports specifying the port for the WAC to listen on  and using either a _self-signed certificate_ or a _local machine certificate_ in the by specifying a thumbprint.
 
 To apply the DSC using a self-signed certificate and on the default port of 6516, run the following in an Administrator PowerShell console:
 
-{{< gist PlagueHO 24e893d429e9aa83f00c2021afaab6ef >}}
+
+```powershell
+Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/PlagueHO/e8120e1cc01b447d084322eb2ad14c95/raw/2aff9e1a8d94cdb6f8a7409874a3bdbfcf234f8e/WindowsAdminCenterDscConfiguration.ps1' -OutFile 'WindowsAdminCenterDscConfiguration.ps1'
+Install-Module -Name PSDscResources
+. .\WindowsAdminCenterDscConfiguration.ps1
+WindowsAdminCenter
+Start-DscConfiguration -Path .\WindowsAdminCenter\ -ComputerName localhost -Wait -Verbose
+```
 
 ![ss_wacdsc_defaultport](/images/ss_wacdsc_defaultport.png)
 
@@ -31,11 +79,19 @@ You can run this on a Windows Server Core machine by logging in and typing **pow
 
 To apply the DSC configuration specifying a certificate with a thumbprint from the local machine store and on Port 4000, run these commands instead:
 
-{{< gist PlagueHO 3f4dc6d70e9fa9e294c4a1c691fe7aad >}}
+
+```powershell
+Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/PlagueHO/e8120e1cc01b447d084322eb2ad14c95/raw/2aff9e1a8d94cdb6f8a7409874a3bdbfcf234f8e/WindowsAdminCenterDscConfiguration.ps1' -OutFile 'WindowsAdminCenterDscConfiguration.ps1'
+Install-Module -Name PSDscResources
+. .\WindowsAdminCenterDscConfiguration.ps1
+WindowsAdminCenter -Port 4000 -Thumbprint 'fddfec2150b2a1c0d1166debffdbed1d55798485'
+Start-DscConfiguration -Path .\WindowsAdminCenter\ -ComputerName localhost -Wait -Verbose
+```
 
 ![ss_wacdsc_installwiththumbprint](/images/ss_wacdsc_installwiththumbprint.png)
 
 This DSC configuration can also be used on Virtual Machines deployed to Azure, using either the [Azure DSC Extension Handler](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/dsc-overview) or a [Azure Automation DSC Pull Server](https://docs.microsoft.com/en-us/azure/automation/automation-dsc-overview).
 
 Easy as all that. Now you can use the awesome WAC GUI and still run headless while also taking advantage of the benefits that DSC brings.
+
 

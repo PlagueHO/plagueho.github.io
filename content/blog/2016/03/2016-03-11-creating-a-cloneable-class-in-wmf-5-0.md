@@ -13,7 +13,13 @@ tags:
 
 You might have noticed that instances of certain types of classes are created, a method called **Clone** is available that will create a ([shallow](http://stackoverflow.com/questions/184710/what-is-the-difference-between-a-deep-copy-and-a-shallow-copy)) copy of the object. A PowerShell **Hashtable** object is a classic example of a class that supports the **Clone** method:
 
-{{< gist PlagueHO db460dffa44c6e82372f >}}
+
+```powershell
+$Car = [Hashtable]::New()
+$Car.Add('Make','Lamborghini')
+$Car.Add('Model','Aventador')
+$NewCar = $Car.Clone()
+```
 
 This is nothing new to developers, but for most Ops people it might be something they're not that familiar with. But if you are an Ops person who is implementing more advanced PowerShell modules or scripts in WMF 5.0 that require custom classes, then this might be something you need to do.
 
@@ -33,7 +39,13 @@ _Note: You don't really need to know what an interface is to use it, but if you 
 
 Creating a class that implements the **ICloneable** interface just requires that we add the name of the interface to implement after a colon following the class name:
 
-{{< gist PlagueHO 3caddac4f0644587f681 >}}
+
+```powershell
+class Car:ICloneable {
+  [String] $Make
+  [String] $Model
+}
+```
 
 However, if we try to define this class as is we'll get an error:
 
@@ -43,7 +55,21 @@ The problem is that we've told PowerShell that the **Car** class implements **IC
 
 To do this we need to add the method to our class definition:
 
-{{< gist PlagueHO 47be0d4ad65dd76a06d7 >}}
+
+```powershell
+class Car:ICloneable {
+  [Object] Clone () {
+      $NewCar = [Car]::New()
+      foreach ($Property in ($this | Get-Member -MemberType Property))
+      {
+          $NewCar.$($Property.Name) = $this.$($Property.Name)
+      } # foreach
+      return $NewCar
+  } # Clone
+  [String] $Make
+  [String] $Model
+}
+```
 
 The above code first creates a new Car object, then gets a list of the **properties** on the existing (**$This**) object and uses a **foreach** loop to copy the content of each property to the new Car object (**$NewCar**). The **$NewCar** object is returned to the calling code.
 
@@ -52,4 +78,5 @@ _Note: This performs a [shallow copy](http://stackoverflow.com/questions/184710/
 You've now created an class that implements an interface. The .NET framework provides hundreds (if not thousands) of interfaces that you potentially could implement on your PowerShell classes. Of course, you could have cloned the Car object without implementing the **ICloneable** interface at all, but this post is intended to be a general introduction to implementing interfaces in WMF 5.0 as well as the **ICloneable** interface.
 
 Thanks for reading.
+
 

@@ -6,9 +6,9 @@ tags:
   - "powershell"
 ---
 
-# introduction
+## Introduction
 
-This morning I decided I wanted to update all my lab servers to Windows Management Framework 5.0 so I could do some work on the new DSC features that come with it. To do this, I though I'd use a GPO with a startup PowerShell script that would perform the installation of the WMF 5.0 April hotfix (available [here)](https://www.microsoft.com/en-us/download/details.aspx?id=46889 "Windows Management Framework 5.0 Preview April 2015").
+This morning I decided I wanted to update all my lab servers to Windows Management Framework 5.0 so I could do some work on the new DSC features that come with it. To do this, I thought I'd use a GPO with a startup PowerShell script that would perform the installation of the WMF 5.0 April hotfix (available [here](https://www.microsoft.com/en-us/download/details.aspx?id=46889 "Windows Management Framework 5.0 Preview April 2015")).
 
 [![A GPO Startup PowerShell script with parameters.](/images/ss_gpo_startuppowershellscriptparametersexample.png?w=660)](/images/ss_gpo_startuppowershellscriptparametersexample.png)
 A GPO Startup PowerShell script with parameters.
@@ -25,9 +25,21 @@ There seems to be a maximum number of characters that will be used in the Script
 
 If you do run into this issue, one way around it is to edit the script and wrap all the code in a function definition and then add a call with the parameters to the end of the script after the end of the function definition. For Example:
 
-\[sourcecode language="powershell"\] Function Install-Application { ... Existing script code here ... } Install-Application -InstallerPath "\\\\Server\\Software$\\Notepad++\\npp.6.7.8.2.Installer.exe" -InstallerParameters "/S" -RegistryKey "HKLM:\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Notepad++" -RegistryName "DisplayVersion" -RegistryValue "6.7.8.2" -LogPath \\\\Server\\Logfiles$\\ \[/sourcecode\]
+```powershell
+Function Install-Application {
+    # ... Existing script code here ...
+}
 
-The PowerShell script parameters in the GPO can then be dropped as they are contained in the script itself - this is not ideal, but unless Microsoft lifts this limitation it may be required.
+Install-Application `
+    -InstallerPath "\\Server\Software$\Notepad++\npp.6.7.8.2.Installer.exe" `
+    -InstallerParameters "/S" `
+    -RegistryKey "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Notepad++" `
+    -RegistryName "DisplayVersion" `
+    -RegistryValue "6.7.8.2" `
+    -LogPath "\\Server\Logfiles$"
+```
+
+The PowerShell script parameters in the GPO can then be dropped as they are contained in the script itself – this is not ideal, but unless Microsoft lifts this limitation it may be required.
 
 ### Parameter Quotes
 
@@ -41,4 +53,3 @@ There is also some odd behaviour passing parameters with quotes (single or doubl
 In short, if you stick to the above when calling PowerShell scripts with parameters from GPO then you might save yourself a lot of time scratching your head.
 
 As a quick aside, the scripts I wrote as part of this (for installing Windows QFE Hotfixes and Applications via GPO) are available on Microsoft Script Center [here](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-to-Install-70009e38 "PowerShell Scripts to Install Application (EXE) or Update (MSU) using GPO"). I will be writing a full post on these scripts later in the week.
-

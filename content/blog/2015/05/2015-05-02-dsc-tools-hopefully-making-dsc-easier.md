@@ -33,25 +33,47 @@ For example, to set up a DSC Pull Server (in HTTP mode) there are several steps 
 
 These steps are easy to understand and perform, but if you don't do them often you will quickly forget exactly how to do it. I found myself referring back to long sets of instructions (found many places online) every time I did it.
 
-To perform the above steps using the **DSCTools** module simply requires the following cmdlets to be executed on the computer that will become the DSC Pull Server. \[sourcecode language="powershell"\] # Download the DSC Resource Kit and install it to the local DSC Pull Server Install-DSCResourceKit
+To perform the above steps using the **DSCTools** module simply requires the following cmdlets to be executed on the computer that will become the DSC Pull Server.
 
-\# Copy all the resources up to the local DSC Pull Server (zipped and with a checksum file). Publish-DSCPullResources
+```powershell
+# Download the DSC Resource Kit and install it to the local DSC Pull Server
+Install-DSCResourceKit
 
-\# Install a DSC Pull Server to the local machine Enable-DSCPullServer \[/sourcecode\] The cmdlets can be executed on a computer other than the Pull Server by providing _ComputerName_ and _Credential_ parameters.
+# Copy all the resources up to the local DSC Pull Server (zipped and with a checksum file)
+Publish-DSCPullResources
+
+# Install a DSC Pull Server to the local machine
+Enable-DSCPullServer
+```
+
+The cmdlets can be executed on a computer other than the Pull Server by providing `-ComputerName` and `-Credential` parameters.
 
 ### DSCTool CmdLet Parameters
 
-Like most PS cmdlets, you can also provide additional configuration options to them as well. For example, you might want your DSC Pull Server resources folder to be placed in a different location, in which case you could provide the commands with the PullServerResourcePath parameter: \[sourcecode language="powershell"\] # Copy all the resources up to the local DSC Pull Server (zipped and with a checksum file). Publish-DSCPullResources -PullServerResourcePath e:\\DSC\\Resources
+Like most PS cmdlets, you can also provide additional configuration options to them as well. For example, you might want your DSC Pull Server resources folder to be placed in a different location, in which case you could provide the commands with the PullServerResourcePath parameter: 
 
-\# Install a DSC Pull Server to the local machine Enable-DSCPullServer -PullServerResourcePath e:\\DSC\\Resources \[/sourcecode\] Most **DSCTools** cmdlets have many other parameters for controlling most aspects of the functions such as the type of Pull Server to install (HTTP, HTTPS or SMB), the location where files should be stored. If these parameters aren't passed then the default values will be used.
+```powershell
+# Copy the resources to a non-default folder on the Pull Server
+Publish-DSCPullResources -PullServerResourcePath e:\DSC\Resources
+
+# Install a DSC Pull Server that uses the same custom folder
+Enable-DSCPullServer    -PullServerResourcePath e:\DSC\Resources
+```
+
+Most **DSCTools** cmdlets have many other parameters for controlling most aspects of the functions such as the type of Pull Server to install (HTTP, HTTPS or SMB), the location where files should be stored. If these parameters aren't passed then the default values will be used.
 
 ### Default DSCTools Module Settings
 
-If you're lazy (like me) and don't want to have to pass the same parameters in to every cmdlet, you can change the default values by overriding script variables once the module has been loaded. For example you might always want your Pull Servers to use a configuration path of _e:\\DSC\\Configuration_. You could pass the _PullServerConfigurationPath_ parameter to each cmdlet that needs it (which could be many), or you could just change the value of the _$Script:DSCTools\_DefaultPullServerConfigurationPath_ variable: \[sourcecode language="powershell"\] # Set the default location where all Pull Server cmdlets will put DSC Pull Server configuration files. $Script:DSCTools\_DefaultPullServerConfigurationPath = 'e:\\DSC\\Configuration'
+If you're lazy (like me) and don't want to have to pass the same parameters in to every cmdlet, you can change the default values by overriding script variables once the module has been loaded. For example you might always want your Pull Servers to use a configuration path of _e:\\DSC\\Configuration_. You could pass the _PullServerConfigurationPath_ parameter to each cmdlet that needs it (which could be many), or you could just change the value of the _$Script:DSCTools\_DefaultPullServerConfigurationPath_ variable: 
 
-\# Copy all the resources up to the local DSC Pull Server (zipped and with a checksum file). Publish-DSCPullResources
+```powershell
+# Change the default location where all Pull-Server cmdlets put configuration files
+$Script:DSCTools_DefaultPullServerConfigurationPath = 'e:\DSC\Configuration'
 
-\# Install a DSC Pull Server to the local machine Enable-DSCPullServer \[/sourcecode\]
+# Now the standard commands pick up that new default
+Publish-DSCPullResources
+Enable-DSCPullServer
+```
 
 ### Configuring a Node
 
@@ -62,19 +84,41 @@ Configuring a node to use the Pull Server also used to be a more complicated pro
 3. Configure the LCM on the node to pull its configuration from the Pull Server.
 4. Trigger the node to immediately pull it's DSC configuration from the Pull Server (rather than wait 30 minutes).
 
-This process can now be performed by just two cmdlets: \[sourcecode language="powershell"\] # Set up the node NODE01 to pull from the pull server on machine MYDSCSERVER. # The MOF file for this node will be looked for in: # $Home\\Documents\\NODE01.MOF # This can be configured. Start-DSCPullMode \` -ComputerName 'NODE01' -PullServerURL 'http://MYDSCSERVER:8080/PSDSCPullServer.svc'
+This process can now be performed by just two cmdlets: 
 
-\# Force the node to pull its configuration from the Pull Server Invoke-DSCCheck -ComputerName NODE01 \[/sourcecode\] The second cmdlet, _Invoke-DSCCheck_, is not even required if you're willing to wait for the automatic DSC check to occur (every 30 minutes or so).
+```powershell
+# Set up NODE01 to pull from the server MYDSCSERVER
+# The MOF file is searched for in $Home\Documents\NODE01.MOF (configurable)
+Start-DSCPullMode `
+    -ComputerName 'NODE01' `
+    -PullServerURL 'http://MYDSCSERVER:8080/PSDSCPullServer.svc'
+
+# Force an immediate configuration pull (optional)
+Invoke-DSCCheck -ComputerName NODE01
+```
 
 ### Configuring Lots of Nodes at Once
 
 Once again, this module is all about laziness. So, why configure one node at a time when you can configure lots of them all at once. Many of the cmdlets in this module support a _Nodes_ parameter, which take an array of hash tables. This array of hash tables will contain the definitions of the nodes that need to be set up or have other procedures performed on them (e.g. invoke a configuration check).
 
-For example, to configure seven different nodes for using a DSC Pull Server (with different configurations even) would require the following code: \[sourcecode language="powershell"\] $Nodes = @( \` @{Name='NODE01';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e1';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE01.MOF"} , \` @{Name='NODE02';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e2';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE02.MOF"} , \` @{Name='NODE03';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e3';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE03.MOF"} , \` @{Name='NODE04';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e4';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE04.MOF"} , \` @{Name='NODE05';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e5';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE05.MOF"} , \` @{Name='NODE06';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e6';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE06.MOF"} , \` @{Name='NODE07';Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e7';RebootIfNeeded=$true;MofFile="$PSScriptRoot\\Configuration\\Config\_StandardSrv\\NODE07.MOF"} )
+For example, to configure seven different nodes for using a DSC Pull Server (with different configurations even) would require the following code: 
 
-Start-DSCPullMode \` -Nodes $Nodes \` -PullServerURL 'http://MYDSCSERVER:8080/PSDSCPullServer.svc'
+```powershell
+$Nodes = @(
+    @{ Name='NODE01'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e1'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE01.MOF" },
+    @{ Name='NODE02'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e2'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE02.MOF" },
+    @{ Name='NODE03'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e3'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE03.MOF" },
+    @{ Name='NODE04'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e4'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE04.MOF" },
+    @{ Name='NODE05'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e5'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE05.MOF" },
+    @{ Name='NODE06'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e6'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE06.MOF" },
+    @{ Name='NODE07'; Guid='115929a0-61e2-41fb-a9ad-0cdcd66fc2e7'; RebootIfNeeded=$true; MofFile="$PSScriptRoot\Config\NODE07.MOF" }
+)
 
-Invoke-DSCCheck -Nodes $Node \[/sourcecode\] The nodes array could even be populated from a CSV file to make it even easier.
+Start-DSCPullMode -Nodes $Nodes -PullServerURL 'http://MYDSCSERVER:8080/PSDSCPullServer.svc'
+Invoke-DSCCheck  -Nodes $Nodes
+```
+
+The nodes array could even be populated from a CSV file to make it even easier.
 
 ### Where to get It
 
@@ -95,4 +139,3 @@ Over the next few weeks I am planning to update the module so that some of the f
 After creating this module it occurred to me that there might be an even better way to implement a DSC set up: using a basic DSC system XML configuration file that could define all the pull servers and nodes. This XML file could be passed to a cmdlet that could configure all the applicable servers and nodes from the content. So this is the next long-term goal I have for this module.
 
 If anyone out there finds this module useful and has a request for additional features or finds a (shudder) bug, please let me know!
-

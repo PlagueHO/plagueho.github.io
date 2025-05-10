@@ -34,7 +34,46 @@ Before getting started there is a few things that will be needed:
 
 The first task is to customize and install the Azure Key Vault using the following **PowerShell script**.
 
-{{< gist PlagueHO 24bcab61df4741a0c388d3d0467d192a >}}
+
+```powershell
+# The name of the Azure subscription to install the Key Vault into
+$subscriptionName = 'MySubscription'
+
+# The resource group that will contain the Key Vault to create to contain the Key Vault
+$resourceGroupName = 'MyKeyVaultRG'
+
+# The name of the Key Vault to install
+$keyVaultName = 'MyKeyVault'
+
+# The Azure data center to install the Key Vault to
+$location = 'southcentralus'
+
+# These are the Azure AD users that will have admin permissions to the Key Vault
+$keyVaultAdminUsers = @('Joe Boggs','Jenny Biggs')
+
+# Login to Azure
+Login-AzureRMAccount
+
+# Select the appropriate subscription
+Select-AzureRmSubscription -SubscriptionName $subscriptionName
+
+# Make the Key Vault provider is available
+Register-AzureRmResourceProvider -ProviderNamespace Microsoft.KeyVault
+
+# Create the Resource Group
+New-AzureRmResourceGroup -Name $resourceGroupName -Location $location
+
+# Create the Key Vault (enabling it for Disk Encryption, Deployment and Template Deployment)
+New-AzureRmKeyVault -VaultName $keyVaultName -ResourceGroupName $resourceGroupName -Location $location `
+    -EnabledForDiskEncryption -EnabledForDeployment -EnabledForTemplateDeployment
+
+# Add the Administrator policies to the Key Vault
+foreach ($keyVaultAdminUser in $keyVaultAdminUsers) {
+    $UserObjectId = (Get-AzureRmADUser -SearchString $keyVaultAdminUser).Id
+    Set-AzureRmKeyVaultAccessPolicy -VaultName $keyVaultName -ResourceGroupName $resourceGroupName -ObjectId $UserObjectId `
+        -PermissionsToKeys all -PermissionsToSecrets all -PermissionsToCertificates all
+}
+```
 
 But first, the variables in the **PowerShell script** need to be customized to suit. The variables in the **PowerShell script** that needs to be set are:
 
@@ -56,19 +95,41 @@ Once the **Azure Key Vault** is setup and an administrator or two have been assi
 
 To create an **access policy** to allow a **user** to _get_ and _list_ **cryptographic key****s**, **certificates** and **secrets** if you know the **User Principal Name**:
 
-{{< gist PlagueHO c430d4f9eafbe4c6d753613365c6b6aa >}}
+
+```powershell
+Set-AzureRmKeyVaultAccessPolicy -VaultName $keyVaultName -ResourceGroupName $resourceGroupName `
+  -UserPrincipalName 'Joe.Boggs@contoso.com' `
+  -PermissionsToCertificates list,get `
+  -PermissionsToKeys list,get `
+  -PermissionsToSecrets list,get
+```
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
 If you only have the **full name** of the **user** then you'll need to look up the **Object Id** for the user in the **Azure AD**:
 
-{{< gist PlagueHO 5900d92a9b97e947bc60ff7fe721fefe >}}
+
+```powershell
+$userObjectId = (Get-AzureRmADUser -SearchString 'Joe Bloggs').Id
+Set-AzureRmKeyVaultAccessPolicy -VaultName $keyVaultName -ResourceGroupName $resourceGroupName `
+  -ObjectId $userObjectId `
+  -PermissionsToCertificates list,get `
+  -PermissionsToKeys list,get `
+  -PermissionsToSecrets list,get
+```
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
 To create an **access policy** to allow a **service principal** or **application** to _get_ and _list_ **cryptographic key****s** if you know the **Application Id** (a GUID):
 
-{{< gist PlagueHO e079674f79ed6cf87b877d6829735917 >}}
+
+```powershell
+Set-AzureRmKeyVaultAccessPolicy -VaultName $keyVaultName -ResourceGroupName $resourceGroupName `
+  -ServicePrincipalName 'e9b1bc3c-4769-4a98-9014-b315fd2adf53' `
+  -PermissionsToCertificates list,get `
+  -PermissionsToKeys list,get `
+  -PermissionsToSecrets list,get
+```
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -80,7 +141,11 @@ The available permissions for **certificates**, **keys** and **secrets** are:
 
 An **access policy** can be removed from **users** or **service principals** using the **Remove-AzureRmKeyVaultAccessPolicy** cmdet:
 
-{{< gist PlagueHO 058455310cdff17b8bdba6ba6db74f6c >}}
+
+```powershell
+Remove-AzureRmKeyVaultAccessPolicy -VaultName $keyVaultName -ResourceGroupName $resourceGroupName `
+  -UserPrincipalName 'Joe.Boggs@contoso.com'
+```
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -92,7 +157,11 @@ _Note: the above code assumes you still have the variables set from the 'Install
 
 To create a new secret, use the **Set-AzureKeyVaultSecret** cmdlet:
 
-{{< gist PlagueHO 45d281e3f6dc58107fbb6f982c27b4e8 >}}
+
+```powershell
+Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' `
+  -SecretValue (ConvertTo-SecureString -String 'P@ssword!1' -AsPlainText -Force)
+```
 
 _Note: the above code assumes you still have the variables set from the 'Install the Key Vault' section._
 
@@ -100,7 +169,11 @@ This will create a secret called **MyAdminPassword** with the value **P@ssword!1
 
 The secret can be updated to a new value using the same cmdlet:
 
-{{< gist PlagueHO fe8da3ca6a0ac7e543e2f9c1de1339f9 >}}
+
+```powershell
+Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' `
+  -SecretValue (ConvertTo-SecureString -String 'Sup3rS3cr3tP4ss!' -AsPlainText -Force)
+```
 
 **Additional parameters** can also be assigned to each version of a secret to control how it can be used:
 
@@ -112,7 +185,16 @@ The secret can be updated to a new value using the same cmdlet:
 
 For example:
 
-{{< gist PlagueHO 20e433002d73a69e2b7ef9318d9b4b9b >}}
+
+```powershell
+Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' `
+  -SecretValue (ConvertTo-SecureString -String 'Sup3rS3cr3tP4ss!' -AsPlainText -Force) `
+  -ContentType 'txt' `
+  -NotBefore ((Get-Date).ToUniversalTime()) `
+  -Expires ((Get-Date).AddYears(2).ToUniversalTime()) `
+  -Disable:$false `
+  -Tags @{ 'Risk' = 'High'; }
+```
 
 ![ss_akv_secretupdatewithparameters](/images/ss_akv_secretupdatewithparameters.png)
 
@@ -120,29 +202,42 @@ For example:
 
 To retrieve the **latest (current) version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet:
 
-{{< gist PlagueHO 335c7a9420ccdf1c2c0c7559b5d01db9 >}}
+
+```powershell
+$secretText = (Get-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword').SecretValue
+```
 
 This will assign the stored secret to the variable **$secretText** as a **SecureString**. This can then be passed to any other cmdlets that require a **SecureString**.
 
 To list **all** the versions of a secret, add the **IncludeVersions** parameter:
 
-{{< gist PlagueHO 82cc3c622a43673c5b35e9eb5ed0710b >}}
+
+```powershell
+Get-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' -IncludeVersions
+```
 
 ![ss_akv_secretallhistory](/images/ss_akv_secretallhistory.png)
 
 To retrieve a **specific version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet with the **Version** parameter specified:
 
-{{< gist PlagueHO 12b88cde2f6c67cefd2c1a17710b4936 >}}
+
+```powershell
+$secretText = (Get-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' -Version '02218af0521749b084bb08bd13184efb')
+```
 
 ## Removing Secrets
 
 Finally, to remove a secret use the **Remove-AzureKeyVaultSecret** cmdlet:
 
-{{< gist PlagueHO 5892377f9952506199c1d3843a028cd8 >}}
+
+```powershell
+Remove-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' -Force
+```
 
 That pretty much covers managing and using **secrets** in **Azure Key Vault** using **PowerShell****.**
 
 # C**ryptographic keys** and C**ertificates**
 
 In the next part of this series I'll cover using **Azure Key Vault** to use and manage **cryptographic keys** and **certificates**. Thanks for sticking with me this far.
+
 

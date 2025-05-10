@@ -61,7 +61,140 @@ The process will perform the following tasks:
 
 This is the content of the script:
 
-{{< gist PlagueHO d8f61cb9490015532442ee90a5ea8311 >}}
+
+```powershell
+[CmdletBinding()]
+param
+(
+    [Parameter(Mandatory = $True)]
+    [String] $ServicePrincipalUsername,
+
+    [Parameter(Mandatory = $True)]
+    [SecureString] $ServicePrincipalPassword,
+
+    [Parameter(Mandatory = $True)]
+    [String] $TenancyId,
+
+    [Parameter(Mandatory = $True)]
+    [String] $SubscriptionName,
+
+    [String] $AppCode = 'gocd', # just a short code to identify this app
+
+    [String] $UniqueCode = 'dsr', # a short unique code to ensure that resources are unique
+
+    [String] $ContainerImage = 'gocd/gocd-server:v17.8.0', # the container image name and version to deploy
+
+    [String] $ContainerPort = '8153', # The port to expose on the container
+
+    [String] $VolumeName = 'gocd', # The name of the volume to mount
+
+    [String] $MountPoint = '/godata/', # The mount point
+
+    [Int] $CPU = 1, # The number of CPUs to assign to the instance
+
+    [String] $MemoryInGB = '1.5' # The amount of memory to assign to the instance
+)
+
+$supportRGName = '{0}{1}rg' -f $UniqueCode, $AppCode
+$storageAccountName = '{0}{1}storage' -f $UniqueCode, $AppCode
+$storageShareName = '{0}{1}share' -f $UniqueCode, $AppCode
+$keyvaultName = '{0}{1}akv' -f $UniqueCode, $AppCode
+$keyvaultStorageSecretName = '{0}key' -f $storageAccountName
+$aciRGName = '{0}{1}acirg' -f $UniqueCode, $AppCode
+$aciName = '{0}{1}aci' -f $UniqueCode, $AppCode
+$location = 'eastus'
+
+# Login to Azure using Service Principal
+Write-Verbose -Message ('Connecting to Azure Subscription "{0}" using Service Principal account "{1}"' -f $SubscriptionName, $ServicePrincipalUsername)
+$servicePrincipalCredential = New-Object -TypeName 'System.Management.Automation.PSCredential' -ArgumentList ($ServicePrincipalUsername, $ServicePrincipalPassword)
+$null = Add-AzureRmAccount -TenantId $TenancyId -SubscriptionName $SubscriptionName -ServicePrincipal -Credential $servicePrincipalCredential
+
+# Create resource group for Key Vault and Storage Account
+if (-not (Get-AzureRmResourceGroup -Name $supportRGName -ErrorAction SilentlyContinue))
+{
+    Write-Verbose -Message ('Creating Resource Group "{0}" for Storage Account and Key Vault' -f $supportRGName)
+    $null = New-AzureRmResourceGroup -Name $supportRGName -Location $location
+}
+
+# Create Key Vault
+if (-not (Get-AzureRmKeyVault -ResourceGroupName $supportRGName -VaultName $keyVaultName -ErrorAction SilentlyContinue))
+{
+    Write-Verbose -Message ('Creating Key Vault "{0}" in Resource Group "{1}"' -f $keyVaultName, $supportRGName)
+    $null = New-AzureRmKeyVault -ResourceGroupName $supportRGName -VaultName $keyVaultName -Location $location -EnabledForTemplateDeployment -EnabledForDeployment
+}
+Write-Verbose -Message ('Setting Key Vault "{0}" access policy to enable Service Principal "{1}" to Get,List and Set secrets' -f $keyVaultName, $ServicePrincipalUsername)
+$null = Set-AzureRmKeyVaultAccessPolicy -ResourceGroupName $supportRGName -VaultName $keyVaultName -ServicePrincipalName $ServicePrincipalUsername -PermissionsToSecrets get, list, set
+Write-Verbose -Message ('Getting Key Vault "{0}" Id' -f $keyVaultName)
+$keyvaultNameId = (Get-AzureRmKeyVault -Name $keyVaultName).ResourceId
+
+# Create Storage Account
+if (-not (Get-AzureRmStorageAccount -ResourceGroupName $supportRGName -Name $storageAccountName -ErrorAction SilentlyContinue))
+{
+    Write-Verbose -Message ('Creating Storage Account "{0}" in Resource Group "{1}"' -f $storageAccountName, $supportRGName)
+    $null = New-AzureRmStorageAccount -ResourceGroupName $supportRGName -Name $storageAccountName -SkuName Standard_LRS -Location $location
+}
+Write-Verbose -Message ('Getting Storage Account "{0}" key' -f $storageAccountName)
+$storageAccountKey = Get-AzureRmStorageAccountKey -ResourceGroupName $supportRGName -Name $storageAccountName
+$storageConnectionString = 'DefaultEndpointsProtocol=https;AccountName={0};AccountKey={1};' -f $storageAccountName, $storageAccountKey[0].value
+$storageContext = New-AzureStorageContext -ConnectionString $storageConnectionString
+if (-not (Get-AzureStorageShare -Name $storageShareName -Context $storageContext -ErrorAction SilentlyContinue))
+{
+    Write-Verbose -Message ('Creating Azure Storage Share "{0}" in Storage Account {1}' -f $storageShareName, $storageAccountName)
+    $null = New-AzureStorageShare -Name $storageShareName -Context $storageContext
+}
+
+# Add the Storage Key to the Key Vault
+Write-Verbose -Message ('Adding Storage Account "{0}" key to Key Vault "{1}"' -f $storageAccountName, $keyvaultName)
+$null = Set-AzureKeyVaultSecret -VaultName $keyvaultName -Name $keyvaultStorageSecretName -SecretValue (ConvertTo-SecureString -String $storageAccountKey[0].value -AsPlainText -Force)
+
+# Create Azure Container Intstance
+if (-not (Get-AzureRmResourceGroup -Name $aciRGName -ErrorAction SilentlyContinue))
+{
+    Write-Verbose -Message ('Creating Resource Group "{0}" for Container Group' -f $aciRGName)
+    $null = New-AzureRmResourceGroup -Name $aciRGName -Location $location
+}
+
+# Generate the azure deployment parameters
+$azureDeployParametersPath = (Join-Path -Path $PSScriptRoot -ChildPath 'aci-azuredeploy.parameters.json')
+$azureDeployPath = (Join-Path -Path $PSScriptRoot -ChildPath 'aci-azuredeploy.json')
+
+$azureDeployParameters = ConvertFrom-Json -InputObject (Get-Content -Path $azureDeployParametersPath -Raw)
+$azureDeployParameters.parameters.containername.value = $aciName
+$azureDeployParameters.parameters.containerimage.value = $ContainerImage
+$azureDeployParameters.parameters.cpu.value = $CPU
+$azureDeployParameters.parameters.memoryingb.value = $MemoryInGB
+$azureDeployParameters.parameters.containerport.value = $ContainerPort
+$azureDeployParameters.parameters.sharename.value = $storageShareName
+$azureDeployParameters.parameters.storageaccountname.value = $storageAccountName
+$azureDeployParameters.parameters.storageaccountkey.reference.keyVault.id = $keyvaultNameId
+$azureDeployParameters.parameters.storageaccountkey.reference.secretName = $keyvaultStorageSecretName
+$azureDeployParameters.parameters.volumename.value = $VolumeName
+$azureDeployParameters.parameters.mountpoint.value = $MountPoint
+Set-Content -Path $azureDeployParametersPath -Value (ConvertTo-Json -InputObject $azureDeployParameters -Depth 6) -Force
+
+$deploymentName = ((Get-ChildItem -Path $azureDeployPath).BaseName + '-' + ((Get-Date).ToUniversalTime()).ToString('MMdd-HHmm'))
+Write-Verbose -Message ('Deploying Container Group "{0}" to Resource Group "{1}"' -f $aciName, $aciRGName)
+$null = New-AzureRmResourceGroupDeployment -Name $deploymentName `
+    -ResourceGroupName $aciRGName `
+    -TemplateFile $azureDeployPath `
+    -TemplateParameterFile $azureDeployParametersPath `
+    -Force `
+    -ErrorVariable errorMessages
+
+# Get the container info and display it
+$subscriptionId = (Get-AzureRmSubscription -SubscriptionName $SubscriptionName).Id
+$resourceId = ('/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ContainerInstance/containerGroups/{2}' -f $subscriptionId, $aciRGName, $aciName)
+$containerState = 'Unknown'
+while ($containerState -ne 'Running')
+{
+    Write-Verbose -Message 'Waiting for container to enter running state'
+    $containerResource = Get-AzureRmResource -ResourceId $resourceId
+    $containerState = $containerResource.Properties.state
+    Start-Sleep -Seconds 2
+}
+
+Write-Verbose -Message ('Container is running on http://{0}:{1}' -f $containerResource.Properties.ipAddress.ip, $containerResource.Properties.ipAddress.ports.port)
+```
 
 The script requires a four parameters to be provided:
 
@@ -94,13 +227,137 @@ There are two other files that are required for this process:
 
 This file is called **aci-azuredeploy.json** and should be downloaded to the same folder as the script above.
 
-{{< gist PlagueHO 2e3307a21802a97f2db46be7c8f1b984 >}}
+
+```json
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "containername": {
+      "type": "string"
+    },
+    "containerimage": {
+      "type": "string"
+    },
+    "cpu": {
+      "type": "int"
+    },
+    "memoryingb": {
+      "type": "string"
+    },
+    "containerport": {
+      "type": "string"
+    },
+    "sharename": {
+      "type": "string"
+    },
+    "storageaccountname": {
+      "type": "string"
+    },
+    "storageaccountkey": {
+      "type": "securestring"
+    },
+    "volumename": {
+      "type": "string"
+    },
+    "mountpoint": {
+      "type": "string"
+    }
+  },
+  "resources": [{
+    "name": "[parameters('containername')]",
+    "type": "Microsoft.ContainerInstance/containerGroups",
+    "apiVersion": "2018-04-01",
+    "location": "[resourceGroup().location]",
+    "properties": {
+      "containers": [{
+        "name": "[parameters('containername')]",
+        "properties": {
+          "image": "[parameters('containerimage')]",
+          "ports": [{
+            "port": "[parameters('containerport')]"
+          }],
+          "resources": {
+            "requests": {
+              "cpu": "[parameters('cpu')]",
+              "memoryInGb": "[parameters('memoryingb')]"
+            }
+          },
+          "volumeMounts": [{
+            "name": "[parameters('volumename')]",
+            "mountPath": "[parameters('mountpoint')]"
+          }]
+        }
+      }],
+      "osType": "Linux",
+      "ipAddress": {
+        "type": "Public",
+        "ports": [{
+          "protocol": "tcp",
+          "port": "[parameters('containerport')]"
+        }]
+      },
+      "volumes": [{
+        "name": "[parameters('volumename')]",
+        "azureFile": {
+          "shareName": "[parameters('sharename')]",
+          "storageAccountName": "[parameters('storageaccountname')]",
+          "storageAccountKey": "[parameters('storageaccountkey')]"
+        }
+      }]
+    }
+  }]
+}
+```
 
 ## ARM Template Parameters
 
 This file is called **aci-azuredeploy.parameters.json** and should be downloaded to the same folder as the script above.
 
-{{< gist PlagueHO 6b8fb93b7f2eb16582060d42946edf37 >}}
+
+```json
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "containername": {
+            "value": ""
+        },
+        "containerimage": {
+            "value": ""
+        },
+        "cpu": {
+            "value": 1
+        },
+        "memoryingb": {
+            "value": "1.5"
+        },
+        "containerport": {
+            "value": ""
+        },
+        "sharename": {
+            "value": ""
+        },
+        "storageaccountname": {
+            "value": ""
+        },
+        "storageaccountkey": {
+            "reference": {
+                "keyVault": {
+                    "id": ""
+                },
+                "secretName": ""
+            }
+        },
+        "volumename": {
+            "value": ""
+        },
+        "mountpoint": {
+            "value": ""
+        }
+    }
+}
+```
 
 # Steps
 
@@ -110,7 +367,21 @@ To use the script the following steps need to be followed:
 2. Open a **PowerShell** window.
 3. Change directory to the folder you place the files into by executing:
 4. CD <folder location>
-5. Execute the script like this (passing in the variables):{{< gist PlagueHO 1bab27a8a7d5f8f81bb9712c50a3152f >}}![ss_aci_executingscript](/images/ss_aci_executingscript.png)
+5. Execute the script like this (passing in the variables):
+```powershell
+.\Install-AzureContainerInstancePersistStorage.ps1 `
+    -ServicePrincipalUsername 'ce6fca5e-a22d-44b2-a75a-f3b20fcd1b16' `
+    -ServicePrincipalPassword (ConvertTo-SecureString -String 'JUJfenwe89hwNNF723ibw2YBybf238ybflA=' -AsPlainText -Force) `
+    -TenancyId '8871b1ba-7d3d-45f3-8ee0-bb60c0e4733e' `
+    -SubscriptionName 'Visual Studio Enterprise' `
+    -AppCode 'gocd' `
+    -UniqueCode 'mine' `
+    -ContainerImage 'gocd/gocd-server:v17.8.0' `
+    -ContainerPort '8153' `
+    -VolumeName 'gocd' `
+    -MountPoint '/godata/' `
+    -Verbose
+```![ss_aci_executingscript](/images/ss_aci_executingscript.png)
 6. The process will then begin and make take a few minutes to complete:![ss_aci_creategocd](/images/ss_aci_creategocd.gif)**Note:** I've changed the keys to this service principal and deleted this storage account, so I using these Service Principal or Storage Account keys won't work!
 7. Once completed you will be able to log in to the Azure Portal and find the newly created Resource Groups:![ss_aci_resourcegroup](/images/ss_aci_resourcegroup.png)
 8. Open the resource group **\*gocdacirg** and then select the container group **\*gocdaci****:**![ss_aci_getcontainerip](/images/ss_aci_getcontainerip.png)
@@ -124,4 +395,5 @@ The Azure Container Instance can now be **deleted** and **recreated** at will, t
 Hopefully this process will help you implement persisted storage containers in Azure Container Instances more easily and quickly.
 
 Thanks for reading!
+
 
