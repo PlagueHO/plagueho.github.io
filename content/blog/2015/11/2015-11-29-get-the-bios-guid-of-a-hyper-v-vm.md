@@ -18,4 +18,3 @@ It uses WMI/CIM, but does seem to work nicely (don't forget to set the name of t
 ![ss_ps_getbiosguid](/images/ss_ps_getbiosguid.png)
 
 Good night!
-
