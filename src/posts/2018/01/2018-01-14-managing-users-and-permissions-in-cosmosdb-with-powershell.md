@@ -14,7 +14,8 @@ If you're just getting started with [Cosmos DB](https://docs.microsoft.com/en-us
 
 The most common usage scenario for users and permissions is if you're implementing a [Resource Token Broker](https://docs.microsoft.com/en-us/azure/cosmos-db/secure-access-to-data) type pattern, allowing client applications to directly access the Cosmos DB database.
 
-> _Side note: The Cosmos DB implementation of **users** and **permissions** only provides **authorization** - it does not provide **authentication**. It would be up to your own implementation to manage the **authentication**. In most cases you'd use something like **Azure Active Directory** to provide an **authentication** layer._
+> [!NOTE]
+> The Cosmos DB implementation of **users** and **permissions** only provides **authorization** - it does not provide **authentication**. It would be up to your own implementation to manage the **authentication**. In most cases you'd use something like **Azure Active Directory** to provide an **authentication** layer.
 
 But if you go hunting through the Azure Management Portal **Cosmos DB data explorer** (or [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)) you won't find any way to configure or even view **users** and **permissions**.
 
@@ -61,13 +62,12 @@ Install-Module -Name CosmosDB
 Before you get down to the process of working with Cosmos DB resources, you'll need to create a **context** variable containing the information required to connect. This requires the following information:
 
 1. The Cosmos DB Account name
-2. The Cosmos DB Database name
-3. The Master Key for the account (you can have the Cosmos DB PowerShell module get this directly from your Azure account if you wish).
+1. The Cosmos DB Database name
+1. The Master Key for the account (you can have the Cosmos DB PowerShell module get this directly from your Azure account if you wish).
 
 To create the **connection variable** we just use the **New-CosmosDbContext**:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 $account = 'MyCosmosDBAccount'
 $database = 'MyDatabase'
 $key = ConvertTo-SecureString -String 'this is your master key, get it from the Azure portal' -AsPlainText -Force
@@ -79,7 +79,6 @@ $context = New-CosmosDbContext -Account $account -Database $database -Key $key
 If you do not wish to specify your **master key**, you can have the **New-CosmosDbContext** function pull your **master key** from the **Azure Management Portal** directly:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Add-AzureRmAccount
 $account = 'MyCosmosDBAccount'
 $database = 'MyDatabase'
@@ -96,7 +95,6 @@ _Note: This requires the **AzureRM.Profile** and **AzureRM.Resources** module on
 To **add a user** to the Cosmos DB Database use the **New-CosmosDbUser** function:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 New-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
@@ -105,7 +103,6 @@ New-CosmosDbUser -Context $context -Id 'daniel'
 To **get a list of users** in the database:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Get-CosmosDbUser -Context $context
 ```
 
@@ -114,7 +111,6 @@ Get-CosmosDbUser -Context $context
 To **get a specific** user:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Get-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
@@ -123,7 +119,6 @@ Get-CosmosDbUser -Context $context -Id 'daniel'
 To **remove a user** (this will also remove all permissions assigned to the user):
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Remove-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
@@ -143,7 +138,6 @@ To grant a permission you need to provide four pieces of information:
 In the following example, we'll grant the user **daniel** _all_ access to the **TestCollection**:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 $userId = 'TestUserId'
 $resourcePath = Get-CosmosDbCollectionResourcePath -Database 'TestDatabase' -Id 'TestCollection'
 New-CosmosDbPermission -Context $context -Id 'AccessTestCollection' -UserId $userId -PermissionMode All -Resource $resourcePath
@@ -158,7 +152,6 @@ _Note: as you have the **Master Key** already, using the **Resource Token** isn'
 For example, to retrieve all permissions for the user with **Id** daniel and a resource token expiration of 600 seconds:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Get-CosmosDbPermission -Context $context -UserId 'daniel' -TokenExpiry '600' | 
     Format-List *
 ```
@@ -168,7 +161,6 @@ Get-CosmosDbPermission -Context $context -UserId 'daniel' -TokenExpiry '600' |
 You can as expected delete a permission by using the **Remove-CosmosDbPermission** function:
 
 ```powershell
-# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\src\posts\2018\01\2018-01-14-managing-users-permissions-in-cosmosdb-with-powershell.md
 Remove-CosmosDbPermission -Context $context -UserId 'daniel' -Id 'AccessTestCollection'
 ```
 
