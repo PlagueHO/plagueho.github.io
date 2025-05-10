@@ -1,0 +1,21 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Eleventy (npm)",
+      "type": "shell",
+      "command": "npx @11ty/eleventy --serve",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Start the Eleventy server using npm."
+    },
+    {
+      "label": "Start Eleventy (pnpm)",
+      "type": "shell",
+      "command": "pnpm dlx @11ty/eleventy --serve",
+      "group": "build",
+      "problemMatcher": [],
+      "detail": "Start the Eleventy server using pnpm."
+    }
+  ]
+}

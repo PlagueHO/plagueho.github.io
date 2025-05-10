@@ -1,4 +1,4 @@
-This repository contains the source code for the blog at https://danielscottraynsford.com. The blog is built using Hugo and is hosted on GitHub Pages.
+This repository contains the source code for the blog at https://danielscottraynsford.com. The blog is built using Eleventy (11ty) and is hosted on GitHub Pages.
 It hosts articles on the authors experience building, designing and architecting generative AI solutions, using AI agents, Azure cloud, Semantic Kernel, .NET, Python and Typescript.
 We use a personal, conversational writing style in this project. All responses should be in first person (“I”) and directly address the reader as “you” in a friendly tone.
 Our writing voice is enthusiastic and encouraging – feel free to express excitement about technologies and encourage the reader, as we do in blog posts.
