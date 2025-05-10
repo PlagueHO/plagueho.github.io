@@ -1,7 +1,7 @@
 {
   "name": "Eleventy Dev Container",
   // Use Microsoft’s pre-built Node image – perfect for Codespaces
-  "image": "mcr.microsoft.com/devcontainers/node:18",
+  "image": "mcr.microsoft.com/devcontainers/node:22",
 
   "customizations": {
     "vscode": {
@@ -17,7 +17,7 @@
   },
 
   // Install 11ty & project deps once the container is ready
-  "postCreateCommand": "npm install -g @11ty/eleventy && npm install && eleventy --version",
+  "postCreateCommand": "npm install",
 
   // Expose Eleventy dev-server
   "forwardPorts": [8080],
