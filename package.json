@@ -1,49 +1,72 @@
 {
-  "name": "plagueho-blog",
-  "version": "1.0.0",
-  "description": "Eleventy version of danielscottraynsford.com",
+  "name": "eleventy-excellent",
+  "version": "4.1.8",
+  "description": "Eleventy starter built around the workflow suggested by Andy Bell's buildexcellentwebsit.es.",
+  "author": "Lene Saile",
+  "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": ">=20.x.x"
+  },
   "scripts": {
-    "build": "npx @11ty/eleventy",
-    "build-nocolor": "cross-env NODE_DISABLE_COLORS=1 npx @11ty/eleventy",
-    "build-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/",
-    "start": "npx @11ty/eleventy --serve --quiet",
-    "start-ghpages": "npx @11ty/eleventy --pathprefix=/eleventy-base-blog/ --serve --quiet",
-    "debug": "cross-env DEBUG=Eleventy* npx @11ty/eleventy",
-    "debugstart": "cross-env DEBUG=Eleventy* npx @11ty/eleventy --serve --quiet",
-    "benchmark": "cross-env DEBUG=Eleventy:Benchmark* npx @11ty/eleventy"
-  },
-  "devDependencies": {
-    "@11ty/eleventy": "^3.1.0-beta.1",
-    "@11ty/eleventy-img": "^6.0.2",
-    "@11ty/eleventy-navigation": "^1.0.4",
-    "@11ty/eleventy-plugin-rss": "^2.0.3",
-    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
-    "cross-env": "^7.0.3",
-    "luxon": "^3.6.1",
-    "prismjs": "^1.30.0",
-    "zod": "^3.24.3",
-    "zod-validation-error": "^3.4.0"
-  },
-  "dependencies": {
-    "@zachleat/heading-anchors": "^1.0.3"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PlagueHO/plagueho.github.io.git"
+    "clean": "rimraf dist src/_includes/css src/_includes/scripts",
+    "clean:og": "rimraf src/assets/og-images",
+    "favicons": "node ./src/_config/setup/generate-favicons.js",
+    "colors": "node ./src/_config/setup/create-colors.js",
+    "screenshots": "node ./src/_config/setup/generate-screenshots.js",
+    "dev:11ty": "cross-env ELEVENTY_ENV=development eleventy --serve",
+    "build:11ty": "cross-env ELEVENTY_ENV=production eleventy",
+    "start": "npm run dev:11ty",
+    "build": "npm run clean && npm run build:11ty"
   },
   "keywords": [],
-  "author": {
-    "name": "Daniel Scott Raynsford",
-    "email": "dscottraynsford@outlook.com",
-    "url": "https://danielscottraynsford.com"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PlagueHO/plagueho.github.io.git"
   },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/PlagueHO/plagueho.github.io/issues"
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-fetch": "^5.0.2",
+    "@11ty/eleventy-img": "^6.0.2",
+    "@11ty/eleventy-plugin-rss": "^2.0.3",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "@11ty/eleventy-plugin-webc": "^0.11.2",
+    "@11ty/is-land": "^4.0.1",
+    "lite-youtube-embed": "^0.3.3",
+    "tailwindcss": "^3.4.17"
   },
-  "homepage": "https://github.com/PlagueHO/plagueho.github.io",
-  "engines": {
-    "node": ">=18"
+  "devDependencies": {
+    "@toycode/markdown-it-class": "^1.2.4",
+    "autoprefixer": "^10.4.21",
+    "colorjs.io": "^0.5.2",
+    "cross-env": "^7.0.3",
+    "cssnano": "^7.0.6",
+    "dayjs": "^1.11.13",
+    "dotenv": "^16.5.0",
+    "esbuild": "^0.25.3",
+    "html-minifier-terser": "^7.2.0",
+    "js-yaml": "^4.1.0",
+    "markdown-it": "^14.1.0",
+    "markdown-it-abbr": "^2.0.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-attrs": "^4.3.1",
+    "markdown-it-emoji": "^3.0.0",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-link-attributes": "^4.0.1",
+    "markdown-it-mark": "^4.0.0",
+    "markdown-it-prism": "^3.0.0",
+    "netlify-plugin-cache": "^1.0.3",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1",
+    "postcss-import": "^16.1.0",
+    "postcss-import-ext-glob": "^2.1.1",
+    "postcss-js": "^4.0.1",
+    "prettier-plugin-jinja-template": "^2.1.0",
+    "rimraf": "^6.0.1",
+    "sanitize-html": "^2.16.0",
+    "sharp": "^0.34.1",
+    "sharp-ico": "^0.1.5",
+    "slugify": "^1.6.6",
+    "svgo": "^3.3.2"
   }
 }

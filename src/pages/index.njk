@@ -1,0 +1,48 @@
+---
+layout: base
+permalink: /index.html
+title: 'Cognitive Coding'
+description: 'The blog of Daniel Scott-Raynsford: my developer journey into AI and beyond.'
+blog:
+  title: 'Blog'
+  intro: "I'm showing the last 4 blog posts, but there might be more!"
+---
+
+<div class="wrapper">
+  <header class="full | section" style="--spot-color: var(--color-primary)">
+    <div class="section__inner flow region">
+      <h1 class="text-center" style="color: var(--color-light);">{{ title }}</h1>
+    </div>
+    {% svg "divider/waves", null, "divider" %}
+  </header>
+
+  <article class="full | region">
+    <div class="wrapper flow prose">
+      <h2 id="an-eleventy-starter">An Eleventy starter</h2>
+      <p>
+        Built around a CSS workflow that emphasizes guiding browser styling rather than micromanaging it. It
+        incorporates progressive enhancement, fluid type and spacing, and utilizes modern CSS features for
+        layout. The goal is to develop frontends that provide a great experience across all devices,
+        connection speeds, and usage contexts.
+      </p>
+    </div>
+  </article>
+
+  <section class="full | region">
+    <div class="wrapper flow prose">
+      <h2>{{ blog.title }}</h2>
+      {% if blog.intro %}
+        <p>{{ blog.intro }}</p>
+      {% endif %}
+      <div class="feature |  region region-space-l">
+        <custom-masonry layout="50-50">
+          {% set itemList = collections.allPosts %}
+					{% asyncEach item in itemList.slice(0, 4) %}
+            {% set headingLevel = "h3" %}
+						{% include "partials/card-blog.njk" %}
+					{% endeach %}
+        </custom-masonry>
+      </div>
+    </div>
+  </section>
+</div>
