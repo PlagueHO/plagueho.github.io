@@ -9,19 +9,28 @@ tags:
 
 Something quick for Friday morning! Are you feeling enthusiastic about DSC? Do you want to **update** or **install** _every DSC resource_ in a repository onto your computer?
 
-Try this (only on PowerShell 5.0 computers - what do you mean you're not using PowerShell 5.0?):
+Try this (only on PowerShell 5.0 computers - what do you mean you're not using PowerShell 5.0?!):
 
-\[sourcecode language="powershell"\] Find-DscResource | Select-Object -ExpandProperty ModuleName -Unique | % { Install-Module -Name $\_ -Force } \[/sourcecode\]
+```powershell
+Find-DscResource |
+    Select-Object -ExpandProperty ModuleName -Unique |
+    ForEach-Object { Install-Module -Name $_ -Force }
+```
 
-This will download and install (or update if you've got older versions) of all DSC Resources in all PowerShell Repositories registered on your computer. This can definitely take some time.
+This downloads and installs (or updates, if you have older versions) every DSC resource in **all** PowerShell repositories registered on your computer. It can take a while.
 
-If you would like to limit this to only using a specific repository use:
+If you want to limit the action to a specific repository, do this:
 
-\[sourcecode language="powershell"\] $RepoName = 'PSGallery' Find-DscResource -Repository $RepoName | Select-Object -ExpandProperty ModuleName -Unique | % { Install-Module -Name $\_ -Repository $RepoName -Force } \[/sourcecode\]
+```powershell
+$RepoName = 'PSGallery'
 
-**Important Note:** I'd suggest you only install DSC resources from _repositories you trust_. You might therefore want to make sure you've marked those repositories as trusted otherwise you'll need to confirm the installation of each module (which is a little irritating).
+Find-DscResource -Repository $RepoName |
+    Select-Object -ExpandProperty ModuleName -Unique |
+    ForEach-Object { Install-Module -Name $_ -Repository $RepoName -Force }
+```
 
-To trust a repository:
+**Important:** only install DSC resources from repositories you trust. Mark trusted repositories so you don’t have to confirm each module installation:
 
-\[sourcecode language="powershell"\] Set-PSRepository -Name PSGallery -InstallationPolicy Trusted \[/sourcecode\]
-
+```powershell
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+```

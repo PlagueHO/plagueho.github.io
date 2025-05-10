@@ -17,11 +17,11 @@ So after updating my script I built some new VM's containing the new packages **
 [![Nano Server Emergency Management Console](/images/ss_nanoserver_tp3.png?w=660)](/images/ss_nanoserver_tp3.png)
 Nano Server Emergency Management Console
 
-This allows you to easily see some basic information abut the running Nano Server on a monitor (or more likely VM Console). But you do first need to log into the Nano Server before you can review this information:
+This allows you to easily see some basic information **about** the running Nano Server on a monitor (or, more likely, a VM console). But you do first need to log in to the Nano Server before you can review this information:
 
 [![Nano Server Authenticate](/images/ss_nanoserver_authenticate.png?w=660)](/images/ss_nanoserver_authenticate.png)
 Nano Server Authenticate
 
-You can't actually do much once inside the **Emergency Management Console** except reboot and shutdown the server. But this does mean that you no longer need to create a start up task that shows the IP Address and other details of the Nano Server on screen manually. I've left it in my script for now, but it could probably be removed once I'm sure it isn't necessary.
+You can’t actually do much once inside the **Emergency Management Console** except reboot and shut down the server. But this does mean that you no longer need to create a start-up task that shows the IP address and other details of the Nano Server on screen manually. I’ve left it in my script for now, but it could probably be removed once I’m sure it isn’t necessary.
 
 Back to the lab scripting!

@@ -27,7 +27,10 @@ However, the most common use is going to be creating an HTTPS/SSL listener by au
 
 The first thing that needs to be done is installing the **cWSMan** Module. If you're using WMF 5.0 you can get this directly from the [PowerShell Gallery](https://www.powershellgallery.com/) by running this command:
 
-\[sourcecode language="powershell"\] Install-Module -Name cWSMan -MinimumVersion 1.0.0.0 \[/sourcecode\]
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-05-creating-ws-man-listeners-with-dsc.md
+Install-Module -Name cWSMan -MinimumVersion 1.0.0.0
+```
 
 If you're using WMF 4.0 then you'll need to get this from the [Microsoft Script Center](https://gallery.technet.microsoft.com/scriptcenter/cWSMan-DSC-Resource-c29af3fd). But of course, you're using [WMF 5.0](https://dscottraynsford.wordpress.com/2015/06/09/installing-windows-management-framework-5-0-with-a-gpo/) right?
 
@@ -37,27 +40,69 @@ Once it is installed you can integrate it into your DSC Scripts.
 
 The most likely thing you're going to want to do is install an HTTPS/SSL Listener. To do that all you need to do is something like this:
 
-\[sourcecode language="powershell"\] configuration Sample\_cWSManListener\_HTTPS { Import-DscResource -Module cWSMan
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-05-creating-ws-man-listeners-with-dsc.md
+configuration Sample_cWSManListener_HTTPS {
+    Import-DscResource -Module cWSMan
 
-Node Server01 { cWSManListener HTTPS { Transport = 'HTTPS' Ensure = 'Present' Issuer = 'CN=CONTOSO.COM Issuing CA, DC=CONTOSO, DC=COM' } # End of cWSManListener Resource } # End of Node } # End of Configuration \[/sourcecode\]
+    Node Server01 {
+        cWSManListener HTTPS {
+            Transport = 'HTTPS'
+            Ensure    = 'Present'
+            Issuer    = 'CN=CONTOSO.COM Issuing CA, DC=CONTOSO, DC=COM'
+        }
+        # End of cWSManListener Resource
+    }
+    # End of Node
+}
+# End of Configuration
+```
 
 This would install an HTTPS/SSL Listener onto the default port of 5986 using a certificate that was issued by _CN=CONTOSO.COM Issuing CA, DC=CONTOSO, DC=COM_. There really is nothing to it - it is actually more fiddly getting your PKI set up than doing this part.
 
 You can also configure the **port** and **address to bind** the HTTPS/SSL Listener to by passing the **port** and **address** parameters as well:
 
-\[sourcecode language="powershell"\] configuration Sample\_cWSManListener\_HTTPS { Import-DscResource -Module cWSMan
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-05-creating-ws-man-listeners-with-dsc.md
+configuration Sample_cWSManListener_HTTPS {
+    Import-DscResource -Module cWSMan
 
-Node Server01 { cWSManListener HTTPS { Transport = 'HTTPS' Ensure = 'Present' Issuer = 'CN=CONTOSO.COM Issuing CA, DC=CONTOSO, DC=COM' Port = 7000 address = '192.168.1.55' } # End of cWSManListener Resource } # End of Node } # End of Configuration \[/sourcecode\]
+    Node Server01 {
+        cWSManListener HTTPS {
+            Transport = 'HTTPS'
+            Ensure    = 'Present'
+            Issuer    = 'CN=CONTOSO.COM Issuing CA, DC=CONTOSO, DC=COM'
+            Port      = 7000
+            Address   = '192.168.1.55'
+        }
+        # End of cWSManListener Resource
+    }
+    # End of Node
+}
+# End of Configuration
+```
 
 If you don't provide the **port** and **address** parameters they default to 5986 (or 5985 for HTTP listeners) and '\*' respectively.
 
 You can also use this resource to _remove_ an HTTP or HTTPS listener. For example you might want to remove the default HTTP listener so that it can't be used once your HTTPS listener has been created. To do that:
 
-\[sourcecode language="powershell"\] configuration Remove\_cWSManListener\_HTTP { Import-DscResource -Module cWSMan
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-05-creating-ws-man-listeners-with-dsc.md
+configuration Remove_cWSManListener_HTTP {
+    Import-DscResource -Module cWSMan
 
-Node Server01 { cWSManListener HTTP { Transport = 'HTTP' Ensure = 'Absent' } # End of cWSManListener Resource } # End of Node } # End of Configuration \[/sourcecode\]
+    Node Server01 {
+        cWSManListener HTTP {
+            Transport = 'HTTP'
+            Ensure    = 'Absent'
+        }
+        # End of cWSManListener Resource
+    }
+    # End of Node
+}
+# End of Configuration
+```
 
 ### Feedback
 
 If you're interested in contributing to this resource, providing feedback or raising issues or requesting features, please feel free (anything is appreciated). You'll find the resource GitHub repository [here](https://github.com/PlagueHO/cWSMan) where you can fork, issue pull requests and raise issues/feature requests.
-

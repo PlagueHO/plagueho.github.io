@@ -34,7 +34,15 @@ And finally, after these values have been set the **CertSvc** needs to be restar
 
 You might look at the above code and wonder, "won't the CertSvc be restarted every 30 minutes no matter what?". That is where the **TestScript** resource parameter comes in. We'll use this to decide if the current values of the CA are different to what we want them to be. In this case we dive straight to the registry rather than using the **CertUtil.exe** application.
 
-\[sourcecode language="powershell"\] TestScript = { If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { Return $False } If (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { Return $False } Return $True } \[/sourcecode\]
+```powershell
+TestScript = {
+    if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+    if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+    if (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { return $false }
+    if (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { return $false }
+    return $true
+}
+```
 
 Once again I need to ensure the **Using** scope is used with the **Node** variable. If any of the node properties don't match the registry value then **false** is returned which triggers **SetScript**. If all of the values match **True** is returned (meaning everything is the same) and **SetScript** isn't fired.
 
@@ -42,13 +50,54 @@ Once again I need to ensure the **Using** scope is used with the **Node** variab
 
 Almost. Finally I needed to implement the **GetScript** parameter of the resource. This was the easiest part:
 
-\[sourcecode language="powershell"\] GetScript = { Return @{ 'DSConfigDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN'); 'DSDomainDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN'); 'CRLPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs'); 'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') } } \[/sourcecode\]
+```powershell
+GetScript = {
+    return @{
+        'DSConfigDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN')
+        'DSDomainDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN')
+        'CRLPublicationURLs'  = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs')
+        'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs')
+    }
+}
+```
 
 I could also adjust the **TestScript** to call the **GetScript** and then use the returned hash table to compare with the **Node** values instead of comparing them directly with the registry values. But I didn't.
 
 Here is what the final script looks like (I didn't include everything in the DSC Configuration as there were lots of other resources for creating the machine):
 
-\[sourcecode language="powershell"\] Script ADCSAdvConfig { SetScript = { If ($Using:Node.CADistinguishedNameSuffix) { & "$($ENV:SystemRoot)\\system32\\certutil.exe" -setreg CA\\DSConfigDN "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)" & "$($ENV:SystemRoot)\\system32\\certutil.exe" -setreg CA\\DSDomainDN "$($Using:Node.CADistinguishedNameSuffix)" } If ($Using:Node.CRLPublicationURLs) { & "$($ENV:SystemRoot)\\System32\\certutil.exe" -setreg CA\\CRLPublicationURLs $($Using:Node.CRLPublicationURLs) } If ($Using:Node.CACertPublicationURLs) { & "$($ENV:SystemRoot)\\System32\\certutil.exe" -setreg CA\\CACertPublicationURLs $($Using:Node.CACertPublicationURLs) } Restart-Service -Name CertSvc Add-Content -Path 'c:\\windows\\setup\\scripts\\certutil.log' -Value "Certificate Service Restarted ..." } GetScript = { Return @{ 'DSConfigDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN'); 'DSDomainDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN'); 'CRLPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs'); 'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') } } TestScript = { If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { Return $False } If (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { Return $False } Return $True } DependsOn = '\[xADCSWebEnrollment\]ConfigWebEnrollment' } \[/sourcecode\]
+```powershell
+Script ADCSAdvConfig {
+    SetScript = {
+        if ($Using:Node.CADistinguishedNameSuffix) {
+            & "$($ENV:SystemRoot)\system32\certutil.exe" -setreg CA\DSConfigDN "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)"
+            & "$($ENV:SystemRoot)\system32\certutil.exe" -setreg CA\DSDomainDN "$($Using:Node.CADistinguishedNameSuffix)"
+        }
+        if ($Using:Node.CRLPublicationURLs) {
+            & "$($ENV:SystemRoot)\System32\certutil.exe" -setreg CA\CRLPublicationURLs $($Using:Node.CRLPublicationURLs)
+        }
+        if ($Using:Node.CACertPublicationURLs) {
+            & "$($ENV:SystemRoot)\System32\certutil.exe" -setreg CA\CACertPublicationURLs $($Using:Node.CACertPublicationURLs)
+        }
+        Restart-Service -Name CertSvc
+        Add-Content -Path 'c:\windows\setup\scripts\certutil.log' -Value "Certificate Service Restarted ..."
+    }
+    GetScript = {
+        return @{
+            'DSConfigDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN')
+            'DSDomainDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN')
+            'CRLPublicationURLs'  = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs')
+            'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs')
+        }
+    }
+    TestScript = {
+        if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+        if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+        if (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { return $false }
+        if (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { return $false }
+        return $true
+    }
+    DependsOn = '[xADCSWebEnrollment]ConfigWebEnrollment'
+}
+```
 
 Hopefully someone will make sense of all this. It should also be useful in other similar situations where there are no relevant DSC resources.
-

@@ -1,5 +1,5 @@
 ---
-title: "How To use Containers on Windows Nano Server"
+title: "How to Use Containers on Windows Nano Server"
 date: "2015-08-26"
 categories:
   - "containers"
@@ -9,9 +9,9 @@ tags:
   - "powershell"
 ---
 
-**Edit:** I wrote this article when examining **containers** on **Windows Nano Server TP3** - _which wasn't in a working state_. I have not yet had a chance to fully examine **containers** on **Windows Nano Server TP4**, but when I get a spare day hours I will no doubt deep dive into it.
+**Edit:** I wrote this article when examining **containers** on **Windows Nano Server TP3** – _which wasn’t in a working state_. I have not yet had a chance to fully examine **containers** on **Windows Nano Server TP4**, but when I get a spare few hours I will no doubt deep-dive into it.
 
-If you're looking for instructions on installing and using **containers** on **Windows Nano Server TP4**, start [here](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/deployment/deployment#nano).
+If you’re looking for instructions on installing and using **containers** on **Windows Nano Server TP4**, start [here](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/deployment/deployment#nano).
 
 These instructions are more focused on setting up a container host on **Windows Server Core TP4**, but I have managed to get them working on **Windows Nano Server TP4** just fine:
 
@@ -21,9 +21,7 @@ I do plan to document this process over the next week or so.
 
 * * *
 
- 
-
-You'd be forgiven for believing that it was just a simple click of a button (or addition of a package) to get Docker Containers working on a shiny new **Windows Nano Server TP3** install. That is what I thought too. But after careful examination of the available [documentation](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/containers_welcome) I found that there isn't much information on running actually getting containers working on Nano Server. Sure, there is lots of information on running it on a full or core version of WIndows Server TP3, but Nano is lacking. So, because I'm a bit obsessive I decided I'd have a try and adapting the standard installation process.
+You’d be forgiven for believing that it was just a simple click of a button (or addition of a package) to get Docker containers working on a shiny new **Windows Nano Server TP3** install. That’s what I thought too. But after careful examination of the available [documentation](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/containers_welcome) I found that there isn’t much information on actually getting containers working on Nano Server. Sure, there is lots of information on running them on a full or core version of **Windows Server TP3**, but Nano is lacking. So, because I’m a bit obsessive, I decided I’d try adapting the standard installation process.
 
 **Edit:** Initially I had a bit of success, but I've run into some rather stop dead issues that I haven't been able to resolve (see later on in this post).
 
@@ -106,4 +104,3 @@ Nope - can't use the Core WIM with a Nano Server Container Host!
 The video can be seen [here](https://youtu.be/YoA_MMlGPRc).
 
 Feel free to let me know if you can solve any of these issues! Any help is appreciated. I'll continue to work on this and post any additional results.
-

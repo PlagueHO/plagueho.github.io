@@ -18,10 +18,10 @@ This post is mainly documenting the process of manually creating containers on W
 
 Anyone who has played around with Nano Server should already be very familiar with this step. The only thing to remember is that the following packages must be included in the VHDx:
 
-1. **Guest** \- All Nano Server VHDx files running as  VM should have this package. If you're installing Nano Server onto bare metal you won't need this.
+1. **Guest** - All Nano Server VHDx files running as  VM should have this package. If you're installing Nano Server onto bare metal you won't need this.
 2. **Compute** - Includes the Nano Server Hyper-V components. Required because Containers use Hyper-V networking and are a form of Virtualization.
 3. **OEM-Drivers** - Not strictly required but I tend to include it anyway.
-4. **Containers** \- This package provides the core of Windows Server Containers.
+4. **Containers** - This package provides the core of Windows Server Containers.
 
 If you're unfamiliar with creating a Nano Server VHDx, please see [this](https://dscottraynsford.wordpress.com/2015/05/08/install-windows-server-nano-the-easy-way/) post.
 
@@ -30,15 +30,15 @@ If you're unfamiliar with creating a Nano Server VHDx, please see [this](https:/
 Any _container_ that needs to be connected to a network (most of them usually) will need to connect to a **Hyper-V Virtual Switch** configured on this **Container Host**. There are two virtual switch types that can be configured for this purpose:
 
 1. **NAT** - This seems to be a new switch type in Windows Server 2016 that causes performs some kind of NAT on the connected adapters.
-2. **DHCP** \- this is actually just a standard **External** switch with a connection to a physical network adapter on the **Container Host**.
+2. **DHCP** - this is actually just a standard **External** switch with a connection to a physical network adapter on the **Container Host**.
 
 The installation script normally performs one of the above depending on which option you select. However on Nano Server both of these processes fail:
 
-##### NAT
+#### NAT
 
 Creating a **NAT** **VM Switch** on Nano Server actually works. But the command to create a NAT Network connection to the VM Switch fails because the **NETNAT** module is not available on Nano Server.
 
-##### DHCP
+#### DHCP
 
 [![Creating a standard External VM Switch on Nano Server](/images/ss_nano_containers_creatingadhcpswitch.png?w=660)](/images/ss_nano_containers_creatingadhcpswitch.png)
 
@@ -50,21 +50,28 @@ Every _container_ you create requires a **Base OS Image**. This **Base OS Image*
 
 During an installation of **Windows Server Containers** onto a **Windows Server Core** operating system, the process automatically [downloads](http://aka.ms/ContainerOSImage) a WIM file that is used as the **Base OS Image**.
 
-To install a **Base OS Image** from a **WIM File** to the **Container Host** using the PowerShell **function**:
+To install a **Base OS Image** from a **WIM** file on the **Container Host**, use:
 
-\[sourcecode language="powershell"\] Install-ContainerOSImage -WimPath CoreServer.wim -Verbose \[/sourcecode\]
+```powershell
+Install-ContainerOSImage -WimPath CoreServer.wim -Verbose
+```
 
-[![Installing a Base OS Image](/images/ss_nano_containerinstallingos.png?w=660)](/images/ss_nano_containerinstallingos.png)
+![Installing a Base OS Image](/images/ss_nano_containerinstallingos.png?w=660)
 
-This **function** does several things:
+This function does several things:
 
-1. Creates a new folder in **c:\\programdata\\microsoft\\windows\\images** with _Canonical Name_ of the new **Base OS Image**: [![Contents of the Images folder](/images/ss_nano_container_images_content.png?w=660)](/images/ss_nano_container_images_content.png)
-2. Inside the _Canonical Name_ folder a subfolder called **files** is created where the **Base OS Image** file is extracted to:[![The contents of an Image Files](/images/ss_nano_container_image_files.png?w=660)](/images/ss_nano_container_image_files.png)
-3. Another subfolder called **hives** is also created in the _Canonical Name_ folder which contains the _default registry hives_ for the **Base OS Image**: [![The Image Registry Hives](/images/ss_nano_container_image_hives.png?w=660)](/images/ss_nano_container_image_hives.png)
-4. Two additional files are created in the _Canonical Name_ folder that contain metadata about the image: **Metadata.json** **Version.wcx**[![Image Metadata](/images/ss_nano_container_image_metadata.png?w=660)](/images/ss_nano_container_image_metadata.png)
-5. Adds the **Base OS Image** into the list of **Image Containers** that are available to create new **Containers** from: [![All Base OS Images installed](/images/ss_nano_containers_installedall.png?w=660)](/images/ss_nano_containers_installedall.png)
+1. Creates a new folder in `C:\ProgramData\Microsoft\Windows\Images` whose name is the *canonical* name of the new **Base OS Image**.  
+   ![Contents of the Images folder](/images/ss_nano_container_images_content.png?w=660)
+2. Inside that folder a sub-folder called **files** is created and the image is expanded there.  
+   ![The contents of an Image files folder](/images/ss_nano_container_image_files.png?w=660)
+3. Another sub-folder called **hives** is created which contains the default registry hives for the image.  
+   ![The Image registry hives](/images/ss_nano_container_image_hives.png?w=660)
+4. Two metadata files are written – **Metadata.json** and **Version.wcx**.  
+   ![Image metadata](/images/ss_nano_container_image_metadata.png?w=660)
+5. Finally, the image is added to the list of container images available for new containers.  
+   ![All Base OS images installed](/images/ss_nano_containers_installedall.png?w=660)
 
-I have tried using the Install.wim from the ISO, the NanoServer.wim from the ISO and the Core.wim downloaded using the Core Edition Containers install script. Also note, the INSTALL.WIM file on the TP3 ISO still refers to **Windows Server 2012 R2 SERVERSTANDARDCORE** (I double checked this and you can confirm by the Version number in the OS Image).
+I have tried using **Install.wim** from the ISO, **NanoServer.wim** from the ISO, and the **Core.wim** downloaded via the Core-edition container install script. Note that *Install.wim* on the TP3 ISO still reports **Windows Server 2012 R2 SERVERSTANDARDCORE** (double-checked via the version number inside the image).
 
 The **Test-ContainerImage** cmdlet can be used to identify "problems" with container images:
 
@@ -82,7 +89,7 @@ I don't know what causes this, but if you reboot your Nano Server VM the error g
 
 [![First Container - making progress](/images/ss_nano_containers_firstcontainer.png?w=660)](/images/ss_nano_containers_firstcontainer.png)
 
-Unfortunately only the Base OS Image downloaded from Microsoft and used with Containers for **Windows Server 2016 Core** results in a valid _Container._ So it would seem there are some things that are done to a WIM file to make it able to be _Containerized_ (is that a wo_rd_?).
+Unfortunately only the Base OS image downloaded from Microsoft for Windows Server 2016 Core results in a valid container. It seems that certain customisations are required before an image can be _containerised_.
 
 ### Step 5 - Start the Container
 
@@ -105,4 +112,3 @@ Also, it is interesting to dig around into the files that are created when the n
 When a container is created the container files are stored in the **C:\\ProgramData\\Microsoft\\Windows\\Hyper-V\\containers** folder. Unfortunately the files all binary so we aren't able to dig around in them to glean any other information.
 
 Well, that is enough for today.
-

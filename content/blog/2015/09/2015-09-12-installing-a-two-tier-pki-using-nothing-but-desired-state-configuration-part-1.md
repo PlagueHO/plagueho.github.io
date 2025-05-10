@@ -51,9 +51,11 @@ The DSC configuration files are going to require a few additional **DSC resource
 3. **xPSDesiredStateConfiguration** - we need this [community DSC resource](https://github.com/PowerShell/xPSDesiredStateConfiguration) for the xRemoteFile DSC Resource.
 4. **xComputerManagement** \- this [community DSC resource](https://github.com/PowerShell/xComputerManagement) is required to join the Sub CA to the domain.
 
-The easiest way to do this on PowerShell 5.0 is using the **Find-Module** and  **Install-Module** cmdlets from **PowerShellGet** module to download these from the [PowerShell Gallery](https://www.powershellgallery.com/):
+The easiest way to do this on PowerShell 5.0 is using the **Find-Module** and **Install-Module** cmdlets from the **PowerShellGet** module to download these from the [PowerShell Gallery](https://www.powershellgallery.com/):
 
-\[sourcecode language="powershell"\] Find-Module xPSDesiredStateConfiguration,xADCSDeployment,xComputerManagement | Install-Module \[/sourcecode\]
+```powershell
+Find-Module xPSDesiredStateConfiguration, xADCSDeployment, xComputerManagement | Install-Module
+```
 
 ### AllNodes
 
@@ -67,37 +69,152 @@ To make things a little bit more generic I like to put all the variables that th
 
 These are the Node parameters that contain the variables that you'll want to configure for the Root CA. They are fairly self explanatory but they will be covered later on in the post.
 
-\[sourcecode language="powershell"\] AllNodes = @( @{ NodeName = 'SS\_ROOTCA' Thumbprint = 'CDD4EEAE6000AC7F40C3802C171E30148030C072' LocalAdminPassword = 'P@ssword!1' CACommonName = "LABBUILDER.COM Root CA" CADistinguishedNameSuffix = "DC=LABBUILDER,DC=COM" CRLPublicationURLs = "1:C:\\Windows\\system32\\CertSrv\\CertEnroll\\%3%8%9.crl\\n10:ldap:///CN=%7%8,CN=%2,CN=CDP,CN=Public Key Services,CN=Services,%6%10\\n2:http://pki.labbuilder.com/CertEnroll/%3%8%9.crl" CACertPublicationURLs = "1:C:\\Windows\\system32\\CertSrv\\CertEnroll\\%1\_%3%4.crt\\n2:ldap:///CN=%7,CN=AIA,CN=Public Key Services,CN=Services,%6%11\\n2:http://pki.labbuilder.com/CertEnroll/%1\_%3%4.crt" SubCAs = @('SA\_SUBCA') } ) \[/sourcecode\]
+```powershell
+AllNodes = @(
+    @{
+        NodeName = 'SS_ROOTCA'
+        Thumbprint = 'CDD4EEAE6000AC7F40C3802C171E30148030C072'
+        LocalAdminPassword = 'P@ssword!1'
+        CACommonName = "LABBUILDER.COM Root CA"
+        CADistinguishedNameSuffix = "DC=LABBUILDER,DC=COM"
+        CRLPublicationURLs = "1:C:\Windows\system32\CertSrv\CertEnroll\%3%8%9.crl\n10:ldap:///CN=%7%8,CN=%2,CN=CDP,CN=Public Key Services,CN=Services,%6%10\n2:http://pki.labbuilder.com/CertEnroll/%3%8%9.crl"
+        CACertPublicationURLs = "1:C:\Windows\system32\CertSrv\CertEnroll\%1_%3%4.crt\n2:ldap:///CN=%7,CN=AIA,CN=Public Key Services,CN=Services,%6%11\n2:http://pki.labbuilder.com/CertEnroll/%1_%3%4.crt"
+        SubCAs = @('SA_SUBCA')
+    }
+)
+```
 
 #### AllNodes for Sub CA
 
-And these are the parameters for each Subordinate CA. If you had more than on Sub CA then you could add additional nodes. The variables are fairly self explanatory but they will be covered later on in the post.
+And these are the parameters for each Subordinate CA. If you had more than one Sub CA then you could add additional nodes. The variables are fairly self explanatory but they will be covered later on in the post.
 
-\[sourcecode language="powershell"\] AllNodes = @( @{ NodeName = 'SA\_SUBCA' Thumbprint = '8F43288AD272F3103B6FB1428485EA3014C0BCFE' LocalAdminPassword = 'P@ssword!1' DomainName = "LABBUILDER.COM" DomainAdminPassword = "P@ssword!1" PSDscAllowDomainUser = $True CACommonName = "LABBUILDER.COM Issuing CA" CADistinguishedNameSuffix = "DC=LABBUILDER,DC=COM" CRLPublicationURLs = "65:C:\\Windows\\system32\\CertSrv\\CertEnroll\\%3%8%9.crl\\n79:ldap:///CN=%7%8,CN=%2,CN=CDP,CN=Public Key Services,CN=Services,%6%10\\n6:http://pki.labbuilder.com/CertEnroll/%3%8%9.crl" CACertPublicationURLs = "1:C:\\Windows\\system32\\CertSrv\\CertEnroll\\%1\_%3%4.crt\\n2:ldap:///CN=%7,CN=AIA,CN=Public Key Services,CN=Services,%6%11\\n2:http://pki.labbuilder.com/CertEnroll/%1\_%3%4.crt" RootCAName = "SS\_ROOTCA" RootCACRTName = "SS\_ROOTCA\_LABBUILDER.COM Root CA.crt" } ) \[/sourcecode\]
+```powershell
+AllNodes = @(
+    @{
+        NodeName = 'SA_SUBCA'
+        Thumbprint = '8F43288AD272F3103B6FB1428485EA3014C0BCFE'
+        LocalAdminPassword = 'P@ssword!1'
+        DomainName = "LABBUILDER.COM"
+        DomainAdminPassword = "P@ssword!1"
+        PSDscAllowDomainUser = $True
+        CACommonName = "LABBUILDER.COM Issuing CA"
+        CADistinguishedNameSuffix = "DC=LABBUILDER,DC=COM"
+        CRLPublicationURLs = "65:C:\Windows\system32\CertSrv\CertEnroll\%3%8%9.crl\n79:ldap:///CN=%7%8,CN=%2,CN=CDP,CN=Public Key Services,CN=Services,%6%10\n6:http://pki.labbuilder.com/CertEnroll/%3%8%9.crl"
+        CACertPublicationURLs = "1:C:\Windows\system32\CertSrv\CertEnroll\%1_%3%4.crt\n2:ldap:///CN=%7,CN=AIA,CN=Public Key Services,CN=Services,%6%11\n2:http://pki.labbuilder.com/CertEnroll/%1_%3%4.crt"
+        RootCAName = "SS_ROOTCA"
+        RootCACRTName = "SS_ROOTCA_LABBUILDER.COM Root CA.crt"
+    }
+)
+```
 
 ### Step 1: Installing the Root CA
 
 First things first. We need to create a credential object that will be used to perform various steps in the process. This is a local credential as this is a standalone server.
 
-\[sourcecode language="powershell"\] Node $AllNodes.NodeName { # Assemble the Local Admin Credentials If ($Node.LocalAdminPassword) { \[PSCredential\]$LocalAdminCredential = New-Object System.Management.Automation.PSCredential ("Administrator", (ConvertTo-SecureString $Node.LocalAdminPassword -AsPlainText -Force)) } \[/sourcecode\]
+```powershell
+Node $AllNodes.NodeName {
+    # Assemble the Local Admin Credentials
+    if ($Node.LocalAdminPassword) {
+        [PSCredential]$LocalAdminCredential = New-Object System.Management.Automation.PSCredential (
+            "Administrator",
+            (ConvertTo-SecureString $Node.LocalAdminPassword -AsPlainText -Force)
+        )
+    }
+}
+```
 
 Next up we'll install the **ADCS Certificate Authority** and the **ADCS Web Enrollment** features. Normally on a standalone Root CA you wouldn't bother installing the ADCS Web Enrollment feature, but in our case it is an easy way to have the _CertEnroll_ website virtual folder created which we use to transfer the Root CA Cert and the Issuing CA Cert (later on).
 
-\[sourcecode language="powershell"\] # Install the ADCS Certificate Authority WindowsFeature ADCSCA { Name = 'ADCS-Cert-Authority' Ensure = 'Present' } # Install ADCS Web Enrollment - only required because it creates the CertEnroll virtual folder # Which we use to pass certificates to the Issuing/Sub CAs WindowsFeature ADCSWebEnrollment { Ensure = 'Present' Name = 'ADCS-Web-Enrollment' DependsOn = '\[WindowsFeature\]ADCSCA' } \[/sourcecode\]
+```powershell
+# Install the ADCS Certificate Authority
+WindowsFeature ADCSCA {
+    Name   = 'ADCS-Cert-Authority'
+    Ensure = 'Present'
+}
+
+# Install ADCS Web Enrollment - only required because it creates the CertEnroll virtual folder
+# Which we use to pass certificates to the Issuing/Sub CAs
+WindowsFeature ADCSWebEnrollment {
+    Ensure    = 'Present'
+    Name      = 'ADCS-Web-Enrollment'
+    DependsOn = '[WindowsFeature]ADCSCA'
+}
+```
 
 Next on the agenda is we create a **CAPolicy.inf** file - this file configures some basic parameters that will be used by the Root CA certificate and server:
 
-\[sourcecode language="powershell"\] # Create the CAPolicy.inf file which defines basic properties about the ROOT CA certificate File CAPolicy { Ensure = 'Present' DestinationPath = 'C:\\Windows\\CAPolicy.inf' Contents = "\[Version\]\`r\`n Signature= \`"$Windows NT$\`"\`r\`n\[Certsrv\_Server\]\`r\`n RenewalKeyLength=4096\`r\`n RenewalValidityPeriod=Years\`r\`n RenewalValidityPeriodUnits=20\`r\`n CRLDeltaPeriod=Days\`r\`n CRLDeltaPeriodUnits=0\`r\`n\[CRLDistributionPoint\]\`r\`n\[AuthorityInformationAccess\]\`r\`n" Type = 'File' DependsOn = '\[WindowsFeature\]ADCSWebEnrollment' } \[/sourcecode\]
+```powershell
+# Create the CAPolicy.inf file which defines basic properties about the ROOT CA certificate
+File CAPolicy {
+    Ensure          = 'Present'
+    DestinationPath = 'C:\Windows\CAPolicy.inf'
+    Contents        = "[Version]`r`nSignature=`"$Windows NT$`"`r`n[Certsrv_Server]`r`nRenewalKeyLength=4096`r`nRenewalValidityPeriod=Years`r`nRenewalValidityPeriodUnits=20`r`nCRLDeltaPeriod=Days`r`nCRLDeltaPeriodUnits=0`r`n[CRLDistributionPoint]`r`n[AuthorityInformationAccess]`r`n"
+    Type            = 'File'
+    DependsOn       = '[WindowsFeature]ADCSWebEnrollment'
+}
+```
 
 And now the **ADCS Certificate Authority** and the **ADCS Web Enrollment** features can be configured. Notice we are using some of the Nodes parameters here as well as the Local Administrator Credentials:
 
-\[sourcecode language="powershell"\] # Configure the CA as Standalone Root CA xADCSCertificationAuthority ConfigCA { Ensure = 'Present' Credential = $LocalAdminCredential CAType = 'StandaloneRootCA' CACommonName = $Node.CACommonName CADistinguishedNameSuffix = $Node.CADistinguishedNameSuffix ValidityPeriod = 'Years' ValidityPeriodUnits = 20 DependsOn = '\[File\]CAPolicy' }
+```powershell
+# Configure the CA as Standalone Root CA
+xADCSCertificationAuthority ConfigCA {
+    Ensure                   = 'Present'
+    Credential               = $LocalAdminCredential
+    CAType                   = 'StandaloneRootCA'
+    CACommonName             = $Node.CACommonName
+    CADistinguishedNameSuffix = $Node.CADistinguishedNameSuffix
+    ValidityPeriod           = 'Years'
+    ValidityPeriodUnits      = 20
+    DependsOn                = '[File]CAPolicy'
+}
 
-\# Configure the ADCS Web Enrollment xADCSWebEnrollment ConfigWebEnrollment { Ensure = 'Present' Name = 'ConfigWebEnrollment' Credential = $LocalAdminCredential DependsOn = '\[xADCSCertificationAuthority\]ConfigCA' } \[/sourcecode\]
+# Configure the ADCS Web Enrollment
+xADCSWebEnrollment ConfigWebEnrollment {
+    Ensure    = 'Present'
+    Name      = 'ConfigWebEnrollment'
+    Credential = $LocalAdminCredential
+    DependsOn = '[xADCSCertificationAuthority]ConfigCA'
+}
+```
 
 Now, here is where things get interesting. We need to configure some of the more advanced properties of the CA such as the _AIA_ and _CDP extensions_. The problem is that there is no DSC resource for doing this and there aren't even any native PowerShell cmdlets either! So I had to resort to the _DSC Script resource_ in combination with the **CertUtil.exe** tool and **registry** entries:
 
-\[sourcecode language="powershell"\] # Set the advanced CA properties Script ADCSAdvConfig { SetScript = { If ($Using:Node.CADistinguishedNameSuffix) { & "$($ENV:SystemRoot)\\system32\\certutil.exe" -setreg CA\\DSConfigDN "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)" & "$($ENV:SystemRoot)\\system32\\certutil.exe" -setreg CA\\DSDomainDN "$($Using:Node.CADistinguishedNameSuffix)" } If ($Using:Node.CRLPublicationURLs) { & "$($ENV:SystemRoot)\\System32\\certutil.exe" -setreg CA\\CRLPublicationURLs $($Using:Node.CRLPublicationURLs) } If ($Using:Node.CACertPublicationURLs) { & "$($ENV:SystemRoot)\\System32\\certutil.exe" -setreg CA\\CACertPublicationURLs $($Using:Node.CACertPublicationURLs) } Restart-Service -Name CertSvc Add-Content -Path 'c:\\windows\\setup\\scripts\\certutil.log' -Value "Certificate Service Restarted ..." } GetScript = { Return @{ 'DSConfigDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN'); 'DSDomainDN' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN'); 'CRLPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs'); 'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') } } TestScript = { If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { Return $False } If (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { Return $False } If (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\\System\\CurrentControlSet\\Services\\CertSvc\\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { Return $False } Return $True } DependsOn = '\[xADCSWebEnrollment\]ConfigWebEnrollment' } \[/sourcecode\]
+```powershell
+# Set the advanced CA properties
+Script ADCSAdvConfig {
+    SetScript = {
+        if ($Using:Node.CADistinguishedNameSuffix) {
+            & "$($ENV:SystemRoot)\system32\certutil.exe" -setreg CA\DSConfigDN "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)"
+            & "$($ENV:SystemRoot)\system32\certutil.exe" -setreg CA\DSDomainDN "$($Using:Node.CADistinguishedNameSuffix)"
+        }
+        if ($Using:Node.CRLPublicationURLs) {
+            & "$($ENV:SystemRoot)\System32\certutil.exe" -setreg CA\CRLPublicationURLs $($Using:Node.CRLPublicationURLs)
+        }
+        if ($Using:Node.CACertPublicationURLs) {
+            & "$($ENV:SystemRoot)\System32\certutil.exe" -setreg CA\CACertPublicationURLs $($Using:Node.CACertPublicationURLs)
+        }
+        Restart-Service -Name CertSvc
+        Add-Content -Path 'c:\windows\setup\scripts\certutil.log' -Value "Certificate Service Restarted ..."
+    }
+    GetScript = {
+        return @{
+            'DSConfigDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN')
+            'DSDomainDN'          = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN')
+            'CRLPublicationURLs'  = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs')
+            'CACertPublicationURLs' = (Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs')
+        }
+    }
+    TestScript = {
+        if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSConfigDN') -ne "CN=Configuration,$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+        if (((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('DSDomainDN') -ne "$($Using:Node.CADistinguishedNameSuffix)")) { return $false }
+        if (($Using:Node.CRLPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CRLPublicationURLs') -ne $Using:Node.CRLPublicationURLs)) { return $false }
+        if (($Using:Node.CACertPublicationURLs) -and ((Get-ChildItem 'HKLM:\System\CurrentControlSet\Services\CertSvc\Configuration').GetValue('CACertPublicationURLs') -ne $Using:Node.CACertPublicationURLs)) { return $false }
+        return $true
+    }
+    DependsOn = '[xADCSWebEnrollment]ConfigWebEnrollment'
+}
+```
 
 The above section was actually detailed in my previous post [here](https://dscottraynsford.wordpress.com/2015/09/03/advanced-certificate-services-configuration-with-dsc/). With all that done the Root CA is installed and ready to go. But this DSC configuration script is not yet finished, but we can't go any further until the Sub CA DSC has progressed. It is important to keep in mind that these DSC scripts are running at the same time on different machines and will interact with one another during this process.
 
@@ -106,4 +223,3 @@ This also seems like an appropriate time to take a break. The really interesting
 ### Next Part
 
 [Installing a Two-Tier PKI using nothing but Desired State Configuration - Part 2](https://dscottraynsford.wordpress.com/2015/09/13/installing-a-two-tier-pki-using-nothing-but-desired-state-configuration-part-2/)
-

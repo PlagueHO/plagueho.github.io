@@ -11,4 +11,3 @@ I know this is a bit of a non event, but anyone notice the new PowerShell icon i
 [![The New PowerShell icon](/images/ss_new_powershell_icon1.png)](/images/ss_new_powershell_icon1.png)
 
 I wonder if there are any other PowerShell changes in this build?
-

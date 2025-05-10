@@ -39,31 +39,90 @@ Because this resource calls PowerShell CmdLets that interact with the **AD Datab
 
 Because this resource requires **WMF 5.0** you can just download this directly from the [PowerShell Gallery](https://www.powershellgallery.com/) by running this command:
 
-\[sourcecode language="powershell"\] Install-Module -Name cDFS \[/sourcecode\]
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-10-windows-distributed-file-system-dsc-resource.md
+Install-Module -Name cDFS
+```
 
 ### Using the Resource
 
 The following example creates a **DFS Replication Group** called **Public** containing two members, **FileServer1** and **FileServer2**. The **Replication Group** contains a single folder called **Software**. A description will be set on the **Software** folder and it will be set to exclude the directory **Temp** from replication.
 
-\[sourcecode language="powershell"\] configuration Sample\_cDFSRepGroup { Import-DscResource -Module cDFS
+```powershell
+# filepath: d:\source\GitHub\PlagueHO\plagueho.github.io\content\blog\2015\10\2015-10-10-windows-distributed-file-system-dsc-resource.md
+configuration Sample_cDFSRepGroup {
+    Import-DscResource -Module cDFS
 
-Node $NodeName { \[PSCredential\]$Credential = New-Object System.Management.Automation.PSCredential ("CONTOSO.COM\\Administrator", (ConvertTo-SecureString $"MyP@ssw0rd!1" -AsPlainText -Force))
+    Node $NodeName {
+        [PSCredential]$Credential = New-Object System.Management.Automation.PSCredential (
+            "CONTOSO.COM\Administrator",
+            (ConvertTo-SecureString "MyP@ssw0rd!1" -AsPlainText -Force)
+        )
 
-\# Install the Prerequisite features first # Requires Windows Server 2012 R2 Full install WindowsFeature RSATDFSMgmtConInstall { Ensure = "Present" Name = "RSAT-DFS-Mgmt-Con" }
+        # Install the Prerequisite features first
+        # Requires Windows Server 2012 R2 Full install
+        WindowsFeature RSATDFSMgmtConInstall {
+            Ensure = "Present"
+            Name   = "RSAT-DFS-Mgmt-Con"
+        }
 
-\# Configure the Replication Group cDFSRepGroup RGPublic { GroupName = 'Public' Description = 'Public files for use by all departments' Ensure = 'Present' Members = 'FileServer1','FileServer2' Folders = 'Software' PSDSCRunAsCredential = $Credential DependsOn = "\[WindowsFeature\]RSATDFSMgmtConInstall" } # End of RGPublic Resource
+        # Configure the Replication Group
+        cDFSRepGroup RGPublic {
+            GroupName            = 'Public'
+            Description          = 'Public files for use by all departments'
+            Ensure               = 'Present'
+            Members              = 'FileServer1','FileServer2'
+            Folders              = 'Software'
+            PSDSCRunAsCredential = $Credential
+            DependsOn            = "[WindowsFeature]RSATDFSMgmtConInstall"
+        }
 
-cDFSRepGroupConnection RGPublicC1 { GroupName = 'Public' Ensure = 'Present' SourceComputerName = 'FileServer1' DestinationComputerName = 'FileServer2' PSDSCRunAsCredential = $Credential } # End of cDFSRepGroupConnection Resource
+        cDFSRepGroupConnection RGPublicC1 {
+            GroupName                = 'Public'
+            Ensure                   = 'Present'
+            SourceComputerName       = 'FileServer1'
+            DestinationComputerName  = 'FileServer2'
+            PSDSCRunAsCredential     = $Credential
+        }
 
-cDFSRepGroupConnection RGPublicC2 { GroupName = 'Public' Ensure = 'Present' SourceComputerName = 'FileServer2' DestinationComputerName = 'FileServer1' PSDSCRunAsCredential = $Credential } # End of cDFSRepGroupConnection Resource
+        cDFSRepGroupConnection RGPublicC2 {
+            GroupName                = 'Public'
+            Ensure                   = 'Present'
+            SourceComputerName       = 'FileServer2'
+            DestinationComputerName  = 'FileServer1'
+            PSDSCRunAsCredential     = $Credential
+        }
 
-cDFSRepGroupFolder RGSoftwareFolder { GroupName = 'Public' FolderName = 'Software' Description = 'DFS Share for storing software installers' DirectoryNameToExclude = 'Temp' PSDSCRunAsCredential = $Credential DependsOn = '\[cDFSRepGroup\]RGPublic' } # End of RGSoftwareFolder Resource
+        cDFSRepGroupFolder RGSoftwareFolder {
+            GroupName                = 'Public'
+            FolderName               = 'Software'
+            Description              = 'DFS Share for storing software installers'
+            DirectoryNameToExclude   = 'Temp'
+            PSDSCRunAsCredential     = $Credential
+            DependsOn                = '[cDFSRepGroup]RGPublic'
+        }
 
-cDFSRepGroupMembership RGPublicSoftwareFS1 { GroupName = 'Public' FolderName = 'Software' ComputerName = 'FileServer1' ContentPath = 'd:\\Public\\Software' PrimaryMember = $true PSDSCRunAsCredential = $Credential DependsOn = '\[cDFSRepGroupFolder\]RGSoftwareFolder' } # End of RGPublicSoftwareFS1 Resource
+        cDFSRepGroupMembership RGPublicSoftwareFS1 {
+            GroupName                = 'Public'
+            FolderName               = 'Software'
+            ComputerName             = 'FileServer1'
+            ContentPath              = 'd:\Public\Software'
+            PrimaryMember            = $true
+            PSDSCRunAsCredential     = $Credential
+            DependsOn                = '[cDFSRepGroupFolder]RGSoftwareFolder'
+        }
 
-cDFSRepGroupMembership RGPublicSoftwareFS2 { GroupName = 'Public' FolderName = 'Software' ComputerName = 'FileServer2' ContentPath = 'e:\\Data\\Public\\Software' PSDSCRunAsCredential = $Credential DependsOn = '\[cDFSRepGroupFolder\]RGPublicSoftwareFS1' } # End of RGPublicSoftwareFS2 Resource
-
-} # End of Node } # End of Configuration \[/sourcecode\]
+        cDFSRepGroupMembership RGPublicSoftwareFS2 {
+            GroupName                = 'Public'
+            FolderName               = 'Software'
+            ComputerName             = 'FileServer2'
+            ContentPath              = 'e:\Data\Public\Software'
+            PSDSCRunAsCredential     = $Credential
+            DependsOn                = '[cDFSRepGroupFolder]RGPublicSoftwareFS1'
+        }
+    }
+}
+```
 
 ### Example Breakdown
 
@@ -115,4 +174,3 @@ Well, there is not much more to say about this. Hopefully someone finds it usefu
 ### Feedback
 
 If you're interested in contributing to this resource, providing feedback or raising issues or requesting features, please feel free (anything is appreciated). You'll find the resource GitHub repository [here](https://github.com/PlagueHO/cDFS) where you can fork, issue pull requests and raise issues/feature requests.
-
