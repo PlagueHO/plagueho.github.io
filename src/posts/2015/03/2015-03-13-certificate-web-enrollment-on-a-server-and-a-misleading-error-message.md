@@ -7,6 +7,7 @@ tags:
   - "certificate-web-enrollment"
   - "https"
 image: "/assets/images/screenshots/ss_cs_advancedcertificateqrequest_misleading.png"
+isArchived: true
 ---
 
 The Certificate Web Enrollment component of Certificate Services is fairly helpful for allowing easy certificate request and enrollment from any computer.

@@ -2,6 +2,7 @@
 title: "Nano Server Packages in Windows Server 2016 TP5"
 date: 2016-04-28
 description: "A quick snapshot of the package list for Nano Server in Windows Server 2016 TP5."
+isArchived: true
 ---
 
 Happy TP5 day!

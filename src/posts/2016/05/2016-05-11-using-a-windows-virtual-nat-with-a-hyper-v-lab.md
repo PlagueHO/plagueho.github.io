@@ -6,6 +6,7 @@ tags:
   - "hyper-v"
   - "windows-server-2016"
   - "nat"
+isArchived: true
 ---
 
 One of the new features introduced into Windows in build 10586 and above was the new **NAT** **Virtual Switch**. This feature was primarily introduced to ease the introduction of the [Windows Containers](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/about/about_overview) in the upcoming release of **Windows Server 2016**.

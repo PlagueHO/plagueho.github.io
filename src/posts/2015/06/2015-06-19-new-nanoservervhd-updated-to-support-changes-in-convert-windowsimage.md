@@ -2,6 +2,7 @@
 title: "New-NanoServerVHD Updated to support changes in Convert-WindowsImage"
 date: 2015-06-19
 description: "New-NanoServerVHD Updated to support changes in Convert-WindowsImage"
+isArchived: true
 ---
 
 A new version of **Convert-WindowsImage.ps1** script that me **New-NanoServerVHD.ps1** script uses was released a few days ago. It fixes the issue with running on Windows 10 and Windows Server 2016. However it was also changed in other ways that caused my **New-NanoServerVHD.ps1** script to no longer function.

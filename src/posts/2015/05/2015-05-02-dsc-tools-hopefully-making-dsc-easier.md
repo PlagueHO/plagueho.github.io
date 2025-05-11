@@ -7,6 +7,7 @@ tags:
   - "dsctools"
   - "powershell"
 image: "/assets/images/blog/fi_dsctools.jpg"
+isArchived: true
 ---
 
 ### Introduction

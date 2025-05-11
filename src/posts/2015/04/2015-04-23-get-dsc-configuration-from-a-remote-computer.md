@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "desired-state-configuration"
   - "dsc"
+isArchived: true
 ---
 
 I've spent the last day or so working on a module to help with managing DSC Pull Servers and other functions to help making DSC a little bit easier to get up and running. This module isn't quite finished yet, but I thought I'd share a quick code snippet that I've been using a lot to get the DSC configuration from a remote machine when credentials and special port details are required.

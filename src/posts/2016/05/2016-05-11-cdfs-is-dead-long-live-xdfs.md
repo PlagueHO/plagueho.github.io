@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "distributed-file-system"
   - "dsc"
+isArchived: true
 ---
 
 The [xDFS DSC resource module](https://github.com/PowerShell/xDFS) has been officially released to the [PowerShell Gallery](https://www.powershellgallery.com/packages/xdfs) thanks to the awesome review efforts of the Microsoft PowerShell Team. The **cDFS DSC Resource** has now been **unlisted** from the PowerShell Gallery. So now is the time to update any DSC configuration scripts to use xDFS.

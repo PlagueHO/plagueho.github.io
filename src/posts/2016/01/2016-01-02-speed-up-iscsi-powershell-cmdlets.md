@@ -5,6 +5,7 @@ description: "A quick tip about speeding up iSCSI PowerShell cmdlets."
 tags:
   - "iscsi"
   - "powershell"
+isArchived: true
 ---
 
 I've been spending a bit of time lately completing a set of **DSC Resources** for configuring **iSCSI** **Targets** and **iSCSI Initiators**. One thing I've noticed is that these **iSCSI** cmdlets are extremely slow:

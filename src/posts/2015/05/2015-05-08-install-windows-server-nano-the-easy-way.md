@@ -5,6 +5,7 @@ description: "A quick article about installing Windows Server Nano the easy way.
 categories:
   - "windows-server-2016"
   - "windows-server-nano"
+isArchived: true
 ---
 
 All the recent talk about the new Windows Server Nano (Windows Server Core on diet pills) that is available for installation on the Windows Server 2016 Technical Preview 2 ISO got me quite interested. So, I thought I'd give it a whirl to see what all the fuss was about. Well, first up, it really is as small (568Mb with my chosen packages) and fast as Microsoft says. Second, however, it is most definitely a Tech Preview and is missing lots of stuff and has some obvious issues.

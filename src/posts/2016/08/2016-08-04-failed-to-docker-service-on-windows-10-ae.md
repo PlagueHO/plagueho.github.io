@@ -6,6 +6,7 @@ tags:
   - "docker"
   - "windows-10"
 image: "/assets/images/blog/fi_brokencontainers.jpg"
+isArchived: true
 ---
 
 So, pretty much the first thing I did when the Windows 10 Anniversary Edition was installed onto my primary development machine was to installer the **Windows Container Service** and Docker on it.

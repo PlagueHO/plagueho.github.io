@@ -8,6 +8,7 @@ tags:
   - "isns"
   - "desired-state-configuration"
   - "powershell"
+isArchived: true
 ---
 
 Several months back I created a [DSC Resource](https://www.powershellgallery.com/packages/ciSCSI) for configuring **iSCSI Server Targets** (including Virtual Disks) as well as **iSCSI Initiators** using **Desired State Configuration (DSC)**. I created this for several reasons:

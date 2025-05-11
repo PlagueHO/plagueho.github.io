@@ -6,6 +6,7 @@ tags:
   - "windows-server-update-services"
   - "wsus"
   - "powershell"
+isArchived: true
 ---
 
 Just a quick snippet today. I wrote this because I was didn't want to have to wait for **30** days before unusused superceded updates in my **WSUS** server were automatically _declined_ - especially those daily "Definition Update for Windows Defender".

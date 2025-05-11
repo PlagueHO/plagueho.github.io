@@ -9,6 +9,7 @@ tags:
   - "dism"
   - "features-on-demand"
   - "windows-server-2012"
+isArchived: true
 ---
 
 _Features-on-demand_ - it's a great new "feature" - when it works. However, the rest of the time it is a real headache.

@@ -35,7 +35,18 @@ export default async function (eleventyConfig) {
   eleventyConfig.addCollection('allPosts', getAllPosts);
   eleventyConfig.addCollection('showInSitemap', showInSitemap);
   eleventyConfig.addCollection('tagList', tagList);
+  eleventyConfig.addCollection("livePosts", function(collectionApi) {
+    return collectionApi.getFilteredByTag("posts") // Or your primary posts collection
+      .filter(item => !item.data.isArchived)
+      .reverse(); // Assuming you want newest first
+  });
 
+  eleventyConfig.addCollection("archivedPosts", function(collectionApi) {
+    return collectionApi.getFilteredByTag("posts") // Or your primary posts collection
+      .filter(item => item.data.isArchived === true)
+      .reverse(); // Assuming you want newest first
+  });
+  
   // ---------------------  Plugins
   eleventyConfig.addPlugin(plugins.htmlConfig);
   eleventyConfig.addPlugin(plugins.cssConfig);

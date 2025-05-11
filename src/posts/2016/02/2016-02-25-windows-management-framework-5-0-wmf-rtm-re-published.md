@@ -5,6 +5,7 @@ description: "The Windows Management Framework 5.0 (WMF) RTM has been re-publish
 tags: 
   - "powershell"
   - "wmf5-0"
+isArchived: true
 ---
 
 After a bit of a false start the WMF 5.0 installer package has been [republished](https://blogs.msdn.microsoft.com/powershell/2016/02/24/windows-management-framework-wmf-5-0-rtm-packages-has-been-republished/). This released fixes the [PSModulePath issue](https://windowsserver.uservoice.com/forums/301869-powershell/suggestions/11148471-bug-wmf5-rtm-psmodulepath) that popped up on the first release of this package.

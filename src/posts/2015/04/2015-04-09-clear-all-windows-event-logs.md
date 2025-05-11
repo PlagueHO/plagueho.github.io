@@ -5,6 +5,7 @@ description: "A quick PowerShell command to clear all Windows Event Logs."
 tags:
   - "event-log"
   - "powershell"
+isArchived: true
 ---
 
 Just a quick one this time.

@@ -5,6 +5,7 @@ description: "Optimize multiple VHD/VHDx files using PowerShell Workflows."
 tags:
   - "hyper-v"
   - "powershell"
+isArchived: true
 ---
 
 Like most tech people I have lots of Hyper-V VM's scattered across various computers at home. Some of these VM's are running on Server OS hosts (Server 2012 R2) and some running on client OS hosts (Windows 8.1) on my desktop or laptop. These VMs also get varying amount of use - lab and dev machines getting used most of the time while "experimentation" machines getting booted only rarely.

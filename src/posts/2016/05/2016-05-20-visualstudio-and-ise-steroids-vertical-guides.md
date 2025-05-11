@@ -7,6 +7,7 @@ tags:
   - "visual-studio-code"
   - "powershell"
 image: "/assets/images/screenshots/ss_verticalruler_visualstudiocodesettingsrulers.png"
+isArchived: true
 ---
 
 To make it easier for _reviewers_ and _other programmers_ to read PowerShell code it is recommended that lines of PowerShell code don't exceed 100 characters. If you run past this limit you should usually split the line using a **backtick** (\`). I also find that this limit prompts me to rethink my code logic if the line gets too long. Besides, no one wants to have to scroll several pages horizontally to be able to read your whole line of code.

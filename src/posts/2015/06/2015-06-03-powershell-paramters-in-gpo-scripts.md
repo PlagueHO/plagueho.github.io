@@ -5,6 +5,7 @@ description: "A quick article about PowerShell parameters in GPO scripts."
 tags:
   - "group-policy"
   - "powershell"
+isArchived: true
 ---
 
 ## Introduction

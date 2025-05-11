@@ -7,6 +7,7 @@ tags:
   - "microsoft-office"
   - "powershell"
 image: "/assets/images/blog/danrus.jpg"
+isArchived: true
 ---
 
 I've been recently doing some experimentation with AD RMS templates and AD FS integration in my lab environment. Clearly, I lead a very exciting life. Of course, to test AD RMS templates, one needs a copy of Office installed into the lab environment. This, I thought, would be a good opportunity to configure Office (Office 2013 Pro Plus to be precise) to be installed via Group Policy.

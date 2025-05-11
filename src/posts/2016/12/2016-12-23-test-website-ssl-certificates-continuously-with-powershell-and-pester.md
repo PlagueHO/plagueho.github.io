@@ -9,6 +9,7 @@ tags:
   - "ssl"
   - "testing"
 image: "/assets/images/screenshots/ss_chrome_certificateok.png"
+isArchived: true
 ---
 
 One of the most **common problems** that our teams deal with is ensuring that **SSL certificates** are **working correctly**. We've all had that urgent call in telling us that the web site is down or some key API or authentication function is offline - only to find out it was caused by an expired certificate.

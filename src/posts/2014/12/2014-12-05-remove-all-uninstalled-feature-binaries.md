@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "features-on-demand"
   - "windows-server-2012"
+isArchived: true
 ---
 
 I'm still getting my head around this whole blog thing, but I'm going to write a quick article about trimming down a Windows Server 2012 install while I wait for my partner to recover from a small bout of vertigo.

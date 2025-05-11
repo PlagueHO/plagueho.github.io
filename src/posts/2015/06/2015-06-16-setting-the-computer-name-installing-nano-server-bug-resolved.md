@@ -4,6 +4,7 @@ date: 2015-06-16
 description: "Setting the Computer Name installing Nano Server bug resolved"
 tags: 
   - "windows-server-nano"
+isArchived: true
 ---
 
 When I [originally wrote the script](https://dscottraynsford.wordpress.com/2015/05/08/install-windows-server-nano-the-easy-way/) to help install Nano Server I ran into a problem where I couldn't get the Computer Name of the Nano Server to set during the _OfflineServicing_ phase. This was supposed to be a new feature of Windows Server 2016 where the computer name could now be set in this phase rather than having to wait for the _Specialize_ phase - which meant one less reboot during installation of the OS - saving precious seconds. And when installing Nano, saving an extra few seconds actually matter. I spent some time trying to get this new feature to work but nothing I tried worked, so I resorted to setting it in the _Specialize_ phase like installations of old.

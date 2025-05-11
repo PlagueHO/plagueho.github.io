@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "windows-server-core"
   - "windows-server-2012"
+isArchived: true
 ---
 
 Although Windows Server Core is a great way of ending up with a slim and trim diet server, it can be a little bit tricky when first getting started configuring it. During my experiments running Server Core VMs, I found that there were a few tools either built into Server Core or available separately that can help get over this configuration "hump."

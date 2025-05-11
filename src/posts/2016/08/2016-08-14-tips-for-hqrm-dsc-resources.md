@@ -7,6 +7,7 @@ tags:
   - "hqrm"
   - "powershell"
 image: "/assets/images/screenshots/ss_hqrmreview_codeofconductgood.png"
+isArchived: true
 ---
 
 I've spent a fair amount of time recently working on getting some of my DSC Resources ([SystemLocaleDsc](https://github.com/PlagueHO/SystemLocaleDsc), [WSManDsc](https://github.com/PlagueHO/WSManDsc), [iSCSIDsc](https://github.com/PlagueHO/iSCSIDsc) and [FSRMDsc](https://github.com/PlagueHO/FSRMDsc)) accepted into the **[Microsoft DSC Community Resource Kit](https://github.com/PowerShell/DscResources)**. Some are nearly there (SystemLocaleDsc and WSManDsc), whereas others have a way to go yet.

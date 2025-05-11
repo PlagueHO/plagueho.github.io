@@ -7,6 +7,7 @@ tags:
   - "ovf"
   - "powershell"
 image: "/assets/images/screenshots/ss_ovfoms_omslogsearchevents.png"
+isArchived: true
 ---
 
 ## Introduction

@@ -5,6 +5,7 @@ description: "A quick article about Nano Server and the CIM cmdlets."
 tags:
   - "nano-server"
   - "powershell"
+isArchived: true
 ---
 
 Just a quick Nano server tip for this morning. As of **Windows Server 2016 TP4**, **Nano Server** only contains the **CIM** cmdlets. It does _not_ contain the **WMI** cmdlets:

@@ -8,6 +8,7 @@ tags:
   - "continuous-integration"
   - "devops"
 image: "/assets/images/blog/fi_chocolatey.jpg"
+isArchived: true
 ---
 
 ## Introduction

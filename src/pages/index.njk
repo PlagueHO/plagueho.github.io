@@ -26,7 +26,7 @@ description: "The Website of Daniel Scott-Raynsford: An AI adventurer and builde
   </article>
 
   {# --- Featured Latest Post --- #}
-  {% set latestPost = collections.allPosts[0] %}
+  {% set latestPost = collections.livePosts[0] %}
   <section class="region region-space-l">
     <div class="wrapper flow prose">
       {% set item = latestPost %}
@@ -41,7 +41,7 @@ description: "The Website of Daniel Scott-Raynsford: An AI adventurer and builde
       <h2 class="gradient-text-linear">Recent Posts</h2>
       <div class="region region-space-l">
         <custom-masonry layout="50-50">
-          {% set itemList = collections.allPosts.slice(1, 5) %}
+          {% set itemList = collections.livePosts.slice(1, 5) %}
           {% asyncEach item in itemList %}
             {% set headingLevel = "h3" %}
             {% set headingTextStep = "text-step-0" %}

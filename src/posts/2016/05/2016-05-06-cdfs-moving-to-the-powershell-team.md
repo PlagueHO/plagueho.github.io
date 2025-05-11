@@ -7,6 +7,7 @@ tags:
   - "distributed-file-system"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 Just a Friday afternoon heads up - if you're using the [cDFS DSC Resource](https://www.powershellgallery.com/packages/cDFS/2.1.0.238) I created to manage Windows Server Distributed File System (Replication and Namespaces), it has now been accepted into the PowerShell Community resources and will be under the control of the PowerShell Team.

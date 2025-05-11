@@ -2,6 +2,7 @@
 title: "Building a Enum that Supports Bit Fields in PowerShell"
 date: 2016-03-09
 description: "Building a Enum that Supports Bit Fields in PowerShell"
+isArchived: true
 ---
 
 I found this post extremely useful - definitely worth a read.

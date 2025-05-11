@@ -7,6 +7,7 @@ tags:
   - "classes"
   - "powershell"
   - "wmf5-0"
+isArchived: true
 ---
 
 ## Introduction

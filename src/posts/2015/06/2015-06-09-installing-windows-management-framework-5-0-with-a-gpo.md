@@ -7,6 +7,7 @@ tags:
   - "group-policy"
   - "powershell"
   - "windows-management-framework-5-0"
+isArchived: true
 ---
 
 ## The Need

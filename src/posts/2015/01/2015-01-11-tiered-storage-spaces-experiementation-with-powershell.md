@@ -4,6 +4,7 @@ date: 2015-01-11
 description: "Experimenting with Tiered Storage Spaces in Windows Server 2012 R2 using PowerShell."
 tags:
   - "windows-server-2012"
+isArchived: true
 ---
 
 I've been recently experimenting with the interesting Tiered Storage Spaces features in Windows Server 2012 R2. As part of this, I've been going through some of the excellent MSFT File Server team blogs on TechNet.

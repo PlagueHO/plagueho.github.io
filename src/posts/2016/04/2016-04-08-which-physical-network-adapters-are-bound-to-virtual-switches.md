@@ -5,6 +5,7 @@ description: "A short PowerShell script to find out which physical network adapt
 tags:
   - "hyper-v"
   - "powershell"
+isArchived: true
 ---
 
 Today's post has quite a long title for what is going to be a fairly short post. While making some improvements to [LabBuilder](https://github.com/PlagueHO/LabBuilder), I had a need to find out which physical network adapters on a host are bound to Hyper-V Virtual Switches. This is because a single physical adapter can only be bound to a single External Virtual Switch.

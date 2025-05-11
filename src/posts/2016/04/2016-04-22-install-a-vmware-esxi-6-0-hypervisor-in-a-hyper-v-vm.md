@@ -5,6 +5,7 @@ description: "Install a VMWare ESXi 6.0 Hypervisor in a Hyper-V VM"
 categories:
   - "hyper-v"
   - "vmware"
+isArchived: true
 ---
 
 ## **Update 19th February 2018:**

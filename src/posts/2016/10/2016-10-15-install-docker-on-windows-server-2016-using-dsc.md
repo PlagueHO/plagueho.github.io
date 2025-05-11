@@ -8,6 +8,7 @@ tags:
   - "dsc"
   - "windows-server-2016"
 image: "/assets/images/screenshots/ss_dockerdsc_installing.png"
+isArchived: true
 ---
 
 Windows Server 2016 is now GA and it contains some pretty exciting stuff. Chief among them for me is support for containers by way of [Docker](http://www.docker.com/). So, one of the first things I did was start installing Windows Server 2016 VM's (Server Core and Nano Server naturally) and installing Docker on them so I could begin experimenting with Docker Swarms and other cool stuff.

@@ -6,6 +6,7 @@ tags:
   - "acl-report-tools"
   - "access-control-list"
   - "ntfs-security"
+isArchived: true
 ---
 
 ## Introduction

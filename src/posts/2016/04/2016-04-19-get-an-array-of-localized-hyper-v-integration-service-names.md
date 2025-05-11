@@ -5,6 +5,7 @@ description: "Get an Array of Localized Hyper-V Integration Service Names"
 tags:
   - "hyper-v"
   - "powershell"
+isArchived: true
 ---
 
 Today's PowerShell snippet is used to get a list of Localized captions for the available Integration Services available on a Hyper-V host. I needed this because [LabBuilder](https://github.com/PlagueHO/LabBuilder) allows the individual Integration Services to be enabled or disabled per Lab Virtual Machine.

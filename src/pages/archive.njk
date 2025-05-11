@@ -3,7 +3,7 @@ layout: base
 title: Archive
 description: 'Older archived blog posts'
 pagination:
-  data: collections.allPosts
+  data: collections.archivedPosts
   size: 8
 permalink: 'archive/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
 ---
@@ -17,8 +17,7 @@ permalink: 'archive/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNum
   </header>
 
   <div class="region flow prose" style="--region-space-top: var(--space-l-2xl)">
-    <p>Check out my other blog posts here.
-    </p>
+    <p>These are all my older blog posts that I have archived. You can find my most recent blog posts <a href="/blog/">here</a>.</p>
   </div>
 
   <custom-masonry layout="50-50">
@@ -28,9 +27,9 @@ permalink: 'archive/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNum
 	</custom-masonry>
 
   <!-- set collection to paginate -->
-  {% set collectionToPaginate = collections.posts %}
+  {% set collectionToPaginate = collections.archivedPosts %}
   <!-- set target pagination settings in meta.js -->
-  {% set metaKey = "blog" %}
+  {% set metaKey = "blog" %} <!-- You might want to change this metaKey to "archive" if it affects pagination link generation or other metadata -->
   <!-- if the number of items in the collection is greater than the number of items shown on one page -->
   {% if collectionToPaginate.length > pagination.size %}
     <!-- include pagination -->

@@ -3,7 +3,7 @@ layout: base
 title: Blog
 description: 'Most recent and relevant blog posts'
 pagination:
-  data: collections.allPosts
+  data: collections.livePosts
   size: 8
 permalink: 'blog/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
 ---
@@ -28,7 +28,7 @@ permalink: 'blog/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber
 	</custom-masonry>
 
   <!-- set collection to paginate -->
-  {% set collectionToPaginate = collections.posts %}
+  {% set collectionToPaginate = collections.livePosts %}
   <!-- set target pagination settings in meta.js -->
   {% set metaKey = "blog" %}
   <!-- if the number of items in the collection is greater than the number of items shown on one page -->

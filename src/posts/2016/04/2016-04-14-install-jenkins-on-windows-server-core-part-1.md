@@ -7,6 +7,7 @@ tags:
   - "jenkins"
   - "powershell"
   - "windows-server-core"
+isArchived: true
 ---
 
 I'll admit it—I love Windows Server Core and I use it whenever possible. I think everyone should try and do the same. However, I know not everyone is a PowerShell expert or has any desire to be one.

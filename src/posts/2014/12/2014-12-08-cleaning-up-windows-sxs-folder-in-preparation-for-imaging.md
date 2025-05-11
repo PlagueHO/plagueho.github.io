@@ -7,6 +7,7 @@ tags:
   - "dism"
   - "features-on-demand"
   - "windows-server-2012"
+isArchived: true
 ---
 
 In preparation for releasing an operating system image to be used as a VM template, I usually like to perform some "shrinking commands" to make sure the image has as small a footprint as possible.

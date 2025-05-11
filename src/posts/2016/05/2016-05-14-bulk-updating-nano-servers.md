@@ -6,6 +6,7 @@ tags:
   - "windows-server-nano"
   - "powershell"
 image: "/assets/images/screenshots/ss_azuresmt_nanoserverupdatecomplete.png"
+isArchived: true
 ---
 
 ## Introduction

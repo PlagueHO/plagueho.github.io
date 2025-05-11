@@ -7,6 +7,7 @@ tags:
   - "dsc"
   - "jenkins"
   - "powershell"
+isArchived: true
 ---
 
 In my [previous post](https://dscottraynsford.wordpress.com/2016/04/14/install-jenkins-on-windows-server-core-part-1/), I showed how to create a PowerShell script that would install a Jenkins CI Master server onto a Windows Server Core installation. The obvious next step for such a script was to convert it into a DSC configuration file.

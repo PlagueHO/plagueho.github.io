@@ -5,6 +5,7 @@ description: "Exporting a Base-64 Encoded x.509 certificate using PowerShell is 
 tags:
   - "certificate-services"
   - "powershell"
+isArchived: true
 ---
 
 Exporting a Base-64 Encoded x.509 certificate using PowerShell is trivial if you have the [Export-Certificate](https://technet.microsoft.com/en-us/library/hh848628.aspx) cmdlet available. However, many of the nodes I work with are Windows 7 which unfortunately doesn't include these cmdlets. Therefore I needed an alternate method of exporting these Base-64 encoded x.509 certificates from these nodes.

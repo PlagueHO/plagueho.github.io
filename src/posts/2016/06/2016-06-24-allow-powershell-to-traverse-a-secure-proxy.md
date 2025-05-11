@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "proxy"
 image: "/assets/images/blog/fi_useproxy.png"
+isArchived: true
 ---
 
 One of the first things I like to do when setting up my development machine in a new environment is to update PowerShell help with the **update-help** cmdlet. After that, I will then go and download a slew of modules from the [PowerShell Gallery](http://www.powershellgallery.com/).
