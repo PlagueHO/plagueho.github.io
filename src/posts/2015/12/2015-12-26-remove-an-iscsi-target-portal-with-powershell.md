@@ -6,6 +6,7 @@ tags:
   - "dsc"
   - "iscsi"
   - "powershell"
+isArchived: true
 ---
 
 I ran into a small problem with removing **iSCSI Target Portals** using **PowerShell** the other day and thought it might be worth documenting.

@@ -4,6 +4,7 @@ date: 2015-12-24
 description: "Microsoft has removed the WMF 5.0 RTM download from the download center because of a significant bug."
 tags: 
   - "powershell"
+isArchived: true
 ---
 
 Bit of a bump in the WMF 5.0 road today: Microsoft has removed the WMF 5.0 RTM download from the download center because of a significant bug:

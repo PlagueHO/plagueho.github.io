@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 The purpose of this series of articles is to try and document a few of the lessons I learned while releasing new DSC resources as well as contributing to the existing **Microsoft Community DSC resources**. These articles are not intended to tell you how to write DSC resources from a programming perspective, but to give you some ideas on what might be expected of a DSC resource you're releasing to the public. For example, **unit** and **integration** tests (don't worry if you aren't familiar with those terms).

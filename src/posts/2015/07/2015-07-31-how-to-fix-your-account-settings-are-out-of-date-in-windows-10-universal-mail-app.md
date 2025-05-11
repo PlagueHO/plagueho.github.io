@@ -5,6 +5,7 @@ description: "A quick fix for the 'Your account settings are out of date' error 
 tags:
   - "powershell"
   - "windows-10"
+isArchived: true
 ---
 
 ### The Problem

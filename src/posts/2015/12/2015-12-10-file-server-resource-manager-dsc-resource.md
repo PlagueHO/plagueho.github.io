@@ -7,6 +7,7 @@ tags:
   - "dsc"
   - "file-server-resource-manager"
   - "powershell"
+isArchived: true
 ---
 
 ## With Our Powers Combined, We Are Captain FSRM

@@ -5,6 +5,7 @@ description: "A quick article about the new PowerShell icon in Windows 10 build 
 tags:
   - "powershell"
 image: "/assets/images/screenshots/ss_new_powershell_icon1.png"
+isArchived: true
 ---
 
 I know this is a bit of a non event, but anyone notice the new PowerShell icon in Windows 10 insider build 10547?

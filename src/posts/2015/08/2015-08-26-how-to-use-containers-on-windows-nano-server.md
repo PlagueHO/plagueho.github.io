@@ -7,6 +7,7 @@ tags:
   - "docker"
   - "windows-server-nano"
   - "powershell"
+isArchived: true
 ---
 
 **Edit:** I wrote this article when examining **containers** on **Windows Nano Server TP3** – _which wasn’t in a working state_. I have not yet had a chance to fully examine **containers** on **Windows Nano Server TP4**, but when I get a spare few hours I will no doubt deep-dive into it.

@@ -6,6 +6,7 @@ tags:
   - "format"
   - "powershell"
   - "visual-studio-code"
+isArchived: true
 ---
 
 One of the features I'm most fond of in Visual Studio Code is the **Format Document** feature that is built into [Visual Studio Code](https://code.visualstudio.com/).

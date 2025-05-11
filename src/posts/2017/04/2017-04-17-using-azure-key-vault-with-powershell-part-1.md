@@ -7,6 +7,7 @@ tags:
   - "azure"
   - "powershell"
 image: "/assets/images/screenshots/ss_akv_createcompleteportal.png"
+isArchived: true
 ---
 
 [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/) is used to safeguard and manage **cryptographic keys**, **certificates** and **secrets** used by cloud applications and services (you can still consume these on-premise though). This allows other application, services or users in an Azure subscription to store and retrieve these **cryptographic keys**, **certificates** and **secrets**.

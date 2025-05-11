@@ -5,6 +5,7 @@ description: "A quick article about the relationship between the Group and Displ
 tags:
   - "wfas"
   - "powershell"
+isArchived: true
 ---
 
 Recently I've been helping resolve a couple of issues with the behavior of the **xFirewall** resource in the [xNetworking](https://github.com/PowerShell/xNetworking) DSC Module. One of these was trying to implement both the Group and DisplayGroup parameters when creating a new Firewall Rule.

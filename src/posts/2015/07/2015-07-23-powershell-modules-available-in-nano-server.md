@@ -6,6 +6,7 @@ tags:
   - "windows-server-nano"
   - "powershell"
   - "sysprep"
+isArchived: true
 ---
 
 I have been spending a bit of time experimenting with loading Nano Server into WDS (using capture images, VHDX files and the like) and while doing this I decided to dig around inside Server Nano to see what is missing. The thing that is missing that makes me grumble the most is that lots of PowerShell modules are missing. This of course is because Server Nano doesn't have the full .NET Framework available, which most PowerShell modules depend.

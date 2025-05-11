@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 ## Introduction

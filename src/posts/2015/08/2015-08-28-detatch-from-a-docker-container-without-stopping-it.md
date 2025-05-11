@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "containers"
   - "docker"
+isArchived: true
 ---
 
 Saturday-morning Docker fun times (still only on Windows Server Core) – here’s something I found out that might be useful. It is documented in the official [Docker docs](https://docs.docker.com/articles/basics/) but not in the [Microsoft container docs](https://msdn.microsoft.com/en-us/virtualization/windowscontainers/quick_start/manage_docker).

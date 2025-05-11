@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 The Microsoft DSC Resource Kit has been updated with a bunch of new stuff. You can check this out [here](http://blogs.msdn.com/b/powershell/archive/2015/10/23/dsc-resource-kit-updates-are-here.aspx).

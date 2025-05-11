@@ -6,6 +6,7 @@ tags:
   - "windows-server-2016"
   - "windows-server-nano"
   - "powershell"
+isArchived: true
 ---
 
 Just a quick one for Friday. After downloading the new Windows Server 2016 TP4 ISO, I quickly fired up my **New-NanoServerVHD** script to see how it went. Unfortunately, I ran straight into a bug in the **Convert-WindowsImage** script. The bug in this script only occurs when the WIM file being converted only contains a single image—which as of TP4 includes the NanoServer.wim.

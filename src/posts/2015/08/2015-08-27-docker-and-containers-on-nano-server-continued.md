@@ -8,6 +8,7 @@ tags:
   - "windows-server-nano"
   - "powershell"
 image: "/assets/images/screenshots/ss_nano_containers_firstcontainer.png"
+isArchived: true
 ---
 
 This is a continuation of my investigation of how to get Containers and also possibly the Docker engine running on **Windows Server Nano 2016 TP 3**. The initial investigation into this can be found here: [How to use Containers on Windows Nano Server.](/blog/how-to-use-containers-on-windows-nano-server/)

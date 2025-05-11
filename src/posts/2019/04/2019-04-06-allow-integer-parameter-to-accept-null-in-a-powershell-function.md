@@ -4,6 +4,7 @@ date: 2019-04-06
 description: "A PowerShell function that takes a mandatory integer parameter, but that parameter needs to allow Null."
 tags:
   - "powershell"
+isArchived: true
 ---
 
 One of the great things about PowerShell being based on .NET is that we get access to the huge number of types built into the framework.

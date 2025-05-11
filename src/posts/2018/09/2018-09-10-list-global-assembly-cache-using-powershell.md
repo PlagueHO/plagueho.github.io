@@ -6,6 +6,7 @@ tags:
   - "gac"
   - "global-assembly-cache"
   - "powershell"
+isArchived: true
 ---
 
 The list of assemblies stored in the Global Assembly Cache (GAC) can be found in the registry under the **HKEY\_CLASSES\_ROOT\\Installer\\Assemblies\\Global** key.

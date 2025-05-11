@@ -7,6 +7,7 @@ tags:
   - "dynamic-disks"
   - "powershell"
   - "vhd"
+isArchived: true
 ---
 
 As part of my recent studies (and because I'm a bit OCD) I've been writing some notes on **how to perform** various DISKPART commands in **PowerShell**. You might also need to do this if you're converting old DISKPART scripts into **PowerShell** for automation purposes.

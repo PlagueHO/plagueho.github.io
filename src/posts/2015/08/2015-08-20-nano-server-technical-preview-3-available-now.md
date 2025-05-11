@@ -6,6 +6,7 @@ tags:
   - "windows-server-2016"
   - "windows-server-nano"
   - "powershell"
+isArchived: true
 ---
 
 Naturally, right as I need to be focusing on rebuilding my lab environment (using PowerShell scripts only of course), Microsoft goes and releases Windows Server 2016 Technical Preview 3, which contains lots of cool things like [containers](http://weblogs.asp.net/scottgu/announcing-windows-server-2016-containers-preview). It also meant a new version of the awesome **Nano Server**.

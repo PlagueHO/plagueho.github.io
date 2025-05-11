@@ -6,6 +6,7 @@ tags:
   - "labbuilder"
   - "pester"
   - "powershell"
+isArchived: true
 ---
 
 Recently I spent the good part of a weekend putting together _Pester Tests_ (click [here](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) if you aren't familiar with Pester) for my **LabBuilder PowerShell** module- a module to build a set of Virtual Machines based on an XML configuration file. In the module I have several cmdlets that take an XML configuration file (sample below) and return an array of hash tables as well as some hash table properties containing other arrays - basically a fairly complex object structure.

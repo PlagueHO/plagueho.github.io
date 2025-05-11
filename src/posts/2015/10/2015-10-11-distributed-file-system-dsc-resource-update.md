@@ -7,6 +7,7 @@ tags:
   - "desired-state-configuration"
   - "distributed-file-system"
 image: "/assets/images/blog/fi_sweetpea.png"
+isArchived: true
 ---
 
 After releasing the **DFS DSC Resource Module** [yesterday](/blog/windows-distributed-file-system-dsc-resource/), I had an idea of how to simplify it if you're deploying a DFS folder that contains the same path content path for all members. I added a **ContentPaths** parameter (an array of strings) to the **cDFSRepGroup** resource so that if the folder exists in the same location on every member, you won't need to use the **cDFSRepGroupMembership** resource to individually set the Content Path for each member.

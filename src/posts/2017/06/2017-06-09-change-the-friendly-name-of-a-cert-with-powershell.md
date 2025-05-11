@@ -5,6 +5,7 @@ description: "Change the Friendly Name of a Cert with PowerShell"
 tags:
   - "powershell"
   - "certificate-services"
+isArchived: true
 ---
 
 While working on adding a new feature in the certificate request DSC resource, I came across this handy little trick: You can change the Friendly Name of a certificate using PowerShell.

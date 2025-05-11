@@ -6,6 +6,7 @@ tags:
   - "azure"
   - "azure-container-instance"
 image: "/assets/images/screenshots/ss_aci_sonatypenexus3.png"
+isArchived: true
 ---
 
 On the [back of yesterdays post](https://dscottraynsford.wordpress.com/2017/08/05/persistent-storage-in-azure-container-instances/) on running Azure Container Instance containers with persistent storage, I thought I'd try a couple of other containers with [my script](https://dscottraynsford.wordpress.com/2017/08/05/persistent-storage-in-azure-container-instances/).

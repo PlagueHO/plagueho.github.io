@@ -4,6 +4,7 @@ date: 2015-09-08
 description: "A quick tip about the $Switch variable in PowerShell."
 tags:
   - "powershell"
+isArchived: true
 ---
 
 I just spent the last hour bashing my head against my keyboard trying to figure out what I had done wrong in one of my scripts.

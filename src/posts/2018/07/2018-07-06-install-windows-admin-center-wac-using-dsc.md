@@ -7,6 +7,7 @@ tags:
   - "dsc"
   - "windows-admin-center"
 image: "/assets/images/screenshots/ss_wacdsc_overview.png"
+isArchived: true
 ---
 
 [Windows Admin Center (WAC)](https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/understand/windows-admin-center) is a locally deployed, browser-based app for managing servers, clusters, hyper-converged infrastructure, and Windows 10 PCs. It was previously known as **Project Honolulu**.

@@ -6,6 +6,7 @@ tags:
   - "visual-studio-code"
   - "powershell"
 image: "/assets/images/screenshots/ss_vscode_powershell.png"
+isArchived: true
 ---
 
 I feel like my birthday has come early: Microsoft has added [PowerShell language support in Visual Studio Code](http://blogs.msdn.com/b/powershell/archive/2015/11/17/announcing-windows-powershell-for-visual-studio-code-and-more.aspx):

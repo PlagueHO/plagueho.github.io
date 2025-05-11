@@ -6,6 +6,7 @@ tags:
   - "certificate-services"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 I am a firm believer in the concept of [Infrastructure as Code](http://devops.com/2014/05/05/meet-infrastructure-code/). I do think technologies such as [Chef](https://www.chef.io/) and [Windows PowerShell Desired State Configuration (DSC)](https://technet.microsoft.com/en-us/library/dn249912.aspx) will eventually replace 'clickety-click' administration in medium to large environments, and even some smaller sites. If you're not familiar with these technologies or concepts I'd strongly recommend you take a look at the above links.

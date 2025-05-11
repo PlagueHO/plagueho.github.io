@@ -7,6 +7,7 @@ tags:
   - "ws-management"
   - "group-policy"
   - "powershell"
+isArchived: true
 ---
 
 ## Introduction

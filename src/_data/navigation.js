@@ -14,7 +14,7 @@ export default {
     },
     {
       text: 'Communities',
-      url: '/Communities/'
+      url: '/communities/'
     },
     {
       text: 'About',

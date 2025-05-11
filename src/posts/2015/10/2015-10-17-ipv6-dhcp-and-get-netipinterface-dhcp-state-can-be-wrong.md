@@ -6,6 +6,7 @@ tags:
   - "dhcp"
   - "ipv6"
   - "powershell"
+isArchived: true
 ---
 
 Recently I've been attempting to help out with the awesome Microsoft Community DSC Resources by throwing in a bit of code here and there - especially into the [xNetworking](https://github.com/PowerShell/xNetworking) resource. I started contributing to them because I had a need for some specific features in these resources for some other projects I was working on.

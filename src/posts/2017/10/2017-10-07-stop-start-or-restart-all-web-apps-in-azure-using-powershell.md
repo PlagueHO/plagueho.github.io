@@ -7,6 +7,7 @@ tags:
   - "powershell"
   - "webapp"
 coverImage: "/assets/images/screenshots/ss_azurecloudshell_restartallwebapps.png"
+isArchived: true
 ---
 
 Here is a short (and sometimes handy) single line of PowerShell code that can be used to **restart** all the Azure Web Apps in a subscription:

@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "distributed-file-system"
   - "powershell"
+isArchived: true
 ---
 
 ### Introduction

@@ -5,6 +5,7 @@ description: "A look at the Markdown preview feature in Visual Studio Code."
 tags:
   - "visual-studio-code"
 image: "/assets/images/screenshots/ss_vscode_previewbutton.png"
+isArchived: true
 ---
 
 I used to keep around a copy of [Markdown Pad](http://markdownpad.com/) to enable me to preview any [markdown](https://guides.github.com/features/mastering-markdown/) files I created. However, after an update to a **Awesomium** **SDK** Markdown Pad stopped working. I reported the issue but it hasn't been resolved yet.

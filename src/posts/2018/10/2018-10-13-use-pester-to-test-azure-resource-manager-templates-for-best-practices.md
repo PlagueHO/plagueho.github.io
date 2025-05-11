@@ -7,6 +7,7 @@ tags:
   - "powershell"
   - "azsk"
   - "pester"
+isArchived: true
 ---
 
 Recently I came across the amazing [Secure DevOps Kit for Azure (AzSK)](https://azure.microsoft.com/en-gb/resources/videos/azure-friday-getting-started-with-the-secure-devops-kit-for-azure-azsk/). This contains a really useful [AzSK PowerShell Module](https://www.powershellgallery.com/packages/AzSK) that contains cmdlets for performing different types of security scanning on Azure Resources, Subscriptions, and Resource Manager Templates.

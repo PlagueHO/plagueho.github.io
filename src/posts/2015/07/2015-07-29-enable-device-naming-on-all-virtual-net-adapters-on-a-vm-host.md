@@ -5,6 +5,7 @@ description: "Enable Device Naming on all Virtual Net Adapters on a VM Host"
 tags: 
   - "hyper-v"
   - "powershell"
+isArchived: true
 ---
 
 After a couple of bumps upgrading my development laptop to Windows 10, I finally got to update all my Hyper-V lab VMs to the new version of Hyper-V. This included updating the **Virtual Machine Configuration** version and enabling virtual network adapter **Device Naming** \- see [What's new in Hyper-V in Technical Preview](https://technet.microsoft.com/en-nz/library/dn765471.aspx) for more information.

@@ -5,6 +5,7 @@ description: "Replace NETSH TRACE START with PowerShell"
 tags: 
   - "netsh"
   - "powershell"
+isArchived: true
 ---
 
 Recently as part of studying for my MCSA I have been using Message Analyzer to look at Kerberos exchanges (among other things). Yes, I really know how to party! I usually did this by starting the trace on the KDC (DC) using the good old command:

@@ -6,6 +6,7 @@ tags:
   - "containers"
   - "windows-server-nano"
   - "powershell"
+isArchived: true
 ---
 
 Just a Monday-morning quickie:

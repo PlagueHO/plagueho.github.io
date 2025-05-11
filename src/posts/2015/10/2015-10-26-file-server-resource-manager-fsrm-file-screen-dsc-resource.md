@@ -8,6 +8,7 @@ tags:
   - "dsc"
   - "file-screen"
   - "fsrm"
+isArchived: true
 ---
 
 ## Introduction

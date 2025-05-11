@@ -5,6 +5,7 @@ description: "How to get the BIOS GUID of a Hyper-V VM from the Host OS using Po
 tags:
   - "hyper-v"
   - "powershell"
+isArchived: true
 ---
 
 I've just spent the last few hours looking into how I can get the BIOS GUID from a Hyper-V VM from inside the Host OS. I needed this so I could use it to pre-stage devices in Windows Deployment Services. I could have used the MAC address of course, but I decided I wanted to use the **BIOS GUID** instead.

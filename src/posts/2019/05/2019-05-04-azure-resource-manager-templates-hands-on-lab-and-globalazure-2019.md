@@ -8,6 +8,7 @@ tags:
   - "azure-resource-manager-templates"
   - "arm-templates"
 image: "/assets/images/blog/aucklandgab2019-armtemplatesworkshop.png"
+isArchived: true
 ---
 
 Recently I helped organize and present at the 2019 [Global Azure Bootcamp](https://global.azurebootcamp.net/) in Auckland. The Global Azure Bootcamp is an huge event run by Azure communities throughout the world all on the same day every year. It is an opportunity for anyone with an interest in Azure to come and learn from experts and presenters and share their knowledge. If you're new to Azure or even if you're an expert it is well worth your time to attend these free events.

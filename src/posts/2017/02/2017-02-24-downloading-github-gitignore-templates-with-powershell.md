@@ -5,6 +5,7 @@ description: "Downloading GitHub .GitIgnore templates with PowerShell"
 tags:
   - "powershell"
   - "github"
+isArchived: true
 ---
 
 This will be a relatively short post today to get be back into the blogging rhythm. Most of my time has been spent of late working on the DSC Resource Kit adding [code coverage reporting](https://codecov.io/gh/PlagueHO/xNetworking/) and new xCertificate features.

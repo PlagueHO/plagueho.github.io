@@ -4,6 +4,7 @@ date: 2015-11-10
 description: "A quick PowerShell snippet to check if a variable has not been declared."
 tags: 
   - "powershell"
+isArchived: true
 ---
 
 In most situations in PowerShell, I am really only interested if a variable has a value or not (e.g. not null). Checking for this is easy:

@@ -7,6 +7,7 @@ tags:
   - "azure-cli-2-0"
   - "powershell"
 image: "/assets/images/screenshots/ss_azurecli_installnightlybuild.png"
+isArchived: true
 ---
 
 The [Azure PowerShell cmdlets](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?view=azurermps-4.4.0) are really first class if you're wanting to manage Azure with PowerShell. However, they don't always support the very latest Azure components and features. For example, at the time of writing this there is no Azure PowerShell module for managing [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/).

@@ -9,6 +9,7 @@ tags:
   - "powershell"
   - "azure-api-management"
 image: "/assets/images/screenshots/ss_apim_gitrepositoryclone.png"
+isArchived: true
 ---
 
 One of the many great features of [Azure API Management](https://azure.microsoft.com/en-us/services/api-management/) is the fact that it has a built in **Git repository** for storing the **current configuration** as well as **publishing new configurations**.

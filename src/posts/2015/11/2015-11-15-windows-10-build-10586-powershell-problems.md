@@ -9,6 +9,7 @@ tags:
   - "powershell"
   - "powershell-direct"
 image: "/assets/images/screenshots/ss_powershell_version10586.png"
+isArchived: true
 ---
 
 ## PowerShell Direct Broken

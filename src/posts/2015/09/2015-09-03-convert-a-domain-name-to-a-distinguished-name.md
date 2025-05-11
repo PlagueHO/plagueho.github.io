@@ -4,6 +4,7 @@ date: 2015-09-03
 description: "A quick PowerShell snippet to convert a domain name to a distinguished name."
 tags: 
   - "powershell"
+isArchived: true
 ---
 
 Here is a small **PowerShell** snippet to easily convert a domain name (e.g. `corp.bmdlab.com`) to a distinguished name (`DC=corp,DC=bmdlab,DC=com`):

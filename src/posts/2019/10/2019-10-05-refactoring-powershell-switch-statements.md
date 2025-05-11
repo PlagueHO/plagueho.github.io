@@ -6,6 +6,7 @@ tags:
   - "powershell"
   - "refactoring"
   - "switch"
+isArchived: true
 ---
 
 Regardless of your experience within technology, the process of creating code usually starts out with a solution that is just enough to get the job done. The solution is then typically tweaked and improved continuously until it is either "_production worthy_" or "_good enough for the requirements_". This process of improvement is called **refactoring**. Refactoring is a skill that all technical professionals should become proficient in, regardless if you are an IT Pro, a developer or just someone who needs to automate things.

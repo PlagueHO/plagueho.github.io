@@ -6,6 +6,7 @@ tags:
   - "certificate-services"
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 Recently I've been rebuilding my Hyper-V lab environment from scratch (as part of my MCSA/MCSE studying) and decided I would completely script the process using PowerShell only. My goal was to not require a single interactive session with any of the servers to set up the entire environment. This was a multi-site AD environment with several other member servers performing other duties including NPS & NAP, ADCS, WDS, WSUS, ADFS, ADRMS, IIS, DirectAccess, SQL, etc. I also wanted this to include a proper Multi-tier PKI environment with both a standalone Root CA and an Enterprise Subordinate CA (as is recommended by Microsoft).

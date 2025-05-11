@@ -4,6 +4,7 @@ date: 2015-09-07
 description: "A quick PowerShell command to get the IP address of a VM attached to an external switch."
 tags: 
   - "powershell"
+isArchived: true
 ---
 
 My LabBuilder project is coming along nicely and it is building a large lab environment in Hyper-V within a few minutes. However, a problem I ran into was that sometimes the host couldn't connect (using _New-PSSession_ or equivalent) to a Guest VM to _copy files_ or _invoke commands_. This was because I was usually using the computer name to connect to the Guest VM—which won't always work. Instead, I needed to use the **IP address** of the VM's Virtual NIC that is attached to the **External Switch**.

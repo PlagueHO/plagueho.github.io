@@ -7,6 +7,7 @@ tags:
   - "powershell"
   - "cosmosdb"
 image: "/assets/images/screenshots/ss_cosmosdbcors_cosmosdbinportalwithcors.png"
+isArchived: true
 ---
 
 Support for **Cross-Origin Resource Sharing (CORS)** was [recently added](https://azure.microsoft.com/en-us/blog/azure-cosmos-now-supports-cross-origin-resource-sharing-cors/) to Cosmos DB. If you want to enable CORS on an existing Cosmos DB account or create a new Cosmos DB account with CORS enabled it is very easy to do with [Azure Resource Manager](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-cross-origin-resource-sharing#enable-cors-support-from-resource-manager-template) (ARM) templates or the [Azure Portal](https://docs.microsoft.com/en-us/azure/cosmos-db/how-to-configure-cross-origin-resource-sharing#enable-cors-support-from-azure-portal).

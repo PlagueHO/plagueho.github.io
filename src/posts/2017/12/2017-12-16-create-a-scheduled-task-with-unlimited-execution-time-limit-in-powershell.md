@@ -8,6 +8,7 @@ tags:
   - "task-scheduler"
   - "windows-server-2012"
   - "windows-server-2016"
+isArchived: true
 ---
 
 When creating a scheduled task in PowerShell you may wish to set the **Execution Time Limit** of the task to be **unlimited** (no time limit).

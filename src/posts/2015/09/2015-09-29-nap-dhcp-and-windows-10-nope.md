@@ -7,6 +7,7 @@ tags:
   - "nap"
   - "windows-10"
   - "group-policy"
+isArchived: true
 ---
 
 I just spent a good hour trying to figure out why my **Windows 10** clients were not getting assigned an IP Address from my DHCP servers once I enabled _NAP integration on the scope_. The reason, of course, is obvious: [NAP was deprecated in Windows Server 2012 R2](http://windowsitpro.com/blog/3-reasons-why-network-access-protection-being-phased-out).

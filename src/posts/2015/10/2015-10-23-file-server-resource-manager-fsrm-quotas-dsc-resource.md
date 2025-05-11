@@ -8,6 +8,7 @@ tags:
   - "file-server-resource-manager"
   - "quotas"
   - "fsrm"
+isArchived: true
 ---
 
 ### Introduction

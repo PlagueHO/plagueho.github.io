@@ -8,6 +8,7 @@ tags:
   - "powershell"
   - "certificate-services"
 image: "/assets/images/screenshots/ss_readpfx_loadingthepfx.png"
+isArchived: true
 ---
 
 One of the things I've been working on lately is adding a new resource to the [xCertificate DSC Resource module](https://github.com/PowerShell/xCertificate) for exporting an certificate with (or without) the private key from the Windows Certificate Store as a .CER or .PFX file. The very insightful (and fellow DSC Resource maintainer) [@JohanLjunggren](https://twitter.com/johanljunggren) has been giving some really great direction on this new resource.

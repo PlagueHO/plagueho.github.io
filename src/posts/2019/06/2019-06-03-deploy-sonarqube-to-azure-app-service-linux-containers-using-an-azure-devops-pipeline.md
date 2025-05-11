@@ -12,6 +12,7 @@ tags:
   - "containers"
   - "docker"
 image: "/assets/images/screenshots/ss_sonarqube_architecture-1.png"
+isArchived: true
 ---
 
 _Update 2020-10-12: I have updated the [101-webapp-linux-sonarqube-azuresql](https://github.com/Azure/azure-quickstart-templates/pull/8410) Azure Resource Manager quick start template to default to **7.7-community** edition and prevent deployment of versions that aren't currently compatible with Azure App Service Web App Containers._

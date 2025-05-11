@@ -1,10 +1,10 @@
 ---
 layout: base
-title: Blog
+title: 'Neural Flow: Blog'
 description: 'Most recent and relevant blog posts'
 pagination:
   data: collections.livePosts
-  size: 8
+  size: 10
 permalink: 'blog/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
 ---
 
@@ -17,18 +17,20 @@ permalink: 'blog/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber
   </header>
 
   <div class="region flow prose" style="--region-space-top: var(--space-l-2xl)">
-    <p>Check out my other blog posts here.
+    <p>Here are all the recent blog posts I have written. I write about AI, software development and building intelligent systems in the cloud. You can find my older, archived posts <a href="/archive/">here</a>.</p>
     </p>
   </div>
 
   <custom-masonry layout="50-50">
 		{% asyncEach item in pagination.items %}
+      {% set headingLevel = "h3" %}
+      {% set headingTextStep = "text-step-0" %}
 			{% include "partials/card-blog.njk" %}
 		{% endeach %}
 	</custom-masonry>
 
   <!-- set collection to paginate -->
-  {% set collectionToPaginate = collections.livePosts %}
+  {% set collectionToPaginate = collections.posts %}
   <!-- set target pagination settings in meta.js -->
   {% set metaKey = "blog" %}
   <!-- if the number of items in the collection is greater than the number of items shown on one page -->

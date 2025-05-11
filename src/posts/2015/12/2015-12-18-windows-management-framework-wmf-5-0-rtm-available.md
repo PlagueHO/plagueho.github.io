@@ -2,6 +2,7 @@
 title: "Windows Management Framework (WMF) 5.0 RTM Available"
 date: 2015-12-18
 description: "Windows Management Framework (WMF) 5.0 RTM is now available for download."
+isArchived: true
 ---
 
 I don't know about you, but I am excited about the release to manufacture of [Windows Management Framework (WMF) 5.0](http://blogs.msdn.com/b/powershell/archive/2015/12/16/windows-management-framework-wmf-5-0-rtm-is-now-available.aspx). It has been a long time coming and I'm hoping this release will resolve the issues I've been having with DSC configurations built on Windows 10 build 10586 (see [this article](/blog/windows-10-build-10586-powershell-problems/)).

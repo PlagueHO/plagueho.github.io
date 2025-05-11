@@ -8,6 +8,7 @@ tags:
   - "powershell"
   - "cosmosdb"
 image: "/assets/images/screenshots/ss_cdb_cosmosdblogo.png"
+isArchived: true
 ---
 
 If you're just getting started with [Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/), you might not have come across [users and permissions in a Cosmos DB database](https://docs.microsoft.com/en-us/azure/cosmos-db/database-security). However, there are certain use cases where managing **users** and **permissions** are necessary. For example, if you're wanting to be able to limit access to a particular resource (e.g. a collection, document, stored procedure) by user.

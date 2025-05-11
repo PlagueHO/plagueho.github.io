@@ -7,6 +7,7 @@ tags:
   - "powershell"
   - "azure-sql-server"
 image: "/assets/images/screenshots/ss_sqlserver_databaseautotuning.png"
+isArchived: true
 ---
 
 One thing I've found with configuring Azure services using automation (e.g. [Azure PowerShell Modules](https://docs.microsoft.com/en-us/powershell/azure/overview), [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authoring-templates)) is that the automation features are a little bit behind the feature set. For example, the Azure PowerShell modules may not yet implement settings for new or preview features. This can be a an issue if you're strictly deploying everything via code (e.g. infrastructure as code). But if you run into a problem like this, all is not lost. So read on for an example of how to solve this issue.

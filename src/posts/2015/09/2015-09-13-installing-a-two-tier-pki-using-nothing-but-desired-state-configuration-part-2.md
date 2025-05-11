@@ -6,6 +6,7 @@ tags:
   - "certificate-services"
   - "desired-state-configuration"
   - "powershell"
+isArchived: true
 ---
 
 Continuing on from yesterday, the goal of this series is show how it is possible to install a two-tier Active Directory Certificate Services environment using only Desired State Configuration. In [Part 1](/blog/installing-a-two-tier-pki-using-nothing-but-desired-state-configuration-part-1/), I covered the basic DSC setup and requirements, the AllNodes hash table and the first part of the Root CA configuration script.

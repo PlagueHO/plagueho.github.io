@@ -5,6 +5,7 @@ description: "A quick tip to prevent template VMs from being booted."
 tags: 
   - "hyper-v"
   - "sysprep"
+isArchived: true
 ---
 
 Here's a quick tip for Wednesday night:

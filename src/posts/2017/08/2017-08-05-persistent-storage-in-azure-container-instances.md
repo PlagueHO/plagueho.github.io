@@ -7,6 +7,7 @@ tags:
   - "gocd"
   - "azure-container-instance"
 image: "/assets/images/screenshots/ss_aci_logo.png"
+isArchived: true
 ---
 
 _**Update 2018-04-26:** At some point Microsoft made a change to the requirements of the ARM template creating the Azure Container Instance. It now requires the Ports to be specified within the container as well as we the container group. I have **improved the ARM template** to meet the current requirements._

@@ -6,6 +6,7 @@ tags:
   - "desired-state-configuration"
   - "ws-management"
   - "powershell"
+isArchived: true
 ---
 
 ### Introduction

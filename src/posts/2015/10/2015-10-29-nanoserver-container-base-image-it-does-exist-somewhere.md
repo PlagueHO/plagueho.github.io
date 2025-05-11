@@ -5,6 +5,7 @@ description: "A really interesting video from Microsoft was just released with M
 categories:
   - "containers"
   - "windows-server-nano"
+isArchived: true
 ---
 
 A really interesting video from Microsoft was just released with Mark Russinovich (CTO of Azure if you don't already know) [demonstrating Windows Server Containers](https://youtu.be/YoA_MMlGPRc). What is really interesting about this demo is that he is demonstrating containers using a **Windows NanoServer Base Image:**

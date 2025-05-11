@@ -8,6 +8,7 @@ tags:
   - "service-principal"
   - "azure-web-app"
 image: "/assets/images/screenshots/ss_webappdeploy_publishazurermwebappproject.png"
+isArchived: true
 ---
 
 ## Introduction

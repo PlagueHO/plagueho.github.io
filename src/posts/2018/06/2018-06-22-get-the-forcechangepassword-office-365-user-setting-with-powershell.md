@@ -8,6 +8,7 @@ tags:
   - "powershell"
   - "office-365"
 image: "/assets/images/screenshots/ss_o365_getforcechangepassword.png"
+isArchived: true
 ---
 
 Recently I was asked by a friend if I knew of a way to get the value of the setting that forces a user to change their password when they next log in to Office 365. The friend wanted to get this value for all users using PowerShell.

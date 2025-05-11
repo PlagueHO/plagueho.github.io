@@ -5,6 +5,7 @@ description: "A quick tip on how to install all DSC resources in a repository."
 tags: 
   - "dsc"
   - "powershell"
+isArchived: true
 ---
 
 Something quick for Friday morning! Are you feeling enthusiastic about DSC? Do you want to **update** or **install** _every DSC resource_ in a repository onto your computer?
