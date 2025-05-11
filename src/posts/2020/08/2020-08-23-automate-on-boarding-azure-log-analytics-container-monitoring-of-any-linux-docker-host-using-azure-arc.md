@@ -7,7 +7,7 @@ tags:
   - "azure-log-analytics"
   - "azure-resource-manager-templates"
   - "docker"
-image: "/assets/images/blog/ss_containermonitoring_infoimage-1.png"
+image: "/assets/images/screenshots/ss_containermonitoring_infoimage-1.png"
 ---
 
 That title is a bit of a mouthful, but this post will show how easy it is to configure a Linux Docker host to be monitored by [Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/overview).
@@ -16,13 +16,13 @@ Azure Monitor can be used to monitor machines that are running in **Azure**, in 
 
 But to make things a lot easier, we're going to set up the Docker host to allow it to be managed in Azure using [Azure Arc](https://docs.microsoft.com/en-us/azure/azure-arc/servers/overview). This will allow Azure Arc to install MMA for us. The Linux Docker host will appear in the Azure portal like other Azure resources:
 
-![](/assets/images/blog/ss_containermonitoring_azurearc.png)
+![](/assets/images/screenshots/ss_containermonitoring_azurearc.png)
 
 Azure Arc managed machines running outside of Azure
 
 We will also add the [Container Monitoring solution](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/containers) to our Azure Monitor Log Analytics workspace. The Container Monitoring solution will set up the Log Analytics workspace to [record telemetry data](https://docs.microsoft.com/en-us/azure/azure-monitor/insights/containers#container-records) from your Linux Docker host and add a **container monitoring dashboard**.
 
-![](/assets/images/blog/ss_containermonitoring_containermonitorsolution.png)
+![](/assets/images/screenshots/ss_containermonitoring_containermonitorsolution.png)
 
 Container Monitoring Solution dashboard in an Azure Monitor Log Analytics Workspace
 
@@ -37,7 +37,7 @@ Once we have completed the configuration of the Docker Host, the following telem
 
 The cost of sending this telemetry to your Azure Monitor Log Analytics workspace will depend on the [volume of data ingested](https://azure.microsoft.com/en-us/pricing/details/monitor/). You can control this by reducing the frequency with which performance counters are transmitted. By default this is sent every 60 seconds. You can configure this through the Log Analytics workspace.
 
-![](/assets/images/blog/ss_containermonitoring_configureperformancecounterfrequency.png)
+![](/assets/images/screenshots/ss_containermonitoring_configureperformancecounterfrequency.png)
 
 Configuring performance counter frequency
 
@@ -65,7 +65,7 @@ We are going to run [this Azure Arc Onboarding script generator PowerShell scrip
    Invoke-WebRequest -Uri https://gist.githubusercontent.com/PlagueHO/64a2fd67489ea22b3ca09cd5bf3a0782/raw/Get-AzureArcOnboardingScript.ps1 -OutFile ~\Get-AzureArcOnboardingScript.ps1
    ```
 
-   ![](/assets/images/blog/ss_containermonitoring_cloudshelldownloadscriptgenerator.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_cloudshelldownloadscriptgenerator.png)
 
 1. Run the script by executing the following command and setting the `TenantId`, `SubscriptionId`, `Location` and `ResourceGroup` parameters:
 
@@ -73,16 +73,16 @@ We are going to run [this Azure Arc Onboarding script generator PowerShell scrip
    ./Get-AzureArcOnboardingScript.ps1 -TenantId '<TENANT ID>' -SubscriptionId '<SUBSCRIPTION ID>' -Location '<LOCATION>' -ResourceGroup '<RESOURCE GROUP>'
    ```
   
-   ![](/assets/images/blog/ss_containermonitoring_cloudshellgeneratescript.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_cloudshellgeneratescript.png)
 
    You will need to [get your Tenant ID from the Azure Portal](https://microsoft.github.io/AzureTipsAndTricks/blog/tip153.html). The **Subscription Id** and **Resource Group** is the subscription and resource group respectively to register the machine in. The **Location** is the Azure region that the machine metadata will be stored.
 1. Copy the script that was produced. We will execute it on any Linux machine we want to onboard.
 1. SSH into the Linux Host and run (paste) the script:
-   ![](/assets/images/blog/ss_containermonitoring_onboardmachinetoarc.gif)
-   ![](/assets/images/blog/ss_containermonitoring_cloudshellonboardedok.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_onboardmachinetoarc.gif)
+   ![](/assets/images/screenshots/ss_containermonitoring_cloudshellonboardedok.png)
    In a real production environment you'd probably automate this process and you'd also need to protect the secrets in the script.
 1. Once the installation is complete, the machine will appear in the Azure Portal in the resource group:
-   ![](/assets/images/blog/ss_containermonitoring_azurearconboarded.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_azurearconboarded.png)
 
 Now that the machine is **onboarded into Azure Arc**, we can use it to install Microsoft Monitoring Agent (MMA) and then run the [microsoft/oms Docker container](https://hub.docker.com/r/microsoft/oms).
 
@@ -157,16 +157,16 @@ Invoke-WebRequest -Uri https://gist.githubusercontent.com/PlagueHO/74c5035543c45
      }
    ```
 
-   ![](/assets/images/blog/ss_containermonitoring_installingmmaextension.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_installingmmaextension.png)
    You can get the `WorkspaceId` and `WorkspaceKey` values by locating your Log Analytics Workspace in the Azure Portal and clicking **Agents Management** in the side bar.
 
     _**Important:** If you're automating this, you'll want to take care not to expose the **Workspace Key**._
 
 1. You can navigate to the **Azure Arc Machine** resource in the **Azure Portal** and select the extension to see that it is "creating". It will take a between 5 and 10 minutes before installation of the extension is **completed**.
 1. Once installation has **completed**, you can navigate to your **Azure Monitor Log Analytics Workspace**, click **Agents Management** in the side bar and select **Linux Agents**. You should notice that the number of agents has increased:
-   ![](/assets/images/blog/ss_containermonitoring_mmaonboarded.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_mmaonboarded.png)
 1. Clicking **Go to logs** will show all **Linux Machines** that Azure Monitor Log Analytics has received a **Heartbeat** from:
-   ![](/assets/images/blog/ss_containermonitoring_loganalyticsheartbeat.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_loganalyticsheartbeat.png)
 
 ## Enable Container Telemetry
 
@@ -202,11 +202,11 @@ The way to automate the installation of this on the host is to again use an ARM 
      }
    ```
 
-   ![](/assets/images/blog/ss_containermonitoring_customscriptcreating-1.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_customscriptcreating-1.png)
 1. After a few minutes installation of the **CustomScript** extension should have completed and should show **Succeeded** in the Azure Portal.
-   ![](/assets/images/blog/ss_containermonitoring_customscriptsucceeded.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_customscriptsucceeded.png)
 1. If you SSH into the Linux Container host and run `sudo docker ps` you will see that the **omsagent** container is running:
-   ![](/assets/images/blog/ss_containermonitoring_omsagentrunning.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_omsagentrunning.png)
 
 The process is now complete and we're getting telemetry from both the host and the containers running on it. We only needed to log into the host initially to onboard it into Azure Arc, but after that all other steps were performed by Azure. We could have performed the onboarding using automation as well and that would be the **recommended** pattern to use in a production environment.
 
@@ -217,9 +217,9 @@ The final (and optional) step is to configure **sample interval** that performan
 1. Open the [Azure Portal](https://portal.azure.com/).
 1. Navigate to your **Azure Monitor Log Analytics Workspace**.
 1. Click **Advanced Settings**:
-   ![](/assets/images/blog/ss_containermonitoring_loganalyticsadvancedsettings.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_loganalyticsadvancedsettings.png)
 1. Select **Data**, then **Linux Performance Counters**:
-   ![](/assets/images/blog/ss_containermonitoring_loganalyticsconfigperf.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_loganalyticsconfigperf.png)
 1. Configure the **Sample Interval** and click **Save**.
 
 The updated counter sample interval will be updated in the Microsoft Monitoring Agent configuration on the host.
@@ -232,8 +232,8 @@ Now that everything is all set up, let's see what it looks like in Azure Monitor
 1. Navigate to your **Azure Monitor Log Analytics Workspace**.
 1. Click **Workspace Summary** in the side bar.
 1. Click **Container Monitoring Solution** in the workspace overview:
-   ![](/assets/images/blog/ss_containermonitoring_loganalyticscontainersolution.png)
+   ![](/assets/images/screenshots/ss_containermonitoring_loganalyticscontainersolution.png)
 1. You can now browse through the Container Monitoring Solution dashboard and see your hosts are being monitored as well as see performance information from your containers:
-   ![](/assets/images/blog/ss_containermonitoring_containermonitoring.gif)
+   ![](/assets/images/screenshots/ss_containermonitoring_containermonitoring.gif)
 
 It really is fairly easy to get set up and once configured will give you much greater visibility over your entire estate, no matter where it is running.

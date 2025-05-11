@@ -14,13 +14,13 @@ I have been spending a bit of time experimenting with loading Nano Server into W
 
 This to some degree depends on the packages that are installed, but with the OEM-Drivers, Storage and Guest packages installed the following modules are available:
 
-[![PowerShell Modules in Nano](/assets/images/blog/ss_nano_listofpowershellmodules.png)](/assets/images/blog/ss_nano_listofpowershellmodules.png)
+[![PowerShell Modules in Nano](/assets/images/screenshots/ss_nano_listofpowershellmodules.png)](/assets/images/screenshots/ss_nano_listofpowershellmodules.png)
 
 As the screenshot above shows, there are a lot of useful modules missing. Even within some of the modules, many of the CmdLets are not available.
 
 For example, in the **Microsoft.PowerShell.Management** module on Windows Server 2012 R2, there are **86** cmdlets available. In Nano Server there are only **38**:
 
-[![List of Cmdlets in Management Module in TP2](/assets/images/blog/ss_nano_listofmanagmentcmdlets.png)](/assets/images/blog/ss_nano_listofmanagmentcmdlets.png)
+[![List of Cmdlets in Management Module in TP2](/assets/images/screenshots/ss_nano_listofmanagmentcmdlets.png)](/assets/images/screenshots/ss_nano_listofmanagmentcmdlets.png)
 
 Obviously, this is only Tech Preview 2, and so will likely change, but it certainly might be the case that some PowerShell scripts won't work on Nano Server and will need to be re-written.
 

@@ -11,7 +11,7 @@ tags:
   - "azure-web-app"
   - "containers"
   - "docker"
-image: "/assets/images/blog/ss_sonarqube_architecture-1.png"
+image: "/assets/images/screenshots/ss_sonarqube_architecture-1.png"
 ---
 
 _Update 2020-10-12: I have updated the [101-webapp-linux-sonarqube-azuresql](https://github.com/Azure/azure-quickstart-templates/pull/8410) Azure Resource Manager quick start template to default to **7.7-community** edition and prevent deployment of versions that aren't currently compatible with Azure App Service Web App Containers._
@@ -26,13 +26,13 @@ This post is not specifically about Sonarqube and how it works. It is intended t
 
 A Sonarqube installation is made up of a web application front end backed by database.
 
-![ss_sonarqube_architecture](/assets/images/blog/ss_sonarqube_architecture-1.png)
+![ss_sonarqube_architecture](/assets/images/screenshots/ss_sonarqube_architecture-1.png)
 
 Sonarqube supports many [different types of databases](https://docs.sonarqube.org/latest/setup/install-server/), but I chose to use [Azure SQL Database](https://azure.microsoft.com/en-in/services/sql-database/). I decided to use Azure SQL Database for the following reasons:
 
 1. It is a **managed service**, so I don't have to worry about patching, securing and looking after SQL servers.
    1. I can **scale** the database performance up and down easily with code. This allows me to balance my performance requirements with the cost to run the server or even dial performance right back at times when the service is not being used.
-   1. I can make use of the new [Azure SQL Database serverless](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-serverless) (spoiler alert: there are still SQL servers). This allows the SQL Database to be **paused** when not being accessed by the Sonarqube front end. It can be used to further reduce costs running Sonarqube by allowing me to delete the front end every night and only pay for the storage costs when developers aren't developing code.![ss_sonarqube_sql_server_serverless](/assets/images/blog/ss_sonarqube_sql_server_serverless.png)
+   1. I can make use of the new [Azure SQL Database serverless](https://docs.microsoft.com/en-us/azure/sql-database/sql-database-serverless) (spoiler alert: there are still SQL servers). This allows the SQL Database to be **paused** when not being accessed by the Sonarqube front end. It can be used to further reduce costs running Sonarqube by allowing me to delete the front end every night and only pay for the storage costs when developers aren't developing code.![ss_sonarqube_sql_server_serverless](/assets/images/screenshots/ss_sonarqube_sql_server_serverless.png)
 
 For the front end web application I decided to use the [Azure Web App for Containers](https://azure.microsoft.com/en-in/services/app-service/containers/) running a Linux container using the official [Sonarqube Docker image](https://hub.docker.com/_/sonarqube/). Because the Sonarqube web application is stateless it is a great target for being able to be delete and recreate from code. The benefits to using Azure Web App for Containers are:
 
@@ -58,7 +58,7 @@ I could have quite easily built the infrastructure manually straight into the Az
 
 There are a number of reasons that I'll list below, but this is the most mature way to deploy applications and services.
 
-![ss_sonarqube_journey_of_an_Azure_professional](/assets/images/blog/ss_sonarqube_journey_of_an_azure_professional.png)
+![ss_sonarqube_journey_of_an_Azure_professional](/assets/images/screenshots/ss_sonarqube_journey_of_an_azure_professional.png)
 
 1. I wanted to define my services using **infrastructure as code** using an [Azure Resource Manager template](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-authoring-templates).
 1. I wanted the infrastructure as code under **version** **control** using [Azure Repos](https://azure.microsoft.com/en-us/services/devops/repos/). I could have easily used GitHub here or one of a number of other Git repositories, but I'm using Azure Repos for simplicity.
@@ -79,7 +79,7 @@ First up we need to have an **Azure DevOps organization**. You can sign up for a
 1. Select **Public** if you want to allow anyone to view your project (they can't contribute or change it). Otherwise leave it as **Private** to make it only visible to you.
 1. Click **Create**.
 
-![ss_sonarqube_createproject](/assets/images/blog/ss_sonarqube_createproject.gif)
+![ss_sonarqube_createproject](/assets/images/screenshots/ss_sonarqube_createproject.gif)
 
 You've now got an **Azure** **Repo** (version control) as well as a place to create **Azure Pipelines** as well as a whole lot of other tools, such as Azure Boards, that we're not going to be using for this project.
 
@@ -88,11 +88,11 @@ You've now got an **Azure** **Repo** (version control) as well as a place to cre
 Next, we need to initialize our repository and then add the **Azure Resource Manager** **(ARM) template** files and the **Azure Pipeline definition** (YAML) file. We're going to be adding all the files to the repository directly in the browser, but if you're comfortable using Git, then I'd suggest using that.
 
 1. Select **Repos** \> **Files** from the nav bar.
-1. Make sure **Add a README** is ticked and click **Initialize**.![ss_sonarqube_initializerepo](/assets/images/blog/ss_sonarqube_initializerepo.gif)
+1. Make sure **Add a README** is ticked and click **Initialize**.![ss_sonarqube_initializerepo](/assets/images/screenshots/ss_sonarqube_initializerepo.gif)
 1. Click the **ellipsis** (...) next to the **repo** name and select **Create a new folder**.
 1. Set the **Folder name** to **infrastructure.** The name matters because the pipeline definition expects to find the ARM template files in that folder.
 1. Enter a **checkin** **comment** of "Added infrastructure folder".
-1. Click **Create**.![ss_sonarqube_createinfrastructurefolder](/assets/images/blog/ss_sonarqube_createinfrastructurefolder.gif)
+1. Click **Create**.![ss_sonarqube_createinfrastructurefolder](/assets/images/screenshots/ss_sonarqube_createinfrastructurefolder.gif)
 1. Once the folder has been created, we need to add two files to it:
     - **sonarqube.json** - The ARM template representing the infrastructure to deploy.
     - **sonarqube.parameters.json** - The ARM template default parameters.
@@ -102,7 +102,7 @@ Next, we need to initialize our repository and then add the **Azure Resource Man
 1. Click the **Browse** button and select the **sonarqube.json** and **sonarqube.parameters.json** files you downloaded.
 1. Set the **Comment** to something like "Added ARM template".
 1. Ensure **Branch name** is set to **master** (it should be if you're following along).
-1. Click **Commit**.![ss_sonarqube_uploadarmtemplate](/assets/images/blog/ss_sonarqube_uploadarmtemplate.gif)
+1. Click **Commit**.![ss_sonarqube_uploadarmtemplate](/assets/images/screenshots/ss_sonarqube_uploadarmtemplate.gif)
 
 We've now got the ARM Template in the repository and under version control. So we can track any changes to them.
 
@@ -116,10 +116,10 @@ Now that we've got a repository we can create our **mulit-stage build pipeline**
 1. Click the **ellipsis (...)** button next to the repository name and select **Upload file(s)**.
 1. Click **Browse** and select the **azure-pipelines.yml** file you dowloaded.
 1. Set the **Comment** to something like "Added Pipeline Defnition".
-1. Click **Commit**.![ss_sonarqube_uploadpipelinefile](/assets/images/blog/ss_sonarqube_uploadpipelinefile.gif)
+1. Click **Commit**.![ss_sonarqube_uploadpipelinefile](/assets/images/screenshots/ss_sonarqube_uploadpipelinefile.gif)
 1. Click **Set up build** button.
 1. **Azure Pipelines** will automatically detect the **azure-pipelines.yml** file in the root of our repository and configure our pipeline.
-1. Click the **Run** button. The build will fail because we haven't yet created the **service connection** called **Sonarqube-Azure** to allow our pipeline to deploy to Azure. We also still still need to configure the **parameters** for the pipeline.![ss_sonarqube_createbuildpipeline](/assets/images/blog/ss_sonarqube_createbuildpipeline.gif)
+1. Click the **Run** button. The build will fail because we haven't yet created the **service connection** called **Sonarqube-Azure** to allow our pipeline to deploy to Azure. We also still still need to configure the **parameters** for the pipeline.![ss_sonarqube_createbuildpipeline](/assets/images/screenshots/ss_sonarqube_createbuildpipeline.gif)
 
 _Note: I'll break down the contents of the **azure-pipelines.yml** at the end of this post so you get a feel for how a **multi-stage build pipeline** can be defined._
 
@@ -140,7 +140,7 @@ _Important: This step assumes you have permissions to create **service connectio
 1. Make sure the **Resource group** box is empty.
 1. Click **OK**.
 1. An authorization box will pop up requesting that you authenticate with the Azure subscription you want to deploy to.
-1. Enter the account details of a user who has **permissions** to create a **Service Principal** with **contributor** access to the **subscription** selected above**.**![ss_sonarqube_createserviceconnection](/assets/images/blog/ss_sonarqube_createserviceconnection-1.gif)
+1. Enter the account details of a user who has **permissions** to create a **Service Principal** with **contributor** access to the **subscription** selected above**.**![ss_sonarqube_createserviceconnection](/assets/images/screenshots/ss_sonarqube_createserviceconnection-1.gif)
 
 You now have a **service connection** to Azure that any build pipeline (including the one we created earlier) in this project can use to deploy services to Azure.
 
@@ -178,7 +178,7 @@ To create your variables:
     - **servicePlanPricingTier** - Set to **S1** for now (you can always change and scale up later).
     - **sqlDatabaseSkuName** \- Set to **GP\_Gen5\_2** for now (you can always change and scale up later). _If you want to use the SQL Serverless database, use **GP\_S\_Gen5\_1**, **GP\_S\_Gen5\_2** or **GP\_S\_Gen5\_4**._
     - **location** \- set to **WestUS2** or whatever the code is for your preferred data center.
-1. You can also click the **Settable at Queue** time box against any of the parameters you want to be able to set when the job is manually queued.![ss_sonarqube_createvariables](/assets/images/blog/ss_sonarqube_createvariables.gif)![ss_sonarqube_variables](/assets/images/blog/ss_sonarqube_variables.png)
+1. You can also click the **Settable at Queue** time box against any of the parameters you want to be able to set when the job is manually queued.![ss_sonarqube_createvariables](/assets/images/screenshots/ss_sonarqube_createvariables.gif)![ss_sonarqube_variables](/assets/images/screenshots/ss_sonarqube_variables.png)
 1. Click the **Save and Queue** button and select **Save**.
 
 We are now ready to deploy our service by triggering the pipeline.
@@ -192,7 +192,7 @@ The most common way an **Azure Pipeline** is going to get **triggered** is by **
 1. Click the **Run pipeline**.
 1. Set any of the variables we want to change (for example if we wanted to scale up our services).
 1. Click **Run**.
-1. You can then watch the **build** and **deploy** stages complete.![ss_sonarqube_runpipeline.gif](/assets/images/blog/ss_sonarqube_runpipeline.gif)
+1. You can then watch the **build** and **deploy** stages complete.![ss_sonarqube_runpipeline.gif](/assets/images/screenshots/ss_sonarqube_runpipeline.gif)
 
 Your **pipeline** should have completed and your resources will be on thier way to being deployed to Azure. You can rerun this pipeline at any time with different variables to scale your services. You could even delete the front end app service completely and use this pipeline to redeploy the service again - saving lots of precious $$$.
 
@@ -203,13 +203,13 @@ You can login to the Azure Portal to see the new resource group and resources th
 1. Open the [Azure portal](https://portal.azure.com) and log in.  
 1. You will see a new resource group named **\[siteName]-rg**.  
 1. Open the **\[siteName]-rg**.  
-   ![ss_sonarqube_resources](/assets/images/blog/ss_sonarqube_resources.png)  
+   ![ss_sonarqube_resources](/assets/images/screenshots/ss_sonarqube_resources.png)  
 1. Select the Web App with the name **\[siteName]**.  
-   ![ss_sonarqube_webapp](/assets/images/blog/ss_sonarqube_webapp.png)  
+   ![ss_sonarqube_webapp](/assets/images/screenshots/ss_sonarqube_webapp.png)  
 1. Click the **URL**.  
 1. Your **Sonarqube** application will open after a few seconds.\
    _Note: It may take a little while to load the first time depending on the performance you configured on your SQL database._  
-   ![ss_sonarqube_theapplication](/assets/images/blog/ss_sonarqube_theapplication.png)  
+   ![ss_sonarqube_theapplication](/assets/images/screenshots/ss_sonarqube_theapplication.png)  
 1. Log in to Sonarqube with the username **admin** and the password **admin**.\
    **Remember to change this password immediately.**
 
@@ -234,49 +234,49 @@ At the time of writing this post, the **Multi-stage Build Pipeline YAML** was re
 
 ### Trigger
 
-![ss_sonarqube_yamltrigger](/assets/images/blog/ss_sonarqube_yamltrigger.png)
+![ss_sonarqube_yamltrigger](/assets/images/screenshots/ss_sonarqube_yamltrigger.png)
 
 This section ensures the pipeline will only be triggered on changes to the **master** branch.
 
 ### Stages
 
-![ss_sonarqube_yamlstages](/assets/images/blog/ss_sonarqube_yamlstages.png)
+![ss_sonarqube_yamlstages](/assets/images/screenshots/ss_sonarqube_yamlstages.png)
 
 This section contains the two stages: **Build** and **Deploy**. We could have as many stages as we like. For example: Build, Deploy Test, Deploy Prod.
 
 ### Build Stage
 
-![ss_sonarqube_yamlbuildstage](/assets/images/blog/ss_sonarqube_yamlbuildstage.png)
+![ss_sonarqube_yamlbuildstage](/assets/images/screenshots/ss_sonarqube_yamlbuildstage.png)
 
 This defines the steps to run in the build stage. It also requires the execution of the stage on an **Azure DevOps** agent in the **vs2017-win2016** pool.
 
 ### Build Stage Checkout Step
 
-![ss_sonarqube_yamlbuildcheckout](/assets/images/blog/ss_sonarqube_yamlbuildcheckout.png)
+![ss_sonarqube_yamlbuildcheckout](/assets/images/screenshots/ss_sonarqube_yamlbuildcheckout.png)
 
 This step causes the **repository** to be checked out onto the **Azure DevOps** agent.
 
 ### Build Stage Publish Artifacts Step
 
-![ss_sonarqube_yamlbuildpublish](/assets/images/blog/ss_sonarqube_yamlbuildpublish.png)
+![ss_sonarqube_yamlbuildpublish](/assets/images/screenshots/ss_sonarqube_yamlbuildpublish.png)
 
 This step takes the **infrastructure** folder from the checked out **repository** and stores it as an artifact that will always be accessible as long as the build record is stored. The artifact will also be made available to the next stage (the **Deploy Stage**). The purpose of this step is to ensure we have an **immutable artifact** available that we could always use to redeploy this exact build.
 
 ### Deploy Stage
 
-![ss_sonarqube_yamldeploystage](/assets/images/blog/ss_sonarqube_yamldeploystage.png)
+![ss_sonarqube_yamldeploystage](/assets/images/screenshots/ss_sonarqube_yamldeploystage.png)
 
 The deploy stage takes the artifact produced in the **build stage** and deploys it. It runs on an Azure DevOps agent in the **vs2017-win2016** pool.
 
 It also specifies that this is a deployment to an environment called "**dev**". This will cause the environment to show up in the **environments** section under **pipelines** in **Azure DevOps**.
 
-![ss_sonarqube_environments.png](/assets/images/blog/ss_sonarqube_environments.png)
+![ss_sonarqube_environments.png](/assets/images/screenshots/ss_sonarqube_environments.png)
 
 The **strategy** and **runOnce** define that this deployment should only execute once each time the pipeline is triggered.
 
 ### Deploy Stage Azure Resource Group Deployment Step
 
-![ss_sonarqube_yamldeploystep](/assets/images/blog/ss_sonarqube_yamldeploystep.png)
+![ss_sonarqube_yamldeploystep](/assets/images/screenshots/ss_sonarqube_yamldeploystep.png)
 
 This deploy step takes the ARM template from the **infrastructure** artifact and deploys it to the **Sonarqube-Azure** Service connection. It overrides the parameters (using the **overrideParameters**) property using **build variables** (e.g. _$(siteName)_, _$(servicePlanCapacity)_).
 

@@ -15,7 +15,7 @@ If you’re looking for instructions on installing and using **containers** on *
 
 These instructions are more focused on setting up a container host on **Windows Server Core TP4**, but I have managed to get them working on **Windows Nano Server TP4** just fine:
 
-![ss_nano_containerhostworking](/assets/images/blog/ss_nano_containerhostworking.png)
+![ss_nano_containerhostworking](/assets/images/screenshots/ss_nano_containerhostworking.png)
 
 I do plan to document this process over the next week or so.
 
@@ -96,7 +96,7 @@ If you try to use the NanoServer.WIM file from the Windows Server 2016 ISO as th
 
 I did try putting the Core WIM file downloaded above onto the Nano Server. I could then create a container OK, but an error would occur starting it up:
 
-[![Nope - can't use the Core WIM with a Nano Server Container Host!](/assets/images/blog/ss_nano_containerfromcore.png)](/assets/images/blog/ss_nano_containerfromcore.png)
+[![Nope - can't use the Core WIM with a Nano Server Container Host!](/assets/images/screenshots/ss_nano_containerfromcore.png)](/assets/images/screenshots/ss_nano_containerfromcore.png)
 Nope - can't use the Core WIM with a Nano Server Container Host!
 
 **Update 2015-10-29:** There is a new video available online from Microsoft of Mark Russinovich (Azure CTO) doing a container demonstration using a Nano Server. It clearly shows that the **NanoServer Base Container Image** does exist. So perhaps we'll see this in the **TP4** release.

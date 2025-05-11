@@ -21,7 +21,7 @@ This article has had a lot more attention than I ever expected! This has brought
 
 Recently I've been playing around with the new Hyper-V Nested Virtualization feature within Windows 10 (build 10565 and greater) and Windows Server 2016. It is pretty cool to be able to create virtualized lab environments containing Hyper-V clusters. But what if we want a lab that contains VMWare ESXi Hypervisors running on a Hyper-V host? I couldn't find the process documented anywhere and couldn't even confirm if it should be possible. But after asking a lot of annoying questions—thanks [Adam Burns](https://nz.linkedin.com/in/adam-burns-b8307664)—Googling, and hair-pulling, I managed to get it going:
 
-![ss_vmwareinhv_proof](/assets/images/blog/ss_vmwareinhv_proof.png)
+![ss_vmwareinhv_proof](/assets/images/screenshots/ss_vmwareinhv_proof.png)
 
 So this seems like a good topic for a blog post.
 
@@ -39,7 +39,7 @@ I suggest you download all of the above items to a working folder—I called min
 
 You should end up with a folder containing these files:
 
-![ss_vmwareinhv_neededfiles](/assets/images/blog/ss_vmwareinhv_neededfiles.png)
+![ss_vmwareinhv_neededfiles](/assets/images/screenshots/ss_vmwareinhv_neededfiles.png)
 
 And before you ask: No, you don't need a VMWare ESXi 6.0 ISO—this will get downloaded and produced for us.
 
@@ -60,40 +60,40 @@ The biggest problem I ran into when trying to install ESXi onto Hyper-V was that
 
 1. After a few minutes, the VMWare ESXi 6.0 ISO will be downloaded, and the "net-tulip" drivers merged with it:
 
-![ss_vmwareinhv_createesxiiso](/assets/images/blog/ss_vmwareinhv_createesxiiso.png)
+![ss_vmwareinhv_createesxiiso](/assets/images/screenshots/ss_vmwareinhv_createesxiiso.png)
 
 The ISO will now be available in the `D:\ESX-In-Hyper-V` folder:
 
-![ss_vmwareinhv_neededfilesandiso](/assets/images/blog/ss_vmwareinhv_neededfilesandiso.png)
+![ss_vmwareinhv_neededfilesandiso](/assets/images/screenshots/ss_vmwareinhv_neededfilesandiso.png)
 
 ### Part 2 - Create the Hyper-V VM
 
 1. In **Hyper-V Manager**, create a new Virtual Machine:  
-   ![ss_vmwareinhv_newvmpath](/assets/images/blog/ss_vmwareinhv_newvmpath.png)
+   ![ss_vmwareinhv_newvmpath](/assets/images/screenshots/ss_vmwareinhv_newvmpath.png)
 1. Click **Next**.
 1. Select **Generation 1** and click **Next**.
 1. Set the **Startup Memory** to at least **4096MB**.
 1. Uncheck **Use Dynamic Memory for this Virtual Machine:**  
-   ![ss_vmwareinhv_newvmmemory](/assets/images/blog/ss_vmwareinhv_newvmmemory.png)
+   ![ss_vmwareinhv_newvmmemory](/assets/images/screenshots/ss_vmwareinhv_newvmmemory.png)
 1. Click **Next**.
 1. Don't bother to **Configure Networking** on the next step—just click **Next**.
 1. Select **Create a new virtual hard disk** and set the **Size** to **10GB** (this is just going to be the boot disk for the ESXi Hypervisor):  
-   ![ss_vmwareinhv_newvmdisk](/assets/images/blog/ss_vmwareinhv_newvmdisk.png)
+   ![ss_vmwareinhv_newvmdisk](/assets/images/screenshots/ss_vmwareinhv_newvmdisk.png)
 1. Click **Next**.
 1. Select **Install an operating system from a bootable CD/DVD-ROM**.
 1. Select **Image file (.iso)** and browse to the **ISO** created in **Part 1**:  
-   ![ss_vmwareinhv_newvminstallation](/assets/images/blog/ss_vmwareinhv_newvminstallation.png)
+   ![ss_vmwareinhv_newvminstallation](/assets/images/screenshots/ss_vmwareinhv_newvminstallation.png)
 1. Click **Next**, then click **Finish** to create the Virtual Machine:  
-   ![ss_vmwareinhv_newvm](/assets/images/blog/ss_vmwareinhv_newvm.png)
+   ![ss_vmwareinhv_newvm](/assets/images/screenshots/ss_vmwareinhv_newvm.png)
 1. Right-click the new **Virtual Machine** and select **Settings.**
 1. Select the **Processor** node and increase the **Number of Virtual Processors** to **at least 2**:  
-   ![ss_vmwareinhv_vmsettings_processor](/assets/images/blog/ss_vmwareinhv_vmsettings_processor.png)
+   ![ss_vmwareinhv_vmsettings_processor](/assets/images/screenshots/ss_vmwareinhv_vmsettings_processor.png)
 1. Select the existing **Network Adapter** node and click **Remove:**  
-   ![ss_vmwareinhv_vmsettings_removenetwork](/assets/images/blog/ss_vmwareinhv_vmsettings_removenetwork.png)
+   ![ss_vmwareinhv_vmsettings_removenetwork](/assets/images/screenshots/ss_vmwareinhv_vmsettings_removenetwork.png)
 1. Select the **Add Hardware** node and select **Legacy Network Adapter**:  
-   ![ss_vmwareinhv_vmsettings_addnetwork](/assets/images/blog/ss_vmwareinhv_vmsettings_addnetwork.png)
+   ![ss_vmwareinhv_vmsettings_addnetwork](/assets/images/screenshots/ss_vmwareinhv_vmsettings_addnetwork.png)
 1. Click **Add**:  
-   ![ss_vmwareinhv_vmsettings_addlegacy](/assets/images/blog/ss_vmwareinhv_vmsettings_addlegacy.png)
+   ![ss_vmwareinhv_vmsettings_addlegacy](/assets/images/screenshots/ss_vmwareinhv_vmsettings_addlegacy.png)
 1. Select a **Virtual Switch** to connect the **ESXi Host** to.
 1. Click **OK**.
 

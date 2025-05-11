@@ -8,12 +8,12 @@ tags:
   - "git"
   - "powershell"
   - "azure-api-management"
-image: "/assets/images/blog/ss_apim_gitrepositoryclone.png"
+image: "/assets/images/screenshots/ss_apim_gitrepositoryclone.png"
 ---
 
 One of the many great features of [Azure API Management](https://azure.microsoft.com/en-us/services/api-management/) is the fact that it has a built in **Git repository** for storing the **current configuration** as well as **publishing new configurations**.
 
-![ss_apim_gitrepository](/assets/images/blog/ss_apim_gitrepository.png)
+![ss_apim_gitrepository](/assets/images/screenshots/ss_apim_gitrepository.png)
 
 This allows you to **push** updated Azure API Management configurations to this **internal Git repository** as a **new branch** and then **Deploy the configuration to API Management**.
 
@@ -23,7 +23,7 @@ This allows you to **push** updated Azure API Management configurations to this 
 
 To access the **Internal Git Repository** requires **short lived** (30 days maximum) Git credentials to be generated. This is fairly easy through the Azure API Management portal:
 
-![ss_apim_gitrepositorygeneratecreds](/assets/images/blog/ss_apim_gitrepositorygeneratecreds.png)
+![ss_apim_gitrepositorygeneratecreds](/assets/images/screenshots/ss_apim_gitrepositorygeneratecreds.png)
 
 Unfortunately using the portal to get these credentials is a manual process and so would not be so good for an automated delivery process (e.g. CI/CD). You'd need to update these Git credentials in your CI/CD automation system every time they expired (every 30 days).
 
@@ -78,7 +78,7 @@ You can also optionally supply which of the two _internal API Management keys_, 
   -ExpiryTimespan '4:00:00'
 ```
 
-![ss_apim_gitrepositoryinvoke](/assets/images/blog/ss_apim_gitrepositoryinvoke.png)
+![ss_apim_gitrepositoryinvoke](/assets/images/screenshots/ss_apim_gitrepositoryinvoke.png)
 
 The script will return an object containing the properties **GitUsername** and **GitPassword** that can be provided to Git when cloning the **internal Git repository**.
 
@@ -88,7 +88,7 @@ In the example above I generated an **internal Git Credential** using the **Prim
 
 Typically you'd assign the output of this script to a variable and use the properties to generate the URL to pass into the Git Clone. For example:
 
-![ss_apim_gitrepositoryclone](/assets/images/blog/ss_apim_gitrepositoryclone.png)
+![ss_apim_gitrepositoryclone](/assets/images/screenshots/ss_apim_gitrepositoryclone.png)
 
 ## Tips
 

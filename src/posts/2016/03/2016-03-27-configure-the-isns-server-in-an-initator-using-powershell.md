@@ -12,7 +12,7 @@ This will just be a very quick post today.
 
 Configuring an **iSCSI Initiator** to use an **iSNS Server** is fairly easy using the iSCSI configuration utility:
 
-![ss_isns_guiinitiatorconfig](/assets/images/blog/ss_isns_guiinitiatorconfig.png)
+![ss_isns_guiinitiatorconfig](/assets/images/screenshots/ss_isns_guiinitiatorconfig.png)
 
 But lets face it, that's no fun and it really doesn't fit well when when we have to configure 10's or 100's of initiators or we're using **Server Core**. Not to mention that this is something we'd really want to do with **Desired State Configuration**. Besides, this is a PowerShell blog.
 
@@ -45,7 +45,7 @@ Get-WmiObject `
   -Namespace root\wmi
 ```
 
-![ss_isns_getlistservers](/assets/images/blog/ss_isns_getlistservers.png)
+![ss_isns_getlistservers](/assets/images/screenshots/ss_isns_getlistservers.png)
 
 And if you need to remove an **iSNS Server** from the **iSCSI Initiator**:
 

@@ -38,7 +38,7 @@ If you have **WMF 5.0** installed (or have installed the [PowerShell Package Mod
 Find-Module -Tag DSC
 ```
 
-![ss_powershell_findmoduletagdsc](/assets/images/blog/ss_powershell_findmoduletagdsc.png)
+![ss_powershell_findmoduletagdsc](/assets/images/screenshots/ss_powershell_findmoduletagdsc.png)
 
 > [!NOTE]
 > This will only find modules tagged with **DSC**. Some resources may not be tagged with this so they will not appear in this search. Therefore you may need to tweak the search.

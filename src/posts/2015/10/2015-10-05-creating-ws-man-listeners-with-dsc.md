@@ -14,7 +14,7 @@ After my last post showing [how to create an SSL/HTTPS listener using GPO](https
 
 You might ask "what is the point of adding HTTPS/SSL WS-Man Listeners when HTTP WS-Man Listeners are usually enabled by default"? Well, first off, it ensures you're going to be connecting to the server you actually think you're connecting to. This is pretty important and helps protect against _DNS poisoning_ and _man-in-the-middle_ attacks. It also means you don't have to set the WS-Man client trusted hosts setting on your client machines to bypass host name checking for your servers:
 
-[![No more of this!](/assets/images/blog/ss_wsman_nomoretrustedhosts.png)](/assets/images/blog/ss_wsman_nomoretrustedhosts.png)
+[![No more of this!](/assets/images/screenshots/ss_wsman_nomoretrustedhosts.png)](/assets/images/screenshots/ss_wsman_nomoretrustedhosts.png)
 No more of this!
 
 ### HTTPS/SSL and Certificates

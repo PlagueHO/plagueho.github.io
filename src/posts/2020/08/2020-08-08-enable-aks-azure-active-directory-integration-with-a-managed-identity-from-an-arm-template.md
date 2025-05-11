@@ -6,7 +6,7 @@ tags:
   - "aks"
   - "azure"
   - "azure-kubernetes-service"
-image: "/assets/images/blog/ss_aksaadintegration_aadprofile.png"
+image: "/assets/images/screenshots/ss_aksaadintegration_aadprofile.png"
 ---
 
 When you're deploying an Azure Kubernetes Service (AKS) cluster in Azure, it is common that you'll want to integrate it into Azure Active Directory (AAD) to use it as an authentication provider.
@@ -25,11 +25,11 @@ You can easily do this integration by running PowerShell or Bash scripts, but if
        -MailNickname "AksClusterAdmin").Id
    ```
 
-   ![ss_aksaadintegration_createaadgroup](/assets/images/blog/ss_aksaadintegration_createaadgroup.png)
+   ![ss_aksaadintegration_createaadgroup](/assets/images/screenshots/ss_aksaadintegration_createaadgroup.png)
 
    This will return the object Id for the newly create group in the variable `$clusterAdminGroupObjectIds`. You will need to pass this variable into your ARM template.
 1. You need to add an `aadProfile` block into the `properties` of your AKS cluster deployment definition:
-   ![](/assets/images/blog/ss_aksaadintegration_aadprofile.png)
+   ![](/assets/images/screenshots/ss_aksaadintegration_aadprofile.png)
    For example:
 
     ```json

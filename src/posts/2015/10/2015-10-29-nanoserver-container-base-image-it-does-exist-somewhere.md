@@ -9,7 +9,7 @@ categories:
 
 A really interesting video from Microsoft was just released with Mark Russinovich (CTO of Azure if you don't already know) [demonstrating Windows Server Containers](https://youtu.be/YoA_MMlGPRc). What is really interesting about this demo is that he is demonstrating containers using a **Windows NanoServer Base Image:**
 
-[![Nano Server Containers Base Image - it does exist.](/assets/images/blog/ss_video_nanoservercontainers.png)](/assets/images/blog/ss_video_nanoservercontainers.png)  
+[![Nano Server Containers Base Image - it does exist.](/assets/images/screenshots/ss_video_nanoservercontainers.png)](/assets/images/screenshots/ss_video_nanoservercontainers.png)  
 Nano Server Containers Base Image - it does exist.
 
 If you've read any of my previous posts [here](https://dscottraynsford.wordpress.com/2015/08/26/how-to-use-containers-on-windows-nano-server/) and [here](https://dscottraynsford.wordpress.com/2015/08/27/docker-and-containers-on-nano-server-continued/) you'll know I spent quite some time looking at this and trying to get it going with TP3. I deduced it was not possible yet without the Windows **NanoServer Base Image for containers** - which had not been provided by Microsoft.

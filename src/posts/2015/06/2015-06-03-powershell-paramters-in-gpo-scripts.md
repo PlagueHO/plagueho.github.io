@@ -11,7 +11,7 @@ tags:
 
 This morning I decided I wanted to update all my lab servers to Windows Management Framework 5.0 so I could do some work on the new DSC features that come with it. To do this, I thought I'd use a GPO with a startup PowerShell script that would perform the installation of the WMF 5.0 April hotfix (available [here](https://www.microsoft.com/en-us/download/details.aspx?id=46889 "Windows Management Framework 5.0 Preview April 2015")).
 
-[![A GPO Startup PowerShell script with parameters.](/assets/images/blog/ss_gpo_startuppowershellscriptparametersexample.png)](/assets/images/blog/ss_gpo_startuppowershellscriptparametersexample.png)
+[![A GPO Startup PowerShell script with parameters.](/assets/images/screenshots/ss_gpo_startuppowershellscriptparametersexample.png)](/assets/images/screenshots/ss_gpo_startuppowershellscriptparametersexample.png)
 A GPO Startup PowerShell script with parameters.
 
 On thinking about this I decided it might also be a good idea to modify the PowerShell script designed to install Microsoft Office 2013 products via GPO (see the post [here](https://dscottraynsford.wordpress.com/2015/04/06/using-powershell-to-installuninstall-microsoft-office-products-by-group-policy/ "Using PowerShell to Install/Uninstall Microsoft Office Products by Group Policy")). After producing the new scripts and testing them by manually running them to ensure they worked correctly, I put them into some GPOs.  And that is when things started to go wrong!

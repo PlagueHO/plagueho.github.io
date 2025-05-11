@@ -18,23 +18,23 @@ Unfortunately though, this time it didn't work. When I attempted to start the Do
 
 start-service : Failed to start service 'Docker Engine (docker)'.
 
-![ss_docker_startserviceerror](/assets/images/blog/ss_docker_startserviceerror.png)
+![ss_docker_startserviceerror](/assets/images/screenshots/ss_docker_startserviceerror.png)
 
 So, after a bit of digging around I found the following error in the **Windows Event Log** in the **Application** logs:
 
-![ss_docker_startserviceerror_eventlog](/assets/images/blog/ss_docker_startserviceerror_eventlog.png)
+![ss_docker_startserviceerror_eventlog](/assets/images/screenshots/ss_docker_startserviceerror_eventlog.png)
 
 Basically what this was telling me was that the Docker Daemon couldn't create the new virtual network adapter that it needed - because it already existed. So a quick run of **Get-NetAdapter** and I found that the docker adapter "vEthernet (HNS Internal)" already existed:
 
-![ss_docker_startserviceerror_eventlog](/assets/images/blog/ss_docker_startserviceerror_eventlog.png)
+![ss_docker_startserviceerror_eventlog](/assets/images/screenshots/ss_docker_startserviceerror_eventlog.png)
 
 So what I needed to do was **uninstall** this adapter so that the **Docker Service** could recreate it. I'm not actually aware of a **command line** method of doing (except for using [DevCon](https://chocolatey.org/packages/devcon.portable)) so I had to resort to using **Device Manager**:
 
-![ss_docker_startservice_uninstalldevice](/assets/images/blog/ss_docker_startservice_uninstalldevice.png)
+![ss_docker_startservice_uninstalldevice](/assets/images/screenshots/ss_docker_startservice_uninstalldevice.png)
 
 You'll need to use the output of the **Get-NetAdapter** to find he right adapter **uninstall**. Once it has been uninstalled you should be able to start the service again:
 
-![ss_docker_startservice_dockerstarts](/assets/images/blog/ss_docker_startservice_dockerstarts.png)
+![ss_docker_startservice_dockerstarts](/assets/images/screenshots/ss_docker_startservice_dockerstarts.png)
 
 This time the service should start successfully. A quick call to **docker ps** shows that the container service is indeed working. So now I can get onto the process pulling down the **base container images**.
 

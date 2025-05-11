@@ -21,10 +21,10 @@ The following command will remove the binaries for any non-installed features on
 Get-WindowsFeature | Where-Object -FilterScript { $_.InstallState -eq 'Available' } | Remove-WindowsFeature -Remove
 ```
 
-![Features on Demand Removal Progress](/assets/images/blog/ss_psfeaturesondemandremovalprogress.png)
+![Features on Demand Removal Progress](/assets/images/screenshots/ss_psfeaturesondemandremovalprogress.png)
 Features on Demand Removal Progress
 
-![Features on Demand Removal Complete](/assets/images/blog/ss_psfeaturesondemandremovalcomplete.png)
+![Features on Demand Removal Complete](/assets/images/screenshots/ss_psfeaturesondemandremovalcomplete.png)
 Features on Demand Removal Complete
 
 After you've run this command, you'll need to have your Windows install source available if you want to install any additional features. You might also need to specify an alternate source location when installing any future features. For more information on installing Windows features from an alternate source, see this article on TechNet:

@@ -17,7 +17,7 @@ Last week I decided I needed to get to know the new features that come with DSC 
 
 After downloading the .MSU file for installing WMF 5.0 from Microsoft I decided that WSUS would be the proper way to get this out to all my machines. Nope. Wrong! WSUS only supports pushing updates that appear in the [Microsoft Update Catalogue (looking for Windows Management Framework)](http://catalog.update.microsoft.com/v7/site/Search.aspx?q=Windows%20Management%20Framework) - but no update packages greater than Windows Management Frameworks 2.0 are available in the catalogue:
 
-[caption id="attachment\_205" align="alignnone" width="660"\][![Where is PowerShell 5.0? Or 4.0? Or 3.0?](/assets/images/blog/ss_microsoft_update_catalogue_windows_management_framework.png)](/assets/images/blog/ss_microsoft_update_catalogue_windows_management_framework.png)
+[caption id="attachment\_205" align="alignnone" width="660"\][![Where is PowerShell 5.0? Or 4.0? Or 3.0?](/assets/images/screenshots/ss_microsoft_update_catalogue_windows_management_framework.png)](/assets/images/screenshots/ss_microsoft_update_catalogue_windows_management_framework.png)
 Where is PowerShell 5.0? Or 4.0? Or 3.0?
 
 As an aside after doing a bit of reading on the reason for this it appears that updating to later versions of PS can cause problems with some applications and so it is kept as a manual process.
@@ -73,10 +73,10 @@ Before getting started, I strongly suggest you read my post about the problems e
 
 1. Download the [PowerShell Scripts to Install Application (EXE) or Update (MSU) using GPO](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-to-Install-70009e38) from Microsoft Script Center.
 1. Download the MSU/EXE update file and put it in a shared folder all of your machines can get to. I used _\\\\plague-pdc\\Software$\\Updates\\WindowsBlue-KB3055381-x64.msu_
-1. Create a new GPO that will be used to install the update - I called mine _Install WMF 5.0 Policy_:[![New Policy](/assets/images/blog/ss_gpo_installwmf5.png)](/assets/images/blog/ss_gpo_installwmf5.png)
-1. Locate the **Startup** setting under _Computer Configuration/Policies/Windows Settings/Scripts_:[![The Startup Script of a Computer GPO.](/assets/images/blog/ss_gpo_installwmf5_startup.png)](/assets/images/blog/ss_gpo_installwmf5_startup.png)
-1. Double click the **Startup** item to edit the scripts and select the **PowerShell** **Scripts** tab: [![Setting the Startup PowerShell Scripts](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts.png)](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts.png)
-1. Click the **Show Files** button and copy the **Install-Update.ps1** file that was in the zip file downloaded from Microsoft Script Center into this location:[![GPO Folder containing script](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts_folder.png)](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts_folder.png)
+1. Create a new GPO that will be used to install the update - I called mine _Install WMF 5.0 Policy_:[![New Policy](/assets/images/screenshots/ss_gpo_installwmf5.png)](/assets/images/screenshots/ss_gpo_installwmf5.png)
+1. Locate the **Startup** setting under _Computer Configuration/Policies/Windows Settings/Scripts_:[![The Startup Script of a Computer GPO.](/assets/images/screenshots/ss_gpo_installwmf5_startup.png)](/assets/images/screenshots/ss_gpo_installwmf5_startup.png)
+1. Double click the **Startup** item to edit the scripts and select the **PowerShell** **Scripts** tab: [![Setting the Startup PowerShell Scripts](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts.png)](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts.png)
+1. Click the **Show Files** button and copy the **Install-Update.ps1** file that was in the zip file downloaded from Microsoft Script Center into this location:[![GPO Folder containing script](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts_folder.png)](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts_folder.png)
 1. Close the folder and go back to the **Startup Properties** window and click the **Add** button.
 1. Set the **Script Name** to _Install-Update.ps1_.
 1. Set the **Script Parameters** to be the following (customized the **bold** sections to your environment):
@@ -88,7 +88,7 @@ Before getting started, I strongly suggest you read my post about the problems e
     > [!NOTE]
     > You can leave off the -LogPath parameter if you don't want to create logs stating if the update was installed correctly on each machine.
 
-    [![Add the script and parameters](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts_details.png)](/assets/images/blog/ss_gpo_installwmf5_startuppsscripts_details.png)
+    [![Add the script and parameters](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts_details.png)](/assets/images/screenshots/ss_gpo_installwmf5_startuppsscripts_details.png)
 1. Click **OK**.
 1. Click **OK** on the **Startup Properties** window.
 1. Close the **GPME** window and assign the policy to whichever OUs you want to try WMF 5.0 out on.

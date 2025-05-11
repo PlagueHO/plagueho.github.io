@@ -5,7 +5,7 @@ description: "Running Sonatype Nexus 2 and 3 containers with persistent storage 
 tags:
   - "azure"
   - "azure-container-instance"
-image: "/assets/images/blog/ss_aci_sonatypenexus3.png"
+image: "/assets/images/screenshots/ss_aci_sonatypenexus3.png"
 ---
 
 On the [back of yesterdays post](https://dscottraynsford.wordpress.com/2017/08/05/persistent-storage-in-azure-container-instances/) on running Azure Container Instance containers with persistent storage, I thought I'd try a couple of other containers with [my script](https://dscottraynsford.wordpress.com/2017/08/05/persistent-storage-in-azure-container-instances/).
@@ -25,7 +25,7 @@ And here are the results of my tests:
 
 Works perfectly and the container starts up quickly (under 10 seconds):
 
-![ss_aci_sonatypenexus2](/assets/images/blog/ss_aci_sonatypenexus2.png)
+![ss_aci_sonatypenexus2](/assets/images/screenshots/ss_aci_sonatypenexus2.png)
 
 I passed the following parameters to the script:
 
@@ -50,7 +50,7 @@ _**Note: The Nexus 2 server is only accessible on the path /nexus/.**_
 
 Works perfectly but after takes at least a minute to be accessible after the container starts. But this is normal behavior for Nexus 3.
 
-![ss_aci_sonatypenexus3](/assets/images/blog/ss_aci_sonatypenexus3.png)
+![ss_aci_sonatypenexus3](/assets/images/screenshots/ss_aci_sonatypenexus3.png)
 
 I passed the following parameters to the script:
 
@@ -73,7 +73,7 @@ I passed the following parameters to the script:
 
 Unfortunately Jenkins does not work with a persistent storage volume from an Azure Share. It seems to be trying to set the timestamp of the file that will contain the InitialAdminPassword, which is failing:
 
-![ss_aci_jenkins](/assets/images/blog/ss_aci_jenkins.png)
+![ss_aci_jenkins](/assets/images/screenshots/ss_aci_jenkins.png)
 
 I passed the following parameters to the script:
 

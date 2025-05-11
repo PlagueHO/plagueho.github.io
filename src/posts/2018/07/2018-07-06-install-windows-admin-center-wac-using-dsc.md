@@ -6,12 +6,12 @@ tags:
   - "azure-dsc"
   - "dsc"
   - "windows-admin-center"
-image: "/assets/images/blog/ss_wacdsc_overview.png"
+image: "/assets/images/screenshots/ss_wacdsc_overview.png"
 ---
 
 [Windows Admin Center (WAC)](https://docs.microsoft.com/en-us/windows-server/manage/windows-admin-center/understand/windows-admin-center) is a locally deployed, browser-based app for managing servers, clusters, hyper-converged infrastructure, and Windows 10 PCs. It was previously known as **Project Honolulu**.
 
-![ss_wacdsc_overview](/assets/images/blog/ss_wacdsc_overview.png)
+![ss_wacdsc_overview](/assets/images/screenshots/ss_wacdsc_overview.png)
 
 WAC really shines when being used to manage headless Windows Servers (e.g., Windows Server Core). The [benefits of deploying Windows Server Core](https://cloudblogs.microsoft.com/windowsserver/2018/07/05/server-core-and-server-with-desktop-which-one-is-best-for-you/) are huge, but it can be a bit daunting to system administrators that have only used the Windows GUI experience to manage servers.
 
@@ -64,7 +64,7 @@ WindowsAdminCenter
 Start-DscConfiguration -Path .\WindowsAdminCenter\ -ComputerName localhost -Wait -Verbose
 ```
 
-![ss_wacdsc_defaultport](/assets/images/blog/ss_wacdsc_defaultport.png)
+![ss_wacdsc_defaultport](/assets/images/screenshots/ss_wacdsc_defaultport.png)
 
 You can run this on a Windows Server Core machine by logging in and typing **powershell** to start a PowerShell console, then entering the commands above.
 
@@ -78,7 +78,7 @@ WindowsAdminCenter -Port 4000 -Thumbprint 'fddfec2150b2a1c0d1166debffdbed1d55798
 Start-DscConfiguration -Path .\WindowsAdminCenter\ -ComputerName localhost -Wait -Verbose
 ```
 
-![ss_wacdsc_installwiththumbprint](/assets/images/blog/ss_wacdsc_installwiththumbprint.png)
+![ss_wacdsc_installwiththumbprint](/assets/images/screenshots/ss_wacdsc_installwiththumbprint.png)
 
 This DSC configuration can also be used on Virtual Machines deployed to Azure, using either the [Azure DSC Extension Handler](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/dsc-overview) or an [Azure Automation DSC Pull Server](https://docs.microsoft.com/en-us/azure/automation/automation-dsc-overview).
 

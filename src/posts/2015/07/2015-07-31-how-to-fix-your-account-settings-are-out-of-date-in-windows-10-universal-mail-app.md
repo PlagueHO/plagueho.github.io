@@ -26,7 +26,7 @@ My Gmail account worked fine in the Mail app as well and my outlook account also
         Remove-AppxPackage
     ```
 
-    ![Uninstall the Windows 10 Universal Mail and Calendar App](/assets/images/blog/ss_powershell_uninstallcomms.png)
+    ![Uninstall the Windows 10 Universal Mail and Calendar App](/assets/images/screenshots/ss_powershell_uninstallcomms.png)
 
 1. **@Stephen** suggests restarting your computer at this point.  
 1. **Delete** the **%LOCALAPPDATA%\Comms\\** folder (back it up first if you want):
@@ -35,12 +35,12 @@ My Gmail account worked fine in the Mail app as well and my outlook account also
     Remove-Item -Path "$Home\AppData\Local\Comms" -Recurse -Force
     ```
 
-    ![Deleting the Comms folder – some files can't be deleted; this is OK](/assets/images/blog/ss_powershell_uninstallcommsdeletefiles.png)
+    ![Deleting the Comms folder – some files can't be deleted; this is OK](/assets/images/screenshots/ss_powershell_uninstallcommsdeletefiles.png)
 
     _Note: you’ll probably find that some files are in use and can’t be deleted – this is OK._
 
 1. Reinstall the [**Windows 10 Universal Mail and Calendar app**](http://apps.microsoft.com/webpdp/app/64a79953-cf0b-44f9-b5c4-ee5df3a15c63) from the Microsoft Store.  
-    ![Reinstall the Windows 10 Universal Mail and Calendar app from the Windows Store](/assets/images/blog/ss_powershell_reinstallcomms.png)
+    ![Reinstall the Windows 10 Universal Mail and Calendar app from the Windows Store](/assets/images/screenshots/ss_powershell_reinstallcomms.png)
 
 Once this had all been done I loaded the Mail up and it asked me to configure all my mail accounts again (and authorize them with the providers). After this the error message had gone away and all my accounts worked normally. I did also however have to re-enter my credentials for both Google Drive and One Drive.
 

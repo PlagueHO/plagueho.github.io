@@ -7,7 +7,7 @@ tags:
   - "docker"
   - "dsc"
   - "windows-server-2016"
-image: "/assets/images/blog/ss_dockerdsc_installing.png"
+image: "/assets/images/screenshots/ss_dockerdsc_installing.png"
 ---
 
 Windows Server 2016 is now GA and it contains some pretty exciting stuff. Chief among them for me is support for containers by way of [Docker](http://www.docker.com/). So, one of the first things I did was start installing Windows Server 2016 VM's (Server Core and Nano Server naturally) and installing Docker on them so I could begin experimenting with Docker Swarms and other cool stuff.
@@ -18,7 +18,7 @@ At first I started using the [standard manual instructions](https://blog.docker.
 
 So, what I did was put together a basic DSC config that I could load into a DSC Pull Server and build out lots of Docker nodes quickly and easily. This worked really nicely for me to build out lots of Windows Server 2016 Container hosts in very short order:
 
-![ss_dockerdsc_installing](/assets/images/blog/ss_dockerdsc_installing.png)
+![ss_dockerdsc_installing](/assets/images/screenshots/ss_dockerdsc_installing.png)
 
 If you don't have a DSC Pull server or you just want a simple script that you can use to quickly configure a Windows Server 2016 (Core or Core with GUI only) then read on.
 
@@ -33,7 +33,7 @@ _**Edit: After a suggestion from Michael Friis ([@friism](https://twitter.com/fr
 On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core with GUI** server:
 
 1. Log on as a user with **Local Administrator** privileges.
-1. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/assets/images/blog/ss_dockerdsc_console.png)
+1. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/assets/images/screenshots/ss_dockerdsc_console.png)
 1. Install the **Install-DockerOnWS2016UsingDSC.ps1** script from the PowerShell Gallery using this command: 
 
     ```powershell
@@ -41,18 +41,18 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
     ```
 
     _You may be asked to confirm installation of these modules, answer yes to any confirmations._
-    ![ss_dockerdsc_consolegetscript](/assets/images/blog/ss_dockerdsc_consolegetscript.png)
+    ![ss_dockerdsc_consolegetscript](/assets/images/screenshots/ss_dockerdsc_consolegetscript.png)
 1. Run the **Install-DockerOnWS2016UsingDSC.ps1** script using:
 
     ```powershell
     Install-DockerOnWs2016UsingDSC.ps1
     ```
 
-    ![ss_dockerdsc_consolerunscriptfromgallery](/assets/images/blog/ss_dockerdsc_consolerunscriptfromgallery.png)
+    ![ss_dockerdsc_consolerunscriptfromgallery](/assets/images/screenshots/ss_dockerdsc_consolerunscriptfromgallery.png)
 
 The script will run and reboot the server once. Not long after the reboot the Docker service will start up and you can get working with containers:
 
-![ss_dockerdsc_consoledockerdetails](/assets/images/blog/ss_dockerdsc_consoledockerdetails.png)
+![ss_dockerdsc_consoledockerdetails](/assets/images/screenshots/ss_dockerdsc_consoledockerdetails.png)
 
 You're now ready to start working with Containers.
 
@@ -61,7 +61,7 @@ You're now ready to start working with Containers.
 On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core with GUI** server:
 
 1. Log on as a user with **Local Administrator** privileges.
-1. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/assets/images/blog/ss_dockerdsc_console.png)
+1. Start an **Administrator PowerShell** console - if you're using Server Core just enter **PowerShell** at the command prompt:![ss_dockerdsc_console](/assets/images/screenshots/ss_dockerdsc_console.png)
 1. **Install the DSC Resources** required for the DSC configuration by executing these commands: 
 
     ```powershell
@@ -70,7 +70,7 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
     ```
 
     _You may be asked to confirm installation of these modules, answer yes to any confirmations._
-    ![ss_dockerdsc_consoleinstallresources](/assets/images/blog/ss_dockerdsc_consoleinstallresources.png)
+    ![ss_dockerdsc_consoleinstallresources](/assets/images/screenshots/ss_dockerdsc_consoleinstallresources.png)
 
 1. **Download the Docker installation DSC script** by executing this command: 
 
@@ -78,7 +78,7 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
     Invoke-WebRequest -Uri 'https://gist.githubusercontent.com/PlagueHO/d9595cae1788f436b97bd4c90d50d72e/raw/1146baa2b1e0c8b3869004074b4c97bf71ce9c3c/Install-DockerOnWS2016ByDSC.ps1' -OutFile 'Install-DockerOnWS2016ByDSC.ps1'
     ```
 
-    ![ss_dockerdsc_consoledownloadscript](/assets/images/blog/ss_dockerdsc_consoledownloadscript.png)
+    ![ss_dockerdsc_consoledownloadscript](/assets/images/screenshots/ss_dockerdsc_consoledownloadscript.png)
 
 1. **Run the Docker installation DSC script** by executing this command: 
 
@@ -86,11 +86,11 @@ On a **Windows Server 2016 Server Core** or **Windows Server 2016 Server Core wi
     .\Install-DockerOnWS2016ByDSC.ps1
     ```
 
-    ![ss_dockerdsc_consolerunscript](/assets/images/blog/ss_dockerdsc_consolerunscript.png)
+    ![ss_dockerdsc_consolerunscript](/assets/images/screenshots/ss_dockerdsc_consolerunscript.png)
 
 The script will run and reboot the server once. Not long after the reboot the Docker service will start up and you can get working with containers:
 
-![ss_dockerdsc_consoledockerdetails](/assets/images/blog/ss_dockerdsc_consoledockerdetails.png)
+![ss_dockerdsc_consoledockerdetails](/assets/images/screenshots/ss_dockerdsc_consoledockerdetails.png)
 
 You're now ready to start working with Containers.
 

@@ -74,7 +74,7 @@ For every **DSC Resource** in your **DSC Resource Module**, you should ensure th
 
 You should place all tests inside a **Tests** folder in the root of your **DSC Module** folder:
 
-![Test Folders](/assets/images/blog/ss_dsc_testfolders.png)
+![Test Folders](/assets/images/screenshots/ss_dsc_testfolders.png)
 
 **Unit** tests should be placed in a **Unit** folder within **Tests**, and ... I'm sure you get where I'm going here.
 

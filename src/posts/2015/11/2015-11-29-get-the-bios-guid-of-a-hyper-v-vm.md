@@ -18,6 +18,6 @@ $VMName = 'My VM'
 
 It uses WMI/CIM, but does seem to work nicely (don't forget to set the name of the VM):
 
-![ss_ps_getbiosguid](/assets/images/blog/ss_ps_getbiosguid.png)
+![ss_ps_getbiosguid](/assets/images/screenshots/ss_ps_getbiosguid.png)
 
 Good night!

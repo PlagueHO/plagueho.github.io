@@ -19,7 +19,7 @@ As a side note - I wonder why Microsoft doesn't support installing Office 2013 p
 
 These PowerShell scripts accept parameters that allow key elements of the installation process (product, source folder, config file, log file location) to be specified in the GPO Script parameters themselves:
 
-![GPO PowerShell Startup Script](/assets/images/blog/ss_gpo_startupscript_ps_install_msoffice.png)
+![GPO PowerShell Startup Script](/assets/images/screenshots/ss_gpo_startupscript_ps_install_msoffice.png)
 
 For example, to install a copy of Microsoft Office 2013 Pro Plus from the `\\server\software$\Office15.ProPlus\` share using the file `\\server\software$\Office15.ProPlus\ProPlus.ww\SilentInstall.xml` to control the configuration, the following parameters could be used:
 
@@ -32,26 +32,26 @@ The full script parameters are documented in the PowerShell scripts as well as o
 ## Creating a GPO using the PowerShell Scripts
 
 1. In Group Policy Management Console, create a new GPO:  
-   ![Create a new GPO](/assets/images/blog/ss_gpmc_new_gpo.png)
+   ![Create a new GPO](/assets/images/screenshots/ss_gpmc_new_gpo.png)
 1. Enter a name for the installation policy and click **OK**:  
-   ![Enter GPO name](/assets/images/blog/ss_gpmc_new_gpo_name.png)
+   ![Enter GPO name](/assets/images/screenshots/ss_gpmc_new_gpo_name.png)
 1. Right-click on the new policy and select **Edit**:  
-   ![Edit GPO](/assets/images/blog/ss_gpmc_gpo_edit.png)
+   ![Edit GPO](/assets/images/screenshots/ss_gpmc_gpo_edit.png)
 1. Select the **Computer Configuration\Policies\Windows Settings\Scripts (Startup/Shutdown)** node:  
-   ![Edit Startup Script](/assets/images/blog/ss_gpmc_edit_startup_script.png)
+   ![Edit Startup Script](/assets/images/screenshots/ss_gpmc_edit_startup_script.png)
 1. Double-click the **Startup** item:  
-   ![Startup Properties](/assets/images/blog/ss_gpmc_startup_properties_scripts.png)
+   ![Startup Properties](/assets/images/screenshots/ss_gpmc_startup_properties_scripts.png)
 1. Select the **PowerShell Scripts** tab:  
-   ![PowerShell Scripts Tab](/assets/images/blog/ss_gpmc_startup_powershell_scripts.png)
+   ![PowerShell Scripts Tab](/assets/images/screenshots/ss_gpmc_startup_powershell_scripts.png)
 1. Click **Add** to add a new startup script:  
-   ![Add PowerShell Script](/assets/images/blog/ss_gpmc_startup_powershell_addascript.png)
+   ![Add PowerShell Script](/assets/images/screenshots/ss_gpmc_startup_powershell_addascript.png)
 1. Click the **Browse** button to locate the folder where the policy scripts should be stored:  
-   ![Script Location](/assets/images/blog/ss_gpmc_startup_scripts_location.png)
+   ![Script Location](/assets/images/screenshots/ss_gpmc_startup_scripts_location.png)
 1. Copy the PowerShell scripts downloaded from the [Microsoft Script Repository](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-to-InstallUninst-0536b17b "PowerShell Scripts to Install/Uninstall Office 2013 products using GPO") into this folder and select the one that should be used with this policy.
 1. Enter the PowerShell script parameters into the **Script Parameters** box:  
-   ![Script Parameters](/assets/images/blog/ss_gpmc_startup_powershell_script_properties.png)
+   ![Script Parameters](/assets/images/screenshots/ss_gpmc_startup_powershell_script_properties.png)
 1. Click **OK** to save the PowerShell startup script:  
-   ![Configured Scripts](/assets/images/blog/ss_gpmc_startup_powershell_scrpts_configured.png)
+   ![Configured Scripts](/assets/images/screenshots/ss_gpmc_startup_powershell_scrpts_configured.png)
 1. Click **OK** to save the Startup Properties.
 1. Close the GPME and apply the new GPO.
 

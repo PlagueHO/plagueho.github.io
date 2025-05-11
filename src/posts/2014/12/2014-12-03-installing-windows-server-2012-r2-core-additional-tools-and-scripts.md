@@ -16,7 +16,7 @@ Although Windows Server Core is a great way of ending up with a slim and trim di
 
 `SConfig.exe` is a built-in command-line tool (with a simple command-line GUI) that allows you to perform some simple configuration tasks on your core installation.
 
-![SConfig.exe](/assets/images/blog/ss_sconfig1.png)
+![SConfig.exe](/assets/images/screenshots/ss_sconfig1.png)
 
 Some of the functions include:
 
@@ -37,7 +37,7 @@ When installing a new copy of one of the Windows Server Core versions, it's quit
 
 [Corefig](https://corefig.codeplex.com/ "Corefig for Windows Server 2012 Core and Hyper-V Server 2012") allows you to configure some of the main settings of a Windows Server Core installation as well as installing updates and Windows features and roles.
 
-![Corefig PowerShell Application](/assets/images/blog/ss_corefig1.png)
+![Corefig PowerShell Application](/assets/images/screenshots/ss_corefig1.png)
 
 ### Windows Update PowerShell Module
 

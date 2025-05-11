@@ -8,7 +8,7 @@ tags:
   - "powershell"
   - "ssl"
   - "testing"
-image: "/assets/images/blog/ss_chrome_certificateok.png"
+image: "/assets/images/screenshots/ss_chrome_certificateok.png"
 ---
 
 One of the most **common problems** that our teams deal with is ensuring that **SSL certificates** are **working correctly**. We've all had that urgent call in telling us that the web site is down or some key API or authentication function is offline - only to find out it was caused by an expired certificate.
@@ -244,7 +244,7 @@ Invoke-Pester
 
 This is the result:
 
-![ss_testssl_pesteroutput](/assets/images/blog/ss_testssl_pesteroutput.png)
+![ss_testssl_pesteroutput](/assets/images/screenshots/ss_testssl_pesteroutput.png)
 
 This shows that all the SSL endpoint certificates being used by google.com, bing.com and yahoo.com are all valid SHA-256 certificates and aren't going to expire in 14 days.
 

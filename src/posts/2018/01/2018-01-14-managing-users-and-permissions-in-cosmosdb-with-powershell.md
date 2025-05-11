@@ -7,7 +7,7 @@ tags:
   - "documentdb"
   - "powershell"
   - "cosmosdb"
-image: "/assets/images/blog/ss_cdb_cosmosdblogo.png"
+image: "/assets/images/screenshots/ss_cdb_cosmosdblogo.png"
 ---
 
 If you're just getting started with [Cosmos DB](https://docs.microsoft.com/en-us/azure/cosmos-db/), you might not have come across [users and permissions in a Cosmos DB database](https://docs.microsoft.com/en-us/azure/cosmos-db/database-security). However, there are certain use cases where managing **users** and **permissions** are necessary. For example, if you're wanting to be able to limit access to a particular resource (e.g. a collection, document, stored procedure) by user.
@@ -19,7 +19,7 @@ The most common usage scenario for users and permissions is if you're implementi
 
 But if you go hunting through the Azure Management Portal **Cosmos DB data explorer** (or [Azure Storage Explorer](https://azure.microsoft.com/en-us/features/storage-explorer/)) you won't find any way to configure or even view **users** and **permissions**.
 
-![ss_cdb_cosmosdbdataexplorer](/assets/images/blog/ss_cdb_cosmosdbdataexplorer.png)
+![ss_cdb_cosmosdbdataexplorer](/assets/images/screenshots/ss_cdb_cosmosdbdataexplorer.png)
 
 To manage **users** and **permissions** you need to use the [Cosmos DB API](https://docs.microsoft.com/en-us/rest/api/documentdb/users) directly or one of the [SDKs](https://docs.microsoft.com/en-us/azure/cosmos-db/sql-api-sdk-dotnet).
 
@@ -40,7 +40,7 @@ The best way to install the [Cosmos DB PowerShell module](https://www.powershell
 Install-Module -Name CosmosDB -Scope CurrentUser
 ```
 
-![ss_cdb_cosmosdbinstallmodulecurrentuser](/assets/images/blog/ss_cdb_cosmosdbinstallmodulecurrentuser.png)
+![ss_cdb_cosmosdbinstallmodulecurrentuser](/assets/images/screenshots/ss_cdb_cosmosdbinstallmodulecurrentuser.png)
 
 Or to install it for all users on the machine (requires administrator permissions):
 
@@ -49,7 +49,7 @@ Or to install it for all users on the machine (requires administrator permission
 Install-Module -Name CosmosDB
 ```
 
-![ss_cdb_cosmosdbinstallmoduleallusers](/assets/images/blog/ss_cdb_cosmosdbinstallmoduleallusers.png)
+![ss_cdb_cosmosdbinstallmoduleallusers](/assets/images/screenshots/ss_cdb_cosmosdbinstallmoduleallusers.png)
 
 ## Context Variable
 
@@ -74,7 +74,7 @@ $key = ConvertTo-SecureString -String 'this is your master key, get it from the 
 $context = New-CosmosDbContext -Account $account -Database $database -Key $key
 ```
 
-![ss_cdb_cosmosdbnewconnection](/assets/images/blog/ss_cdb_cosmosdbnewconnection.png)
+![ss_cdb_cosmosdbnewconnection](/assets/images/screenshots/ss_cdb_cosmosdbnewconnection.png)
 
 If you do not wish to specify your **master key**, you can have the **New-CosmosDbContext** function pull your **master key** from the **Azure Management Portal** directly:
 
@@ -86,7 +86,7 @@ $resourceGroup = 'MyCosmosDBResourceGroup'
 $context = New-CosmosDbContext -Account $account -Database $database -ResourceGroup $resourceGroup
 ```
 
-![ss_cdb_cosmosdbnewconnectionviaportal](/assets/images/blog/ss_cdb_cosmosdbnewconnectionviaportal.png)
+![ss_cdb_cosmosdbnewconnectionviaportal](/assets/images/screenshots/ss_cdb_cosmosdbnewconnectionviaportal.png)
 
 _Note: This requires the **AzureRM.Profile** and **AzureRM.Resources** module on **Windows PowerShell 5.x** or **AzureRM.Profile.NetCore** and **AzureRM.Resources.NetCore** on **PowerShell Core 6.0.0**._
 
@@ -98,7 +98,7 @@ To **add a user** to the Cosmos DB Database use the **New-CosmosDbUser** functio
 New-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
-![ss_cdb_cosmosdbnewuser](/assets/images/blog/ss_cdb_cosmosdbnewuser.png)
+![ss_cdb_cosmosdbnewuser](/assets/images/screenshots/ss_cdb_cosmosdbnewuser.png)
 
 To **get a list of users** in the database:
 
@@ -106,7 +106,7 @@ To **get a list of users** in the database:
 Get-CosmosDbUser -Context $context
 ```
 
-![ss_cdb_cosmosdbgetusers](/assets/images/blog/ss_cdb_cosmosdbgetusers.png)
+![ss_cdb_cosmosdbgetusers](/assets/images/screenshots/ss_cdb_cosmosdbgetusers.png)
 
 To **get a specific** user:
 
@@ -114,7 +114,7 @@ To **get a specific** user:
 Get-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
-![ss_cdb_cosmosdbgetuser](/assets/images/blog/ss_cdb_cosmosdbgetuser1.png)
+![ss_cdb_cosmosdbgetuser](/assets/images/screenshots/ss_cdb_cosmosdbgetuser1.png)
 
 To **remove a user** (this will also remove all permissions assigned to the user):
 
@@ -122,7 +122,7 @@ To **remove a user** (this will also remove all permissions assigned to the user
 Remove-CosmosDbUser -Context $context -Id 'daniel'
 ```
 
-![ss_cdb_cosmosdbremoveuser](/assets/images/blog/ss_cdb_cosmosdbremoveuser.png)
+![ss_cdb_cosmosdbremoveuser](/assets/images/screenshots/ss_cdb_cosmosdbremoveuser.png)
 
 ## Managing Permissions
 
@@ -143,7 +143,7 @@ $resourcePath = Get-CosmosDbCollectionResourcePath -Database 'TestDatabase' -Id 
 New-CosmosDbPermission -Context $context -Id 'AccessTestCollection' -UserId $userId -PermissionMode All -Resource $resourcePath
 ```
 
-![ss_cdb_cosmosdbnewpermission](/assets/images/blog/ss_cdb_cosmosdbnewpermission.png)
+![ss_cdb_cosmosdbnewpermission](/assets/images/screenshots/ss_cdb_cosmosdbnewpermission.png)
 
 Once a **permission** has been **granted**, you can use the **Get-CosmosDbPermission** function to retrieve the permission _and with it_ the **Resource Token** that can be used to access the resource for a limited amount of time (between 10 minutes and 5 hours).
 
@@ -156,7 +156,7 @@ Get-CosmosDbPermission -Context $context -UserId 'daniel' -TokenExpiry '600' |
     Format-List *
 ```
 
-![ss_cdb_cosmosdbgetpermission](/assets/images/blog/ss_cdb_cosmosdbgetpermission.png)
+![ss_cdb_cosmosdbgetpermission](/assets/images/screenshots/ss_cdb_cosmosdbgetpermission.png)
 
 You can as expected delete a permission by using the **Remove-CosmosDbPermission** function:
 
@@ -164,7 +164,7 @@ You can as expected delete a permission by using the **Remove-CosmosDbPermission
 Remove-CosmosDbPermission -Context $context -UserId 'daniel' -Id 'AccessTestCollection'
 ```
 
-![ss_cdb_cosmosdbremovepermission](/assets/images/blog/ss_cdb_cosmosdbremovepermission.png)
+![ss_cdb_cosmosdbremovepermission](/assets/images/screenshots/ss_cdb_cosmosdbremovepermission.png)
 
 ## Final Thoughts
 

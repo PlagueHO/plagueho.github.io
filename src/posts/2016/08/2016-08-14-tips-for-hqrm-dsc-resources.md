@@ -6,7 +6,7 @@ tags:
   - "dsc"
   - "hqrm"
   - "powershell"
-image: "/assets/images/blog/ss_hqrmreview_codeofconductgood.png"
+image: "/assets/images/screenshots/ss_hqrmreview_codeofconductgood.png"
 ---
 
 I've spent a fair amount of time recently working on getting some of my DSC Resources ([SystemLocaleDsc](https://github.com/PlagueHO/SystemLocaleDsc), [WSManDsc](https://github.com/PlagueHO/WSManDsc), [iSCSIDsc](https://github.com/PlagueHO/iSCSIDsc) and [FSRMDsc](https://github.com/PlagueHO/FSRMDsc)) accepted into the **[Microsoft DSC Community Resource Kit](https://github.com/PowerShell/DscResources)**. Some are nearly there (SystemLocaleDsc and WSManDsc), whereas others have a way to go yet.
@@ -31,11 +31,11 @@ Every function (public or private) within the DSC resource module must contain a
 
 This will get rejected:
 
-![ss_hqrmreview_gethelpbad](/assets/images/blog/ss_hqrmreview_gethelpbad.png)
+![ss_hqrmreview_gethelpbad](/assets/images/screenshots/ss_hqrmreview_gethelpbad.png)
 
 This is good:
 
-![ss_hqrmreview_gethelpgood](/assets/images/blog/ss_hqrmreview_gethelpgood.png)
+![ss_hqrmreview_gethelpgood](/assets/images/screenshots/ss_hqrmreview_gethelpgood.png)
 
 ### Examples Missing Explanation
 
@@ -43,11 +43,11 @@ All examples in the **Examples** folder and the **Readme.md** must contain an ex
 
 This is bad:
 
-![ss_hqrmreview_exampledescriptionbad](/assets/images/blog/ss_hqrmreview_exampledescriptionbad.png)
+![ss_hqrmreview_exampledescriptionbad](/assets/images/screenshots/ss_hqrmreview_exampledescriptionbad.png)
 
 This is good:
 
-![ss_hqrmreview_exampledescriptiongood](/assets/images/blog/ss_hqrmreview_exampledescriptiongood.png)
+![ss_hqrmreview_exampledescriptiongood](/assets/images/screenshots/ss_hqrmreview_exampledescriptiongood.png)
 
 ### Old or Incorrect Unit/Integration Test Headers
 
@@ -57,11 +57,11 @@ _This is probably the hardest thing to get right if you're not paying close atte
 
 This is bad:
 
-![ss_hqrmreview_testheaderbad](/assets/images/blog/ss_hqrmreview_testheaderbad.png)
+![ss_hqrmreview_testheaderbad](/assets/images/screenshots/ss_hqrmreview_testheaderbad.png)
 
 This is good:
 
-![ss_hqrmreview_testheadergood](/assets/images/blog/ss_hqrmreview_testheadergood.png)
+![ss_hqrmreview_testheadergood](/assets/images/screenshots/ss_hqrmreview_testheadergood.png)
 
 ### Incorrect Capitalization of Local Variables
 
@@ -71,11 +71,11 @@ _Note: this is for local variables. Parameter names should start with Uppercase.
 
 This is bad:
 
-![ss_hqrmreview_localparameterbad](/assets/images/blog/ss_hqrmreview_localparameterbad.png)
+![ss_hqrmreview_localparameterbad](/assets/images/screenshots/ss_hqrmreview_localparameterbad.png)
 
 This is good:
 
-![ss_hqrmreview_localparametergood](/assets/images/blog/ss_hqrmreview_localparametergood.png)
+![ss_hqrmreview_localparametergood](/assets/images/screenshots/ss_hqrmreview_localparametergood.png)
 
 ### Spaces around = in Localization Files
 
@@ -83,11 +83,11 @@ In any localization files you should make sure there is a space on either side o
 
 This is bad:
 
-![ss_hqrmreview_localizationbad.png](/assets/images/blog/ss_hqrmreview_localizationbad.png)
+![ss_hqrmreview_localizationbad.png](/assets/images/screenshots/ss_hqrmreview_localizationbad.png)
 
 This is good:
 
-![ss_hqrmreview_localizationgood](/assets/images/blog/ss_hqrmreview_localizationgood.png)
+![ss_hqrmreview_localizationgood](/assets/images/screenshots/ss_hqrmreview_localizationgood.png)
 
 ### Missing code of Conduct in Readme.md
 
@@ -98,11 +98,11 @@ For more information see the [Code of Conduct FAQ](https://opensource.microsoft.
 
 This is bad:
 
-![ss_hqrmreview_codeofconductbad](/assets/images/blog/ss_hqrmreview_codeofconductbad.png)
+![ss_hqrmreview_codeofconductbad](/assets/images/screenshots/ss_hqrmreview_codeofconductbad.png)
 
 This is good:
 
-![ss_hqrmreview_codeofconductgood](/assets/images/blog/ss_hqrmreview_codeofconductgood.png)
+![ss_hqrmreview_codeofconductgood](/assets/images/screenshots/ss_hqrmreview_codeofconductgood.png)
 
 ### Missing Localization file indent
 
@@ -110,11 +110,11 @@ All strings in localization files should be indented.
 
 This is bad:
 
-![ss_hqrmreview_localizationdatabad](/assets/images/blog/ss_hqrmreview_localizationdatabad.png)
+![ss_hqrmreview_localizationdatabad](/assets/images/screenshots/ss_hqrmreview_localizationdatabad.png)
 
 This is good:
 
-### ![ss_hqrmreview_localizationdatagood](/assets/images/blog/ss_hqrmreview_localizationdatagood.png)
+### ![ss_hqrmreview_localizationdatagood](/assets/images/screenshots/ss_hqrmreview_localizationdatagood.png)
 
 ### Final Words
 

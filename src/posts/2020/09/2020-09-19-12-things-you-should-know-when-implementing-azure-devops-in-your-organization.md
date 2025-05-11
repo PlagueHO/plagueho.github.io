@@ -17,7 +17,7 @@ So, let's get into it:
 
 ## 1\. Projects: less is better
 
-![](/assets/images/blog/ss_azure_devops_12_things_1.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_1.png)
 
 Less projects are better
 
@@ -29,7 +29,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 2\. Area Paths: Organize work
 
-![](/assets/images/blog/ss_azure_devops_12_things_2.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_2.png)
 
 Organizing Area Paths
 
@@ -43,7 +43,7 @@ Documentation Reference: [Define area paths for your project](https://docs.micro
 
 ## 3\. Identity: Integrate with Azure AD
 
-![](/assets/images/blog/ss_azure_devops_12_things_5.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_5.png)
 
 Connect AAD.
 
@@ -59,7 +59,7 @@ Documentation Reference: [Connect organization to Azure Active Directory](https:
 
 ## 4\. Git or TFVC?
 
-![](/assets/images/blog/ss_azure_devops_12_things_4a.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_4a.png)
 
 Importing a TFVC repository as Git
 
@@ -73,7 +73,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 5\. Create a Sandbox Project
 
-![](/assets/images/blog/ss_azure_devops_12_things_3.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_3.png)
 
 Create a Sandbox Project
 
@@ -87,7 +87,7 @@ Documentation Reference: [When to add another project](https://docs.microsoft.co
 
 ## 6\. Install extensions... wisely
 
-![](/assets/images/blog/ss_azure_devops_12_things_6.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_6.png)
 
 The Azure DevOps Extensions Marketplace
 
@@ -103,7 +103,7 @@ Documentation Reference: [](https://docs.microsoft.com/en-us/azure/devops/organi
 
 ## 7\. Use Multi-stage YAML Pipelines
 
-![](/assets/images/blog/ss_azure_devops_12_things_7.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_7.png)
 
 Do NOT use "Classic Editor" and create pipelines without YAML
 
@@ -111,7 +111,7 @@ Early on the evolution of Azure DevOps pipelines, all pipelines had to created u
 
 You should always create new **build pipelines** using YAML and store them in your repository with your source code (pipeline as code). You can still use the **assistant** to help you design your YAML:
 
-![](/assets/images/blog/ss_azure_devops_12_things_9.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_9.png)
 
 Click Show Assistant to edit your YAML.
 
@@ -135,7 +135,7 @@ Documentation Reference: [Deployment Job](https://docs.microsoft.com/en-us/azure
 
 ## 10\. Deployment Group Agents?
 
-![](/assets/images/blog/ss_azure_devops_12_things_10.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_10.png)
 
 Add a machine to a Deployment Group.
 
@@ -151,7 +151,7 @@ Documentation Reference: [Deployment Group agent](https://docs.microsoft.com/en-
 
 ## 11\. Automate. Automate
 
-![](/assets/images/blog/ss_azure_devops_12_things_13.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_13.png)
 
 Get a list of Azure DevOps projects using Azure DevOps CLI
 
@@ -167,7 +167,7 @@ Documentation Reference: [Azure DevOps CLI](https://docs.microsoft.com/en-us/azu
 
 ## 12\. Get Practical Experience
 
-![](/assets/images/blog/ss_azure_devops_12_things_12.png)
+![](/assets/images/screenshots/ss_azure_devops_12_things_12.png)
 
 The best way to learn Azure DevOps is to get hands-on practical experience. [Azure DevOps Labs](https://www.azuredevopslabs.com/) provides **free hands-on labs environments** (via your own DevOps organization) and covers practically everything you could ever want to know. The [Azure DevOps content on Microsoft Learn](https://docs.microsoft.com/en-us/learn/browse/?products=azure-devops) also has detailed walk throughs of the product and processes.
 

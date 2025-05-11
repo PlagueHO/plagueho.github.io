@@ -33,7 +33,7 @@ However, I ran into two situations where PowerShell can’t currently replace DI
 1. **Dynamic disks** can’t be created using **PowerShell**. Therefore spanned, striped, mirrored or parity volumes must still be created with DISKPART. (If you’re on Windows Server 2012/Windows 8 or later, consider using **Storage Spaces** instead.)
 1. The **PowerShell** cmdlets to create or mount **Virtual Hard Disk** files (VHD/VHDx) are unavailable if Hyper-V is not installed.  
 
-   ![VHD cmdlets without Hyper-V](/assets/images/blog/ss_vhdcmdleterror_hypervrolemissing.png)
+   ![VHD cmdlets without Hyper-V](/assets/images/screenshots/ss_vhdcmdleterror_hypervrolemissing.png)
 
    This is a little annoying because the **Hyper-V** role can’t always be installed—e.g. inside a guest VM. While it’s unusual to work with VHD/VHDx files inside a guest, the rise of cloud-hosted dev machines means you might hit this limitation.
 

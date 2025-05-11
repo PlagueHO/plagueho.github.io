@@ -32,7 +32,7 @@ The package is fairly simple. It just contains a few files:
 1. **devcon.portable\\DevCon64.exe** - a 64-bit version of the **DevCon.exe** copied straight out of the **WDK**.
 1. **devcon.portable\\devcon.portable.nuspec** - this is the [nuspec package manifest](https://docs.nuget.org/create/nuspec-reference) file I created for this package.
 
-![ss_devconchoco_filestructure](/assets/images/blog/ss_devconchoco_filestructure.png)
+![ss_devconchoco_filestructure](/assets/images/screenshots/ss_devconchoco_filestructure.png)
 
 The really important files here are **AppVeyor.yml** and **devcon.portable.nuspec**. So I'll cover those in a bit more detail.
 
@@ -170,7 +170,7 @@ The third line creates the package using the **cpack** tool.
 
 The last line pushes the completed package to AppVeyor CI as an **artifact** that we can then download and submit to **Chocolatey**:
 
-![ss_devconchoco_appveyorciartifacts](/assets/images/blog/ss_devconchoco_appveyorciartifacts.png)
+![ss_devconchoco_appveyorciartifacts](/assets/images/screenshots/ss_devconchoco_appveyorciartifacts.png)
 
 It is probably possible to have AppVeyor CI automatically submit the package to **Chocolatey** on my behalf, but I didn't want that in this case. But if you're planning on doing that, you'll want to ensure you use the AppVeyor **Encrypt Data** tool to encrypt any **Chocolatey** credentials that your AppVeyor.yml file might use - otherwise your **Chocolatey** credentials are available for the world to see and **abuse**. This would be very bad indeed!
 

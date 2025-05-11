@@ -28,7 +28,7 @@ For this post, I'm assuming you have a basic knowledge of how to create classes 
 
 If you just go and create a new class in PowerShell and try to call the clone method, an error with be thrown:
 
-![ss_cloneable_nolonemethoderror](/assets/images/blog/ss_cloneable_nolonemethoderror.png)
+![ss_cloneable_nolonemethoderror](/assets/images/screenshots/ss_cloneable_nolonemethoderror.png)
 
 This is because by default a new class that is defined in PowerShell is based off the **System.Object** class which does not implement the **ICloneable** interface. The **ICloneable** interface is what gives us the **Clone** method on an object. So we need to tell PowerShell that we want our new class to implement the **ICloneable** interface.
 
@@ -47,7 +47,7 @@ class Car:ICloneable {
 
 However, if we try to define this class as is we'll get an error:
 
-![ss_cloneable_classclonemethodnotimplementederror](/assets/images/blog/ss_cloneable_classclonemethodnotimplementederror.png)
+![ss_cloneable_classclonemethodnotimplementederror](/assets/images/screenshots/ss_cloneable_classclonemethodnotimplementederror.png)
 
 The problem is that we've told PowerShell that the **Car** class implements **ICloneable** and should therefore have a **Clone** method, but we haven't actually created the **Clone** method in the class.
 

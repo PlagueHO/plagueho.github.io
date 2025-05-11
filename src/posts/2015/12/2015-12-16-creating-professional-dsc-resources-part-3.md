@@ -95,11 +95,11 @@ You put **LocalizedData** for other languages in separate PowerShell files in su
 
 Another element of any easy to use **DSC Resource** are example **DSC Configuration** files. These can usually be found in the **Examples** folder in the root of the **DSC Module**:
 
-![ss_dsc_examplesfolder](/assets/images/blog/ss_dsc_examplesfolder.png)
+![ss_dsc_examplesfolder](/assets/images/screenshots/ss_dsc_examplesfolder.png)
 
 There should usually be a number of different **DSC Configuration** files in this folder, showing common scenarios for using your **DSC Resources**:
 
-![ss_dsc_examples](/assets/images/blog/ss_dsc_examples.png)
+![ss_dsc_examples](/assets/images/screenshots/ss_dsc_examples.png)
 
 The **file name** of any **example** files should be prefixed with **Sample** or **Example** so that they can be easily identified and differentiated from types of **DSC Module** files. The summary of the purpose of the configuration should also be included in the **file name**. This is fairly obvious I realize, but I have seen public **DSC Resources** named Example\_1, Example\_2, Example\_3 etc - which reduces usability of the examples.
 

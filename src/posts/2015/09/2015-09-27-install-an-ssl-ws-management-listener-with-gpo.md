@@ -66,7 +66,7 @@ All you'd need to set was the Issuer to whatever the _Distinguished Name_ of you
 
 The next step was to put it into a script where you could just pass the _Distinguished Name_ of the **issuing CA** as a parameter. I did this and also added some other optional parameters and uploaded the result to [Microsoft Script Center](https://gallery.technet.microsoft.com/scriptcenter/PowerShell-used-to-easily-22067907). So you can download this script and put it into a GPO Startup Script:
 
-[![Installing an HTTPS WS-Management Listener with GPO](/assets/images/blog/ss_gpo_httpswsmanlistener.png)](/assets/images/blog/ss_gpo_httpswsmanlistener.png)
+[![Installing an HTTPS WS-Management Listener with GPO](/assets/images/screenshots/ss_gpo_httpswsmanlistener.png)](/assets/images/screenshots/ss_gpo_httpswsmanlistener.png)
 Installing an HTTPS WS-Management Listener with GPO
 
 The script is actually a little bit smarter than the above command. If a certificate with a subject can't be found that matches the **FQDN** of the computer it will automatically look for one that just uses the flat computer name. You can control this behavior by setting the **DNSNameType** parameter.

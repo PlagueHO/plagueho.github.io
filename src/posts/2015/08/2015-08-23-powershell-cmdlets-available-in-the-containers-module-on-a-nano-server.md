@@ -12,7 +12,7 @@ Just a Monday-morning quickie:
 
 Here’s a list of all the cmdlets available in the **Containers** PowerShell module on a Nano Server with the *containers* package installed:
 
-[![Containers – the next big thing!](/assets/images/blog/ss_nano_containers.png)](/assets/images/blog/ss_nano_containers.png)  
+[![Containers – the next big thing!](/assets/images/screenshots/ss_nano_containers.png)](/assets/images/screenshots/ss_nano_containers.png)  
 *Containers – the next big thing!*
 
 ```text

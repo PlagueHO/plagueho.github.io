@@ -8,7 +8,7 @@ Happy TP5 day!
 
 Here is just a quick snapshot of the package list for Nano Server in Windows Server 2016 TP5:
 
-![ss_nanotp5_packagelist](/assets/images/blog/ss_nanotp5_packagelist.png)
+![ss_nanotp5_packagelist](/assets/images/screenshots/ss_nanotp5_packagelist.png)
 
 Right off the bat I notice a few new ones are included:
 

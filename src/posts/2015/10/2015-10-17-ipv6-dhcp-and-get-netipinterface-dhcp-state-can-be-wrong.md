@@ -12,7 +12,7 @@ Recently I've been attempting to help out with the awesome Microsoft Community D
 
 Anyway, long story short I found myself investigating an odd little bug with the xIPAddress resource (it configures an IPv4 or IPv6 address on a Network adapter). The problem was that even though I had a network adapter with a **statically** assigned **IPv6** address, the **Get-NetIPInterface** cmdlet _always_ seemed to say that **DHCP** was **enabled**:
 
-[![The IPv6 address is clearly statically assigned but it says DHCP is enabled!](/assets/images/blog/ss_ip_dhcpmisreported.png)](/assets/images/blog/ss_ip_dhcpmisreported.png)
+[![The IPv6 address is clearly statically assigned but it says DHCP is enabled!](/assets/images/screenshots/ss_ip_dhcpmisreported.png)](/assets/images/screenshots/ss_ip_dhcpmisreported.png)
 The IPv6 address is clearly statically assigned but it says DHCP is enabled!
 
 I am not sure if this is a bug in **Get-NetIPInterface** that causes the **DHCP** property to be misreported for **IPv6** interfaces or if using this property to determine **DHCP** status on an **IPv6** address is not recommended.

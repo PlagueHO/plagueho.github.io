@@ -17,7 +17,7 @@ New-PSDrive -Name HKCR -PSProvider 'Microsoft.PowerShell.Core\Registry' -Root HK
 Get-ItemProperty -Path 'HKCR:\Installer\Assemblies\Global' | Get-Member -MemberType NoteProperty
 ```
 
-![ss_gac_getcontent](/assets/images/blog/ss_gac_getcontent.png)
+![ss_gac_getcontent](/assets/images/screenshots/ss_gac_getcontent.png)
 
 The first line registers a new drive called **HKCR** in PowerShell that maps to the **HKEY\_CLASSES\_ROOT** in the registry. This is required because, by default only the **HKEY\_CURRENT\_USER** and **HKEY\_LOCAL\_MACHINE** registry hives are registered as drives in PowerShell.
 

@@ -7,18 +7,18 @@ tags:
   - "forcechangepassword"
   - "powershell"
   - "office-365"
-image: "/assets/images/blog/ss_o365_getforcechangepassword.png"
+image: "/assets/images/screenshots/ss_o365_getforcechangepassword.png"
 ---
 
 Recently I was asked by a friend if I knew of a way to get the value of the setting that forces a user to change their password when they next log in to Office 365. The friend wanted to get this value for all users using PowerShell.
 
 Changing this setting is fairly straight forward either in the Office 365 portal or using the [Set-MsolUserPassword](https://docs.microsoft.com/en-us/powershell/module/msonline/set-msoluserpassword) cmdlet in the MSOnline PowerShell module:
 
-![ss_o365_setmsoluserpassword](/assets/images/blog/ss_o365_setmsoluserpassword.png)
+![ss_o365_setmsoluserpassword](/assets/images/screenshots/ss_o365_setmsoluserpassword.png)
 
 However, retrieving the current value of the setting isn't possible using [Get-MsolUser](https://docs.microsoft.com/en-us/powershell/module/msonline/get-msoluser) cmdlet—the attribute does not appear in the returned object:
 
-![ss_o365_getmsoluser](/assets/images/blog/ss_o365_getmsoluser.png)
+![ss_o365_getmsoluser](/assets/images/screenshots/ss_o365_getmsoluser.png)
 
 Instead, we need to use the [Get-AzureADUser](https://docs.microsoft.com/en-us/powershell/module/azuread/get-azureaduser) cmdlet in the [AzureAD PowerShell Module](https://docs.microsoft.com/en-us/powershell/module/azuread) to query the Azure Active Directory for the Office 365 tenant.
 
@@ -35,7 +35,7 @@ Connect-AzureAD
 (Get-AzureADUser -SearchString 'williammurderface@contoso.onmicrosoft.com').PasswordProfile.ForceChangePasswordNextLogin
 ```
 
-![ss_o365_getazureaduser](/assets/images/blog/ss_o365_getazureaduser1.png)
+![ss_o365_getazureaduser](/assets/images/screenshots/ss_o365_getazureaduser1.png)
 
 If you wanted to get a list of all users with the **ForceChangePasswordNextLogin** property set to **true**, you could use:
 
@@ -43,6 +43,6 @@ If you wanted to get a list of all users with the **ForceChangePasswordNextLogin
 Get-AzureADUser | Where-Object -FilterScript { $_.PasswordProfile.ForceChangePasswordNextLogin }
 ```
 
-![ss_o365_getazureadallforcechangepasswordnextlogin](/assets/images/blog/ss_o365_getazureadallforcechangepasswordnextlogin.png)
+![ss_o365_getazureadallforcechangepasswordnextlogin](/assets/images/screenshots/ss_o365_getazureadallforcechangepasswordnextlogin.png)
 
 This is all fairly straight forward once you figure out which object in Azure AD contains the information required.

@@ -10,7 +10,7 @@ tags:
 
 Recently I spent the good part of a weekend putting together _Pester Tests_ (click [here](http://www.powershellmagazine.com/2014/03/12/get-started-with-pester-powershell-unit-testing-framework/) if you aren't familiar with Pester) for my **LabBuilder PowerShell** module- a module to build a set of Virtual Machines based on an XML configuration file. In the module I have several cmdlets that take an XML configuration file (sample below) and return an array of hash tables as well as some hash table properties containing other arrays - basically a fairly complex object structure.
 
-[![A Pester Test config file for the LabBuilder module](/assets/images/blog/ss_vs_pestertestconfigsample.png)](/assets/images/blog/ss_vs_pestertestconfigsample.png) A Pester Test config file for the LabBuilder module
+[![A Pester Test config file for the LabBuilder module](/assets/images/screenshots/ss_vs_pestertestconfigsample.png)](/assets/images/screenshots/ss_vs_pestertestconfigsample.png) A Pester Test config file for the LabBuilder module
 
 In the _Pester Tests_ for these cmdlets I wanted to ensure the object that was returned **exactly** matched what I expected. So in the _Pester Test_ I programmatically created an object that matched what the _Pester Test_ should expect the output of the cmdlets would be:
 
@@ -75,12 +75,12 @@ This then did pretty much exactly what I wanted. However, I also needed the comp
 
 The end result was **a deep object comparison** between a reference object and the object the cmdlet being tested returned. It is by no means perfect as if the properties or contents of any arrays in the object are out of order the comparison will report that there are differences, but because we control the format of these objects this shouldn't be a problem and should enable some very test strict cmdlet tests.
 
-[![How the the Final Pester Test in Visual Studio 2015 (with POSH tools)](/assets/images/blog/ss_vs_pestertest_object_comparison.png)](/assets/images/blog/ss_vs_pestertest_object_comparison.png)
+[![How the the Final Pester Test in Visual Studio 2015 (with POSH tools)](/assets/images/screenshots/ss_vs_pestertest_object_comparison.png)](/assets/images/screenshots/ss_vs_pestertest_object_comparison.png)
 How the the Final Pester Test in Visual Studio 2015 (with POSH tools)
 
 **Edit**: after writing a number of _Pester_ tests using the approach I realized it could be simplified slightly by replacing the generation of the comparison object with the actual JSON output produced by the reference object _embedded_ inline in a variable. For example:
 
-[![Performing the object comparison using JSON in a variable in the test.](/assets/images/blog/ss_vs_pestertest_inline_json1.png)](/assets/images/blog/ss_vs_pestertest_inline_json1.png)
+[![Performing the object comparison using JSON in a variable in the test.](/assets/images/screenshots/ss_vs_pestertest_inline_json1.png)](/assets/images/screenshots/ss_vs_pestertest_inline_json1.png)
 Performing the object comparison using JSON in a variable in the test.
 
 The JSON can be generated manually by hand (before writing the function itself) to stick to the Test Driven Design methodology or it can be generated from the object the function being tested created (once it it working correctly) and then written to a file using:
@@ -98,11 +98,11 @@ I have noticed that when opening the JSON file in something like Notepad++ and c
 
 This is what the end of the JSON variable definition should look like:
 
-[![Good JSON CRLF Formatting](/assets/images/blog/ss_vs_pestertest_inline_json_good.png)](/assets/images/blog/ss_vs_pestertest_inline_json_good.png)
+[![Good JSON CRLF Formatting](/assets/images/screenshots/ss_vs_pestertest_inline_json_good.png)](/assets/images/screenshots/ss_vs_pestertest_inline_json_good.png)
 
 And this is what it should **not** look like (the arrow indicates the location of the extra CRLF that should be removed):
 
-[![Good JSON CRLF formatting](/assets/images/blog/ss_vs_pestertest_inline_json_bad.png)](/assets/images/blog/ss_vs_pestertest_inline_json_bad.png)
+[![Good JSON CRLF formatting](/assets/images/screenshots/ss_vs_pestertest_inline_json_bad.png)](/assets/images/screenshots/ss_vs_pestertest_inline_json_bad.png)
 
 > [!NOTE]
 > I could have used the **Export-CliXML** and **Import-CliXML** CmdLets instead to perform the object serialization and comparison, but these cmdlets write the content to disk and also generate much larger strings which would take much longer to compare and ending up with a more complicated test.

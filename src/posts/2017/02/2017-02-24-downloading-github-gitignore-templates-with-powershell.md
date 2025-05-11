@@ -20,7 +20,7 @@ $templateList = (Invoke-WebRequest -URI 'https://api.github.com/gitignore/templa
 
 This will get the list of _.GitIgnore templates_ to an array variable called **$templateList**. I could then display the list to a user:
 
-![ss_ghgi_getgitignoretemplates](/assets/images/blog/ss_ghgi_getgitignoretemplates.png)
+![ss_ghgi_getgitignoretemplates](/assets/images/screenshots/ss_ghgi_getgitignoretemplates.png)
 
 Now, all I need to do is to download the named _.gitIgnore Template_ to a folder:
 
@@ -34,7 +34,7 @@ Invoke-WebRequest -URI 'https://api.github.com/gitignore/templates/VisualStudio'
 
 This will download the **VisualStudio** _.giIgnore_ template and save it with the filename **.gitignore** to the current folder.
 
-![ss_ghgi_getgitignorefile](/assets/images/blog/ss_ghgi_getgitignorefile.png)
+![ss_ghgi_getgitignorefile](/assets/images/screenshots/ss_ghgi_getgitignorefile.png)
 
 I could have specified a different _.gitIgnore template_ by changing the **VisualStudio** in the URL to another template that appears in the **$templateList**.
 

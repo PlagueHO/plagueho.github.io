@@ -56,14 +56,14 @@ However, many people also run any **integration tests** on their local machines 
 
 **Integration tests** for a DSC resource actually consist of two different files:
 
-![ss_dsc_inttestfiles](/assets/images/blog/ss_dsc_inttestfiles1.png)
+![ss_dsc_inttestfiles](/assets/images/screenshots/ss_dsc_inttestfiles1.png)
 
 1. **\*.config.ps1** - The DSC Configuration file that will use the DSC Resource being tested.
 1. **\*.Integration.Tests.ps1** - The Integration Test script file containing the **Pester** tests.
 
 These files should be stored in the **Tests\\Integration** folder in the DSC Resource module:
 
-![ss_dsc_inttestfolders](/assets/images/blog/ss_dsc_inttestfolders.png)
+![ss_dsc_inttestfolders](/assets/images/screenshots/ss_dsc_inttestfolders.png)
 
 You must also ensure that the names of these files exactly matches the name of the resource itself. For example, if your **DSC Resource** is called **BMD\_MyResource** then these files must be called:
 
@@ -74,7 +74,7 @@ You must also ensure that the names of these files exactly matches the name of t
 
 Luckily, a good amount of the work in implementing **integration tests** is already done for you. Like **unit tests**, templates for the two integration files are available in the [DscResources repository](https://github.com/PowerShell/DscResources/tree/master/Tests.Template) in GitHub:
 
-![ss_dsc_inttesttemplatesrepo](/assets/images/blog/ss_dsc_inttesttemplatesrepo.png)
+![ss_dsc_inttesttemplatesrepo](/assets/images/screenshots/ss_dsc_inttesttemplatesrepo.png)
 
 You need to copy the **integration test template** files and rename them to match your **DSC Resource**.
 
@@ -86,7 +86,7 @@ Copy-Item .\DSCResources\Tests.Template\integration_config_template.ps1 .\ciSCSI
 Copy-Item .\DSCResources\Tests.Template\integration_template.ps1 .\ciSCSI\Tests\Integration\BMD_ciSCSIVirtualDisk.Integration.Tests.ps1
 ```
 
-![ss_dsc_createnewinttestfromtemplate](/assets/images/blog/ss_dsc_createnewinttestfromtemplate.png)
+![ss_dsc_createnewinttestfromtemplate](/assets/images/screenshots/ss_dsc_createnewinttestfromtemplate.png)
 
 You'll now have two new **integration test** files that you can open in your PowerShell editor of choice.
 
@@ -94,7 +94,7 @@ You'll now have two new **integration test** files that you can open in your Pow
 
 The first file I usually edit is the `\config.ps1` file:
 
-![ss_dsc_newinttestconfigtemplate](/assets/images/blog/ss_dsc_newinttestconfigtemplate1.png)
+![ss_dsc_newinttestconfigtemplate](/assets/images/screenshots/ss_dsc_newinttestconfigtemplate1.png)
 
 Next, you'll want to change any `<ResourceName>` occurrences in this file to the name of your resource. I also like to remove the **#TODO** bits at the same time so I know what I've completed:
 
@@ -142,11 +142,11 @@ As you can see in the example above, I create a **$VirtualDisk** hash table that
 
 Now that the **integration tests config** file has been completed it is time to move on to the **integration test script (\*.Integration.Tests.ps1)** itself, so open it in your editor of choice:
 
-![ss_dsc_newinttesttemplate](/assets/images/blog/ss_dsc_newinttesttemplate1.png)
+![ss_dsc_newinttesttemplate](/assets/images/screenshots/ss_dsc_newinttesttemplate1.png)
 
 Next, customize the **TODO** area in the **header** with the your **DSC Resource Name** and **DSC Module Name**:
 
-![ss_dsc_inttestsheader](/assets/images/blog/ss_dsc_inttestsheader.png)
+![ss_dsc_inttestsheader](/assets/images/screenshots/ss_dsc_inttestsheader.png)
 
 Feel free to remove the **TODO** comments if you want (I always do).
 
@@ -196,7 +196,7 @@ Next, we need to add the tests that check that after the **DSC Configuration** h
 
 To do this, we complete this section:
 
-![ss_dsc_inttestsvalidate](/assets/images/blog/ss_dsc_inttestsvalidate.png)
+![ss_dsc_inttestsvalidate](/assets/images/screenshots/ss_dsc_inttestsvalidate.png)
 
 In this case, I've changed it to:
 

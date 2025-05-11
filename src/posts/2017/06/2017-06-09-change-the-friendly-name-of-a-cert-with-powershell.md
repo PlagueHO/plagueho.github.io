@@ -15,8 +15,8 @@ All you need to do is identify the certificate using Get-ChildItem and then assi
 (Get-ChildItem -Path Cert:\LocalMachine\My\97CB2928C7AC163A750BF16CF1D2CF1A3DDAAA8E).FriendlyName = 'New Cert Name'
 ```
 
-![ss_cert_changefriendlyname](/assets/images/blog/ss_cert_changefriendlyname.png)
+![ss_cert_changefriendlyname](/assets/images/screenshots/ss_cert_changefriendlyname.png)
 
-![ss_cert_changefriendlynamecertlm](/assets/images/blog/ss_cert_changefriendlynamecertlm.png)
+![ss_cert_changefriendlynamecertlm](/assets/images/screenshots/ss_cert_changefriendlynamecertlm.png)
 
 Sometimes PowerShell still surprises me at how easy it can make things. I didn't need to search help or the internet - just typed it in and it worked!

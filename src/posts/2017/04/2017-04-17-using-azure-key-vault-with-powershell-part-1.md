@@ -6,7 +6,7 @@ tags:
   - "azure-key-vault"
   - "azure"
   - "powershell"
-image: "/assets/images/blog/ss_akv_createcompleteportal.png"
+image: "/assets/images/screenshots/ss_akv_createcompleteportal.png"
 ---
 
 [Azure Key Vault](https://docs.microsoft.com/en-us/azure/key-vault/) is used to safeguard and manage **cryptographic keys**, **certificates** and **secrets** used by cloud applications and services (you can still consume these on-premise though). This allows other application, services or users in an Azure subscription to store and retrieve these **cryptographic keys**, **certificates** and **secrets**.
@@ -82,11 +82,11 @@ But first, the variables in the **PowerShell script** need to be customized to s
 - **$location** - the Azure data center to install the Key Vault to (use **Get-AzureRMLocation** to get a list of available Azure data centers).
 - **$keyVaultAdminUsers** - an array of users that will be given administrator (full control over **cryptographic keys**, **certificates** and **secrets**). The user names specified must match the full name of users found in the **Azure AD** assigned to the Azure tenancy.
 
-![ss_akv_create](/assets/images/blog/ss_akv_create.gif)
+![ss_akv_create](/assets/images/screenshots/ss_akv_create.gif)
 
 It will take about 30 seconds for the Azure Key Vault to be installed. It will then show up in the Azure Subscription:
 
-![ss_akv_createcompleteportal](/assets/images/blog/ss_akv_createcompleteportal.png)
+![ss_akv_createcompleteportal](/assets/images/screenshots/ss_akv_createcompleteportal.png)
 
 ## Assigning Permissions
 
@@ -193,7 +193,7 @@ Set-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' `
   -Tags @{ 'Risk' = 'High'; }
 ```
 
-![ss_akv_secretupdatewithparameters](/assets/images/blog/ss_akv_secretupdatewithparameters.png)
+![ss_akv_secretupdatewithparameters](/assets/images/screenshots/ss_akv_secretupdatewithparameters.png)
 
 ### Retrieving Secrets
 
@@ -211,7 +211,7 @@ To list **all** the versions of a secret, add the **IncludeVersions** parameter:
 Get-AzureKeyVaultSecret -VaultName $keyVaultName -Name 'MyAdminPassword' -IncludeVersions
 ```
 
-![ss_akv_secretallhistory](/assets/images/blog/ss_akv_secretallhistory.png)
+![ss_akv_secretallhistory](/assets/images/screenshots/ss_akv_secretallhistory.png)
 
 To retrieve a **specific version** of a secret, use the **Get-AzureKeyVaultSecret** cmdlet with the **Version** parameter specified:
 

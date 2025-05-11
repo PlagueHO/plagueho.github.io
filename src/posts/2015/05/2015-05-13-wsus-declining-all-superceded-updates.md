@@ -10,7 +10,7 @@ tags:
 
 Just a quick snippet today. I wrote this because I was didn't want to have to wait for **30** days before unusused superceded updates in my **WSUS** server were automatically _declined_ - especially those daily "Definition Update for Windows Defender".
 
-[![ss_wsus_definitionupdates](/assets/images/blog/ss_wsus_definitionupdates.png)](/assets/images/blog/ss_wsus_definitionupdates.png)
+[![ss_wsus_definitionupdates](/assets/images/screenshots/ss_wsus_definitionupdates.png)](/assets/images/screenshots/ss_wsus_definitionupdates.png)
 
 If you're happy waiting for these _unused superceded updates_ to be _declined_ after **30** days then you can just use the following cmdlet:
 

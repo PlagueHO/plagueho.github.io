@@ -6,12 +6,12 @@ tags:
   - "api-management"
   - "arm-template"
   - "azure-api-management"
-coverImage: "/assets/images/blog/ss_apim_disabletls3des.png"
+coverImage: "/assets/images/screenshots/ss_apim_disabletls3des.png"
 ---
 
 Recently, I've been putting together a continuous delivery pipeline (using VSTS) for our [Azure API Management service](https://azure.microsoft.com/en-us/services/api-management/) using **Azure Resource Manager** (ARM) templates. One of the things I needed to be able to do to _secure this service properly_ is to disable **TLS 1.0**, **TLS 1.1** and **3DES**. This is pretty easy to do in the portal:
 
-![ss_apim_disabletls3des](/assets/images/blog/ss_apim_disabletls3des.png)
+![ss_apim_disabletls3des](/assets/images/screenshots/ss_apim_disabletls3des.png)
 
 However, if you only allow changes to be made via your continuous delivery pipeline (a good thing by the way), then you have to change the ARM template.
 

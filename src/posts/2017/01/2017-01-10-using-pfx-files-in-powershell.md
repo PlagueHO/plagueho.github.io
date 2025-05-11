@@ -7,7 +7,7 @@ tags:
   - "pfx"
   - "powershell"
   - "certificate-services"
-image: "/assets/images/blog/ss_readpfx_loadingthepfx.png"
+image: "/assets/images/screenshots/ss_readpfx_loadingthepfx.png"
 ---
 
 One of the things I've been working on lately is adding a new resource to the [xCertificate DSC Resource module](https://github.com/PowerShell/xCertificate) for exporting an certificate with (or without) the private key from the Windows Certificate Store as a .CER or .PFX file. The very insightful (and fellow DSC Resource maintainer) [@JohanLjunggren](https://twitter.com/johanljunggren) has been giving some really great direction on this new resource.
@@ -31,7 +31,7 @@ The $PFXPath variable is set to the path to the PFX file we're going to read in.
 
 We now have all the certificates loaded into an array in the $PFX variable and work with them like any other array:
 
-![ss_readpfx_loadingthepfx](/assets/images/blog/ss_readpfx_loadingthepfx.png)
+![ss_readpfx_loadingthepfx](/assets/images/screenshots/ss_readpfx_loadingthepfx.png)
 
 Now, that we have the #PFX array, we can identify the thumbprint of the certificate that was actually exported (as opposed to the certificates in the trust chain) by looking at the last array item:
 
@@ -41,7 +41,7 @@ $PFX[$PFX.Count-1] | fl *
 
 I'm piping the output Format-List so we can see the entire x509 certificate details.
 
-![ss_readpfx_showissuedcertificate](/assets/images/blog/ss_readpfx_showissuedcertificate.png)
+![ss_readpfx_showissuedcertificate](/assets/images/screenshots/ss_readpfx_showissuedcertificate.png)
 
 In the case of the DSC Resource we'll compare the certificate thumbprint of the last certificate in the PFX with the thumbprint that of the certificate in the Windows Certificate Store that we're wanting to export. If they're different we will then perform another export using the Export-PFXCertificate cmdlet.
 
@@ -51,11 +51,11 @@ _Protip: You can actually verify the certificate and the entire trust chain is v
 foreach ($Cert in $PFX) { "$($Cert.Subject) is valid: $($Cert.Verify())" }
 ```
 
-![ss_readpfx_validateissuedcertificate](/assets/images/blog/ss_readpfx_validateissuedcertificate.png)
+![ss_readpfx_validateissuedcertificate](/assets/images/screenshots/ss_readpfx_validateissuedcertificate.png)
 
 _In the case above, the certificate I exported was actually invalid (it had expired):_
 
-![ss_readpfx_expiredcertificate](/assets/images/blog/ss_readpfx_expiredcertificate.png)
+![ss_readpfx_expiredcertificate](/assets/images/screenshots/ss_readpfx_expiredcertificate.png)
 
 _So we could easily use the Validate method to test the certificates validity before we import them into the Windows Certificate Store. But beware, the Validate method will check that the certificate chain is trusted. To be trusted the entire chain must have been imported into the Windows Certificate Store in the appropriate stores (e.g. Trusted Root CA/Intermedicate CA stores)._
 

@@ -13,6 +13,6 @@ I just spent a good hour trying to figure out why my **Windows 10** clients were
 
 The NAP client is **not** available on Windows 10 computers. You can't even see the Network Access Policy node when you edit a GPO using **Windows 10 RSAT**:
 
-![NAP on Windows 10? Nope.](/assets/images/blog/ss_nap_windows10gpedit.png)
+![NAP on Windows 10? Nope.](/assets/images/screenshots/ss_nap_windows10gpedit.png)
 
 So if you're wanting to configure your Windows 10 computers with DHCP and you're using NAP, you'll need to disable it or create a special scope without NAP enabled with a **DHCP Scope Policy** for your Windows 10 clients. As this technology has been deprecated, you're probably better off **removing NAP entirely**. Pity I'm having to spend time studying it for my 70.411 exam.

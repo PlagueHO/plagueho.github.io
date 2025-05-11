@@ -26,7 +26,7 @@ Each of these approaches had some drawbacks:
 
 But using the **Virtual NAT device** allows us to configure Labs with complete network isolation but still being connected to the internet without the use of a **guest NAT**.
 
-[![ss_virtualnat_diagram](/assets/images/blog/ss_virtualnat_diagram3.png)](/assets/images/blog/ss_virtualnat_diagram3.png)
+[![ss_virtualnat_diagram](/assets/images/screenshots/ss_virtualnat_diagram3.png)](/assets/images/screenshots/ss_virtualnat_diagram3.png)
 
 So, to configure a pair of Labs like in the diagram above all we need is to execute a few **PowerShell Cmdlets**.
 

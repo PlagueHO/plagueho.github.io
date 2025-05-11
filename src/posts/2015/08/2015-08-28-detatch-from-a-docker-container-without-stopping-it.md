@@ -12,7 +12,7 @@ Saturday-morning Docker fun times (still only on Windows Server Core) – here�
 
 Once you have attached to a Docker container via a CMD console, typing **exit** detaches from the container *and* **stops** it. That’s usually *not* what I want. To **detach** from the container *without* stopping it, press **Ctrl + P** followed by **Ctrl + Q**.
 
-[![The container is still running after being detached.](/assets/images/blog/ss_docker_detatchedbutrunningcontainer.png)](/assets/images/blog/ss_docker_detatchedbutrunningcontainer.png)  
+[![The container is still running after being detached.](/assets/images/screenshots/ss_docker_detatchedbutrunningcontainer.png)](/assets/images/screenshots/ss_docker_detatchedbutrunningcontainer.png)  
 *The container is still running after being detached.*
 
 > [!NOTE]

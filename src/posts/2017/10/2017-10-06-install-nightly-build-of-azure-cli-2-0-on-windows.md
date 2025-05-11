@@ -6,7 +6,7 @@ tags:
   - "azure"
   - "azure-cli-2-0"
   - "powershell"
-image: "/assets/images/blog/ss_azurecli_installnightlybuild.png"
+image: "/assets/images/screenshots/ss_azurecli_installnightlybuild.png"
 ---
 
 The [Azure PowerShell cmdlets](https://docs.microsoft.com/en-us/powershell/azure/install-azurerm-ps?view=azurermps-4.4.0) are really first class if you're wanting to manage Azure with PowerShell. However, they don't always support the very latest Azure components and features. For example, at the time of writing this there is no Azure PowerShell module for managing [Azure Container Instances](https://azure.microsoft.com/en-us/services/container-instances/).
@@ -67,11 +67,11 @@ Write-Host -Object 'Installation of nightly build of Az CLI 2.0 complete. Execut
 
 You could save the content of this script into a PS1 file and then execute it like this:
 
-![ss_azurecli_installnightlybuild](/assets/images/blog/ss_azurecli_installnightlybuild.png)
+![ss_azurecli_installnightlybuild](/assets/images/screenshots/ss_azurecli_installnightlybuild.png)
 
 It will then download and install Python, then use PIP to install the current nightly build packages. After a few minutes the installation will complete:
 
-![ss_azurecli_installnightlybuildcompete](/assets/images/blog/ss_azurecli_installnightlybuildcompete.png)
+![ss_azurecli_installnightlybuildcompete](/assets/images/screenshots/ss_azurecli_installnightlybuildcompete.png)
 
 You can then run:
 
@@ -87,7 +87,7 @@ If you're a bit new to Azure CLI 2.0, then another great way is to use Azure CLI
 az login interactive
 ```
 
-![ss_azurecli_interactive](/assets/images/blog/ss_azurecli_interactive.png)
+![ss_azurecli_interactive](/assets/images/screenshots/ss_azurecli_interactive.png)
 
 If you need to update to a newer nightly build, just run the script again and it will update your packages.
 

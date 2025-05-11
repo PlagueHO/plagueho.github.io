@@ -24,7 +24,7 @@ Install-Module -Name AzSK
 
 The cmdlet we're most interested in is the **Get-AzSKARMTemplateSecurityStatus**. It can be used to scan one or more ARM templates or entire folders of ARM templates for best practice violations:
 
-![ss_azsk_scanning](/assets/images/blog/ss_azsk_scanning.png)
+![ss_azsk_scanning](/assets/images/screenshots/ss_azsk_scanning.png)
 
 This will scan the ARM templates and produce a **CSV report** in a folder **Microsoft\\AzSKLogs\\ARMChecker** within your **$ENV:LOCALAPPDATA** folder and open the folder in Explorer. This isn't ideal for automation scenarios or using during Continuous Integration or Continuous Delivery pipelines. I've raised [an issue](https://github.com/azsk/DevOpsKit/issues/267) with the AzSK team on GitHub to see if this can be improved.
 
@@ -138,7 +138,7 @@ Invoke-Pester -Script @{ Path = 'd:\Invoke-AzSKARMTemplateSecurityStatusPesterTe
 
 This will execute the Pester tests in the file above on the specified ARM template. The tests will fail when there are any best practice violations with the specified **Severity** or above. If you didn't pass in a **Severity**, then it will default to failing on **Medium** and **High**.
 
-![ss_azsk_invokepester](/assets/images/blog/ss_azsk_invokepester.png)
+![ss_azsk_invokepester](/assets/images/screenshots/ss_azsk_invokepester.png)
 
 If you use the **OutputFile** and **OutputFormat** parameters, Pester can output an NUnit format file that most Continuous Integration tools will happily accept and use to display the output of the tests.
 

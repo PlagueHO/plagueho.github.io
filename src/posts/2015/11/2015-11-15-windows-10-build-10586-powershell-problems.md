@@ -8,7 +8,7 @@ tags:
   - "dsc"
   - "powershell"
   - "powershell-direct"
-image: "/assets/images/blog/ss_powershell_version10586.png"
+image: "/assets/images/screenshots/ss_powershell_version10586.png"
 ---
 
 ## PowerShell Direct Broken
@@ -19,7 +19,7 @@ Unfortunately my Sunday afternoon of planned study has been slightly derailed, a
 
 An error has occurred which Windows PowerShell cannot handle. A remote session might have ended.
 
-[![But it was working yesterday!](/assets/images/blog/ss_powershelldirect_errormessage.png)](/assets/images/blog/ss_powershelldirect_errormessage.png)
+[![But it was working yesterday!](/assets/images/screenshots/ss_powershelldirect_errormessage.png)](/assets/images/screenshots/ss_powershelldirect_errormessage.png)
 But it was working yesterday!
 
 Passing credentials that are correct or incorrect for the VM have no effect - the error message is always the same.
@@ -39,7 +39,7 @@ must contain the Data Encipherment or Key Encipherment key usage, and include th
 
 Ok, so this isn't the end of the world and it is pretty clear what has changed here. After looking at my existing self-signed certificates they didn't include the **EKU** (Enhanced Key Usage) of **Document Encrpytion**.
 
-[![My previous certificates - now useless because the Document Encryption EKU is missing.](/assets/images/blog/ss_certificate_selfsignedbad.png)](/assets/images/blog/ss_certificate_selfsignedbad.png)
+[![My previous certificates - now useless because the Document Encryption EKU is missing.](/assets/images/screenshots/ss_certificate_selfsignedbad.png)](/assets/images/screenshots/ss_certificate_selfsignedbad.png)
 My previous certificates - now useless because the Document Encryption EKU is missing.
 
 It seems this is now required to encrypt credentials in MOF Files. I guess this makes sense and I'm sure not that many people are going to run into the problem. But in case you do, you'll need to reissue these certificates including the following EKU:
@@ -56,7 +56,7 @@ Finally, I have one strong recommendation related to the topic of encrypting DSC
 
 **Edit: Karl** in his comment on this post mentioned a problem he was having where the DSC node was failing to decrypt any credentials provided in DSC MOF files created on the build 10586. He was receiving a **Dercyption Failed** error when the MOF was being applied to the node:
 
-![ss_dsc_decryptionfailed](/assets/images/blog/ss_dsc_decryptionfailed.png)
+![ss_dsc_decryptionfailed](/assets/images/screenshots/ss_dsc_decryptionfailed.png)
 
 I hadn't noticed this issue because I hadn't been working on DSC for a week, but when I tried to apply a rebuilt MOF file I experienced the same issue.
 
@@ -84,14 +84,14 @@ In the mean time I have posted a work around (roll back to a previous version of
 
 **Update**: After finishing this last post I've run into some critical problems with **DSC** on build 10586. Specifically, when I build a DSC configuration on this machine and include the **PSDesiredStateConfiguration** resource (by way of **Import-DSCResource** cmdlet) the MOF file that is created references a 1.0 version of the module - **which doesn't exist:**
 
-[![Version 1.0 isn't on the machine!](/assets/images/blog/ss_dsc_badmofversion.png)](/assets/images/blog/ss_dsc_badmofversion.png)
+[![Version 1.0 isn't on the machine!](/assets/images/screenshots/ss_dsc_badmofversion.png)](/assets/images/screenshots/ss_dsc_badmofversion.png)
 Version 1.0 isn't on the machine!
 
 Applying the MOF file to any node immediately throws an error because of course this module doesn't exist (1.1 is the earliest version of this module that are on any of the nodes).
 
 However, if I _force_ the module version to **1.1** in the **Import-DSCResource** cmdlet then the MOF file that is created has the correct module version and can be applied to the node without any issue:
 
-[![Forcing the Module Version.](/assets/images/blog/ss_dsc_howtofixmoduleversion.png)](/assets/images/blog/ss_dsc_howtofixmoduleversion.png)
+[![Forcing the Module Version.](/assets/images/screenshots/ss_dsc_howtofixmoduleversion.png)](/assets/images/screenshots/ss_dsc_howtofixmoduleversion.png)
 Forcing the Module Version.
 
 But of course going around all my config files and forcing the module version to 1.1 is a very unsatisfactory solution. Also, I'm not sure if it is just the **PSDesiredStateConfiguration** resource that has this problem or all modules. I haven't had the time to investigate this further yet.

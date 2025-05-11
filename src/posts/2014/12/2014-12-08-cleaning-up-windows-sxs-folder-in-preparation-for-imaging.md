@@ -25,7 +25,7 @@ The following command removes any files that were backed up as part of installin
 DISM /online /cleanup-image /SPSuperseded
 ```
 
-![DISM /online /cleanup-image /SPSuperseded](/assets/images/blog/ss_dism_spsuperseded.png)
+![DISM /online /cleanup-image /SPSuperseded](/assets/images/screenshots/ss_dism_spsuperseded.png)
 DISM /online /cleanup-image /SPSuperseded
 
 ## Remove Superseded Components
@@ -44,7 +44,7 @@ For **Windows Server 2012 R2** and **Windows 8.1** (performs some additional opt
 DISM /online /cleanup-image /StartComponentCleanup /ResetBase
 ```
 
-![DISM /online /cleanup-image /StartComponentCleanup /ResetBase](/assets/images/blog/ss_dism_startcomponentcleanup_resetbase.png)
+![DISM /online /cleanup-image /StartComponentCleanup /ResetBase](/assets/images/screenshots/ss_dism_startcomponentcleanup_resetbase.png)
 
 ```powershell
 DISM /online /cleanup-image /StartComponentCleanup /ResetBase

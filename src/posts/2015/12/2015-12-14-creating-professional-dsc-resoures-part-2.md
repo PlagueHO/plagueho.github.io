@@ -22,7 +22,7 @@ So, you have an idea or need for a set of super new **DSC Resources**. Before y
 
 The above **GitHub** repository should be your first port of call and for DSC creation and it is worth keeping an eye on this **repository** by **watching** it:
 
-![ss_github_watch](/assets/images/blog/ss_github_watch.png)
+![ss_github_watch](/assets/images/screenshots/ss_github_watch.png)
 
 This will cause you to be notified whenever any changes to this **repository** are made (which isn't that often). So if the best practices are updated you'll be kept in the loop!
 
@@ -38,7 +38,7 @@ _**Tip:**_ _Your resource folder should begin with a lower case_ _**c.**_ _This 
 
 Once you've created the folder to store your new **DSC Resource module**, you should make a copy of all the files in the **GitHub** repository folder found [here](https://github.com/PowerShell/DscResources/tree/master/DscResource.Template) to the root of your new **DSC** **Resource** folder:
 
-![ss_dsc_newresourcefolder](/assets/images/blog/ss_dsc_newresourcefolder.png)
+![ss_dsc_newresourcefolder](/assets/images/screenshots/ss_dsc_newresourcefolder.png)
 
 The easiest way to get a copy of these files is to use **Git** to _clone_ the **DSCResource** repository on your computer and then copy the files from the **DSCResource.Template** folder to your new DSC module folder:
 

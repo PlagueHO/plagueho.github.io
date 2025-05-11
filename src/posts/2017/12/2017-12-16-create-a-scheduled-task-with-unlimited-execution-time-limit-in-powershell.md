@@ -12,7 +12,7 @@ tags:
 
 When creating a scheduled task in PowerShell you may wish to set the **Execution Time Limit** of the task to be **unlimited** (no time limit).
 
-![ss_scheduledtask_executiontimelimit](/assets/images/blog/ss_scheduledtask_executiontimelimit.png)
+![ss_scheduledtask_executiontimelimit](/assets/images/screenshots/ss_scheduledtask_executiontimelimit.png)
 
 This will prevent the task from being terminated if it is still running after a specific period of time.
 

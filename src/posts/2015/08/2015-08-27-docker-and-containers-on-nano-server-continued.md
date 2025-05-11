@@ -7,7 +7,7 @@ tags:
   - "windows-server-2016"
   - "windows-server-nano"
   - "powershell"
-image: "/assets/images/blog/ss_nano_containers_firstcontainer.png"
+image: "/assets/images/screenshots/ss_nano_containers_firstcontainer.png"
 ---
 
 This is a continuation of my investigation of how to get Containers and also possibly the Docker engine running on **Windows Server Nano 2016 TP 3**. The initial investigation into this can be found here: [How to use Containers on Windows Nano Server.](/blog/how-to-use-containers-on-windows-nano-server/)
@@ -40,7 +40,7 @@ Creating a **NAT** **VM Switch** on Nano Server actually works. But the command 
 
 #### DHCP
 
-[![Creating a standard External VM Switch on Nano Server](/assets/images/blog/ss_nano_containers_creatingadhcpswitch.png)](/assets/images/blog/ss_nano_containers_creatingadhcpswitch.png)
+[![Creating a standard External VM Switch on Nano Server](/assets/images/screenshots/ss_nano_containers_creatingadhcpswitch.png)](/assets/images/screenshots/ss_nano_containers_creatingadhcpswitch.png)
 
 Creating a **DHCP/External VM Switch** on Nano Server just fails with a cryptic error message. The same error occurs when creating a _Private_ or _Internal_ VM Switch, so I expect Hyper-V on Nano Server isn't working so well (or at all). Not much point pursuing this method of networking.
 
@@ -56,26 +56,26 @@ To install a **Base OS Image** from a **WIM** file on the **Container Host**, us
 Install-ContainerOSImage -WimPath CoreServer.wim -Verbose
 ```
 
-![Installing a Base OS Image](/assets/images/blog/ss_nano_containerinstallingos.png)
+![Installing a Base OS Image](/assets/images/screenshots/ss_nano_containerinstallingos.png)
 
 This function does several things:
 
 1. Creates a new folder in `C:\ProgramData\Microsoft\Windows\Images` whose name is the *canonical* name of the new **Base OS Image**.  
-   ![Contents of the Images folder](/assets/images/blog/ss_nano_container_images_content.png)
+   ![Contents of the Images folder](/assets/images/screenshots/ss_nano_container_images_content.png)
 2. Inside that folder a sub-folder called **files** is created and the image is expanded there.  
-   ![The contents of an Image files folder](/assets/images/blog/ss_nano_container_image_files.png)
+   ![The contents of an Image files folder](/assets/images/screenshots/ss_nano_container_image_files.png)
 3. Another sub-folder called **hives** is created which contains the default registry hives for the image.  
-   ![The Image registry hives](/assets/images/blog/ss_nano_container_image_hives.png)
+   ![The Image registry hives](/assets/images/screenshots/ss_nano_container_image_hives.png)
 4. Two metadata files are written – **Metadata.json** and **Version.wcx**.  
-   ![Image metadata](/assets/images/blog/ss_nano_container_image_metadata.png)
+   ![Image metadata](/assets/images/screenshots/ss_nano_container_image_metadata.png)
 5. Finally, the image is added to the list of container images available for new containers.  
-   ![All Base OS images installed](/assets/images/blog/ss_nano_containers_installedall.png)
+   ![All Base OS images installed](/assets/images/screenshots/ss_nano_containers_installedall.png)
 
 I have tried using **Install.wim** from the ISO, **NanoServer.wim** from the ISO, and the **Core.wim** downloaded via the Core-edition container install script. Note that `Install.wim` on the TP3 ISO still reports **Windows Server 2012 R2 SERVERSTANDARDCORE** (double-checked via the version number inside the image).
 
 The **Test-ContainerImage** cmdlet can be used to identify "problems" with container images:
 
-[![Testing Containers](/assets/images/blog/ss_nano_containers_testcontainers.png)](/assets/images/blog/ss_nano_containers_testcontainers.png)
+[![Testing Containers](/assets/images/screenshots/ss_nano_containers_testcontainers.png)](/assets/images/screenshots/ss_nano_containers_testcontainers.png)
 
 None of the container images report any problems which is nice to know.
 
@@ -83,11 +83,11 @@ None of the container images report any problems which is nice to know.
 
 This is obviously where things should start to get exciting! The next step is to create a shiny new container using one of our **Base OS Images**. However, if you try and create a new container at this point a cryptic error message will occur:
 
-[![New Container? Nope!](/assets/images/blog/ss_nano_containers_newcontainerfailure.png)](/assets/images/blog/ss_nano_containers_newcontainerfailure.png)
+[![New Container? Nope!](/assets/images/screenshots/ss_nano_containers_newcontainerfailure.png)](/assets/images/screenshots/ss_nano_containers_newcontainerfailure.png)
 
 I don't know what causes this, but if you reboot your Nano Server VM the error goes away and you should be able to successfully create the container:
 
-[![First Container - making progress](/assets/images/blog/ss_nano_containers_firstcontainer.png)](/assets/images/blog/ss_nano_containers_firstcontainer.png)
+[![First Container - making progress](/assets/images/screenshots/ss_nano_containers_firstcontainer.png)](/assets/images/screenshots/ss_nano_containers_firstcontainer.png)
 
 Unfortunately only the Base OS image downloaded from Microsoft for Windows Server 2016 Core results in a valid container. It seems that certain customisations are required before an image can be _containerised_.
 
@@ -95,7 +95,7 @@ Unfortunately only the Base OS image downloaded from Microsoft for Windows Serve
 
 I'm not holding my breath here. This is what happens when the container is started:
 
-[![Starting up the Container - nope!](/assets/images/blog/ss_nano_containers_startupfailure.png)](/assets/images/blog/ss_nano_containers_startupfailure.png)
+[![Starting up the Container - nope!](/assets/images/screenshots/ss_nano_containers_startupfailure.png)](/assets/images/screenshots/ss_nano_containers_startupfailure.png)
 
 Looking closely at the text of the error it would appear that there was a mismatch between the **Container Host OS version** and that of the **Base OS version** that the container was using. This is probably because the _Container Host_ is a **Nano Server** and the **Base OS** that was downloaded was for a **Core Server**.
 
@@ -107,7 +107,7 @@ However, it may still be possible to get the Docker Engine working under Nano Se
 
 Also, it is interesting to dig around into the files that are created when the new container was created:
 
-[![Files Created with a Container](/assets/images/blog/ss_nano_containers_containerfiles.png)](/assets/images/blog/ss_nano_containers_containerfiles.png)
+[![Files Created with a Container](/assets/images/screenshots/ss_nano_containers_containerfiles.png)](/assets/images/screenshots/ss_nano_containers_containerfiles.png)
 
 When a container is created the container files are stored in the **C:\\ProgramData\\Microsoft\\Windows\\Hyper-V\\containers** folder. Unfortunately the files all binary so we aren't able to dig around in them to glean any other information.
 

@@ -7,7 +7,7 @@ tags:
   - "powershell"
   - "service-principal"
   - "azure-web-app"
-image: "/assets/images/blog/ss_webappdeploy_publishazurermwebappproject.png"
+image: "/assets/images/screenshots/ss_webappdeploy_publishazurermwebappproject.png"
 ---
 
 ## Introduction
@@ -187,7 +187,7 @@ $Credential = New-Object -TypeName PSCredential ($Username, $passwordSecure)
 
 When everything is done correctly this is what happens when you run it (with -Verbose enabled):
 
-![ss_webappdeploy_publishazurermwebappproject](/assets/images/blog/ss_webappdeploy_publishazurermwebappproject.png)
+![ss_webappdeploy_publishazurermwebappproject](/assets/images/screenshots/ss_webappdeploy_publishazurermwebappproject.png)
 
 > [!NOTE]
 > In the case above I was installing to a deployment staging slot called **offline**, so the new version of my website wouldn't have been visible in my **production** slot until I called the [Swap-AzureRmWebAppSlot](https://docs.microsoft.com/en-us/powershell/module/azurerm.websites/switch-azurermwebappslot?view=azurermps-4.1.0) cmdlet to swap the **offline** slot with my **production** slot.
