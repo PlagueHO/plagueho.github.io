@@ -3,9 +3,6 @@ layout: base
 permalink: /index.html
 title: 'Neural Flow'
 description: "The Website of Daniel Scott-Raynsford: An AI adventurer and builder."
-blog:
-  title: 'Blog'
-  intro: "My recent blog posts."
 ---
 
 <div class="wrapper">
@@ -18,7 +15,6 @@ blog:
 
   <article class="full | region">
     <div class="wrapper flow prose">
-      <h2 id="an-eleventy-starter">Neural Flow</h2>
       <p>
         Hi, I'm Daniel, I'm a software engineer and AI enthusiast.
       </p>
@@ -29,19 +25,27 @@ blog:
     </div>
   </article>
 
-  <section class="full | region">
+  {# --- Featured Latest Post --- #}
+  {% set latestPost = collections.allPosts[0] %}
+  <section class="region region-space-l">
     <div class="wrapper flow prose">
-      <h2>{{ blog.title }}</h2>
-      {% if blog.intro %}
-        <p>{{ blog.intro }}</p>
-      {% endif %}
-      <div class="feature |  region region-space-l">
+      {% set item = latestPost %}
+      {% set headingLevel = "h2" %}
+      {% include "partials/card-blog.njk" %}
+    </div>
+  </section>
+
+  {# --- Recent Posts --- #}
+  <section class="region region-space-l">
+    <div class="wrapper flow prose">
+      <h2 class="gradient-text-linear">Recent Posts</h2>
+      <div class="feature | region region-space-l">
         <custom-masonry layout="50-50">
-          {% set itemList = collections.allPosts %}
-					{% asyncEach item in itemList.slice(0, 4) %}
+          {% set itemList = collections.allPosts.slice(1, 5) %}
+          {% asyncEach item in itemList %}
             {% set headingLevel = "h3" %}
-						{% include "partials/card-blog.njk" %}
-					{% endeach %}
+            {% include "partials/card-blog.njk" %}
+          {% endeach %}
         </custom-masonry>
       </div>
     </div>

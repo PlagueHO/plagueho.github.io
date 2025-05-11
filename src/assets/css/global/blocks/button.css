@@ -100,6 +100,20 @@
   --button-text-transform: uppercase;
   --button-tracking: var(--tracking-wide);
 }
+
+.button[data-small-button-tag] {
+  --button-border-width: 1px;
+  --button-radius: var(--border-radius-small);
+  --button-font-size: var(--size-step-min-2);
+  --button-padding: var(--space-3xs) var(--space-xs);
+  --button-text-transform: lowercase;
+  --button-tracking: var(--tracking-wide);
+  --button-gap: var(--space-3xs);
+  background: var(--gradient-linear-primary);
+  color: var(--color-light);
+  border-color: color-mix(in oklab, var(--color-primary) 70%, black 30%);
+}
+
 /* Radius variants */
 .button[data-button-radius='hard'] {
   --button-radius: 0;

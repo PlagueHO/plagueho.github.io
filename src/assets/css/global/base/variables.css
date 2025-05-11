@@ -30,6 +30,11 @@
     var(--color-secondary) 50%,
     var(--color-tertiary) 100%
   );
+  --gradient-linear-primary: linear-gradient(
+    45deg,
+    var(--color-primary) 0%,
+    color-mix(in oklab, var(--color-primary) 50%, black 50%) 100%
+  );
 
   --color-light: var(--color-gray-100);
   --color-dark: var(--color-gray-900);
