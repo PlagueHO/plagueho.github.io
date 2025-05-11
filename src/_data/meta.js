@@ -1,7 +1,7 @@
 export const url = process.env.URL || 'http://localhost:8080';
 // Extract domain from `url`
 export const domain = new URL(url).hostname;
-export const siteName = 'Unlocking AI';
+export const siteName = 'Neural Flow';
 export const siteDescription = 'Eleventy starter for building modern, resilient websites';
 export const siteType = 'Person'; // schema
 export const locale = 'en_EN';
@@ -28,7 +28,7 @@ export const opengraph_default_alt =
   "Visible content: The development blog of Daniel Scott-Raynsford"; // alt text for default meta image"
 export const blog = {
   // RSS feed
-  name: 'Unlocking AI Blog',
+  name: 'Neural Flow Blog',
   description: 'Generative AI, Agentic system, software development, Azure architecture, SaaS and much more.',
   // feed links are looped over in the head. You may add more to the array.
   feedLinks: [

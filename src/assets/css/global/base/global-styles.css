@@ -49,9 +49,9 @@ h3 {
 }
 
 blockquote {
-  padding: var(--space-m-l);
+  padding: var(--space-s-m);
   border-inline-start: 0.5rem solid var(--color-primary);
-  font-size: var(--size-step-1);
+  font-size: var(--size-step-min-1) 
 }
 
 blockquote > * + * {
@@ -61,7 +61,7 @@ blockquote > * + * {
 blockquote :last-child {
   font-family: var(--font-base);
   font-style: normal;
-  font-size: var(--size-step-1);
+  font-size: var(--size-step-min-1)
 }
 
 input,

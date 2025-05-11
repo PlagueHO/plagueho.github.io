@@ -39,19 +39,19 @@
       "value": "#161616"
     },
     {
-      "name": "Pink",
-      "value": "#dd4462"
+      "name": "Purple",
+      "value": "#9b5ed4"
     },
     {
-      "name": "Pink Subdued",
-      "value": "#ce5769"
+      "name": "Purple Subdued",
+      "value": "#9667c4"
     },
     {
-      "name": "Blue",
+      "name": "Teal",
       "value": "#4467dd"
     },
     {
-      "name": "Blue Subdued",
+      "name": "Teal Subdued",
       "value": "#4d6cc8"
     },
     {
@@ -149,6 +149,6 @@
     {
       "name": "Opalescent Olive",
       "value": "#8F9779"
-    } 
+    }
   ]
 }
