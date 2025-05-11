@@ -16,6 +16,7 @@ customGradients:
   - property: '--gradient-rainbow'
   - property: '--gradient-conic'
   - property: '--gradient-stripes'
+  - property: '--gradient-linear'
 ---
 
 <!-- Inspired by: https://stevenwoodson.com/blog/eleventy-style-guide-generator-step-by-step-guide-adding-to-an-existing-site/ -->
@@ -188,6 +189,65 @@ customGradients:
           </td>
         </tr>
       {%- endfor -%}
+    </table>
+  </section>
+
+  <section class="flow region">
+    <h2 class="heading-line">Blockquotes</h2>
+
+    <table style="width:100%; border-collapse:separate; border:none;">
+      <tr>
+        <th style="text-align:left; border:none; width:50%;">Markdown</th>
+        <th style="text-align:left; border:none;">Rendered</th>
+      </tr>
+      <tr>
+        <td style="vertical-align:top; border:none;">
+          <pre><code>&gt; This is a standard blockquote.
+&gt; It's great for highlighting quotes or references.</code></pre>
+        </td>
+        <td style="vertical-align:top; border:none;">
+          {{ "
+> This is a standard blockquote.
+> It's great for highlighting quotes or references.
+" | markdownFormat | safe }}
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top; border:none;">
+          <pre><code>&gt; [!NOTE]
+&gt; This is a note callout. Use this for helpful tips or extra info!</code></pre>
+        </td>
+        <td style="vertical-align:top; border:none;">
+          {{ "
+> [!NOTE]
+> This is a note callout. Use this for helpful tips or extra info!
+" | markdownFormat | safe }}
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top; border:none;">
+          <pre><code>&gt; [!WARNING]
+&gt; This is a warning callout. Use this to alert readers to something important!</code></pre>
+        </td>
+        <td style="vertical-align:top; border:none;">
+          {{ "
+> [!WARNING]
+> This is a warning callout. Use this to alert readers to something important!
+" | markdownFormat | safe }}
+        </td>
+      </tr>
+      <tr>
+        <td style="vertical-align:top; border:none;">
+          <pre><code>&gt; [!IMPORTANT]
+&gt; This is an important callout. Use this for critical information!</code></pre>
+        </td>
+        <td style="vertical-align:top; border:none;">
+          {{ "
+> [!IMPORTANT]
+> This is an important callout. Use this for critical information!
+" | markdownFormat | safe }}
+        </td>
+      </tr>
     </table>
   </section>
 </article>

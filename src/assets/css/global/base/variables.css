@@ -24,6 +24,12 @@
     var(--color-secondary) 0 92%,
     var(--color-tertiary) 0 100%
   );
+  --gradient-linear: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    var(--color-secondary) 50%,
+    var(--color-tertiary) 100%
+  );
 
   --color-light: var(--color-gray-100);
   --color-dark: var(--color-gray-900);
