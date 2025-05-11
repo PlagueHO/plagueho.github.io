@@ -147,3 +147,22 @@ a:not([class]):hover {
     display: none;
   }
 }
+
+/* ─── Block-quote call-outs ───────────────────────────── */
+blockquote[data-callout] {
+  position: relative;
+  padding-block-start: var(--space-s);
+}
+
+blockquote[data-callout]::before {
+  content: attr(data-callout);          /* prints NOTE / WARNING / IMPORTANT */
+  display: block;
+  font-weight: var(--font-bold);
+  margin-block-end: var(--space-3xs);
+  text-transform: uppercase;
+}
+
+/* colour variants */
+.blockquote--note     { border-inline-start-color: var(--color-success, #4caf50); }
+.blockquote--warning  { border-inline-start-color: var(--color-warning, #ff9800); }
+.blockquote--important{ border-inline-start-color: var(--color-danger,  #f44336); }

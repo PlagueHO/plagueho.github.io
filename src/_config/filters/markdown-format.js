@@ -1,9 +1,5 @@
 // by Chris Burnell: https://chrisburnell.com/article/some-eleventy-filters/#markdown-format
 
-import markdownParser from 'markdown-it';
+import {markdownLib} from '../plugins/markdown.js';
 
-const markdown = markdownParser();
-
-export const markdownFormat = string => {
-  return markdown.render(string);
-};
+export const markdownFormat = string => markdownLib.render(string);

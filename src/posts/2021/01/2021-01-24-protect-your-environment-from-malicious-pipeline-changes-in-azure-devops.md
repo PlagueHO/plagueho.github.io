@@ -195,7 +195,8 @@ My production Azure Key Vault
 
 In my case, I have two environments, QA and PRODUCTION. So, I created a resource group and a Key Vault for each. This is so that I can implement different levels of controls over QA to PRODUCTION.
 
-> **Note:** As part of this process you should also use other techniques such as [governance with Azure Policy](https://docs.microsoft.com/en-us/azure/key-vault/general/azure-policy?tabs=certificates), [sending logs to Azure Log Analytics](https://docs.microsoft.com/en-us/azure/key-vault/general/howto-logging) to harden and protect your Key Vaults. But this is beyond the scope of this post.
+> [!NOTE]
+> As part of this process you should also use other techniques such as [governance with Azure Policy](https://docs.microsoft.com/en-us/azure/key-vault/general/azure-policy?tabs=certificates), [sending logs to Azure Log Analytics](https://docs.microsoft.com/en-us/azure/key-vault/general/howto-logging) to harden and protect your Key Vaults. But this is beyond the scope of this post.
 
 Next, I need to [create a Service Connection to Azure Resource Manager to the resource group](https://docs.microsoft.com/en-us/azure/devops/pipelines/library/service-endpoints?view=azure-devops&tabs=yaml#create-a-service-connection) I created the Key Vault in:
 
@@ -299,7 +300,8 @@ However, you can only approve when you're a member of the Approvers that were sp
 
 The final improvement is to make use of the [Azure DevOps Environments feature](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/environments?view=azure-devops). This allows us to define an environment to target when using a [deployment job](https://docs.microsoft.com/en-us/azure/devops/pipelines/process/deployment-jobs?view=azure-devops) of an Azure DevOps Multi-stage YAML pipeline. With the environment defined, we can assign **approvals & checks** to that, just like we did with the Service Connections and limit permissions to the environment to specific pipelines.
 
-> Note: An environment can be used to define deployment targets for specific resources types such as Kubernetes namespaces and Virtual Machines. However, these are not required and you can still get a good deal of value from using environments without defining resources. See [this blog post](https://devblogs.microsoft.com/premier-developer/azure-devops-pipelines-multi-stage-pipelines-and-yaml-for-continuous-delivery/) for more details.
+> [!NOTE]
+> An environment can be used to define deployment targets for specific resources types such as Kubernetes namespaces and Virtual Machines. However, these are not required and you can still get a good deal of value from using environments without defining resources. See [this blog post](https://devblogs.microsoft.com/premier-developer/azure-devops-pipelines-multi-stage-pipelines-and-yaml-for-continuous-delivery/) for more details.
 
 In my case, I defined two environments, one for QA and one for PRODUCTION:
 

@@ -93,7 +93,7 @@ resource azureMachineLearningServicePrincipal 'Microsoft.Graph/servicePrincipals
 > [!NOTE]
 > If you don't know the `appId` of the Enterprise Application you want to assign, you can find it in the Azure portal by going to `Microsoft Entra ID` > `Enterprise applications` and searching for `Azure Machine Learning`. The `appId` is the `Application ID` of the Enterprise Application. You might need to remove the `Application type == Enterprise Applications` filter to see the `Azure Machine Learning` Enterprise Application in the list.
 
-![The Azure Machine Learning enterprise application in Entra ID](ss-entra-id-enterprise-app-azure-machine-learning.png 'The Azure Machine Learning enterprise application in Entra ID')
+![The Azure Machine Learning enterprise application in Entra ID](/assets/images/screenshots/ss-entra-id-enterprise-app-azure-machine-learning.png 'The Azure Machine Learning enterprise application in Entra ID')
 
 ### Step 4: Create the role assignment
 
