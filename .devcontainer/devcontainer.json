@@ -1,7 +1,7 @@
 {
   "name": "Eleventy Dev Container",
-  // Use Microsoft’s pre-built Node image – perfect for Codespaces
-  "image": "mcr.microsoft.com/devcontainers/node:22",
+  // Use Microsoft’s pre-built image https://mcr.microsoft.com/en-us/artifact/mar/devcontainers/javascript-node/tags
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
 
   "customizations": {
     "vscode": {
