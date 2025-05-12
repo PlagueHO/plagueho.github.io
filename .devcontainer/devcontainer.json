@@ -11,9 +11,10 @@
     "customizations": {
       "vscode": {
         "extensions": [
-          "ms-vscode.vscode-node-graphql",   // Node helpers
-          "esbenp.prettier-vscode",          // Formatting
-          "dbaeumer.vscode-eslint"           // Linting
+            "ms-vscode.vscode-node-graphql",
+            "esbenp.prettier-vscode",
+            "dbaeumer.vscode-eslint",
+            "GitHub.copilot-chat"
         ]
       }
     },
