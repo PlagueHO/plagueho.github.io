@@ -1,5 +1,5 @@
 ---
-title: About
+title: "Neural Flow: About"
 permalink: /about/index.html
 description: About Daniel Scott-Raynsford
 layout: page
