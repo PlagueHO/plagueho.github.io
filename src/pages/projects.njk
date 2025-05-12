@@ -25,13 +25,16 @@ permalink: 'projects/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNu
     </div>
   </article>
 
-  <custom-masonry layout="50-50">
-		{% asyncEach item in pagination.items %}
-      {% set headingLevel = "h3" %}
-      {% set headingTextStep = "text-step-0" %}
-			{% include "partials/card-project.njk" %}
-		{% endeach %}
-	</custom-masonry>
+  {# --- Single Column Project Cards --- #}
+  {% asyncEach item in pagination.items %}
+    <section class="region region-space-l">
+      <div class="wrapper flow prose">
+        {% set headingLevel = "h3" %}
+        {% set headingTextStep = "text-step-0" %}
+        {% include "partials/card-project.njk" %}
+      </div>
+    </section>
+  {% endeach %}
 
   <!-- set collection to paginate -->
   {% set collectionToPaginate = collections.projects %}

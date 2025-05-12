@@ -22,6 +22,7 @@
       "@type": "Person",
       "name": "{{ meta.author.name }}"
     },
-    "datePublished": "{{ date | toIsoString }}"
+    "datePublished": "{{ date | toIsoString }}",
+    "isArchived": "{{ isArchived | default(false) | dump }}"
   }
 </script>

@@ -10,6 +10,7 @@
     "description": "{{ discover.description or description or meta.siteDescription }}",
     "image": "{{ meta.url }}{% if discover.image %}/assets/images/{{ discover.image }}{% else %}{{ meta.opengraph_default }}{% endif %}",
     "inLanguage": "{{ meta.locale }}",
-    "projectUrl": "{{ projectUrl }}"
+    "projectUrl": "{{ projectUrl }}",
+    "isArchived": "{{ isArchived | default(false) | dump }}"
   }
 </script>
