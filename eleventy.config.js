@@ -15,7 +15,7 @@ dotenv.config();
 import yaml from 'js-yaml';
 
 //  config import
-import {getAllPosts, showInSitemap, tagList} from './src/_config/collections.js';
+import {getAllPosts, getAllProjects, showInSitemap, tagList} from './src/_config/collections.js';
 import events from './src/_config/events.js';
 import filters from './src/_config/filters.js';
 import plugins from './src/_config/plugins.js';
@@ -29,12 +29,12 @@ export default async function (eleventyConfig) {
   eleventyConfig.addLayoutAlias('base', 'base.njk');
   eleventyConfig.addLayoutAlias('page', 'page.njk');
   eleventyConfig.addLayoutAlias('post', 'post.njk');
+  eleventyConfig.addLayoutAlias('project', 'project.njk');
   eleventyConfig.addLayoutAlias('tags', 'tags.njk');
 
   //	---------------------  Collections
   eleventyConfig.addCollection('allPosts', getAllPosts);
-  eleventyConfig.addCollection('showInSitemap', showInSitemap);
-  eleventyConfig.addCollection('tagList', tagList);
+  eleventyConfig.addCollection('allProjects', getAllProjects);
   eleventyConfig.addCollection("livePosts", function(collectionApi) {
     return collectionApi.getFilteredByTag("posts") // Or your primary posts collection
       .filter(item => !item.data.isArchived)
@@ -46,6 +46,8 @@ export default async function (eleventyConfig) {
       .filter(item => item.data.isArchived === true)
       .reverse(); // Assuming you want newest first
   });
+  eleventyConfig.addCollection('showInSitemap', showInSitemap);
+  eleventyConfig.addCollection('tagList', tagList);
   
   // ---------------------  Plugins
   eleventyConfig.addPlugin(plugins.htmlConfig);

@@ -1,8 +1,12 @@
 ---
 layout: base
-permalink: projects/index.html
 title: 'Neural Flow: Projects'
 description: "The AI or development projects I work on, maintain or contribute to."
+pagination:
+  data: collections.allProjects
+  size: 10
+  alias: projects
+permalink: 'projects/{% if pagination.pageNumber >=1 %}page-{{ pagination.pageNumber + 1 }}/{% endif %}index.html'
 ---
 
 <div class="wrapper">
@@ -20,4 +24,23 @@ description: "The AI or development projects I work on, maintain or contribute t
       </p>
     </div>
   </article>
+
+  <custom-masonry layout="50-50">
+		{% asyncEach item in pagination.items %}
+      {% set headingLevel = "h3" %}
+      {% set headingTextStep = "text-step-0" %}
+			{% include "partials/card-project.njk" %}
+		{% endeach %}
+	</custom-masonry>
+
+  <!-- set collection to paginate -->
+  {% set collectionToPaginate = collections.projects %}
+  <!-- set target pagination settings in meta.js -->
+  {% set metaKey = "projects" %}
+  <!-- if the number of items in the collection is greater than the number of items shown on one page -->
+  {% if collectionToPaginate.length > pagination.size %}
+    <!-- include pagination -->
+    {% include 'partials/pagination.njk' %}
+  {% endif %}
+
 </div>

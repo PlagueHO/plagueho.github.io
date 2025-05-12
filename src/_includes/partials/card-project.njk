@@ -1,0 +1,13 @@
+{% set headingLevel = headingLevel | default("h2") %}
+{% set headingTextStep = headingTextStep | default("text-step-2") %}
+
+<custom-card clickable>
+  <{{ headingLevel }} slot="headline" class="{{ headingTextStep }}">
+    <a href="{{ item.url | url }}">{{ item.data.title }}</a>
+  </{{ headingLevel }}>
+  <div slot="content" webc:nokeep>{{ item.data.description | markdownFormat | safe }}</div>
+</custom-card>
+
+{% css "local" %}
+  {% include "css/custom-card.css" %}
+{% endcss %}
