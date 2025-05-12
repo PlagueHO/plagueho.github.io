@@ -4,8 +4,6 @@ description: "The Cosmos DB PowerShell Module is a module for working with data 
 projectUrl: "https://github.com/PlagueHO/CosmosDB"
 ---
 
-## Cosmos DB PowerShell Module
-
 This PowerShell module provides cmdlets for accessing Cosmos DB collections via the [Azure Cosmos DB REST API](https://learn.microsoft.com/rest/api/cosmos-db/).
 It makes it easy to perform CRUD operations on Cosmos DB collections and documents and related entities while also implementing role-based access control or token-based authentication.
 
