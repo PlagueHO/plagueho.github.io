@@ -1,19 +1,19 @@
 {# Render a small icon for a given feature string. Expand as needed! #}
 {% set iconMap = {
-  "Azure": "azure",
-  "Azure AI": "azure-ai",
-  "Bicep": "bicep",
-  "C#": "csharp",
-  ".NET": "dotnet",
-  "Node.js": "nodejs",
-  "Python": "python",
-  "PowerShell": "powershell",
-  "TypeScript": "typescript",
-  "Semantic Kernel": "semantickernel"
+  "Azure": "azure.svg",
+  "Azure AI": "azure-ai.svg",
+  "Bicep": "bicep.png",
+  "C#": "csharp.svg",
+  "DotNet": "dotnet.png",
+  "Python": "python.svg",
+  "PowerShell": "powershell.png",
+  "TypeScript": "typescript.svg",
+  "Semantic Kernel": "semantickernel.png"
 } %}
 {% set icon = iconMap[feature] %}
 {% if icon %}
   <span class="button" data-small-button-tag data-icon-only>
-    <img src="/assets/icons/{{ icon }}.svg" alt="{{ feature }} icon" />
+    <img src="/assets/icons/{{ icon }}" alt="{{ feature }} icon" />
   </span>
 {% endif %}
+

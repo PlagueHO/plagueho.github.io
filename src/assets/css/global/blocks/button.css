@@ -120,34 +120,38 @@
   --button-padding: 0;
   /* No gap needed if there's only an icon */
   --button-gap: 0;
-  /* Ensure the icon is centered within the button */
-  justify-content: center; /* align-items: center is inherited from .button */
+  /* Change display to inline-block for better dimension control */
+  display: inline-block; 
+  vertical-align: middle; /* Helps align with adjacent text like "Uses:" */
   /* Make background transparent */
   background: transparent;
   /* Remove the border */
   border-width: 0;
   /* Set explicit size for the button container to match the image */
-  width: 64px;
-  height: 64px;
-  /* Override line-height to prevent it from constricting the container */
-  line-height: normal; /* or 'initial' or even '64px' */
+  width: 32px;
+  height: 32px;
+  /* Override line-height and font-size to prevent typographic interference */
+  line-height: 32px; /* Match height */
+  font-size: 0; /* Prevent text-based line height issues */
   /* Prevent the button from shrinking in a flex container */
-  flex-shrink: 0;
+  flex-shrink: 0; /* Still useful if parent .project-features is flex */
   /* Reset typographic properties that might interfere */
   text-box-trim: initial;
   text-box-edge: initial;
-  /* Optional: if there's any box-shadow from general button styles you want to remove for these */
-  /* box-shadow: none; */
+  /* Attempt to force visibility */
+  overflow: visible !important; 
+  /* box-shadow: none; */ 
 }
 
 .button[data-small-button-tag][data-icon-only] img {
   /* Set icon size */
-  height: 64px;
-  width: 64px;
+  height: 32px;
+  width: 32px;
   /* Ensure the image scales correctly within its container if needed, though direct sizing is preferred here */
   object-fit: contain;
-  /* Change display to block to remove potential inline spacing issues */
-  display: block;
+  display: block; /* Make image a block element within its container */
+  /* Attempt to force visibility */
+  overflow: visible !important;
 }
 
 /* Styles for the container of project feature icons */

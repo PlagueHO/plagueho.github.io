@@ -6,8 +6,9 @@
     <a href="{{ item.url | url }}">{{ item.data.title }}</a>
   </{{ headingLevel }}>
   <div slot="content" webc:nokeep>
+    {# "Uses:" text and icons go here, before the description #}
     {% if item.data.features and item.data.features.length > 0 %}
-      <div class="project-features">
+      <div class="project-features" style="margin-bottom: 0.5em;">Uses: 
         {% for feature in item.data.features %}
           {% include "partials/feature-icon.njk" %}
         {% endfor %}
