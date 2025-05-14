@@ -11,6 +11,7 @@
     "image": "{{ meta.url }}{% if discover.image %}/assets/images/{{ discover.image }}{% else %}{{ meta.opengraph_default }}{% endif %}",
     "inLanguage": "{{ meta.locale }}",
     "projectUrl": "{{ projectUrl }}",
-    "isArchived": "{{ isArchived | default(false) | dump }}"
+    "isArchived": "{{ isArchived | default(false) | dump }}",
+    "features": {{ features | dump | default("[]") }}
   }
 </script>

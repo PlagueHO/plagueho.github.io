@@ -114,6 +114,51 @@
   border-color: color-mix(in oklab, var(--color-primary) 70%, black 30%);
 }
 
+/* Styles for icon-only version of small button tags */
+.button[data-small-button-tag][data-icon-only] {
+  /* Remove padding */
+  --button-padding: 0;
+  /* No gap needed if there's only an icon */
+  --button-gap: 0;
+  /* Ensure the icon is centered within the button */
+  justify-content: center; /* align-items: center is inherited from .button */
+  /* Make background transparent */
+  background: transparent;
+  /* Remove the border */
+  border-width: 0;
+  /* Set explicit size for the button container to match the image */
+  width: 64px;
+  height: 64px;
+  /* Override line-height to prevent it from constricting the container */
+  line-height: normal; /* or 'initial' or even '64px' */
+  /* Prevent the button from shrinking in a flex container */
+  flex-shrink: 0;
+  /* Reset typographic properties that might interfere */
+  text-box-trim: initial;
+  text-box-edge: initial;
+  /* Optional: if there's any box-shadow from general button styles you want to remove for these */
+  /* box-shadow: none; */
+}
+
+.button[data-small-button-tag][data-icon-only] img {
+  /* Set icon size */
+  height: 64px;
+  width: 64px;
+  /* Ensure the image scales correctly within its container if needed, though direct sizing is preferred here */
+  object-fit: contain;
+  /* Change display to block to remove potential inline spacing issues */
+  display: block;
+}
+
+/* Styles for the container of project feature icons */
+.project-features {
+  display: flex;
+  flex-wrap: wrap; /* Allow icons to wrap to the next line if many */
+  gap: 0.5em;      /* Consistent spacing between icons */
+  align-items: center; /* Vertically align icons if they have different heights (though they shouldn't with current setup) */
+  margin-top: 0.5em; /* Default top margin for spacing from content above */
+}
+
 /* Radius variants */
 .button[data-button-radius='hard'] {
   --button-radius: 0;

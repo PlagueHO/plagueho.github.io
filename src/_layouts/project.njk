@@ -7,12 +7,21 @@ schema: ProjectPosting
   <div class="wrapper flow prose">
     <h1 class="gradient-text-linear">{{ title }}</h1>
 
+    {% if features and features.length > 0 %}
+      <div class="project-features" style="margin-bottom: 1em;"> {# Specific bottom margin for this page layout #}
+        {% for feature in features %}
+          {% include "partials/feature-icon.njk" %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
     {% if image %}
       <!-- image -->
       {% image image, alt or "", credit, "eager", "feature" %}
     {% endif %}
 
     {{ content | safe }}
+
     {% include 'partials/edit-on.njk' %}
   </div>
 

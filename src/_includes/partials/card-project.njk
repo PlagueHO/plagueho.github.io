@@ -5,7 +5,16 @@
   <{{ headingLevel }} slot="headline" class="{{ headingTextStep }}">
     <a href="{{ item.url | url }}">{{ item.data.title }}</a>
   </{{ headingLevel }}>
-  <div slot="content" webc:nokeep>{{ item.data.description | markdownFormat | safe }}</div>
+  <div slot="content" webc:nokeep>
+    {% if item.data.features and item.data.features.length > 0 %}
+      <div class="project-features">
+        {% for feature in item.data.features %}
+          {% include "partials/feature-icon.njk" %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {{ item.data.description | markdownFormat | safe }}
+  </div>
 </custom-card>
 
 {% css "local" %}

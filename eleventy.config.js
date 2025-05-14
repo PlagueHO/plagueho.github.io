@@ -15,6 +15,7 @@ dotenv.config();
 import yaml from 'js-yaml';
 
 //  config import
+// Revert to using getAllProjects directly
 import {getAllPosts, getAllProjects, showInSitemap, tagList} from './src/_config/collections.js';
 import events from './src/_config/events.js';
 import filters from './src/_config/filters.js';
@@ -34,6 +35,7 @@ export default async function (eleventyConfig) {
 
   //	---------------------  Collections
   eleventyConfig.addCollection('allPosts', getAllPosts);
+  // Revert to the simpler definition, as sorting is now in collections.js
   eleventyConfig.addCollection('allProjects', getAllProjects);
   eleventyConfig.addCollection("livePosts", function(collectionApi) {
     return collectionApi.getFilteredByTag("posts") // Or your primary posts collection
