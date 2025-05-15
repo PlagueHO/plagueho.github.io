@@ -4,19 +4,55 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday" # Run updates on Sundays
+      time: "06:00" # UTC time for updates
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
     labels:
       - "dependencies"
       - "npm"
+    reviewers:
+      - plagueho # Assign PRs to yourself or your team
+    assignees:
+      - plagueho
+    groups:
+      npm-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    ignore:
+      - dependency-name: "left-pad"
+        versions: ["*"] # Example: ignore left-pad updates
+    allow:
+      - dependency-type: "direct"
+      - dependency-type: "indirect"
+    security-updates: true # Enable security updates
+    versioning-strategy: widen # Or "increase", "lockfile-only", etc.
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "sunday"
+      time: "06:00"
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
     labels:
       - "dependencies"
       - "github-actions"
+    reviewers:
+      - plagueho
+    assignees:
+      - plagueho
+    groups:
+      actions-minor-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+    security-updates: true
