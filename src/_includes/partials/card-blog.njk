@@ -4,8 +4,16 @@
 {% set headingTextStep = headingTextStep | default("text-step-2") %}
 
 <custom-card clickable>
-  <{{ headingLevel }} slot="headline" class="{{ headingTextStep }}">
+  <{{ headingLevel }} slot="headline" class="{{ headingTextStep }} card-headline-flex"> {# Added new class for flex styling #}
     <a href="{{ item.url | url }}">{{ item.data.title }}</a>
+    {# Add feature icons here if they exist for the blog post item #}
+    {% if item.data.features and item.data.features.length > 0 %}
+      <div class="project-features card-features-inline"> {# New class for specific styling if needed #}
+        {% for feature in item.data.features %}
+          {% include "partials/feature-icon.njk" %}
+        {% endfor %}
+      </div>
+    {% endif %}
   </{{ headingLevel }}>
   <span slot="date">{%- if item.data.isArchived -%}<span class="button" data-small-button data-button-variant='tertiary'>Archived</span>{%- endif -%}{%- if item.data.draft -%}<span class="button" data-small-button data-button-variant='tertiary'>draft</span>{%- endif %} {% include "partials/date.njk" %}</span>
   {% if showTags and item.data.tags.length > 1 %}

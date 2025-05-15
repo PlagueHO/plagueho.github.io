@@ -22,7 +22,22 @@ custom-card ::selection {
 
 custom-card :is(h2, h3) {
   --flow-space: var(--space-m);
-  grid-row: headline;
+  grid-row: headline; /* Assigns H2/H3 to the 'headline' grid row */
+}
+
+/* New styles for making the headline a flex container */
+custom-card .card-headline-flex {
+  display: flex;
+  justify-content: space-between; /* Pushes title to left, features to right */
+  align-items: center; /* Vertically aligns title and features */
+  gap: var(--space-s); /* Adds a small gap between title and features if they get close */
+}
+
+/* Adjustments for project-features when inside the headline */
+custom-card .card-headline-flex .project-features {
+  margin-top: 0; /* Remove top margin if it was set for block display */
+  margin-bottom: 0; /* Remove bottom margin if it was set for block display */
+  /* The existing .project-features already uses flex, which is good */
 }
 
 custom-card :is(h2, h3) a {
@@ -30,7 +45,7 @@ custom-card :is(h2, h3) a {
 }
 
 custom-card > :is(picture, figure) {
-  grid-row: image;
+  grid-row: image; /* Assigns picture/figure to the 'image' grid row */
   --flow-space: 0;
 }
 
@@ -43,17 +58,22 @@ custom-card img {
 }
 
 custom-card > .meta {
-  grid-row: meta;
+  grid-row: meta; /* Assigns elements with class 'meta' to the 'meta' grid row */
   font-size: var(--size-step-min-1);
 }
 
+/* Target the div that receives slot="content" */
+custom-card > div:not(.meta) { /* Assuming .meta is the only other direct child div you might have */
+  grid-row: desc; /* Place it in the 'desc' row */
+}
+
 custom-card > p {
-  grid-row: desc;
+  grid-row: desc; /* Assigns P tags to the 'desc' grid row */
   font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-1) */
 }
 
 custom-card > footer {
-  grid-row: footer;
+  grid-row: footer; /* Assigns footer elements to the 'footer' grid row */
   font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-2) */
 }
 
