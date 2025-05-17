@@ -25,6 +25,9 @@ from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 import semantic_kernel as sk
 from semantic_kernel.connectors.ai.open_ai import AzureChatCompletion
 
+azure_openai_deployment = "<your_deployment_name>" # The name of your Azure OpenAI deployment
+azure_openai_endpoint = "https://<your_endpoint>.openai.azure.com" # The endpoint for your Azure OpenAI Service
+
 kernel = sk.Kernel() # Create the Semantic Kernel instance
 
 # Create the Entra ID token provider using the DefaultAzureCredential
