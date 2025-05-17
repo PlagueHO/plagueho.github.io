@@ -1,7 +1,7 @@
 ---
 title: "Assigning Roles for Azure Enterprise Apps using Bicep"
 date: 2025-05-11
-description: "In this post, I walk you through a practical solution for assigning RBAC roles to Azure Enterprise Applications—like Azure Machine Learning—using Bicep and the Microsoft Graph extension. You'll learn why multi-tenant apps require a different approach, how to use Bicep's extensibility features to reference service principals, and how to automate role assignments securely and repeatably. If you're building secure, zero-trust Azure environments or working with multi-tenant SaaS in Entra ID, this guide will help you confidently automate permissions and avoid common pitfalls."
+description: "Learn a practical solution for assigning RBAC roles to Azure Enterprise Applications—like Azure AI Foundry & Azure ML—using Bicep and the Microsoft Graph extension for Bicep."
 tags: 
   - "bicep"
   - "azure"
