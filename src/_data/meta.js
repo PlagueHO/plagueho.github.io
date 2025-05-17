@@ -2,7 +2,7 @@ export const url = process.env.URL || 'http://localhost:8080';
 // Extract domain from `url`
 export const domain = new URL(url).hostname;
 export const siteName = 'Neural Flow';
-export const siteDescription = 'Eleventy starter for building modern, resilient websites';
+export const siteDescription = 'Neural Flow: AI, Agents and Azure. The Website and blog of Daniel Scott-Raynsford: An AI adventurer and builder.';
 export const siteType = 'Person'; // schema
 export const locale = 'en_EN';
 export const lang = 'en';
