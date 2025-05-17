@@ -87,4 +87,3 @@ export const greenweb = {
     {domain: 'netlify.com', serviceType: 'cdn'}
   ]
 };
-export const easteregg = false;

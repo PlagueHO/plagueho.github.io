@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       URL: https://danielscottraynsford.com
+      CLARITY_PROJECT_ID: i9o1b9f1tp
     steps:
       - uses: actions/checkout@v4
 

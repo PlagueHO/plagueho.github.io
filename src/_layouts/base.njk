@@ -40,6 +40,8 @@
     {% include "head/meta-info.njk" %}
   </head>
 
+  <script type="module" src="/assets/scripts/clarity.js"></script>
+
   <body class="{{ layout }}">
     {% set indicateActiveHome %}
       {% if page.url == "/" %}
@@ -51,9 +53,5 @@
     <main id="main" class="flow">{{ content | safe }}</main>
 
     {% include "partials/footer.njk" %}
-    {%- if meta.easteregg -%}
-      <script type="module" src="/assets/scripts/components/custom-easteregg.js"></script>
-      <custom-easteregg></custom-easteregg>
-    {%- endif -%}
   </body>
 </html>
