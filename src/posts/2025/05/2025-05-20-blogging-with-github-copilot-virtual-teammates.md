@@ -1,6 +1,6 @@
 ---
-title: "Coding with GitHub Copilot's Virtual Teammates"
-date: 2023-12-01
+title: "Blogging with GitHub Copilot's Virtual Teammates"
+date: 2025-05-20
 description: "Exploring how GitHub Copilot Coding Agent works as a virtual teammate to help develop code in your repositories, fix issues, and implement features."
 tags: 
   - "github"
@@ -104,3 +104,11 @@ This blog post was created by:
 The entire process was handled by GitHub Copilot Coding Agent with minimal human intervention, demonstrating the capability of AI to understand repository structure, content requirements, and writing style guidelines.
 
 > **Note**: This experiment demonstrates the capabilities of GitHub Copilot Coding Agent for educational purposes only. Future content on this site will continue to be human-authored.
+
+## Video Demonstration
+
+Check out this video showing me using GitHub Copilot Coding Agent to create this very blog post (yes, it's inception!):
+
+<lite-youtube videoid="F2XkbeazOEc" title="Using GitHub Copilot Coding Agent to create a blog post about GitHub Coding Agent! Inception!"></lite-youtube>
+
+If the embed doesn't work, you can [watch the video on YouTube](https://youtu.be/F2XkbeazOEc).
