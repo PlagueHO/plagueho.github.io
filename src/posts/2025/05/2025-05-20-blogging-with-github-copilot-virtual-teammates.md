@@ -107,7 +107,7 @@ The entire process was handled by GitHub Copilot Coding Agent with minimal human
 
 ## Video Demonstration
 
-Check out this video demonstrating GitHub Copilot's capabilities:
+Check out this video showing me using GitHub Copilot Coding Agent to create this very blog post (yes, it's inception!):
 
 <lite-youtube videoid="F2XkbeazOEc"></lite-youtube>
 
