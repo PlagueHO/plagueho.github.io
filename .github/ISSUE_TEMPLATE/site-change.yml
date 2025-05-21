@@ -1,0 +1,65 @@
+name: Site Change
+description: Suggest a site feature, design change, or report a bug
+title: "[Site Change]: "
+labels: ["site change"]
+assignees: ["PlagueHO"]
+body:
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: What kind of site change is this?
+      options:
+        - New Feature or Enhancement
+        - Design or Content Update
+        - Bug Report
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: summary
+    attributes:
+      label: Short Summary or Title
+      description: Give a brief summary of your site change idea.
+      placeholder: e.g. "Improve homepage layout"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details / Description
+      description: |
+        Describe your idea, change, or bug in detail.
+        - What do you want to improve or fix?
+        - Why is it important?
+        - Any specific technologies, tools, or examples?
+      placeholder: |
+        - What is this about?
+        - Why is it important?
+        - Any specific technologies, tools, or examples?
+    validations:
+      required: true
+  - type: textarea
+    id: affected_pages
+    attributes:
+      label: Affected Pages/Sections
+      description: Which pages or sections are involved? (optional)
+      placeholder: e.g. "Homepage, About page, Footer"
+  - type: textarea
+    id: images
+    attributes:
+      label: Images or Screenshots
+      description: Paste image URLs, upload screenshots, or describe images to include.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Site Change Checklist
+      options:
+        - label: I have checked for duplicate issues
+        - label: I have included enough detail for someone else to understand
+        - label: (For bugs) I have included steps to reproduce if possible
+        - label: (For enhancements) I have described the desired outcome
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional Context or Links
+      description: Add any extra info, links, or references here.

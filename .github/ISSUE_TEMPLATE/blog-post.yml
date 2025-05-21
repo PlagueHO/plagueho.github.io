@@ -1,0 +1,73 @@
+name: Blog Post
+description: Propose a new blog post or update an existing one for the site
+title: "[Blog Post]: "
+labels: ["blog"]
+assignees: ["PlagueHO"]
+body:
+  - type: dropdown
+    id: post_type
+    attributes:
+      label: Is this a new post or an update?
+      options:
+        - New Blog Post
+        - Update Existing Blog Post
+    validations:
+      required: true
+  - type: input
+    id: post_title
+    attributes:
+      label: Blog Post Title
+      description: What's the title of your blog post?
+      placeholder: e.g. "How I Used Azure OpenAI to Build a Chatbot"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Short Summary
+      description: Give a brief summary or introduction for your post.
+      placeholder: e.g. "In this post, I share my journey building a chatbot with Azure OpenAI..."
+    validations:
+      required: true
+  - type: textarea
+    id: draft
+    attributes:
+      label: Draft Content or Outline
+      description: Paste your draft, outline, or main points here. (Markdown supported!)
+      placeholder: |
+        - What problem are you solving?
+        - What technologies are you using?
+        - Any fun stories or lessons learned?
+    validations:
+      required: true
+  - type: textarea
+    id: tags
+    attributes:
+      label: Tags
+      description: List relevant tags (comma-separated), e.g. "Azure, AI, Python"
+      placeholder: Azure, AI, Python
+  - type: input
+    id: publish_date
+    attributes:
+      label: Desired Publish Date
+      description: When would you like this post to go live? (optional)
+      placeholder: YYYY-MM-DD
+  - type: textarea
+    id: images
+    attributes:
+      label: Images or Screenshots
+      description: Paste image URLs, upload screenshots, or describe images to include.
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Blog Post Checklist
+      options:
+        - label: I have checked for duplicate blog posts
+        - label: I have included tags and draft content
+        - label: I have included images or described what images to use
+        - label: I have proofread my post for clarity and style
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional Context or Links
+      description: Add any extra info, links, or references here.

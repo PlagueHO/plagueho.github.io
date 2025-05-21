@@ -1,0 +1,73 @@
+name: Project Page
+description: Propose a new project page or update an existing one
+title: "[Project]: "
+labels: ["project"]
+assignees: ["PlagueHO"]
+body:
+  - type: dropdown
+    id: project_type
+    attributes:
+      label: Is this a new project or an update?
+      options:
+        - New Project Page
+        - Update Existing Project Page
+    validations:
+      required: true
+  - type: input
+    id: project_title
+    attributes:
+      label: Project Title
+      description: What's the name of your project?
+      placeholder: e.g. "Semantic Kernel Playground"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Short Summary
+      description: Give a brief summary or introduction for your project.
+      placeholder: e.g. "A playground for experimenting with Semantic Kernel and AI agents."
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Project Details
+      description: Describe your project, its purpose, technologies used, and any cool features.
+      placeholder: |
+        - What does your project do?
+        - What technologies are involved?
+        - Any fun stories or lessons learned?
+    validations:
+      required: true
+  - type: textarea
+    id: tags
+    attributes:
+      label: Tags
+      description: List relevant tags (comma-separated), e.g. "Azure, AI, .NET"
+      placeholder: Azure, AI, .NET
+  - type: textarea
+    id: images
+    attributes:
+      label: Images or Screenshots
+      description: Paste image URLs, upload screenshots, or describe images to include.
+  - type: input
+    id: project_url
+    attributes:
+      label: Project URL or Repo
+      description: Link to the project repository or live site (optional)
+      placeholder: https://github.com/your/project
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Project Page Checklist
+      options:
+        - label: I have checked for duplicate project pages
+        - label: I have included tags and project details
+        - label: I have included images or described what images to use
+        - label: I have proofread my project description for clarity and style
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional Context or Links
+      description: Add any extra info, links, or references here.
