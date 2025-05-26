@@ -79,7 +79,9 @@ And that's it! In about 5 minutes, you'll have a fully deployed Foundry VTT inst
 
 Here's a video walkthrough of the deployment process:
 
-[Watch the video on YouTube](https://youtu.be/asb8bu0eRmM)
+<custom-youtube slug="asb8bu0eRmM" label="Deploying Foundry VTT to Azure in 5 minutes using Azure Developer CLI"></custom-youtube>
+
+If the embed doesn't work, you can [watch the video on YouTube](https://youtu.be/asb8bu0eRmM)
 
 ## Configuration options
 
