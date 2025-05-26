@@ -13,20 +13,13 @@ draft: true
 
 ## What is Foundry VTT?
 
-If you're a tabletop RPG enthusiast like me, you've probably heard of Foundry Virtual Table Top (VTT). It's a self-hosted, modern application for playing tabletop roleplaying games online with your friends. Unlike subscription-based alternatives, Foundry VTT operates on a one-time purchase model, giving you full control over your gaming experience.
+If you're a tabletop RPG enthusiast like me, you might have heard of Foundry Virtual Table Top (VTT). It's a self-hosted, modern application for playing tabletop roleplaying games online with your friends. Foundry VTT gives you full control over your gaming experience.
 
-Foundry VTT offers a rich set of features including:
-- Dynamic lighting and vision systems
-- Support for hundreds of game systems through modules
-- Audio/video chat capabilities
-- Interactive maps and tokens
-- A powerful and flexible API for customization
-
-But here's the catch - you need to host it yourself. That's where Azure comes in!
+But here's the catch - you need to host it yourself. Many folks just run Foundry locally on a machine in their network - and that works perfectly well. But if you're playing with people spread over many different locations or just like to host things in the cloud, then this is for you - that's where Azure comes in!
 
 ## Why deploy Foundry VTT to Azure?
 
-Running Foundry VTT locally works well if you're always going to be the first one to join the game and the last one to leave. But what if you want more flexibility? Here's why hosting in Azure makes sense:
+Running Foundry works well locally if everyone is local, but if you and your players are all spread out geographically, then it might make sense to deploy it to the cloud - in this case Microsoft Azure. Here's why hosting in Azure makes sense:
 
 1. **Always available** - Your game server is always online, ready for your players to connect anytime
 2. **No port forwarding hassles** - Skip the network configuration headaches
@@ -35,9 +28,13 @@ Running Foundry VTT locally works well if you're always going to be the first on
 5. **Scalability** - Need more power for a bigger campaign? Scale up easily
 6. **Separate storage** - Your game data is safely stored in Azure Files, separate from the compute resources
 
+This also means you can leverage features of Azure storage like snapshots and backups to protect your valuable campaign data.
+
 ## How to deploy the solution accelerator
 
-The Foundry VTT in Azure solution accelerator makes deployment incredibly simple using the Azure Developer CLI (azd). Let's walk through the process:
+The Foundry VTT in Azure solution accelerator makes deployment incredibly simple using the Azure Developer CLI (azd). The Azure Developer CLI is a powerful tool that simplifies the process of provisioning and managing Azure resources. I chose to use it for this solution because it makes it simple to "stamp" out environments as well as tearing them down when they're not needed - perfect for gaming sessions that might not run continuously.
+
+Let's walk through the process:
 
 ### Prerequisites
 
@@ -61,17 +58,27 @@ Before we start, you'll need:
    azd auth login
    ```
 
-3. Initialize your environment:
+3. Configure the required environment parameters:
    ```bash
-   azd init
+   azd env set FOUNDRY_USERNAME "<your-foundry-username>"
+   azd env set FOUNDRY_PASSWORD "<your-foundry-password>"
+   azd env set FOUNDRY_ADMIN_KEY "<your-foundry-admin-key>"
+   azd env set AZURE_ENV_NAME "myuniquefvtt"
+   azd env set AZURE_LOCATION "EastUS2"
+   ```
+
+   You can also configure optional parameters:
+   ```bash
+   azd env set AZURE_DEPLOY_NETWORKING "true"
+   azd env set AZURE_STORAGE_CONFIGURATION "Premium_100GB"
+   azd env set AZURE_COMPUTE_SERVICE "Web App"
+   azd env set AZURE_APP_SERVICE_PLAN_SKUNAME "P0v3"
    ```
 
 4. Start the deployment:
    ```bash
    azd up
    ```
-
-5. When prompted, provide your Foundry VTT license key and admin password.
 
 And that's it! In about 5 minutes, you'll have a fully deployed Foundry VTT instance running in Azure.
 
@@ -87,27 +94,26 @@ If the embed doesn't work, you can [watch the video on YouTube](https://youtu.be
 
 The solution accelerator offers several configuration options to customize your deployment:
 
-### Core Settings
+### Required Parameters
 
-- **Environment Name**: This becomes part of your URL and resource names
-- **Azure Region**: Choose where your server will be hosted
-- **Foundry VTT License Key**: Your license from foundryvtt.com
-- **Admin Password**: For accessing your Foundry VTT instance
+- `FOUNDRY_USERNAME` - Your Foundry VTT username
+- `FOUNDRY_PASSWORD` - Your Foundry VTT password
+- `FOUNDRY_ADMIN_KEY` - The admin key for Foundry VTT
+- `AZURE_ENV_NAME` - Name for the environment (used in resource names)
+- `AZURE_LOCATION` - Azure region for deployment
 
-### Deployment Options
+### Optional Parameters
 
-- **Deployment Type**: Choose between:
-  - **Azure Web App** (default): Simpler setup, great for most users
-  - **Azure Container App**: More advanced, containerized deployment
-  
-- **Foundry VTT Version**: Select which version of Foundry you want to deploy
-
-- **Custom Domain**: Optionally configure your own domain name
-
-- **Compute Size**: Select the performance tier that matches your needs:
-  - Small (1 core, 2GB memory)
-  - Medium (2 cores, 4GB memory)
-  - Large (4 cores, 8GB memory)
+- `AZURE_COMPUTE_SERVICE` - `Web App` (default) or `Container Instance`
+- `AZURE_DEPLOY_NETWORKING` - `true` (default) or `false` to deploy a virtual network
+- `AZURE_STORAGE_CONFIGURATION` - `Premium_100GB` (default) or `Standard_100GB`
+- `AZURE_STORAGE_PUBLIC_ACCESS` - `false` (default) to allow public access to storage
+- `AZURE_APP_SERVICE_PLAN_SKUNAME` - App Service SKU (e.g., `P0v3` is default)
+- `AZURE_CONTAINER_INSTANCE_CPU` - CPU count for Container Instance, from `1` to `4` (default is `2`)
+- `AZURE_CONTAINER_INSTANCE_MEMORY_IN_GB` - Memory (GB) for Container Instance, from `1` to `16` (default is `2`)
+- `AZURE_DEPLOY_DDB_PROXY` - `true` or `false` (default) to deploy DDB-Proxy
+- `AZURE_BASTION_HOST_DEPLOY` - `true` or `false` (default) to deploy Azure Bastion
+- `AZURE_DEPLOY_DIAGNOSTICS` - `true` or `false` (default) to deploy diagnostics
 
 ## What gets deployed?
 
