@@ -48,39 +48,50 @@ Before we start, you'll need:
 ### Deployment Steps
 
 1. Clone the Foundry VTT in Azure repository:
-   ```bash
-   git clone https://github.com/PlagueHO/foundryvtt-azure.git
-   cd foundryvtt-azure
-   ```
+
+    ```bash
+    git clone https://github.com/PlagueHO/foundryvtt-azure.git
+    cd foundryvtt-azure
+    ```
 
 2. Log in to Azure using the Azure Developer CLI:
-   ```bash
-   azd auth login
-   ```
+
+    ```bash
+    azd auth login
+    ```
 
 3. Configure the required environment parameters:
-   ```bash
-   azd env set FOUNDRY_USERNAME "<your-foundry-username>"
-   azd env set FOUNDRY_PASSWORD "<your-foundry-password>"
-   azd env set FOUNDRY_ADMIN_KEY "<your-foundry-admin-key>"
-   azd env set AZURE_ENV_NAME "myuniquefvtt"
-   azd env set AZURE_LOCATION "EastUS2"
-   ```
 
-   You can also configure optional parameters:
-   ```bash
-   azd env set AZURE_DEPLOY_NETWORKING "true"
-   azd env set AZURE_STORAGE_CONFIGURATION "Premium_100GB"
-   azd env set AZURE_COMPUTE_SERVICE "Web App"
-   azd env set AZURE_APP_SERVICE_PLAN_SKUNAME "P0v3"
-   ```
+    ```bash
+    azd env set FOUNDRY_USERNAME "<your-foundry-username>"
+    azd env set FOUNDRY_PASSWORD "<your-foundry-password>"
+    azd env set FOUNDRY_ADMIN_KEY "<your-foundry-admin-key>"
+    ```
+
+    > [!IMPORTANT]
+    > The `FOUNDRY_USERNAME` and `FOUNDRY_PASSWORD` are the credentials you use to log in to Foundry VTT web site. These are used to retrieve your Foundry license and download the application distribution by the Foundry VTT Docker container. They are stored in an Azure Key Vault to protect them. The `FOUNDRY_ADMIN_KEY` is the admin password you'll use to log into your Foundry VTT once it is deployed.
+
+    There are also a number of optional parameters you can configure (this is just a few):
+
+    ```bash
+    azd env set AZURE_DEPLOY_NETWORKING "true"
+    azd env set AZURE_STORAGE_CONFIGURATION "Premium_100GB"
+    azd env set AZURE_COMPUTE_SERVICE "Web App"
+    azd env set AZURE_APP_SERVICE_PLAN_SKUNAME "P0v3"
+    ```
 
 4. Start the deployment:
-   ```bash
-   azd up
-   ```
 
-And that's it! In about 5 minutes, you'll have a fully deployed Foundry VTT instance running in Azure.
+    ```bash
+    azd up
+    ```
+
+5. You will then be asked to enter an environment name and Azure region.
+
+> [!NOTE]
+> The environment name will be used in the Azure resource group and the resource names that are deployed. You should choose a name that is likely to be globally unique, such as your gaming group name or something similar. The Azure region should be the closest to you and your players for optimal performance.
+
+And that's it! In about 5 minutes (give or take a minute), you'll have a fully deployed Foundry VTT instance running in Azure. At the end of the deployment, you'll see the URL where your Foundry VTT server is accessible displayed in the console.
 
 ## See it in action
 
@@ -92,15 +103,13 @@ If the embed doesn't work, you can [watch the video on YouTube](https://youtu.be
 
 ## Configuration options
 
-The solution accelerator offers several configuration options to customize your deployment:
+The solution accelerator provides several configuration options to customize your deployment:
 
 ### Required Parameters
 
-- `FOUNDRY_USERNAME` - Your Foundry VTT username
+- `FOUNDRY_USERNAME` - Your Foundry VTT username.
 - `FOUNDRY_PASSWORD` - Your Foundry VTT password
 - `FOUNDRY_ADMIN_KEY` - The admin key for Foundry VTT
-- `AZURE_ENV_NAME` - Name for the environment (used in resource names)
-- `AZURE_LOCATION` - Azure region for deployment
 
 ### Optional Parameters
 
