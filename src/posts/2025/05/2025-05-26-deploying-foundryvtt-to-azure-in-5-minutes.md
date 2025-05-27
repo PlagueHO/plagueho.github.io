@@ -13,22 +13,22 @@ draft: true
 
 ## What is Foundry VTT?
 
-If you're a tabletop RPG enthusiast like me, you might have heard of Foundry Virtual Table Top (VTT). It's a self-hosted, modern application for playing tabletop roleplaying games online with your friends. Foundry VTT gives you full control over your gaming experience.
+If you're a tabletop RPG enthusiast like me, you might have heard of Foundry Virtual Table Top (VTT). It's a self-hosted, modern application for playing tabletop roleplaying games online with your friends. Foundry VTT gives you full control over your TTRPG gaming experience - and is super extensible with a vibrant community creating modules, systems, and content to enhance your games.
 
-But here's the catch - you need to host it yourself. Many folks just run Foundry locally on a machine in their network - and that works perfectly well. But if you're playing with people spread over many different locations or just like to host things in the cloud, then this is for you - that's where Azure comes in!
+Many people choose to just run Foundry VTT on a machine on their home network and make it accessible via port forwarding on their router, which all works perfectly. But if you're playing with people spread over many different locations or just like to host things in the cloud, then this is for you - that's where Azure comes in!
 
 ## Why deploy Foundry VTT to Azure?
 
-Running Foundry works well locally if everyone is local, but if you and your players are all spread out geographically, then it might make sense to deploy it to the cloud - in this case Microsoft Azure. Here's why hosting in Azure makes sense:
+If you're considering cloud hosting for Foundry VTT, and happen to have access to a Microsoft Azure subscription, deploying Foundry VTT to Azure has several advantages:
 
-1. **Always available** - Your game server is always online, ready for your players to connect anytime
-2. **No port forwarding hassles** - Skip the network configuration headaches
-3. **Performance** - Azure's global infrastructure ensures low latency for players around the world
-4. **Security** - Benefit from Azure's enterprise-grade security features
-5. **Scalability** - Need more power for a bigger campaign? Scale up easily
-6. **Separate storage** - Your game data is safely stored in Azure Files, separate from the compute resources
+1. **Always available** - Your game server is always online, ready for your players to connect anytime.
+1. **No port forwarding** - You keep your home network secure without needing to expose it to the internet.
+1. **Performance** - Azure's global infrastructure ensures low latency for players around the world.
+1. **Scalability** - Need more power for a bigger campaign? Scale up easily.
+1. **Storage Reliability** - Your game data is stored in Azure Files, which can be replicated and backed up for durability. This also means you can leverage features of Azure storage like snapshots and backups to protect your valuable campaign data.
+1. **Security** - Azure provides built-in security features like managed identities and Key Vault for sensitive information.
 
-This also means you can leverage features of Azure storage like snapshots and backups to protect your valuable campaign data.
+Of course, you may not need all of these features, and be perfectly happy running Foundry VTT on your home network. But this blog post is for those who want to take advantage of the cloud to host their Foundry VTT server.
 
 ## How to deploy the solution accelerator
 
