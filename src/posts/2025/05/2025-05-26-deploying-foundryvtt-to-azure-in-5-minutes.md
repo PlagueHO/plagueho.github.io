@@ -32,7 +32,7 @@ Of course, you may not need all of these features, and be perfectly happy runnin
 
 ## How to deploy the solution accelerator
 
-The Foundry VTT in Azure solution accelerator makes deployment incredibly simple using the Azure Developer CLI (azd). The Azure Developer CLI is a powerful tool that simplifies the process of provisioning and managing Azure resources. I chose to use it for this solution because it makes it simple to "stamp" out environments as well as tearing them down when they're not needed - perfect for gaming sessions that might not run continuously.
+So, to make deploying Foundry VTT to Azure as easy as possible, I've created a solution accelerator that automates the entire process. It uses the [Azure Developer CLI](https://aka.ms/azd) (azd) and [Azure Bicep](https://aka.ms/bicep). The Azure Developer CLI is a powerful tool that simplifies the process of provisioning and managing Azure resources as well as building and deploying applications (however, in this case we don't need to build anything). I chose to use it for this solution because it makes it simple to "stamp" out environments as well as tearing them down when they're not needed - perfect for gaming sessions that might not run continuously - although be careful not to delete your storage account if you want to keep your game data!
 
 Let's walk through the process:
 
@@ -40,13 +40,15 @@ Let's walk through the process:
 
 Before we start, you'll need:
 
-1. An Azure subscription
+1. An Azure subscription (well, obviously!)
+   - If you don't have one, you can [sign up for a free Azure account](https://azure.microsoft.com/free) which gives you some credits to get started.
 2. A valid Foundry VTT license (purchase at [foundryvtt.com](https://foundryvtt.com))
 3. [Azure Developer CLI](https://docs.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd) installed
 4. [Git](https://git-scm.com/downloads) installed
 
 ### Deployment Steps
 
+1. Open a terminal or command prompt.
 1. Clone the Foundry VTT in Azure repository:
 
     ```bash
@@ -54,13 +56,19 @@ Before we start, you'll need:
     cd foundryvtt-azure
     ```
 
-2. Log in to Azure using the Azure Developer CLI:
+1. Log in to Azure using the Azure Developer CLI:
 
     ```bash
     azd auth login
     ```
 
-3. Configure the required environment parameters:
+1. The next step is to initialize the Azure Developer CLI project by setting an environment name. This is a unique name that will be used to create the Azure resources. You can choose any name you like, but it should be unique across your Azure subscription. Run the following command, replacing `<UniqueEnvironmentName>` with your chosen name:
+
+    ```bash
+    azd init -e <UniqueEnvironmentName>
+    ```
+
+1. Configure the Foundry VTT environment variables that allow the deployment to access your Foundry VTT account to get the application distribution and license. You can do this by running the following commands, replacing the placeholders with your actual Foundry VTT credentials:
 
     ```bash
     azd env set FOUNDRY_USERNAME "<your-foundry-username>"
@@ -71,7 +79,7 @@ Before we start, you'll need:
     > [!IMPORTANT]
     > The `FOUNDRY_USERNAME` and `FOUNDRY_PASSWORD` are the credentials you use to log in to Foundry VTT web site. These are used to retrieve your Foundry license and download the application distribution by the Foundry VTT Docker container. They are stored in an Azure Key Vault to protect them. The `FOUNDRY_ADMIN_KEY` is the admin password you'll use to log into your Foundry VTT once it is deployed.
 
-    There are also a number of optional parameters you can configure (this is just a few):
+    There are also a number of optional parameters you can also configure to control the deployment (this is just a few):
 
     ```bash
     azd env set AZURE_DEPLOY_NETWORKING "true"
@@ -80,16 +88,18 @@ Before we start, you'll need:
     azd env set AZURE_APP_SERVICE_PLAN_SKUNAME "P0v3"
     ```
 
-4. Start the deployment:
+1. Start the deployment:
 
     ```bash
-    azd up
+    azd provision
     ```
 
-5. You will then be asked to enter an environment name and Azure region.
+1. You will then be asked to select the Azure Subscription and the Azure region to deploy the resources to.
+
+![The commands used to deploy the Foundry VTT solution accelerator](/assets/images/screenshots/ss_foundryvtt_deploy.png 'The commands used to deploy the Foundry VTT solution accelerator')
 
 > [!NOTE]
-> The environment name will be used in the Azure resource group and the resource names that are deployed. You should choose a name that is likely to be globally unique, such as your gaming group name or something similar. The Azure region should be the closest to you and your players for optimal performance.
+> The Azure region should be the closest to you and your players for optimal latency.
 
 And that's it! In about 5 minutes (give or take a minute), you'll have a fully deployed Foundry VTT instance running in Azure. At the end of the deployment, you'll see the URL where your Foundry VTT server is accessible displayed in the console.
 
@@ -103,7 +113,7 @@ If the embed doesn't work, you can [watch the video on YouTube](https://youtu.be
 
 ## Configuration options
 
-The solution accelerator provides several configuration options to customize your deployment:
+The solution accelerator does provide a number of configuration options you can use to customize your deployment. For example, you can change the SKU of the App Service Plan, the size of the Azure Storage account, whether to deploy a virtual network, and more. These can be set using the `azd env set` command as shown above.
 
 ### Required Parameters
 
@@ -113,34 +123,25 @@ The solution accelerator provides several configuration options to customize you
 
 ### Optional Parameters
 
-- `AZURE_COMPUTE_SERVICE` - `Web App` (default) or `Container Instance`
+- `AZURE_COMPUTE_SERVICE` - `Web App` (default, recommended) or `Container Instance`
+- `AZURE_DEPLOY_DDB_PROXY` - `true` (default) or `false` to deploy a DDB Proxy. The DDB Proxy is second Web App that runs Mr. Primates DDB-Proxy container. For more information see [DDB-Proxy](https://github.com/PlagueHO/foundryvtt-azure/?tab=readme-ov-file#ddb-proxy).
 - `AZURE_DEPLOY_NETWORKING` - `true` (default) or `false` to deploy a virtual network
 - `AZURE_STORAGE_CONFIGURATION` - `Premium_100GB` (default) or `Standard_100GB`
 - `AZURE_STORAGE_PUBLIC_ACCESS` - `false` (default) to allow public access to storage
 - `AZURE_APP_SERVICE_PLAN_SKUNAME` - App Service SKU (e.g., `P0v3` is default)
-- `AZURE_CONTAINER_INSTANCE_CPU` - CPU count for Container Instance, from `1` to `4` (default is `2`)
-- `AZURE_CONTAINER_INSTANCE_MEMORY_IN_GB` - Memory (GB) for Container Instance, from `1` to `16` (default is `2`)
-- `AZURE_DEPLOY_DDB_PROXY` - `true` or `false` (default) to deploy DDB-Proxy
-- `AZURE_BASTION_HOST_DEPLOY` - `true` or `false` (default) to deploy Azure Bastion
 - `AZURE_DEPLOY_DIAGNOSTICS` - `true` or `false` (default) to deploy diagnostics
+
+> [!NOTE]
+> There are other optional parameters you can set to control the deployment. You can find the full list of parameters in the [GitHub repository](https://github.com/PlagueHO/foundryvtt-azure).
 
 ## What gets deployed?
 
 When you deploy the solution accelerator, these Azure resources are provisioned:
 
-1. **Storage Account**: Hosts your Foundry VTT data files, configurations, and worlds
-   - Azure File Share for persistent storage
-
-2. **Web App or Container App**: Runs the Foundry VTT application
-   - App Service Plan (for Web App option)
-   - Container Registry (for Container App option)
-
-3. **Public IP & DNS**: Allows your players to connect
-   - App Service Domain or custom domain configuration
-
-4. **Security Settings**:
-   - Managed identities for secure access
-   - Key Vault for storing sensitive configuration
+1. **Azure Storage Account**: Hosts your Foundry VTT data files, configurations, and worlds.
+1. **Azure Web App**: Hosts the Foundry VTT application using the Felddy Docker container.
+1. **Azure Key Vault**: Stores sensitive information like your Foundry VTT credentials securely.
+1. **Azure Virtual Network** (optional): Provides a secure network for your resources.
 
 The solution is designed with a separation of concerns - your data storage is independent from the compute resources. This means you can rebuild, upgrade, or modify your server without risking your valuable game data.
 
@@ -149,26 +150,15 @@ The solution is designed with a separation of concerns - your data storage is in
 For those who want to automate deployments further, the solution accelerator can be integrated with GitHub Actions. This allows you to:
 
 1. Version control your infrastructure configuration
-2. Automate deployments when you push changes
-3. Easily deploy to multiple environments (e.g., testing and production)
+1. Automate deployments when you push changes
+1. Easily deploy to multiple environments (e.g., testing and production)
 
-To set this up:
-
-1. Fork the [foundryvtt-azure](https://github.com/PlagueHO/foundryvtt-azure) repository
-2. Configure your Azure credentials as GitHub secrets
-3. Update the workflow files in `.github/workflows` with your settings
-4. Push changes to trigger automated deployments
+To set this up, check out the [instructions](https://github.com/PlagueHO/foundryvtt-azure/?tab=readme-ov-file#deploy-with-github-actions) in the GitHub repository. It provides a step-by-step guide on how to configure GitHub Actions to deploy your Foundry VTT instance automatically whenever you push changes to your repository.
 
 ## What next?
 
-Now that your Foundry VTT server is up and running in Azure, here are some next steps you might consider:
+I'm planning to add support to deploy the Foundry VTT and DDB-Proxy to Azure Container Apps in the future, which will allow you to run Foundry VTT in a serverless environment. In theory this should allow you to reduce hosting costs by enabling scale-to-zero for the Foundry VTT server when it's not in use, and scale up automatically when players connect. However, this will need some testing and evaluation to ensure it works well with the Foundry VTT application.
 
-1. **Set up your first world** - Import an existing world or create a new one
-2. **Install modules** - Enhance your game with community-created modules
-3. **Invite your players** - Share your Azure URL with your gaming group
-4. **Configure backups** - Set up Azure Backup for extra protection
-5. **Monitor costs** - Use Azure Cost Management to keep an eye on your spending
+If you encounter any issues, have any questions or feature requests, please create an issue in the [GitHub repository](https://github.com/PlagueHO/foundryvtt-azure/issues).
 
-If you encounter any issues or have questions, the [GitHub repository](https://github.com/PlagueHO/foundryvtt-azure) has detailed troubleshooting guides and a discussion forum.
-
-Happy gaming in the cloud!
+Happy gaming in Azure!
