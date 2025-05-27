@@ -127,7 +127,7 @@ The solution accelerator does provide a number of configuration options you can 
 - `AZURE_DEPLOY_DDB_PROXY` - `true` (default) or `false` to deploy a DDB Proxy. The DDB Proxy is second Web App that runs Mr. Primates DDB-Proxy container. For more information see [DDB-Proxy](https://github.com/PlagueHO/foundryvtt-azure/?tab=readme-ov-file#ddb-proxy).
 - `AZURE_DEPLOY_NETWORKING` - `true` (default) or `false` to deploy a virtual network
 - `AZURE_STORAGE_CONFIGURATION` - `Premium_100GB` (default) or `Standard_100GB`
-- `AZURE_STORAGE_PUBLIC_ACCESS` - `false` (default) to allow public access to storage
+- `AZURE_STORAGE_PUBLIC_ACCESS` - `false` (default) to restrict public access to storage, or `true` to allow public access
 - `AZURE_APP_SERVICE_PLAN_SKUNAME` - App Service SKU (e.g., `P0v3` is default)
 - `AZURE_DEPLOY_DIAGNOSTICS` - `true` or `false` (default) to deploy diagnostics
 
