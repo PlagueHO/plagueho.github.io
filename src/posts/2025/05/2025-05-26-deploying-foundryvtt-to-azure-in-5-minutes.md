@@ -8,7 +8,6 @@ tags:
   - "foundryvtt"
   - "tabletop-gaming"
   - "cloud-deployment"
-draft: true
 ---
 
 ## What is Foundry VTT?
