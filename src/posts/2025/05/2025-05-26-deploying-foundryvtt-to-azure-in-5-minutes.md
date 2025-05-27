@@ -77,7 +77,7 @@ Before we start, you'll need:
     ```
 
     > [!IMPORTANT]
-    > The `FOUNDRY_USERNAME` and `FOUNDRY_PASSWORD` are the credentials you use to log in to Foundry VTT web site. These are used to retrieve your Foundry license and download the application distribution by the Foundry VTT Docker container. They are stored in an Azure Key Vault to protect them. The `FOUNDRY_ADMIN_KEY` is the admin password you'll use to log into your Foundry VTT once it is deployed.
+    > The `FOUNDRY_USERNAME` and `FOUNDRY_PASSWORD` are the credentials you use to log in to Foundry VTT website. These are used to retrieve your Foundry license and download the application distribution by the Foundry VTT Docker container. They are stored in an Azure Key Vault to protect them. The `FOUNDRY_ADMIN_KEY` is the admin password you'll use to log into your Foundry VTT once it is deployed.
 
     There are also a number of optional parameters you can also configure to control the deployment (this is just a few):
 
