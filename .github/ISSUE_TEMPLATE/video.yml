@@ -1,0 +1,74 @@
+name: Video Suggestion
+description: Propose a new video idea or update an existing one for the NeuralFlow YouTube channel
+title: "[Video Suggestion]: "
+labels: ["video"]
+assignees: ["PlagueHO"]
+body:
+  - type: dropdown
+    id: video_type
+    attributes:
+      label: Is this a new video or an update?
+      options:
+        - New Video
+        - Update Existing Video
+    validations:
+      required: true
+  - type: input
+    id: video_title
+    attributes:
+      label: Video Title
+      description: What’s the title of your video?
+      placeholder: e.g. "Building an AI Agent with Azure Functions"
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: Short Summary
+      description: Give a brief overview of your video idea.
+      placeholder: e.g. "In this video, we explore how to deploy AI agents on Azure Functions..."
+    validations:
+      required: true
+  - type: textarea
+    id: outline
+    attributes:
+      label: Video Outline or Script Notes
+      description: Paste your draft outline or main talking points here. (Markdown supported!)
+      placeholder: |
+        - Introduction
+        - Demo of Azure Functions integration
+        - Key learnings and tips
+    validations:
+      required: true
+  - type: input
+    id: video_links
+    attributes:
+      label: Reference Links or Resources
+      description: Include any relevant links (e.g. docs, repos, examples)
+      placeholder: "https://github.com/..., https://learn.microsoft.com/..."
+  - type: textarea
+    id: tags
+    attributes:
+      label: Tags
+      description: List relevant tags (comma-separated), e.g. "Azure, AI, YouTube"
+      placeholder: Azure, AI, YouTube
+  - type: input
+    id: publish_date
+    attributes:
+      label: Desired Publish Date
+      description: When would you like this video to go live? (optional)
+      placeholder: YYYY-MM-DD
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Video Proposal Checklist
+      options:
+        - label: I have checked for duplicate video ideas
+        - label: I have included tags and outline
+        - label: I have added reference links
+        - label: I have proofread for clarity
+  - type: textarea
+    id: extra
+    attributes:
+      label: Additional Context or Notes
+      description: Any extra info or special requirements

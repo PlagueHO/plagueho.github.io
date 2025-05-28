@@ -1,0 +1,62 @@
+name: YouTube Channel Improvement
+description: Propose an enhancement or optimization for the Neural Flow YouTube channel
+title: "[YouTube Improvement]: "
+labels: ["video","enhancement"]
+assignees: ["PlagueHO"]
+body:
+  - type: dropdown
+    id: improvement_scope
+    attributes:
+      label: Which area needs improvement?
+      options:
+        - Content Topics
+        - Presentation Style
+        - Video Editing
+        - SEO & Tags
+        - Thumbnails & Branding
+    validations:
+      required: true
+  - type: input
+    id: suggestion_title
+    attributes:
+      label: Brief Title of Suggestion
+      description: A short, descriptive title for your idea
+      placeholder: e.g. "Add chapters for easier navigation"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Detailed Description
+      description: Explain what you propose and why it helps
+      placeholder: |
+        - What change are you suggesting?
+        - How will it benefit viewers?
+    validations:
+      required: true
+  - type: input
+    id: examples
+    attributes:
+      label: Examples or References
+      description: Link to videos or resources illustrating your idea
+      placeholder: "https://youtu.be/..., https://example.com/..."
+  - type: textarea
+    id: impact
+    attributes:
+      label: Expected Impact
+      description: Describe the outcome or metrics you expect to improve
+      placeholder: e.g. "Increased watch time, better engagement"
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Improvement Checklist
+      options:
+        - label: I’ve checked for similar suggestions
+        - label: I’ve clearly described the benefit
+        - label: I’ve provided examples or links
+        - label: I’ve proofread for clarity
+  - type: textarea
+    id: additional_notes
+    attributes:
+      label: Additional Notes
+      description: Any extra context or considerations
