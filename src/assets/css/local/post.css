@@ -22,7 +22,7 @@
 /* Styles for the post banner <picture> element */
 .post-banner {
   display: block; /* Ensures the picture element behaves as a block */
-  margin-block-end: var(--space-l, 2rem); /* Adds some space below the banner image */
+  margin-block-end: calc(var(--space-l, 2rem) / 2); /* Adds some space below the banner image */
   margin-left: 0; /* Ensure no unintended left margin */
   padding-left: 0; /* Ensure no unintended left padding */
 }
