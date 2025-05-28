@@ -5,6 +5,7 @@ description: "Exploring how GitHub Copilot Coding Agent works as a virtual teamm
 tags: 
   - "github"
   - "copilot"
+image: "/assets/banners/banner-2025-05-20-blogging-with-github-copilot-virtual-teammates.png"
 ---
 
 > **Note**: This blog post was created entirely using GitHub Copilot Coding Agent and is AI-generated. It's published purely for demonstration and testing purposes to explore the capabilities of GitHub Copilot Coding Agent. This transparency aligns with Responsible AI practices.

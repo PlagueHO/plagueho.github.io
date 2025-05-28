@@ -1,13 +1,11 @@
 ---
 title: "Deploying Foundry VTT to Azure in 5 minutes"
 date: 2025-05-26
-description: "Learn how to quickly deploy Foundry Virtual Table Top to Azure using the Azure Developer CLI and the Foundry VTT in Azure solution accelerator."
+description: "Easily deploy Foundry Virtual Table Top to Microsoft Azure in minutes using Azure Developer Command Line Interface and best practices for secure cloud gaming."
 tags: 
   - "azure"
   - "azd"
-  - "foundryvtt"
-  - "tabletop-gaming"
-  - "cloud-deployment"
+image: "/assets/banners/banner-2025-05-26-deploying-foundryvtt-to-azure-in-5-minutes.png"
 ---
 
 ## What is Foundry VTT?

@@ -1,7 +1,7 @@
 ---
 title: "Assigning Roles for Azure Enterprise Apps using Bicep"
 date: 2025-05-11
-description: "Learn a practical solution for assigning RBAC roles to Azure Enterprise Applications—like Azure AI Foundry & Azure ML—using Bicep and the Microsoft Graph extension for Bicep."
+description: "Discover how to assign Azure RBAC roles to enterprise applications like Azure AI Foundry and Azure Machine Learning using Bicep and Microsoft Graph for secure deployments."
 tags: 
   - "bicep"
   - "azure"
@@ -10,6 +10,7 @@ tags:
   - "rbac"
   - "microsoft-graph"
   - "service-principal"
+image: "/assets/banners/banner-2025-05-11-roles-for-azure-enterprise-apps-using-bicep.png"
 ---
 
 ## Welcome back

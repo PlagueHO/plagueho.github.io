@@ -1,13 +1,14 @@
 ---
 title: "Using AzureDefaultCredential with Semantic Kernel in Python"
 date: 2025-05-17
-description: "In this post, I show how to use a managed identity (via AzureDefaultCredential) with Semantic Kernel in Python to authenticate to Azure OpenAI Service."
+description: "Learn how to securely authenticate Python Semantic Kernel apps to Azure OpenAI Service using managed identities and DefaultAzureCredential, with practical code examples."
 tags: 
   - "azure"
   - "python"
   - "openai"
   - "semantic-kernel"
   - "managed-identity"
+image: "/assets/banners/banner-2025-05-17-using-defaultazurecredential-with-semantic-kernel-in-python.png"
 ---
 
 ## Background

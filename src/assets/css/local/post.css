@@ -19,6 +19,29 @@
   object-position: center;
 }
 
+/* Styles for the post banner <picture> element */
+.post-banner {
+  display: block; /* Ensures the picture element behaves as a block */
+  margin-block-end: var(--space-l, 2rem); /* Adds some space below the banner image */
+  margin-left: 0; /* Ensure no unintended left margin */
+  padding-left: 0; /* Ensure no unintended left padding */
+}
+
+/* More specific rule for the banner image to override the general one above */
+/* This targets an img inside a picture with class .post-banner that is a direct sibling of h1 within a .post context */
+.post h1 + picture.post-banner img,
+picture.post-banner img /* Fallback if not immediately after h1, but less specific */ {
+  width: 100%; /* Makes the image responsive, filling the width of its container */
+  height: auto; /* Maintains the image's aspect ratio for the img element's box */
+  aspect-ratio: auto; /* Override aspect-ratio from the general rule if needed */
+  object-fit: contain !important; /* Ensures the entire image is visible, !important to help ensure override */
+  object-position: left center !important; /* Aligns the image content to the left, !important for same reason */
+  display: block; /* Removes any extra space beneath the image if it were inline */
+  /* border-radius: var(--radius-medium, 6px); */ /* Optional: adds rounded corners, re-add if trimming is fixed */
+  margin-left: 0; /* Ensure no unintended left margin */
+  padding-left: 0; /* Ensure no unintended left padding */
+}
+
 .post date {
   font-size: var(--size-step-1);
   color: var(--color-text-light);
