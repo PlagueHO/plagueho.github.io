@@ -1,8 +1,13 @@
-# Specification: Post Banner Image Behavior and Styling
+---
+title: Post Banner Image Behavior and Styling
+version: 1.0  
+last-updated: 2024-06-08  
+owner: PlagueHO Blog Maintainers
+---
 
-**Version:** 1.0  
-**Last Updated:** 2024-06-08  
-**Owner:** PlagueHO Blog Maintainers
+# Introduction
+
+This specification outlines the behavior and styling of the post banner image component used in blog posts on the Eleventy-powered site. It ensures that the banner image is displayed correctly, left-aligned, and not visually trimmed or cropped, adhering to best practices for responsive design and accessibility.
 
 ## 1. Purpose & Scope
 
