@@ -10,7 +10,7 @@ tags:
 image: "/assets/banners/banner-2025-06-16-updating-azure-verified-modules-with-github-copilot-prompt-files.png"
 ---
 
-Nobody likes doing janitorial work, but keeping your Infrastructure as Code (IaC) up-to-date is one of those critical maintenance tasks that often gets pushed to the bottom of your to-do list. Today, I want to show you how to use GitHub Copilot Coding Agent and an experimentalal feature in Visual Studio Code, _Prompt Files_ to automate one of the most tedious but important maintenance tasks: updating your Azure Verified Modules (AVM) in Bicep to their latest versions.
+Nobody likes doing janitorial work, but keeping your Infrastructure as Code (IaC) up-to-date is one of those critical maintenance tasks that often gets pushed to the bottom of your to-do list. Today, I want to show you how to use GitHub Copilot Coding Agent and an experimental feature in Visual Studio Code, _Prompt Files_ to automate one of the most tedious but important maintenance tasks: updating your Azure Verified Modules (AVM) in Bicep to their latest versions.
 
 > [!NOTE]
 > Although I'm using the example of Bicep with Azure Verified Modules, the concepts and techniques discussed here can be applied to other IaC tools and module repositories as well. For example, updating ARM APIs, Terraform modules, or even DSC configurations can benefit from similar automation strategies.
