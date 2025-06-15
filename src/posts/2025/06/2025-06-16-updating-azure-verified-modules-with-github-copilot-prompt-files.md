@@ -10,7 +10,10 @@ tags:
 image: "/assets/banners/banner-2025-06-16-updating-azure-verified-modules-with-github-copilot-prompt-files.png"
 ---
 
-Nobody likes doing janitorial work, but keeping your Infrastructure as Code (IaC) up-to-date is one of those critical maintenance tasks that often gets pushed to the bottom of your to-do list. Today, I want to show you how to use GitHub Copilot's experimental Prompt Files feature to automate one of the most tedious but important maintenance tasks: updating your Azure Verified Modules (AVM) in Bicep to their latest versions.
+Nobody likes doing janitorial work, but keeping your Infrastructure as Code (IaC) up-to-date is one of those critical maintenance tasks that often gets pushed to the bottom of your to-do list. Today, I want to show you how to use GitHub Copilot Coding Agent and an experimentalal feature in Visual Studio Code, _Prompt Files_ to automate one of the most tedious but important maintenance tasks: updating your Azure Verified Modules (AVM) in Bicep to their latest versions.
+
+> [!NOTE]
+> Although I'm using the example of Bicep with Azure Verified Modules, the concepts and techniques discussed here can be applied to other IaC tools and module repositories as well. For example, updating ARM APIs, Terraform modules, or even DSC configurations can benefit from similar automation strategies.
 
 ## Why Keep Your Infrastructure as Code Up-to-Date?
 
@@ -22,32 +25,52 @@ Before we dive into the solution, let's talk about why this matters. When you're
 - **Performance improvements**: Better resource allocation and optimization
 - **Compliance**: Meeting organizational requirements for using current versions
 
-The problem? Manually checking and updating dozens or hundreds of module references across multiple Bicep files is time-consuming and error-prone. So we often don't do it as frequently as we should.
+The problem? Manually checking and updating dozens or hundreds of module references across multiple Bicep files is time-consuming and error-prone. So we often don't do it as frequently as we should. And the worst reason of all? We forget about it until something breaks, and then we're scrambling to catch up. Most engineering/platform teams are always overworked and asked to prioritize new features over maintenance tasks, which means that keeping your IaC up-to-date often falls by the wayside.
 
 ## What are Azure Verified Modules?
 
-If you're not familiar with [Azure Verified Modules (AVM)](https://aka.ms/avm), they're Microsoft's curated collection of Infrastructure as Code modules that follow consistent patterns and best practices. These modules are:
+If you're not familiar with [Azure Verified Modules (AVM)](https://aka.ms/avm), they're Microsoft's curated collection of Infrastructure as Code modules that follow consistent patterns and best practices. They wrap up common resources together along with Microsoft Well-Architected Best practices and simplify and speed up the process of defining your IaC.
 
-- **Thoroughly tested** by Microsoft and the community
-- **Regularly updated** with new features and security patches
-- **Consistent** in their parameter naming and structure
-- **Well-documented** with clear examples and guidance
+Using AVM modules in your Bicep templates (or Terraform - yes, there are Terraform versions) means you're building on a solid, well-maintained foundation. But like any dependency, you need to keep them current to get the full benefit.
 
-Using AVM modules in your Bicep templates means you're building on a solid, well-maintained foundation. But like any dependency, you need to keep them current to get the full benefit.
+For a quick primer into AVM, check out this video:
+<custom-youtube slug="JbIMrJKW5N0" label="An Introduction to Azure Verified Modules (AVM)"></custom-youtube>
+
+A Biceop module using AVM might look something like this:
+
+```bicep
+module aiSearchService 'br/public:avm/res/search/search-service:0.10.0' = {
+  name: 'ai-search-service-deployment'
+  scope: rg
+  params: {
+    name: aiSearchServiceName
+    location: location
+    sku: azureAiSearchSku
+    // Other parameters and objects as needed
+    publicNetworkAccess: azureNetworkIsolation ? 'Disabled' : 'Enabled'
+    semanticSearch: 'standard'
+    tags: tags
+  }
+}
+```
+
+In this example, the module `br/public:avm/res/search/search-service:0.10.0` is an AVM module for deploying an Azure AI Search Service. The version `0.10.0` is specified, and over time, newer versions will be released with improvements and fixes.
 
 ## The Manual Update Challenge
 
-Let's be honest—manually updating AVM references is tedious. Here's what the process typically looks like:
+manually updating a Bicep file with lots of AVM resources is a real chore - but it must be done. Here's what the typical process looks like:
 
 1. Open each Bicep file that uses AVM modules
 2. Identify which modules are being used and their current versions
-3. Go to the Microsoft Container Registry to find the latest version for each module
-4. Update the module reference in your Bicep file
-5. Check the module documentation to see if any parameters have changed
+3. Go to the AVM index page to find the latest version of each module
+4. If it's newer, update the module version in the Bicep file
+5. Check the module documentation to see if any parameters have changed. An easy place for things to go wrong is if you update the module version but forget to update the parameters that may have changed in the new version
 6. Update your parameter usage if needed
-7. Test everything to make sure it still works
+7. Test everything to make sure it still works - Automated tests are your best friend here, but simple linting and validation checks can help catch some issues early.
 
 Multiply this by the number of Bicep files in your project, and it quickly becomes a significant time investment. This is exactly the kind of repetitive, rule-based task that AI can help us automate.
+
+With the amount of work required it's lucky if this is done more thank once a year and often it is just done reactively when something breaks. This is not a good situation to be in, especially when you consider the security and compliance implications of running outdated modules.
 
 ## Enter GitHub Copilot Agent Mode and Prompt Files
 
