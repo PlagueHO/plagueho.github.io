@@ -1,13 +1,13 @@
 ---
-title: "Keep your Azure Bicep up-to-date with GitHub Copilot Prompt Files"
+title: "Keeping Azure Bicep up-to-date the easy way with GitHub Copilot Agents"
 date: 2025-06-16
-description: "Learn how to use GitHub Copilot's experimental Prompt Files feature to automate updating Azure Verified Modules in your Bicep infrastructure as code files."
+description: "Learn how to use GitHub Copilot Agents and the experimental Prompt Files feature to automate updating Azure Verified Modules in your Bicep infrastructure as code files."
 tags: 
   - "azure"
   - "github-copilot"
   - "avm"
   - "agents"
-image: "/assets/banners/banner-2025-06-16-updating-azure-verified-modules-with-github-copilot-prompt-files.png"
+image: "/assets/banners/banner-2025-06-16-updating-azure-verified-modules-with-github-copilot-prompt-files"
 ---
 
 Nobody likes doing janitorial work, but keeping your Infrastructure as Code (IaC) up-to-date is one of those critical maintenance tasks that often gets pushed to the bottom of your to-do list. Today, I want to show you how to use GitHub Copilot's experimental Prompt Files feature to automate one of the most tedious but important maintenance tasks: updating your Azure Verified Modules (AVM) in Bicep to their latest versions.
