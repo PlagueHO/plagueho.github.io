@@ -124,7 +124,7 @@ Let's take a closer look at the key sections of this prompt file:
 
 #### On the Tools
 
-There are several build-in tools including `fetch` for retrieving data from URLs, `editFiles` for modifying files, and others that help with retrieving information, running tasks, and interacting with the codebase. Many Visual Studio Code extensions also provide additional tools that can be used in prompts. And if you have custom tools defined in your MCP configuration, you can include those here as well.
+There are several built-in tools including `fetch` for retrieving data from URLs, `editFiles` for modifying files, and others that help with retrieving information, running tasks, and interacting with the codebase. Many Visual Studio Code extensions also provide additional tools that can be used in prompts. And if you have custom tools defined in your MCP configuration, you can include those here as well.
 
 Selecting the right tools for the task is crucial for the agent to be successful. If the prompt file needs a tool that the user doesn't have installed, the agent will inform them that it can't achieve the task that it needs to, but may try to work around it or simply stop and ask the user for guidance.
 
