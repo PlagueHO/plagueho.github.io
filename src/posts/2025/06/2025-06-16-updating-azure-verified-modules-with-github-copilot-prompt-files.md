@@ -71,7 +71,7 @@ manually updating a Bicep file with lots of AVM resources is a real chore - but 
 
 Multiply this by the number of Bicep files in your project, and it quickly becomes a significant time investment. This is exactly the kind of repetitive, rule-based task that AI can help us automate.
 
-With the amount of work required it's lucky if this is done more thank once a year and often it is just done reactively when something breaks. This is not a good situation to be in, especially when you consider the security and compliance implications of running outdated modules.
+With the amount of work required it's lucky if this is done more than once a year and often it is just done reactively when something breaks. This is not a good situation to be in, especially when you consider the security and compliance implications of running outdated modules.
 
 ## Enter GitHub Copilot Agent Mode and Prompt Files
 
