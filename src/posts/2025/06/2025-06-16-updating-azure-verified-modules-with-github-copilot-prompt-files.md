@@ -37,7 +37,7 @@ For a quick primer into AVM, check out this video:
 
 <custom-youtube slug="JbIMrJKW5N0" label="An Introduction to Azure Verified Modules (AVM)"></custom-youtube>
 
-A Biceop module using AVM might look something like this:
+A Bicep module using AVM might look something like this:
 
 ```bicep
 module aiSearchService 'br/public:avm/res/search/search-service:0.10.0' = {
