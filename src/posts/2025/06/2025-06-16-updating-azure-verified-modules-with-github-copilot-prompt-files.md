@@ -34,6 +34,7 @@ If you're not familiar with [Azure Verified Modules (AVM)](https://aka.ms/avm), 
 Using AVM modules in your Bicep templates (or Terraform - yes, there are Terraform versions) means you're building on a solid, well-maintained foundation. But like any dependency, you need to keep them current to get the full benefit.
 
 For a quick primer into AVM, check out this video:
+
 <custom-youtube slug="JbIMrJKW5N0" label="An Introduction to Azure Verified Modules (AVM)"></custom-youtube>
 
 A Biceop module using AVM might look something like this:
@@ -80,7 +81,7 @@ Think of Prompt Files as templates for AI tasks. You define the steps, the tools
 
 ## The AVM Update Prompt File
 
-Here's the Prompt File I've created for updating Azure Verified Modules. This file should be saved with a `.copilotprompt` extension in your project:
+Here's the Prompt File I've created for updating Azure Verified Modules. This file should be saved with a `.prompt.md` extension in the `/.github/prompts/` directory of your project. For example, you could name it `update-avm-modules.prompt.md`.
 
 ```markdown
 ---
@@ -93,9 +94,12 @@ Your goal is to update the Bicep file `${file}` to use the latest available vers
 You will need to perform these steps:
 
 1. Get a list of all the Azure Verified Modules that are used in the specific `${file}` Bicep file and get the module names and their current versions.
-2. Step through each module referenced in the Bicep file and find the latest version of the module. Do this by fetching the tags list from Microsoft Container Registry. E.g. for 'br/public:avm/res/compute/virtual-machine' fetch [https://mcr.microsoft.com/v2/bicep/avm/res/compute/virtual-machine/tags/list](https://mcr.microsoft.com/v2/bicep/avm/res/compute/virtual-machine/tags/list) and find the latest version tag.
-3. If there is a newer version of the module available based on the tags list from Microsoft Container Registry than is currently used in the Bicep, fetch the documentation for the module from the Azure Verified Modules index page. E.g., for `br/public:avm/res/compute/virtual-machine` the docs are [https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/virtual-machine](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/virtual-machine)
-4. Update the Azure Verified Module in the Bicep file to use the latest available version and apply any relevant changes to the module parameters based on the documentation.
+2. Step through each module referenced in the Bicep file and find the latest version of the module. Do this by using the `fetch` tool to get the tags list from Microsoft Container Registry. E.g. for 'br/public:avm/res/compute/virtual-machine' fetch [https://mcr.microsoft.com/v2/bicep/avm/res/compute/virtual-machine/tags/list](https://mcr.microsoft.com/v2/bicep/avm/res/compute/virtual-machine/tags/list) and find the latest version tag.
+3. If there is a newer version of the module available based on the tags list from Microsoft Container Registry than is currently used in the Bicep, use the `fetch` tool to get the documentation for the module from the Azure Verified Modules index page. E.g., for `br/public:avm/res/compute/virtual-machine` the docs are [https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/virtual-machine](https://github.com/Azure/bicep-registry-modules/tree/main/avm/res/compute/virtual-machine)
+4. Compare the documentation for the module to the current usage in the Bicep file and identify any changes that need to be made to the module parameters or usage.
+> [!IMPORTANT]
+> If the changes to the module parameters are not compatible with the current usage, are new changes that would change the behaviour, are related to security or compliance, then these changes must be reviewed and approved before being applied. So, PAUSE and ask for user input before proceeding.
+4. Update the Azure Verified Module version and the resource in the Bicep file to use the latest available version and apply any relevant changes based on the documentation and including guidance from the user if required, to the module parameters.
 5. If there are no changes to the module, leave it as is and make no other changes.
 
 ## IMPORTANT
@@ -105,7 +109,37 @@ You will need to perform these steps:
 - The tags list returned from Microsoft Container Registry is an array of JSON strings, so is not in version order. You will need to parse the tags and find the latest version based on the semantic versioning scheme.
 ```
 
-This prompt file gives the GitHub Copilot agent everything it needs to:
+> [!NOTE]
+> You can create prompt files in the `/.github/prompts` directory of your project and they'll be available to all users accessing the repository, or you can also create prompts in a `prompts` directory in your own User Data Directory for personal use. The latter is useful for prompts that are specific to your workflow or environment.
+
+### Breaking Down the Prompt File
+
+Let's take a closer look at the key sections of this prompt file:
+
+#### Front Matter
+
+- Mode: Set to `agent` to indicate that this prompt must be run in Agent mode. It can also be set to `edit` or `ask`. When you activate a prompt,chat will automatically switch to the appropriate mode - in this case `agent`.
+- Description: A brief description of what the prompt does.
+- Tools: An array of MCP tools that the agent can use to perform the task. Only `agent` mode supports tools, and the tools you specify here will be available to the agent when it runs the prompt.
+
+#### On the Tools
+
+There are several build-in tools including `fetch` for retrieving data from URLs, `editFiles` for modifying files, and others that help with retrieving information, running tasks, and interacting with the codebase. Many Visual Studio Code extensions also provide additional tools that can be used in prompts. And if you have custom tools defined in your MCP configuration, you can include those here as well.
+
+Selecting the right tools for the task is crucial for the agent to be successful. If the prompt file needs a tool that the user doesn't have installed, the agent will inform them that it can't achieve the task that it needs to, but may try to work around it or simply stop and ask the user for guidance.
+
+#### The Prompt Content
+
+The prompt starts with a clear goal: to update the specified Bicep file to use the latest versions of Azure Verified Modules. It also specifies the file to act on using the `${file}` placeholder, which will be replaced with the actual file that is selected in the Copilot context.
+
+![AVM Copilot Prompt File Update Chat Context](ss_avm_copilot_prompt_file_update_chat_context.png)
+
+After that, it outlines a series of steps that the agent should follow to achieve this goal. Each step is clearly defined, and **explicitly** instructs the agent how to achieve each task, tools to use and documentation to reference.
+
+> [!IMPORTANT]
+> Prompt engineering is an art and a science. The more specific and clear you can be about the steps the agent should take, the better the results will be. Being explicit rather than assuming the agent will "just know" what to do is key to getting the desired outcome. Providing explicit references/links to documentation, APIs, or other resources also ensures the agent will have the information it needs to make informed decisions.
+
+It outlines a series of steps that the agent should follow, including:
 
 - Parse your Bicep files to find AVM module references
 - Check the Microsoft Container Registry for the latest versions
@@ -113,31 +147,60 @@ This prompt file gives the GitHub Copilot agent everything it needs to:
 - Fetch documentation to understand any parameter changes
 - Update your files with the new versions and any necessary parameter adjustments
 
+Finally, **IMPORTANT** guardrails and notes are provided at the end of the prompt to ensure the agent follows best practices and doesn't make changes that could break your infrastructure.
+
 ## Setting Up and Using Prompt Files
 
 To use this prompt file, you'll need to:
+
+### Pre-requisites
+
+- **Visual Studio Code**: Make sure you have the latest version of [VS Code installed](https://aka.ms/vscode).
+- **GitHub Copilot**: Ensure you have GitHub Copilot enabled in your GitHub account.
+- **Visual Studio Code GitHub Copilot Extension**: Make sure you have the [GitHub Copilot extension installed](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) in Visual Studio Code.
+- **Visual Studio Code GitHub Copilot Chat Extension**: Ensure you have the [GitHub Copilot Chat extension installed](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) in Visual Studio Code.
+
+![GitHub Copilot Chat Extension](ss_avm_copilot_prompt_file_update_copilot_extensions.png)
 
 ### 1. Enable the Experimental Feature
 
 First, enable Prompt Files in Visual Studio Code:
 
 1. Open VS Code settings (`Ctrl/Cmd + ,`)
-2. Search for "copilot prompt"
-3. Enable the "Copilot: Enable Prompt Files" setting
+1. Search for "prompt files"
+1. Enable the "Copilot: Enable Prompt Files" setting (for either the User or Workspace settings, depending on your preference)
+
+![Enabling Copilot Prompt Files in Visual Studio Code](ss_avm_copilot_prompt_file_update_enable_prompt_files.png)
 
 ### 2. Create Your Prompt File
 
-Save the prompt content above as `update-avm-modules.copilotprompt` in your project root or a `.copilot` directory.
+In Visual Studio Code, create a new file named `update-avm-modules.prompt.md` in the `/.github/prompts/` directory of your project. If you don't have this directory, you can create it.
+
+You can also create this by:
+
+1. Pressing `Ctrl/Cmd + Shift + P` to open the Command Palette
+1. Typing "Chat: New Prompt File"
+1. Select the `prompts` or the `User Data Folder`.
+1. Enter the name `update-avm-modules` (without the `.prompt.md` and paste the content from the prompt file above.
+1. Save the file.
 
 ### 3. Run the Prompt
 
 To use the prompt:
 
 1. Open the Bicep file you want to update
-2. Open the Command Palette (`Ctrl/Cmd + Shift + P`)
-3. Type "Copilot: Run Prompt File"
-4. Select your `update-avm-modules.copilotprompt` file
-5. The agent will analyze your file and make the necessary updates
+1. Open the Copilot Chat sidebar by clicking the Copilot icon in the Activity Bar or pressing `Ctrl/Cmd + Shift + I`
+
+> [!IMPORTANT]
+> Before you run the prompt, make sure to enable all tools that will be used by this prompt file. You can do this by clicking on the gear icon in the Copilot Chat sidebar and ticking the tools. This will ensure that the agent has access to the `fetch`, `editFiles`, and other tools it needs to perform the update.
+
+![Enabling tools in GitHub Copilot Chat Agent mode](ss_avm_copilot_prompt_file_update_copilot_enable_tools.png)
+
+1. In the Copilot Chat sidebar, type `/` to invoke the prompt
+1. Select your `update-avm-modules` prompt
+1. Make sure to _click_ the bicep file you want to update in the Chat context so that it is used as the `${file}` parameter in the prompt.
+1. Select the appropriate model to use. In my experience, `GPT-4.1`, `Gemini 2.5 Pro` and `Claude Sonnet 4` all work well for this task. But I have found reasoning models like `o4-mini` aren't as effective for this kind of task.
+1. Start the agent by clicking the **Send** button or pressing `Enter`
 
 ## The Process in Action
 
@@ -150,7 +213,15 @@ When you run this prompt on a Bicep file, here's what happens behind the scenes:
 5. **Update**: It updates your Bicep file with the new version and adjusts parameters if necessary
 6. **Validation**: It ensures the updated file is valid and follows current best practices
 
+> [!NOTE]
+> The first time you run the prompt, the agent will ask you to confirm any tool calls it needs to make, such as fetching the tags list from the Microsoft Container Registry or updating the Bicep file. This is a safety measure to ensure you have control over what the agent is doing. You can approve them for the session, workspace or globally, depending on your preference.
+
 The entire process that might take you 30-60 minutes manually happens in just a few minutes with the AI agent.
+
+> [!IMPORTANT]
+> It is possible that the agent may decide that there are significant or non-trivial changes required to a resource, in which case it will pause and ask for your feedback and direction before proceeding. This is a good thing! It means the agent is being cautious and not making potentially breaking changes without your approval.
+>
+> If you examine the prompt file, you'll notice that it includes instructions to ensure that this occurs, especially for changes that could affect security or compliance. This is a critical part of the process to ensure that the agent doesn't make changes that could have unintended consequences.
 
 ## The Importance of Test Automation
 
@@ -158,12 +229,17 @@ Before you start using this kind of automated updating, make sure you have solid
 
 You should have:
 
-- **Unit tests** for your Bicep modules
+- **Linting** to ensure your Bicep files follow best practices and standards
+- **Bicep validation** - perform Bicep What-If analysis to ensure the changes won't break your deployment
 - **Integration tests** that deploy to a test environment
-- **Validation tests** that check your deployed resources
-- **Rollback procedures** in case something goes wrong
+- **End-to-End tests** that validate the entire system works as expected after the update
+- **Rollback procedures** (ideally roll forward) in case something goes wrong
 
 Tools like [Bicep's built-in validation](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/bicep-cli#validate), [Azure Resource Manager Template Test Toolkit](https://github.com/Azure/arm-ttk), and [Pester tests for infrastructure](https://pester.dev/) can help you build a comprehensive testing strategy.
+
+For a complete video walkthrough of this process, check out my YouTube video showing the end to end process:
+
+<custom-youtube slug="ZfYWh1qT-Us" label="Keeping your Azure Bicep up-to-date the easy way with GitHub Copilot Agents"></custom-youtube>
 
 ## Beyond AVM Updates: The Bigger Picture
 
@@ -184,15 +260,10 @@ The key is identifying tasks that are:
 
 ## Wrapping Up
 
-GitHub Copilot's Prompt Files feature represents a significant step forward in how we can automate routine maintenance tasks. By creating reusable prompts for complex processes like updating Azure Verified Modules, we can:
-
-- Save significant time on routine maintenance
-- Reduce human error in repetitive tasks
-- Ensure consistency across our codebase
-- Keep our infrastructure current with minimal effort
+GitHub Copilot's Prompt Files feature is a great advancement that helps automate routine maintenance tasks and much more. By creating reusable prompts for complex processes or even using it to plan out one-off tasks helps us think through and document the process before we actually start coding - this in itself increases the chances of success and reduces the time spent on trial and error.
 
 The future of development tooling is moving toward AI agents that can handle increasingly complex tasks. Prompt Files give us a way to encode our domain knowledge and processes into reusable AI workflows, making our entire team more productive.
 
 Have you tried using GitHub Copilot Agent mode for infrastructure maintenance? I'd love to hear about your experiences and the creative ways you're using Prompt Files in your projects.
 
-Remember: the goal isn't to replace human judgment, but to automate the tedious parts so we can focus on the creative and strategic aspects of building great cloud solutions.
+Remember: the goal isn't to replace human judgment, but to automate the tedious parts so we can focus on the creative and strategic aspects of building great cloud solutions. Less toil, more innovation!
