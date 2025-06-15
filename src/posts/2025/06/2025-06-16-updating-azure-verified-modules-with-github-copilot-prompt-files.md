@@ -132,7 +132,7 @@ Selecting the right tools for the task is crucial for the agent to be successful
 
 The prompt starts with a clear goal: to update the specified Bicep file to use the latest versions of Azure Verified Modules. It also specifies the file to act on using the `${file}` placeholder, which will be replaced with the actual file that is selected in the Copilot context.
 
-![AVM Copilot Prompt File Update Chat Context](ss_avm_copilot_prompt_file_update_chat_context.png)
+![AVM Copilot Prompt File Update Chat Context](/assets/images/screenshots/ss_avm_copilot_prompt_file_update_chat_context.png 'AVM Copilot Prompt File Update Chat Context')
 
 After that, it outlines a series of steps that the agent should follow to achieve this goal. Each step is clearly defined, and **explicitly** instructs the agent how to achieve each task, tools to use and documentation to reference.
 
@@ -160,7 +160,7 @@ To use this prompt file, you'll need to:
 - **Visual Studio Code GitHub Copilot Extension**: Make sure you have the [GitHub Copilot extension installed](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) in Visual Studio Code.
 - **Visual Studio Code GitHub Copilot Chat Extension**: Ensure you have the [GitHub Copilot Chat extension installed](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot-chat) in Visual Studio Code.
 
-![GitHub Copilot Chat Extension](ss_avm_copilot_prompt_file_update_copilot_extensions.png)
+![GitHub Copilot Chat Extension](/assets/images/screenshots/ss_avm_copilot_prompt_file_update_copilot_extensions.png 'GitHub Copilot Chat Extension')
 
 ### 1. Enable the Experimental Feature
 
@@ -170,7 +170,7 @@ First, enable Prompt Files in Visual Studio Code:
 1. Search for "prompt files"
 1. Enable the "Copilot: Enable Prompt Files" setting (for either the User or Workspace settings, depending on your preference)
 
-![Enabling Copilot Prompt Files in Visual Studio Code](ss_avm_copilot_prompt_file_update_enable_prompt_files.png)
+![Enabling Copilot Prompt Files in Visual Studio Code](/assets/images/screenshots/ss_avm_copilot_prompt_file_update_enable_prompt_files.png 'Enabling Copilot Prompt Files in Visual Studio Code')
 
 ### 2. Create Your Prompt File
 
@@ -194,7 +194,7 @@ To use the prompt:
 > [!IMPORTANT]
 > Before you run the prompt, make sure to enable all tools that will be used by this prompt file. You can do this by clicking on the gear icon in the Copilot Chat sidebar and ticking the tools. This will ensure that the agent has access to the `fetch`, `editFiles`, and other tools it needs to perform the update.
 
-![Enabling tools in GitHub Copilot Chat Agent mode](ss_avm_copilot_prompt_file_update_copilot_enable_tools.png)
+![Enabling tools in GitHub Copilot Chat Agent mode](/assets/images/screenshots/ss_avm_copilot_prompt_file_update_copilot_enable_tools.png 'Enabling tools in GitHub Copilot Chat Agent mode')
 
 1. In the Copilot Chat sidebar, type `/` to invoke the prompt
 1. Select your `update-avm-modules` prompt
