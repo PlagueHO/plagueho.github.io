@@ -12,10 +12,6 @@ updates:
     labels:
       - "dependencies"
       - "npm"
-    reviewers:
-      - plagueho # Assign PRs to yourself or your team
-    assignees:
-      - plagueho
     groups:
       npm-minor-patch:
         patterns:
@@ -44,10 +40,6 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-    reviewers:
-      - plagueho
-    assignees:
-      - plagueho
     groups:
       actions-minor-patch:
         patterns:
