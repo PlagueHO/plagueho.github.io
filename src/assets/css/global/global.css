@@ -1,9 +1,99 @@
-@import 'tailwindcss/base' layer(tailwindBase);
+@import "tailwindcss";
+
+@theme {
+  /* Screens */
+  --breakpoint-ltsm: 640px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 1000px;
+  --breakpoint-ltnavigation: 662px;
+  --breakpoint-navigation: 662px;
+
+  /* Colors */
+  --color-gray-100: #f8f8f8;
+  --color-gray-200: #e4e4e4;
+  --color-gray-300: #aeaeae;
+  --color-gray-400: #808080;
+  --color-gray-500: #636363;
+  --color-gray-600: #484848;
+  --color-gray-700: #3a3a3a;
+  --color-gray-800: #2e2e2e;
+  --color-gray-900: #161616;
+  --color-purple: #9b5ed4;
+  --color-purple-subdued: #9667c4;
+  --color-teal: #4467dd;
+  --color-teal-subdued: #4d6cc8;
+  --color-gold: #fbbe25;
+  --color-gold-subdued: #f1c15b;
+  --color-green: #4caf50;
+  --color-green-subdued: #5cbf6c;
+  --color-red: #f44336;
+  --color-red-subdued: #f56b6b;
+  --color-orange: #ff9800;
+  --color-orange-subdued: #ffb74d;
+  --color-yellow: #ffeb3b;
+  --color-yellow-subdued: #fff176;
+  --color-anomalous-aqua: #08E8DE;
+  --color-cosmic-coral: #FF6F61;
+  --color-electric-tangerine: #FF7300;
+  --color-phantom-lime: #D0FF14;
+  --color-iridescent-teal: #00A89C;
+  --color-mysterious-mauve: #A3989D;
+  --color-starry-amber: #FFB300;
+  --color-celestial-cerise: #E6208C;
+  --color-nebula-navy: #1A3D6C;
+  --color-opalescent-olive: #8F9779;
+
+  /* Spacing - Fluid values using clamp() */
+  --spacing-3xs: clamp(0.125rem, 0.11rem + 0.07vw, 0.1875rem);
+  --spacing-2xs: clamp(0.1875rem, 0.17rem + 0.09vw, 0.3125rem);
+  --spacing-xs: clamp(0.3125rem, 0.27rem + 0.19vw, 0.4375rem);
+  --spacing-s: clamp(0.625rem, 0.54rem + 0.38vw, 0.875rem);
+  --spacing-m: clamp(0.875rem, 0.70rem + 0.77vw, 1.3125rem);
+  --spacing-l: clamp(1.1875rem, 0.86rem + 1.44vw, 1.75rem);
+  --spacing-xl: clamp(2.375rem, 1.72rem + 2.88vw, 3.5rem);
+  --spacing-2xl: clamp(3.5625rem, 2.77rem + 3.46vw, 5.25rem);
+  --spacing-3xl: clamp(5.9375rem, 4.49rem + 6.35vw, 8.75rem);
+  --spacing-xs-s: clamp(0.3125rem, 0.04rem + 1.25vw, 0.875rem);
+  --spacing-s-m: clamp(0.625rem, 0.20rem + 1.87vw, 1.3125rem);
+  --spacing-m-l: clamp(0.875rem, 0.36rem + 2.31vw, 1.9375rem);
+  --spacing-l-xl: clamp(1.1875rem, 0.09rem + 4.81vw, 3.5rem);
+  --spacing-l-2xl: clamp(2.375rem, 0.86rem + 6.73vw, 5.25rem);
+  --spacing-xl-2xl: clamp(3.5625rem, 1.72rem + 8.08vw, 8.75rem);
+  --spacing-2xl-3xl: clamp(5.9375rem, 2.58rem + 14.81vw, 14rem);
+
+  /* Font Families */
+  --font-family-display: "Redhat", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;
+  --font-family-base: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --font-family-mono: ui-monospace, "Cascadia Code", "Source Code Pro", "Menlo", "Consolas", "DejaVu Sans Mono", monospace;
+
+  /* Font Sizes - Fluid values using clamp() */
+  --font-size-step-min-2: clamp(0.8125rem, 0.79rem + 0.10vw, 1rem);
+  --font-size-step-min-1: clamp(1rem, 0.84rem + 0.77vw, 1.375rem);
+  --font-size-step-0: clamp(1.1875rem, 0.86rem + 1.44vw, 1.75rem);
+  --font-size-step-1: clamp(1.4375rem, 0.89rem + 2.40vw, 2.1875rem);
+  --font-size-step-2: clamp(1.6875rem, 0.90rem + 3.46vw, 2.75rem);
+  --font-size-step-3: clamp(2.0625rem, 0.89rem + 5.19vw, 3.4375rem);
+  --font-size-step-4: clamp(2.5rem, 0.86rem + 7.31vw, 4.25rem);
+  --font-size-step-5: clamp(2.9375rem, 0.74rem + 9.71vw, 5.375rem);
+  --font-size-step-6: clamp(3.5rem, 0.58rem + 12.88vw, 6.6875rem);
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 900;
+
+  /* Line Heights */
+  --line-height-flat: 1;
+  --line-height-fine: 1.2;
+  --line-height-standard: 1.4;
+
+  /* Border Radius */
+  --radius-small: 0.1875rem;
+  --radius-medium: 0.3rem;
+}
 
 @import 'base/reset.css' layer(reset);
 @import 'base/fonts.css' layer(fonts);
-
-@import 'tailwindcss/components' layer(tailwindComponents);
 
 @import 'base/variables.css' layer(variables);
 @import 'base/global-styles.css' layer(global);
@@ -14,5 +104,3 @@
 
 /* debugging */
 /* @import-glob 'tests/*.css' layer(test); */
-
-@import 'tailwindcss/utilities' layer(tailwindUtilities);
