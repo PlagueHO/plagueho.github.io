@@ -61,7 +61,7 @@
 /* marker only for "regular lists" */
 .prose :is(ul:not([class]):not([role='list'])) li::marker {
   color: var(--color-primary);
-  content: '– ';
+  content: 'ΓÇô ';
 }
 
 .prose ul:not([class]) {

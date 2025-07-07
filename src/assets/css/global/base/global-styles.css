@@ -148,7 +148,7 @@ a:not([class]):hover {
   }
 }
 
-/* ─── Block-quote call-outs ───────────────────────────── */
+/* ΓöÇΓöÇΓöÇ Block-quote call-outs ΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇΓöÇ */
 blockquote[data-callout] {
   position: relative;
   padding-block-start: var(--space-s);

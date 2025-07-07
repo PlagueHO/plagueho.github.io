@@ -153,7 +153,7 @@
 }
 
 /* Repeat the settings to provide a different styling when JavaScript is disabled or drawerNav is set to false. The selector
-assumes that the button doesn’t exist without JS, making the list the first child within the navigation. */
+assumes that the button doesnΓÇÖt exist without JS, making the list the first child within the navigation. */
 
 .mainnav ul:first-child {
   --nav-list-layout: row;
