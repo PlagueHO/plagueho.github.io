@@ -48,11 +48,11 @@
     },
     {
       "name": "Teal",
-      "value": "#4467dd"
+      "value": "#009688"
     },
     {
       "name": "Teal Subdued",
-      "value": "#4d6cc8"
+      "value": "#26a69a"
     },
     {
       "name": "Gold",
@@ -61,14 +61,6 @@
     {
       "name": "Gold Subdued",
       "value": "#f1c15b"
-    },
-    {
-      "name": "Purple",
-      "value": "#9b5ed4"
-    },
-    {
-      "name": "Purple Subdued",
-      "value": "#a76bc2"
     },
     {
       "name": "Green",
@@ -93,14 +85,6 @@
     {
       "name": "Orange Subdued",
       "value": "#ffb74d"
-    },
-    {
-      "name": "Teal",
-      "value": "#009688"
-    },
-    {
-      "name": "Teal Subdued",
-      "value": "#26a69a"
     },
     {
       "name": "Yellow",
