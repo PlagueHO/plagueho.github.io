@@ -1,0 +1,163 @@
+# Set default behavior to automatically normalize line endings
+* text=auto eol=lf
+
+# Source code files
+*.js text eol=lf
+*.mjs text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.jsonc text eol=lf
+
+# Web files
+*.html text eol=lf
+*.htm text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+*.sass text eol=lf
+*.less text eol=lf
+
+# Template files (Eleventy/Nunjucks)
+*.njk text eol=lf
+*.liquid text eol=lf
+*.hbs text eol=lf
+*.mustache text eol=lf
+
+# Documentation and content files
+*.md text eol=lf
+*.mdx text eol=lf
+*.txt text eol=lf
+*.rtf text eol=lf
+
+# Configuration files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.toml text eol=lf
+*.ini text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+*.config text eol=lf
+*.rc text eol=lf
+*.env text eol=lf
+*.example text eol=lf
+
+# Package manager files
+package.json text eol=lf
+package-lock.json text eol=lf
+pnpm-lock.yaml text eol=lf
+yarn.lock text eol=lf
+Gemfile text eol=lf
+Gemfile.lock text eol=lf
+composer.json text eol=lf
+composer.lock text eol=lf
+
+# Build and CI/CD files
+Dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+Makefile text eol=lf
+*.mk text eol=lf
+*.sh text eol=lf
+*.fish text eol=lf
+*.zsh text eol=lf
+
+# Git files
+.gitignore text eol=lf
+.gitattributes text eol=lf
+.gitmodules text eol=lf
+
+# Editor config files
+.editorconfig text eol=lf
+.eslintrc* text eol=lf
+.prettierrc* text eol=lf
+.stylelintrc* text eol=lf
+tsconfig*.json text eol=lf
+jsconfig*.json text eol=lf
+
+# License and legal files
+LICENSE* text eol=lf
+COPYING* text eol=lf
+COPYRIGHT* text eol=lf
+NOTICE* text eol=lf
+
+# README and documentation
+README* text eol=lf
+CHANGELOG* text eol=lf
+HISTORY* text eol=lf
+AUTHORS* text eol=lf
+CONTRIBUTORS* text eol=lf
+
+# Images (binary files)
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.bmp binary
+*.tiff binary
+*.tif binary
+*.ico binary
+*.svg text eol=lf
+*.webp binary
+*.avif binary
+
+# Audio/Video files
+*.mp3 binary
+*.mp4 binary
+*.wav binary
+*.flac binary
+*.ogg binary
+*.avi binary
+*.mov binary
+*.wmv binary
+*.webm binary
+
+# Font files
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+
+# Archive files
+*.zip binary
+*.tar binary
+*.gz binary
+*.bz2 binary
+*.7z binary
+*.rar binary
+
+# PDF and other documents
+*.pdf binary
+*.doc binary
+*.docx binary
+*.xls binary
+*.xlsx binary
+*.ppt binary
+*.pptx binary
+
+# Eleventy specific
+*.11tydata.js text eol=lf
+.eleventy.js text eol=lf
+eleventy.config.js text eol=lf
+
+# Node.js specific
+.nvmrc text eol=lf
+.node-version text eol=lf
+
+# Netlify/Vercel deployment
+netlify.toml text eol=lf
+vercel.json text eol=lf
+_redirects text eol=lf
+_headers text eol=lf
+
+# GitHub specific
+.github/**/*.yml text eol=lf
+.github/**/*.yaml text eol=lf
+.github/**/*.md text eol=lf
+
+# Prevent specific files from being exported in git archive
+.gitattributes export-ignore
+.gitignore export-ignore
+.github/ export-ignore
+.vscode/ export-ignore
+node_modules/ export-ignore
