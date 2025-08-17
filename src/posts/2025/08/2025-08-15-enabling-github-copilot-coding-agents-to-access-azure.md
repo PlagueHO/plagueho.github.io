@@ -29,23 +29,29 @@ So, this blog post shows you how to configure your coding agents to be able to u
 
 Here's what I can do now with my Copilot agents:
 
-- Automatically provision (and of course cleanup) Azure resources as part coding agent development process
 - Diagnose issues that might be occuring in dev/test environments
 - Access key vault secrets that might be required to access dev/test databases or other resources
 - Validate or obtain specific information about the Azure environment that is being worked with
+- Automatically provision (and of course cleanup) Azure resources as part coding agent development process. But remember, deploying to Azure might have a cost associated with it.
 
 > [!IMPORTANT]
 > The most important thing to note however, is the principle of least privilege: If your coding agent doesn't need access to Azure, don't provide it access. If just needs to be able to read diagnostic logs from a Log Analytics workspace, then that's all it should be allowed to do. It's very easy to over-provision access, so always err on the side of caution.
+
+## Azure Costs
+
+If you give coding agents permission to deploy resources, be aware of the potential costs involved. Because coding agents now read the [copilot-instructions.md](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/configure-custom-instructions/add-repository-instructions) in your repository, it will be critical to provide cost management guidance within that file - including the fact that they should delete any resources they create once they are done with them.
+
+My advice is to avoid giving them write/deploy access unless absolutely necessary, or at the very least have a method of tracking and auditing their resource usage. It would be quite simple to create a janitor (a GitHub Actions workflow) that deletes any resources that were created in a resource group that the Coding Agent has permission to create in.
 
 ## Getting the Security Right
 
 Before we dive into the setup, let me be clear about the security principles I follow. I've seen too many "quick demos" that skip these fundamentals:
 
 - **Least privilege always**: Give only the minimum permissions needed. You can expand later.
-- **Federated credentials over secrets**: Workload identity federation is the only way to do this properly.
-- **Environment isolation**: Dev, staging, and prod need separate identities.
-- **Audit everything**: You need to know what your agents are doing.
-- **Short-lived tokens**: Never store long-lived credentials anywhere.
+- **Federated credentials only**: Workload identity federation is the right way to give your coding agents access to Azure.
+- **Environment isolation**: Dev/test, staging need separate identities. But I shouldn't have to repeat: don't give coding agents access to production.
+- **Check what your agents are doing**: You need to know what your agents are doing in Azure.
+- **Your agent, your cost**: Coding agents don't care about your budget (unless you tell them to and what to do about it).
 
 These aren't optional "best practices"—they're requirements if you want to sleep well at night.
 
@@ -97,10 +103,10 @@ Here's the crucial part that tripped me up initially:
 
 Now for the permissions. The specific roles depend on what your agents need to do, but I always start minimal and expand. Here's my approach:
 
-For **resource deployment and management**:
+To allow the coding agent to experiment in a single group for **resource deployment and management**:
 
 ```bash
-# Contributor role for resource group
+# Contributor role to a single existing resource group
 az role assignment create \
   --assignee $AZURE_CLIENT_ID \
   --role "Contributor" \
@@ -176,7 +182,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    environment: copilot  # This must match your federated credential
+    environment: copilot  # This must match your federated credential environment name
     
     steps:
       - name: Checkout repository
