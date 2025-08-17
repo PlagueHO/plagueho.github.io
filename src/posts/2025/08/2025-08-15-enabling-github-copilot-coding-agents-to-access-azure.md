@@ -138,9 +138,9 @@ Here's the crucial part that tripped me up initially:
 
 Now for the permissions. The specific roles depend on what your agents need to do, but always start with minimal permissions and expand as needed. Just remember the golden rule:
 
-![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg 'Never give AI access to production')
+![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg)
 
-You can grant the RBAC roles through the Azure Portal just as you would any other application registration, user, group or managed identity, but below, I'm using Azure CLI, so have already logged into Azure using `az login`. Just use the method you're most comfortable with. The following are some examples of RBAC roles you might with to give your coding agent.
+You can grant the RBAC roles through the Azure Portal just as you would any other application registration, user, group or managed identity, but below, I'm using Azure CLI, so have already logged into Azure using `az login`. Just use the method you're most comfortable with. The following are some examples of RBAC roles you might wish to give your coding agent.
 
 To allow the coding agent to experiment in a single group for **resource deployment and management**:
 
@@ -367,7 +367,7 @@ Remember: the goal isn't to replace human oversight—it's to allow your coding 
 
 And one last time:
 
-![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg 'Never give AI access to production')
+![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg)
 
 ## Related Links
 
@@ -376,4 +376,4 @@ And one last time:
 - [Azure RBAC Documentation](https://learn.microsoft.com/azure/role-based-access-control/)
 - [Entra ID App Registration Guide](https://learn.microsoft.com/entra/identity-platform/quickstart-register-app)
 - [GitHub Copilot Enterprise Documentation](https://docs.github.com/enterprise-cloud@latest/copilot)
-- [Reference Workflow Example](https://github.com/PlagueHO/foundryvtt-azure/blob/main/.github/workflows/copilot-setup-steps.yml)
+- [Reference Workflow Example](https://github.com/PlagueHO/libris-maleficarum/blob/main/.github/workflows/copilot-setup-steps.yml)
