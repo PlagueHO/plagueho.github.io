@@ -97,14 +97,14 @@ Next, you need an Entra ID application registration for your coding agents to us
 1. Leave the **Redirect URI** blank and the **Supported Account Types** as `Accounts in this organizational directory only`
 1. Click **Register**
 
-![Create Entra ID App Registration for Coding Agent](ss_entra_id_create_app_registration_for_coding_agent.png 'Create Entra ID App Registration for Coding Agent')
+![Create Entra ID App Registration for Coding Agent](/assets/images/screenshots/ss_entra_id_create_app_registration_for_coding_agent.png 'Create Entra ID App Registration for Coding Agent')
 
 Once it's created, grab these values from the **Overview** page:
 
 - **Application (client) ID** - You'll need this for GitHub secrets
 - **Directory (tenant) ID** - Also required for GitHub secrets
 
-![Copy Entra ID App Registration Details](ss_entra_id_copy_app_registration_details.png 'Copy Entra ID App Registration Details')
+![Copy Entra ID App Registration Details](/assets/images/screenshots/ss_entra_id_copy_app_registration_details.png 'Copy Entra ID App Registration Details')
 
 ```bash
 # Example values (yours will be different)
@@ -129,7 +129,7 @@ Here's the crucial part that tripped me up initially:
    - **Environment name**: `copilot` (this is crucial. It must match exactly the name of the GitHub environment you created)
    - **Name**: Something descriptive like `gitHub-coding-agent-yourreponame-copilot-environment`
 
-![Create GitHub Federated Credential for Coding Agent](ss_entra_id_create_github_federated_credential_for_coding_agent.gif 'Create GitHub Federated Credential for Coding Agent')
+![Create GitHub Federated Credential for Coding Agent](/assets/images/screenshots/ss_entra_id_create_github_federated_credential_for_coding_agent.gif 'Create GitHub Federated Credential for Coding Agent')
 
 > [!IMPORTANT]
 > The environment name must be exactly `copilot` with lowercase 'c'. I learned this the hard way when I kept getting AADSTS7002138 errors. Azure federated identity credentials are case-sensitive, so `Copilot` or `COPILOT` will fail.
@@ -138,7 +138,7 @@ Here's the crucial part that tripped me up initially:
 
 Now for the permissions. The specific roles depend on what your agents need to do, but always start with minimal permissions and expand as needed. Just remember the golden rule:
 
-![Never give AI access to production](ss_never_give_ai_access_to_production.jpeg 'Never give AI access to production')
+![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg 'Never give AI access to production')
 
 You can grant the RBAC roles through the Azure Portal just as you would any other application registration, user, group or managed identity, but below, I'm using Azure CLI, so have already logged into Azure using `az login`. Just use the method you're most comfortable with. The following are some examples of RBAC roles you might with to give your coding agent.
 
@@ -266,7 +266,7 @@ Time to see if everything works. Let's test the authentication flow:
 
 If everything's configured correctly, you should see:
 
-![GitHub Copilot Coding Agent Run Copilot Setup Steps](ss_github_coding_agent_run_copilot_setup_steps.jpeg 'GitHub Copilot Coding Agent Run Copilot Setup Steps')
+![GitHub Copilot Coding Agent Run Copilot Setup Steps](/assets/images/screenshots/ss_github_coding_agent_run_copilot_setup_steps.png 'GitHub Copilot Coding Agent Run Copilot Setup Steps')
 
 **When things go wrong** (and they will):
 
@@ -319,7 +319,7 @@ To enable your coding agents to use an Azure MCP (Model Context Protocol) server
 
 1. Click **Save MCP configuration**.
 
-![GitHub Copilot Coding Agent Azure MCP Setup](ss_github_copilot_coding_agent_azure_mcp_setup.png 'GitHub Copilot Coding Agent Azure MCP Setup')
+![GitHub Copilot Coding Agent Azure MCP Setup](/assets/images/screenshots/ss_github_copilot_coding_agent_azure_mcp_setup.png 'GitHub Copilot Coding Agent Azure MCP Setup')
 
 > [!IMPORTANT]
 > A reminder: the Azure MCP server can only function if the **coding agent** environment is already connected to Azure. It uses the application registration provided in the GitHub repository secrets and will only have permissions to do what that identity can do. So make sure your permissions are set up correctly!
@@ -341,12 +341,12 @@ Add a list of all the Azure Resource Groups in the subscription into a Markdown 
 1. Assign the issue to the Copilot coding agent.
 1. Click the **Create** button.
 
-![Create and assign issue to Copilot coding agent](ss_github_coding_agent_create_assign_issue.gif 'Create and assign issue to Copilot coding agent')
+![Create and assign issue to Copilot coding agent](/assets/images/screenshots/ss_github_coding_agent_create_assign_issue.gif 'Create and assign issue to Copilot coding agent')
 
 1. After a few seconds Copilot will create a new branch and a draft pull request and assign the coding agent to get to work.
 1. You can watch the progress by selecting the new pull request and clicking the **View Session** button.
 
-![Copilot coding agent completed Azure Resource Groups task](ss_github_coding_agent_completed_azure_resource_groups.gif 'Copilot coding agent completed Azure Resource Groups task')
+![Copilot coding agent completed Azure Resource Groups task](/assets/images/screenshots/ss_github_coding_agent_completed_azure_resource_groups.gif 'Copilot coding agent completed Azure Resource Groups task')
 
 This is obviously a simplified example, and a very wasteful way to create this issue, but it demonstrates the potential for using GitHub Copilot coding agents to interact with Azure resources as part of a coding workflow.
 
@@ -367,7 +367,7 @@ Remember: the goal isn't to replace human oversight—it's to allow your coding 
 
 And one last time:
 
-![Never give AI access to production](ss_never_give_ai_access_to_production.jpeg 'Never give AI access to production')
+![Never give AI access to production](/assets/images/screenshots/ss_never_give_ai_access_to_production.jpg 'Never give AI access to production')
 
 ## Related Links
 
