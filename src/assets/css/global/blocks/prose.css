@@ -5,6 +5,15 @@
   --wrapper-width: 64rem;
 }
 
+/* Wider content for blog posts to match banner width */
+.post .prose {
+  --wrapper-width: 80rem;
+}
+
+.post .prose :is(p, li, dl, blockquote) {
+  max-inline-size: 80ch;
+}
+
 .prose :is(pre, pre + *, figure, picture) {
   --flow-space: var(--space-m-l);
 }
