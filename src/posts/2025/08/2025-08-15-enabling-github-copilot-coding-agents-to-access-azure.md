@@ -1,7 +1,7 @@
 ---
 title: "Enabling GitHub Copilot Coding Agents to Access Azure"
 date: 2025-08-15
-description: "Learn how to securely configure GitHub Copilot coding agents to access Azure resources using Entra ID app registrations, federated credentials, RBAC permissions, and GitHub Actions workflows."
+description: "Learn how to securely configure GitHub Copilot coding agents to access Azure resources using Entra ID app registrations, federated credentials and RBAC permissions."
 tags: 
   - "azure"
   - "github"
@@ -16,50 +16,54 @@ tags:
 image: "/assets/banners/banner-2025-08-15-enabling-github-copilot-coding-agents-to-access-azure.png"
 ---
 
-## Introduction
+> [!IMPORTANT]
+> Before I start with the details, I want to make something extremely clear: Do not give coding agents access to production. We've all read/seen the stories on the internet about AI's potential for causing chaos if not properly controlled. This is not specific to AI, but it's a general rule: Don't give developers/anyone permanent, ungoverned access to production resources without strict controls in place. I could spend the rest of this blog post lecturing about this, but then we'd never actually get to the point of this article. So warnings aside, lets get to it.
 
-GitHub Copilot coding agents are revolutionizing how we approach development workflows, but their true power emerges when they can securely interact with your Azure resources. Whether you're automating infrastructure deployments, managing cloud resources, or integrating with Azure services, giving your Copilot agents secure access to Azure opens up incredible possibilities for automation and efficiency.
+## Background
 
-In this post, I'll walk you through the complete process of setting up GitHub Copilot coding agents to securely access Azure resources. We'll cover everything from creating Entra ID app registrations to configuring federated credentials and implementing the necessary GitHub Actions workflow.
+I've been experimenting with [GitHub Copilot coding agents](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/coding-agent/coding-agent), assigning them tasks alomost every day (and night) and they're pretty impressive. But on occasion I actually need coding agents to interact with Azure resources, usually as part of diagnosing an issue/fixing a bug that requires real-time access to those resources (only in dev/test, of course). This is also sometimes useful if I want the coding agent to be able to verify some infrastructure it's creating Bicep or Terraform files for.
+
+So, this blog post shows you how to configure your coding agents to be able to use a federated identity to access Azure resources securely, without needing to store any secrets in your repository. As well as set up RBAC permissions so that they only get the level of access they need.
 
 ## Why This Matters
 
-Imagine having a Copilot agent that can:
-- Automatically provision Azure resources when you create new features
-- Monitor and adjust your cloud infrastructure based on usage patterns
-- Deploy applications directly to Azure App Service or Container Apps
-- Manage Azure Key Vault secrets and configuration
-- Scale resources up or down based on demand
+Here's what I can do now with my Copilot agents:
 
-The key to all of this is secure, keyless authentication that follows enterprise security best practices. No more storing API keys or connection strings in your repositories!
+- Automatically provision (and of course cleanup) Azure resources as part coding agent development process
+- Diagnose issues that might be occuring in dev/test environments
+- Access key vault secrets that might be required to access dev/test databases or other resources
+- Validate or obtain specific information about the Azure environment that is being worked with
 
-## Security Considerations and Best Practices
+> [!IMPORTANT]
+> The most important thing to note however, is the principle of least privilege: If your coding agent doesn't need access to Azure, don't provide it access. If just needs to be able to read diagnostic logs from a Log Analytics workspace, then that's all it should be allowed to do. It's very easy to over-provision access, so always err on the side of caution.
 
-Before we dive into the setup, let's establish some important security principles:
+## Getting the Security Right
 
-- **Principle of least privilege**: Grant only the minimum permissions required
-- **Federated credentials**: Use workload identity federation instead of secrets
-- **Environment isolation**: Separate credentials for different environments
-- **Audit logging**: Enable monitoring for all Azure access
-- **Time-bound access**: Leverage short-lived tokens rather than long-lived secrets
+Before we dive into the setup, let me be clear about the security principles I follow. I've seen too many "quick demos" that skip these fundamentals:
 
-## Step-by-Step Setup Process
+- **Least privilege always**: Give only the minimum permissions needed. You can expand later.
+- **Federated credentials over secrets**: Workload identity federation is the only way to do this properly.
+- **Environment isolation**: Dev, staging, and prod need separate identities.
+- **Audit everything**: You need to know what your agents are doing.
+- **Short-lived tokens**: Never store long-lived credentials anywhere.
 
-### 1. Creating the Entra ID App Registration
+These aren't optional "best practices"—they're requirements if you want to sleep well at night.
 
-The first step is creating a dedicated Entra ID application registration for your GitHub Copilot agents. This application will serve as the identity that your agents use to authenticate with Azure.
+## How to Set This Up
 
-<!-- Screenshot: ss_entra_id_app_registration_creation.png -->
-*Screenshot placeholder: Azure Portal showing the Entra ID → App registrations → New registration screen*
+### 1. Create the Entra ID App Registration
 
-1. Navigate to the [Azure Portal](https://portal.azure.com)
-2. Go to **Entra ID** → **App registrations**
+First, you need a dedicated identity for your Copilot agents. I always create separate app registrations for different projects—it makes tracking and auditing much easier.
+
+1. Head to the [Azure Portal](https://portal.azure.com)
+2. Navigate to **Entra ID** → **App registrations** 
 3. Click **New registration**
-4. Provide a meaningful name like `GitHub-Copilot-YourRepo`
+4. Name it something meaningful like `GitHub-Copilot-YourRepo`
 5. Leave the redirect URI blank (we're using federated credentials)
 6. Click **Register**
 
-Once created, make note of the following values from the **Overview** page:
+Once it's created, grab these values from the **Overview** page:
+
 - **Application (client) ID** - You'll need this for GitHub secrets
 - **Directory (tenant) ID** - Also required for GitHub secrets
 
@@ -69,15 +73,14 @@ AZURE_CLIENT_ID="12345678-1234-1234-1234-123456789012"
 AZURE_TENANT_ID="87654321-4321-4321-4321-210987654321"
 ```
 
-### 2. Setting Up Federated Credentials
+### 2. Configure Federated Credentials
 
-Federated credentials create a trust relationship between GitHub and Azure without requiring secrets. This is much more secure than storing service principal secrets in your repository.
+This is where the magic happens. Federated credentials create a trust relationship between GitHub and Azure without storing any secrets. It's way more secure than cramming service principal secrets into your repo.
 
-<!-- Screenshot: ss_federated_credential_configuration.png -->
-*Screenshot placeholder: Federated credentials configuration screen in Azure Portal*
+Here's the crucial part that tripped me up initially:
 
 1. In your app registration, go to **Certificates & secrets**
-2. Click on the **Federated credentials** tab
+2. Click the **Federated credentials** tab
 3. Click **Add credential**
 4. Select **GitHub Actions deploying Azure resources**
 5. Fill in the details:
@@ -85,18 +88,17 @@ Federated credentials create a trust relationship between GitHub and Azure witho
    - **Repository**: Your repository name
    - **Entity type**: Environment
    - **Environment name**: `copilot` (this is crucial - must match exactly)
-   - **Name**: A descriptive name like `GitHub-Copilot-Environment`
+   - **Name**: Something descriptive like `GitHub-Copilot-Environment`
 
-> **Important**: The environment name must be exactly `copilot` with lowercase 'c'. This addresses the AADSTS7002138 error related to case-sensitive matching that some users encounter. Azure federated identity credentials are case-sensitive, so using `Copilot` or `COPILOT` will cause authentication failures.
+> [!IMPORTANT]
+> The environment name must be exactly `copilot` with lowercase 'c'. I learned this the hard way when I kept getting AADSTS7002138 errors. Azure federated identity credentials are case-sensitive, so `Copilot` or `COPILOT` will fail.
 
-### 3. Configuring Azure RBAC Roles
+### 3. Set Up Azure RBAC Roles
 
-Now we need to grant the appropriate permissions to our app registration. The specific roles depend on what your Copilot agents need to do, but here are common scenarios:
-
-<!-- Screenshot: ss_azure_rbac_role_assignment.png -->
-*Screenshot placeholder: Azure RBAC role assignment interface*
+Now for the permissions. The specific roles depend on what your agents need to do, but I always start minimal and expand. Here's my approach:
 
 For **resource deployment and management**:
+
 ```bash
 # Contributor role for resource group
 az role assignment create \
@@ -106,6 +108,7 @@ az role assignment create \
 ```
 
 For **read-only monitoring**:
+
 ```bash
 # Reader role for subscription
 az role assignment create \
@@ -115,6 +118,7 @@ az role assignment create \
 ```
 
 For **Key Vault access**:
+
 ```bash
 # Key Vault Secrets User
 az role assignment create \
@@ -123,29 +127,26 @@ az role assignment create \
   --scope "/subscriptions/$AZURE_SUBSCRIPTION_ID/resourceGroups/your-rg/providers/Microsoft.KeyVault/vaults/your-keyvault"
 ```
 
-**Best Practice**: Start with minimal permissions and expand as needed. You can always add more roles later.
+I can't stress this enough: start with minimal permissions and expand as needed. I've seen too many demos where people just hand out Contributor at the subscription level. That's asking for trouble.
 
-### 4. Adding GitHub Repository Secrets
+### 4. Add GitHub Repository Secrets
 
-Your Copilot agents need access to three key pieces of information to authenticate with Azure. These should be stored as repository secrets, not environment variables in your code.
-
-<!-- Screenshot: ss_github_repository_secrets.png -->
-*Screenshot placeholder: GitHub repository secrets configuration page*
+Your Copilot agents need three pieces of info to authenticate with Azure. Store these as repository secrets—not environment variables in your code.
 
 1. In your GitHub repository, go to **Settings** → **Secrets and variables** → **Actions**
-2. Add the following repository secrets:
+2. Add these repository secrets:
 
-```
+```text
 AZURE_CLIENT_ID: 12345678-1234-1234-1234-123456789012
 AZURE_TENANT_ID: 87654321-4321-4321-4321-210987654321
 AZURE_SUBSCRIPTION_ID: 11111111-2222-3333-4444-555555555555
 ```
 
-**Security Note**: These aren't really "secrets" in the traditional sense since they're identifiers, but storing them as repository secrets keeps your configuration centralized and secure.
+These aren't really "secrets" since they're identifiers, but storing them as repository secrets keeps your config centralized and secure.
 
-### 5. Creating the GitHub Actions Workflow
+### 5. Create the GitHub Actions Workflow
 
-Now for the magic - creating a workflow that your Copilot agents can use to authenticate with Azure. This workflow establishes the authentication context that other workflows can inherit.
+Here's where it all comes together. This workflow gives your Copilot agents the authentication context they need to actually manage Azure resources.
 
 Create `.github/workflows/copilot-setup-steps.yml`:
 
@@ -214,14 +215,11 @@ jobs:
           # az webapp show --name myapp --resource-group myRG --query "state"
 ```
 
-This workflow provides a foundation that your Copilot agents can build upon for various Azure automation tasks.
+This workflow provides a solid foundation that your Copilot agents can build on for various Azure automation tasks. The key is the `environment: copilot` line—that's what ties everything together with your federated credential.
 
-### 6. Testing and Validation
+### 6. Test It Out
 
-Time to verify everything works correctly! Let's test the authentication flow.
-
-<!-- Screenshot: ss_workflow_execution_results.png -->
-*Screenshot placeholder: GitHub Actions workflow run showing successful Azure authentication*
+Time to see if everything works. Let's test the authentication flow:
 
 1. Go to your GitHub repository
 2. Click **Actions** → **Copilot Setup Steps**
@@ -229,33 +227,37 @@ Time to verify everything works correctly! Let's test the authentication flow.
 4. Select `authenticate` as the action
 5. Click **Run workflow**
 
-If everything is configured correctly, you should see:
+If everything's configured correctly, you should see:
+
 - Successful authentication to Azure
 - Your account information displayed
 - A list of your resource groups
 
-**Common troubleshooting scenarios:**
+**When things go wrong** (and they will):
 
 **Error: `AADSTS7002138: No matching federated identity record found`**
+
 - Verify the environment name is exactly `copilot` (lowercase)
 - Check that your repository and organization names match exactly
 - Ensure the federated credential subject pattern is correct
 
 **Error: `AADSTS70021: No matching federated identity record found for presented assertion`**
+
 - Verify your GitHub repository secrets are correct
 - Check that the app registration client ID matches
 - Ensure the federated credential is properly configured
 
 **Error: `Authorization failed`**
+
 - Verify RBAC role assignments are correct
 - Check that permissions are assigned to the correct scope
 - Ensure the service principal has the necessary roles
 
-## Advanced Topics
+## Beyond the Basics
 
-### Different Authentication Patterns for Various Azure Services
+### Authentication Patterns for Different Azure Services
 
-Different Azure services may require specific authentication approaches:
+Different Azure services sometimes need specific authentication approaches:
 
 ```yaml
 # For Azure Container Registry
@@ -274,26 +276,27 @@ Different Azure services may require specific authentication approaches:
     az storage blob list --container-name mycontainer --account-name mystorageaccount --auth-mode login
 ```
 
-### Scaling This Approach Across Multiple Repositories
+### Scaling This Across Multiple Repos
 
-For organizations with multiple repositories, consider:
+For organizations with multiple repositories, I recommend:
 
 1. **Shared app registrations** per environment (dev, staging, prod)
-2. **Standardized naming conventions** for consistency
+2. **Standardized naming conventions** for consistency  
 3. **Centralized role assignment** using Azure Policy or Bicep templates
 4. **Template repositories** with pre-configured workflows
 
-### Integration with Azure DevOps and Other Tools
+### Integration with Other Tools
 
 You can extend this pattern to work with:
+
 - **Azure DevOps**: Use service connections with workload identity federation
 - **Terraform**: Configure the Azure provider to use OIDC authentication
 - **Bicep/ARM**: Deploy templates using the authenticated context
 - **Azure CLI/PowerShell**: Run any Azure management commands
 
-## Monitoring and Logging Considerations
+## Don't Forget Monitoring
 
-Don't forget to monitor your Copilot agent activities:
+You absolutely need to monitor what your Copilot agents are doing:
 
 ```yaml
 - name: Enable Azure activity logging
@@ -306,33 +309,37 @@ Don't forget to monitor your Copilot agent activities:
 ```
 
 Set up alerts for:
+
 - Unusual authentication patterns
 - Failed authentication attempts
 - High-privilege operations
 - Resource creation/deletion activities
 
+Trust me, you want to know when your agents start doing unexpected things.
+
 ## Conclusion
 
-Setting up GitHub Copilot coding agents with secure Azure access transforms your development workflow from manual processes to intelligent automation. The federated credential approach we've implemented provides enterprise-grade security without the complexity of managing secrets.
+Setting up GitHub Copilot coding agents with secure Azure access completely changes your development workflow. No more manual Azure management tasks, no more security debt from stored secrets.
 
-The benefits of this setup include:
+What I love about this approach:
+
 - **Enhanced security** through keyless authentication
 - **Reduced operational overhead** with automated Azure management
 - **Improved compliance** with audit trails and proper access controls
 - **Faster development cycles** with intelligent infrastructure management
 
-By following the principle of least privilege and using workload identity federation, you've created a foundation that scales with your organization's needs while maintaining security best practices.
+The federated credential approach follows enterprise security best practices while actually being easier to set up than the old "secrets everywhere" approach.
 
-## Next Steps and Additional Resources
+## What's Next
 
-Ready to take this further? Consider:
+Ready to expand this? Consider:
 
-1. **Expanding permissions** gradually as your Copilot agents take on more responsibilities
+1. **Gradually expanding permissions** as your agents take on more responsibilities
 2. **Creating reusable workflows** for common Azure operations
 3. **Implementing infrastructure as code** with Bicep or Terraform
 4. **Setting up multi-environment deployments** with different app registrations
 
-Remember: the goal isn't to replace human oversight, but to automate the routine tasks so you can focus on building great solutions. Start small, validate your approach, and gradually expand your Copilot agents' capabilities.
+Remember: the goal isn't to replace human oversight—it's to automate the tedious stuff so you can focus on building great solutions.
 
 ## Related Links
 
