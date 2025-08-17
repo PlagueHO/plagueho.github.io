@@ -57,12 +57,23 @@ These aren't optional "best practices"—they're requirements if you want to sle
 
 ## How to Set This Up
 
+### 1 Create a GitHub Environment
+
+It is best to create an environment in GitHub that your coding agent has access to. This allows you to provide environment specific variables and secrets that your coding agent will get access to. This is required for the federated credentials to work.
+
+1. Go to your GitHub repository
+2. Click on **Settings**
+3. Scroll down to the **Environments** section
+4. Click **New environment**
+5. Name it something like `copilot`
+6. Click **Configure environment**
+
 ### 1. Create the Entra ID App Registration
 
 First, you need a dedicated identity for your Copilot agents. I always create separate app registrations for different projects—it makes tracking and auditing much easier.
 
 1. Head to the [Azure Portal](https://portal.azure.com)
-2. Navigate to **Entra ID** → **App registrations** 
+2. Navigate to **Entra ID** → **App registrations**
 3. Click **New registration**
 4. Name it something meaningful like `GitHub-Copilot-YourRepo`
 5. Leave the redirect URI blank (we're using federated credentials)
