@@ -21,7 +21,7 @@ image: "/assets/banners/banner-2025-08-15-enabling-github-copilot-coding-agents-
 
 ## Background
 
-I've been experimenting with [GitHub Copilot coding agents](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/coding-agent/coding-agent), assigning them tasks alomost every day (and night) and they're pretty impressive. But on occasion I actually need coding agents to interact with Azure resources, usually as part of diagnosing an issue/fixing a bug that requires real-time access to those resources (only in dev/test, of course). This is also sometimes useful if I want the coding agent to be able to verify some infrastructure it's creating Bicep or Terraform files for.
+I've been experimenting with [GitHub Copilot coding agents](https://docs.github.com/en/enterprise-cloud@latest/copilot/concepts/coding-agent/coding-agent), assigning them tasks almost every day (and night) and they're pretty impressive. But on occasion I actually need coding agents to interact with Azure resources, usually as part of diagnosing an issue/fixing a bug that requires real-time access to those resources (only in dev/test, of course). This is also sometimes useful if I want the coding agent to be able to verify some infrastructure it's creating Bicep or Terraform files for.
 
 So, this blog post shows you how to configure your coding agents to be able to use a federated identity to access Azure resources securely, without needing to store any secrets in your repository. As well as set up RBAC permissions so that they only get the level of access they need.
 
