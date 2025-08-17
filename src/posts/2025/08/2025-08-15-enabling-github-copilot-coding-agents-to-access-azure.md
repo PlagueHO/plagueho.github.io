@@ -32,7 +32,7 @@ Here's what I can do now with my Copilot agents:
 - Diagnose issues that might be occurring in dev/test environments
 - Access key vault secrets that might be required to access dev/test databases or other resources
 - Validate or obtain specific information about the Azure environment that is being worked with
-- Automatically provision (and of course cleanup) Azure resources as part coding agent development process. But remember, deploying resources in Azure usually has a cost associated with it.
+- Automatically provision (and of course cleanup) Azure resources as part of coding agent development process. But remember, deploying resources in Azure usually has a cost associated with it.
 - Enable your Coding Agents to use the [Azure MCP Server](https://learn.microsoft.com/en-us/azure/developer/azure-mcp-server/get-started).
 
 > [!IMPORTANT]
