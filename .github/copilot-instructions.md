@@ -13,15 +13,17 @@ Developer workflows (concise)
 - Add content: create Markdown with YAML front matter in `src/posts/`, add images to `src/assets/images/`.
 - Custom logic: filters/shortcodes/plugins in `src/_config/`.
 
-Writing style — author-specific guidance (short bullets)
-- Voice: first person (“I”) and address the reader as “you”. Use contractions; be conversational and direct.
-- Tone: casual, enthusiastic, but opinionated — state recommendations plainly ("I prefer X because...").
-- Brevity: short paragraphs (2–4 sentences). Prefer numbered steps and bullet lists for procedures.
-- Structure: use clear headings like Background, Why, How, Conclusion. Start posts with a short Background, finish with a brief Conclusion or Related links.
-- Examples: include concise, runnable code snippets with short comments (see `src/posts/2025/05/2025-05-17-using-defaultazurecredential-with-semantic-kernel-in-python.md`).
-- Callouts: preserve repo-style admonitions (e.g., `> [!NOTE]`, `> [!IMPORTANT]`) for warnings and important params (see `2025-05-26-deploying-foundryvtt-to-azure-in-5-minutes.md`).
-- Opinion + rationale: when recommending tools or settings, add a one-line reason.
-- Personal touch: small first-person notes or motivations are fine, keep them tightly focused.
+Writing style — Scott Hanselman-inspired with author specifics
+- Voice: first person ("I") and address reader as "you". Use contractions, be conversational and direct.
+- Tone: casual, enthusiastic, opinionated — state recommendations plainly ("I prefer X because..." or "Nobody likes doing Y, but...").
+- Brevity: short paragraphs (2–4 sentences max). No verbose prose. Get to the point quickly.
+- Structure: clear headings (Background, Why, How, Conclusion). Start with short context, end with practical next steps or related links.
+- Opinionated guidance: call out where things can go wrong, explain your thinking behind choices. Use phrases like "This is exactly the kind of..." or "What excites me most..."
+- Examples: include runnable code with brief inline comments. Show complete, working solutions.
+- Callouts: use `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]` for critical info, prerequisites, and gotchas.
+- Best practices focus: reference Well-Architected, SOLID, DRY, DevOps, CI/CD principles when relevant. "Build for now, design for future" mindset.
+- Personal anecdotes: brief first-person motivations ("I couldn't find this documented anywhere") but keep them focused and relevant.
+- Practical value: emphasize solving real problems, reducing toil, automation. "Less manual work, more value" approach.
 
 Content & formatting rules (repo specifics)
 - Always include YAML front matter: `title`, `date`, `tags` (example front matter shown below).
