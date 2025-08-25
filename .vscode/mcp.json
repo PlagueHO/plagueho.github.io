@@ -1,5 +1,12 @@
 {
-    "inputs": [],
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "clarityApiToken",
+            "description": "Microsoft Clarity MCP API token",
+            "password": true
+        }
+    ],
     "servers": {
         "microsoft.docs.mcp": {
             "type": "http",
@@ -8,6 +15,14 @@
         "github": {
             "url": "https://api.githubcopilot.com/mcp/",
             "type": "http"
+        },
+        "Microsoft Clarity": {
+            "command": "npx",
+            "args": [
+                "@microsoft/clarity-mcp-server@latest",
+                "${input:clarityApiToken}"
+            ],
+            "type": "stdio"
         }
     }
 }
