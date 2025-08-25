@@ -2,6 +2,7 @@
 title: "Enabling GitHub Copilot Coding Agents to Access Azure"
 date: 2025-08-15
 description: "Learn how to securely configure GitHub Copilot coding agents to access Azure resources using Entra ID app registrations, federated credentials and RBAC permissions."
+templateEngineOverride: md
 tags: 
   - "azure"
   - "github"
