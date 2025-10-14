@@ -2,20 +2,72 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Start Eleventy (npm)",
-      "type": "shell",
-      "command": "npx @11ty/eleventy --serve",
-      "group": "build",
+      "label": "Eleventy: Dev Server",
+      "type": "npm",
+      "script": "dev:11ty",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "icon": {
+        "id": "play"
+      },
       "problemMatcher": [],
-      "detail": "Start the Eleventy server using npm."
+      "detail": "Run Eleventy in development mode with live reload."
     },
     {
-      "label": "Start Eleventy (pnpm)",
-      "type": "shell",
-      "command": "pnpm dlx @11ty/eleventy --serve",
+      "label": "Eleventy: Production Build",
+      "type": "npm",
+      "script": "build",
       "group": "build",
+      "icon": {
+        "id": "gear"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Eleventy: Clean",
+      "type": "npm",
+      "script": "clean",
+      "group": "build",
+      "icon": {
+        "id": "trash"
+      },
       "problemMatcher": [],
-      "detail": "Start the Eleventy server using pnpm."
+      "detail": "Remove generated output and bundled assets."
+    },
+    {
+      "label": "Assets: Favicons",
+      "type": "npm",
+      "script": "favicons",
+      "group": "build",
+      "icon": {
+        "id": "symbol-color"
+      },
+      "problemMatcher": [],
+      "detail": "Regenerate favicons from the source artwork."
+    },
+    {
+      "label": "Assets: Color Tokens",
+      "type": "npm",
+      "script": "colors",
+      "group": "build",
+      "icon": {
+        "id": "symbol-color"
+      },
+      "problemMatcher": [],
+      "detail": "Rebuild Tailwind color tokens from the design data."
+    },
+    {
+      "label": "Assets: Screenshots",
+      "type": "npm",
+      "script": "screenshots",
+      "group": "build",
+      "icon": {
+        "id": "device-camera"
+      },
+      "problemMatcher": [],
+      "detail": "Capture social sharing screenshots for recent posts."
     }
   ]
 }
