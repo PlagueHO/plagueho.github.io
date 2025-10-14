@@ -20,6 +20,10 @@
             "url": "https://api.githubcopilot.com/mcp/",
             "type": "http"
         },
+        "eleventy Docs": {
+            "type": "sse",
+            "url": "https://gitmcp.io/11ty/eleventy"
+        },
         "Microsoft Clarity": {
             "command": "npx",
             "args": [
