@@ -1,5 +1,13 @@
 {
-	"servers": {
+    "inputs": [
+        {
+            "type": "promptString",
+            "id": "clarityApiToken",
+            "description": "Microsoft Clarity MCP API token",
+            "password": true
+        }
+    ],
+    "servers": {
 		"context7": {
 			"type": "stdio",
 			"command": "npx",
@@ -8,29 +16,21 @@
 				"@upstash/context7-mcp@latest"
 			]
 		},
-		"github": {
-			"url": "https://api.githubcopilot.com/mcp/",
-			"type": "http"
-		},
-		"eleventy Docs": {
-			"url": "https://gitmcp.io/11ty/eleventy",
-			"type": "http"
-		},
-		"Microsoft Clarity": {
-			"command": "npx",
-			"args": [
-				"@microsoft/clarity-mcp-server@latest",
-				"${input:clarityApiToken}"
-			],
-			"type": "stdio"
-		}
-	},
-	"inputs": [
-		{
-			"type": "promptString",
-			"id": "clarityApiToken",
-			"description": "Microsoft Clarity MCP API token",
-			"password": true
-		}
-	]
+        "github": {
+            "url": "https://api.githubcopilot.com/mcp/",
+            "type": "http"
+        },
+        "eleventy Docs": {
+            "type": "sse",
+            "url": "https://gitmcp.io/11ty/eleventy"
+        },
+        "Microsoft Clarity": {
+            "command": "npx",
+            "args": [
+                "@microsoft/clarity-mcp-server@latest",
+                "${input:clarityApiToken}"
+            ],
+            "type": "stdio"
+        }
+    }
 }
