@@ -1,7 +1,7 @@
 ---
 mode: 'agent'
 description: 'Update an existing specification file for the solution, optimized for Generative AI consumption based on new requirements or updates to any existing code.'
-tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'context7/*', 'extensions', 'todos', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
+tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'context7/*', 'eleventy Docs/*', 'extensions', 'todos', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
 ---
 # Update Specification
 

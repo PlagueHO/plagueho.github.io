@@ -1,6 +1,6 @@
 ---
 description: 'Generate an implementation plan for new features or refactoring existing code.'
-tools: ['changes', 'codebase', 'editFiles', 'extensions', 'fetch', 'findTestFiles', 'githubRepo', 'new', 'openSimpleBrowser', 'problems', 'runCommands', 'runTasks', 'runTests', 'search', 'searchResults', 'terminalLastCommand', 'terminalSelection', 'testFailure', 'usages', 'vscodeAPI', 'github']
+tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'context7/*', 'eleventy Docs/*', 'extensions', 'todos', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
 ---
 # Implementation Plan Generation Mode
 

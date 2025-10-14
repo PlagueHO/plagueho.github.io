@@ -1,7 +1,7 @@
 ---
 mode: 'agent'
 description: 'Update an existing implementation plan file with new or update requirements to provide new features, refactoring existing code or upgrading packages, design, architecture or infrastructure.'
-tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'context7/*', 'extensions', 'todos', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
+tools: ['runCommands', 'runTasks', 'edit', 'runNotebooks', 'search', 'new', 'context7/*', 'eleventy Docs/*', 'extensions', 'todos', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo']
 ---
 # Update Implementation Plan
 
