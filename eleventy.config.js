@@ -23,17 +23,24 @@ import plugins from './src/_config/plugins.js';
 import shortcodes from './src/_config/shortcodes.js';
 
 export default async function (eleventyConfig) {
+  // --------------------- Events: before build
+  eleventyConfig.on('eleventy.before', async () => {
+    await events.buildAllCss();
+    await events.buildAllJs();
+  });
+
+  // --------------------- Custom watch targets
   eleventyConfig.addWatchTarget('./src/assets/**/*.{css,js,svg,png,jpeg}');
   eleventyConfig.addWatchTarget('./src/_includes/**/*.{webc}');
 
-  // --------------------- layout aliases
+  // --------------------- Layout aliases
   eleventyConfig.addLayoutAlias('base', 'base.njk');
   eleventyConfig.addLayoutAlias('page', 'page.njk');
   eleventyConfig.addLayoutAlias('post', 'post.njk');
   eleventyConfig.addLayoutAlias('project', 'project.njk');
   eleventyConfig.addLayoutAlias('tags', 'tags.njk');
 
-  //	---------------------  Collections
+  // --------------------- Collections
   eleventyConfig.addCollection('allPosts', getAllPosts);
   // Revert to the simpler definition, as sorting is now in collections.js
   eleventyConfig.addCollection('allProjects', getAllProjects);
@@ -51,7 +58,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addCollection('showInSitemap', showInSitemap);
   eleventyConfig.addCollection('tagList', tagList);
   
-  // ---------------------  Plugins
+  // --------------------- Plugins
   eleventyConfig.addPlugin(plugins.htmlConfig);
   eleventyConfig.addPlugin(plugins.cssConfig);
   eleventyConfig.addPlugin(plugins.jsConfig);
@@ -82,7 +89,7 @@ export default async function (eleventyConfig) {
     }
   });
 
-  // ---------------------  bundle
+  // --------------------- Bundle
   eleventyConfig.addBundle('css', {hoist: true});
 
   // 	--------------------- Library and Data
@@ -104,7 +111,7 @@ export default async function (eleventyConfig) {
   eleventyConfig.addShortcode('image', shortcodes.imageShortcode);
   eleventyConfig.addShortcode('year', () => `${new Date().getFullYear()}`);
 
-  // --------------------- Events ---------------------
+  // --------------------- Events: after build
   if (process.env.ELEVENTY_RUN_MODE === 'serve') {
     eleventyConfig.on('eleventy.after', events.svgToJpeg);
   }
