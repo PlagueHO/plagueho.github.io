@@ -1,52 +1,36 @@
-This repository contains the source for the blog at https://danielscottraynsford.com. The site is built with Eleventy (11ty) and hosted on GitHub Pages. Posts live under `src/posts/` and images under `src/assets/images/`.
+# Purpose
+- Eleventy site for https://danielscottraynsford.com. Content lives under `src/`, build output goes to `dist/` and is published via GitHub Pages (Netlify/Vercel configs exist but aren’t primary).
 
-Purpose: guidance for AI coding agents working in this repo. Keep output concise, practical, and aligned with the author's voice.
+## Architecture Snapshot
+- `eleventy.config.js` delegates nearly everything to modular helpers in `src/_config/`. Understand those modules before touching build logic.
+- Collections: `src/_config/collections.js` defines `allPosts`, `allProjects`, sitemap sources, and filters out archived content. `eleventy.config.js` also creates `livePosts`/`archivedPosts` collections, so keep `data.isArchived` semantics intact.
+- Data layer: `src/_data/meta.js`, `personal.yaml`, and `navigation.js` drive site-wide metadata and navigation. Update these instead of sprinkling constants.
+- Layouts & includes: Nunjucks templates in `src/_layouts/` and `src/_includes/partials/`; WebC components live in `src/_includes/webc/` and are auto-registered via the WebC plugin.
 
-Key repo facts (quick)
-- Static site generator: Eleventy (11ty). Primary config: `eleventy.config.js` and `src/_config/`.
-- Content: `src/posts/` (Markdown), `src/_layouts/` (Nunjucks), `src/_includes/`, `src/_data/`.
-- Styling: Tailwind CSS (`tailwind.config.js` and `src/_includes/css/`).
-- Deploy: GitHub Pages (primary). `netlify.toml` and `vercel.json` exist for alternate flows.
+## Build & Runtime
+- Install deps with `npm install`. Key scripts: `npm run dev:11ty` (Eleventy dev server + watch), `npm run build` (cleans then production build), `npm run favicons|colors|screenshots` (asset generation).
+- `ELEVENTY_ENV` toggles behavior; scripts set it via `cross-env`. For ad-hoc runs use `npx cross-env ELEVENTY_ENV=development eleventy --serve` or `ELEVENTY_ENV=production npx @11ty/eleventy`.
+- Before Eleventy runs it calls `events.buildAllCss()` and `events.buildAllJs()`. These compile Tailwind/PostCSS and bundle JS via esbuild, writing results into `src/_includes` and `dist/assets`. If you add new CSS/JS entry points, place them under `src/assets/css/**` or `src/assets/scripts/**` so the event builders and template extensions pick them up.
+- CSS processing is duplicated for watch mode via `src/_config/plugins/css-config.js`, which routes global CSS to `src/_includes/css/global.css`, local page CSS to matching filenames, and component CSS directly into `dist/assets/css/components/`.
+- JS behaves similarly in `src/_config/plugins/js-config.js`: files in `bundle/` emit inline includes under `src/_includes/scripts/`, while `components/` bundle to `dist/assets/scripts/components/`.
 
-Developer workflows (concise)
-- Local dev: run Eleventy server: `npx @11ty/eleventy --serve` (there's a VS Code task "Start Eleventy (npm)").
-- Add content: create Markdown with YAML front matter in `src/posts/`, add images to `src/assets/images/`.
-- Custom logic: filters/shortcodes/plugins in `src/_config/`.
+## Content Workflow
+- Posts sit in `src/posts/YYYY/MM/slug.md`; projects mirror this under `src/projects/`. Every markdown file needs YAML front matter with `title`, `date`, and `tags` (include `posts` to join the main feed). Use `isArchived: true` when moving posts out of the live list instead of deleting tags.
+- Images belong in `src/assets/images/`; refer to them as `/assets/images/...` so Eleventy Image shortcodes and transforms can optimize them.
+- Filters live in `src/_config/filters/`, shortcodes in `src/_config/shortcodes/`, and both are registered automatically. Check existing utilities (e.g., `imageShortcode`, `markdownFormat`) before inventing new helpers.
 
-Writing style — Scott Hanselman-inspired with author specifics
-- Voice: first person ("I") and address reader as "you". Use contractions, be conversational and direct.
-- Tone: casual, enthusiastic, opinionated — state recommendations plainly ("I prefer X because..." or "Nobody likes doing Y, but...").
-- Brevity: short paragraphs (2–4 sentences max). No verbose prose. Get to the point quickly.
-- Structure: clear headings (Background, Why, How, Conclusion). Start with short context, end with practical next steps or related links.
-- Opinionated guidance: call out where things can go wrong, explain your thinking behind choices. Use phrases like "This is exactly the kind of..." or "What excites me most..."
-- Examples: include runnable code with brief inline comments. Show complete, working solutions.
-- Callouts: use `> [!NOTE]`, `> [!IMPORTANT]`, `> [!WARNING]` for critical info, prerequisites, and gotchas.
-- Best practices focus: reference Well-Architected, SOLID, DRY, DevOps, CI/CD principles when relevant. "Build for now, design for future" mindset.
-- Personal anecdotes: brief first-person motivations ("I couldn't find this documented anywhere") but keep them focused and relevant.
-- Practical value: emphasize solving real problems, reducing toil, automation. "Less manual work, more value" approach.
+## Voice & Formatting
+- Write in first person and speak directly to the reader. Keep paragraphs tight (2–4 sentences) and organized with headings like Background/Why/How/Conclusion.
+- Be opinionated and pragmatic: call out trade-offs, tie advice to real workflows, and end with actionable next steps or links.
+- Always provide runnable code blocks with language hints and quick inline comments where clarity matters. Prefer numbered lists for CLI or provisioning steps.
+- Use callouts (`> [!NOTE]`, etc.) for risks, prerequisites, or gotchas. Reference best-practice frameworks (Well-Architected, SOLID, DevOps) only when they materially support the guidance.
 
-Content & formatting rules (repo specifics)
-- Always include YAML front matter: `title`, `date`, `tags` (example front matter shown below).
-- Use fenced code blocks with language tags and brief inline comments for clarity.
-- Use numbered lists for step-by-step CLI or provisioning instructions.
-- Reference assets with repo paths (e.g., `/assets/banners/...` or `src/assets/images/`).
+## Reference Examples
+- `src/posts/2025/05/2025-05-26-deploying-foundryvtt-to-azure-in-5-minutes.md` shows the expected procedural tutorial flow with callouts.
+- `src/posts/2025/05/2025-05-17-using-defaultazurecredential-with-semantic-kernel-in-python.md` demonstrates concise code-first storytelling.
 
-Minimal example front matter:
-
----
-title: "My Short How-to"
-date: 2025-08-17
-tags: [azure, tutorial]
----
-
-Practical tip for agents
-- When making content changes, scan `src/_config/` for filters/shortcodes that affect output (e.g., `src/_config/shortcodes/image.js`) and preserve expected parameters.
-- If uncertain about deployment, state the verified facts (Eleventy + GitHub Pages + optional Netlify/Vercel configs) and ask one precise question.
-
-Files to reference for patterns
-- `src/posts/2025/05/2025-05-26-deploying-foundryvtt-to-azure-in-5-minutes.md` — procedural style, numbered steps, callouts.
-- `src/posts/2025/05/2025-05-17-using-defaultazurecredential-with-semantic-kernel-in-python.md` — concise code-first example with short background and conclusion.
-
-Keep the guidance short and token-efficient: focus on explicit examples, file paths, and direct commands. Ask one clarifying question if a required detail is missing.
-
-End of AI agent guidance.
+## Practical Tips
+- If you touch asset pipelines, mirror the existing routing logic so both `events/*.js` and `plugins/*.js` stay in sync.
+- Updating metadata? Prefer `_data` files over hard-coded strings in layouts.
+- Unsure about deployment specifics? Reinforce known facts (Eleventy + GitHub Pages) and ask one focused question instead of guessing.
+- Keep responses short and actionable; ask for missing context when required.
