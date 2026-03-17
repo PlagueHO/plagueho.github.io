@@ -11,7 +11,9 @@
  * @returns {array} {name: string, value: string}
  */
 
-import viewports from '../../_data/designTokens/viewports.json';
+import {createRequire} from 'node:module';
+const require = createRequire(import.meta.url);
+const viewports = require('../../_data/designTokens/viewports.json');
 
 export const clampGenerator = tokens => {
   const rootSize = 16;

@@ -1,16 +1,16 @@
 ---
-title: "Azure AI Foundry Jumpstart"
-description: "The Azure AI Foundry Jumpstart Solution Accelerator deploys an Azure AI Foundry environment and supporting services into your Azure subscription. This accelerator is designed to be used as a secure environment for exploring and experimenting with Azure AI Foundry capabilities."
+title: "Microsoft Foundry Jumpstart"
+description: "The Microsoft Foundry Jumpstart Solution Accelerator deploys an Azure AI Foundry environment and supporting services into your Azure subscription. This accelerator is designed to be used as a secure environment for exploring and experimenting with Azure AI Foundry capabilities."
 features:
   - Azure AI
   - Azure
   - Bicep
   - Python
   - Semantic Kernel
-projectUrl: "https://github.com/PlagueHO/azure-ai-foundry-jumpstart"
+projectUrl: "https://github.com/PlagueHO/microsoft-foundry-jumpstart"
 ---
 
-The Azure AI Foundry Jumpstart Solution Accelerator deploys an [Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub) and supporting services into your Azure subscription. This accelerator is designed to be used as a secure environment for exploring and experimenting with Azure AI Foundry capabilities.
+The Microsoft Foundry Jumpstart Solution Accelerator deploys an [Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub) and supporting services into your Azure subscription. This accelerator is designed to be used as a secure environment for exploring and experimenting with Azure AI Foundry capabilities.
 
 This solution accelerator is intended to help getting started with Azure AI Foundry quickly and easily, while meeting security and well-architected framework best practices.
 

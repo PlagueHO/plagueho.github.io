@@ -1,0 +1,217 @@
+/* Auto-generated from design tokens — do not edit manually */
+:root {
+  --color-gray-100: #f8f8f8;
+  --color-gray-200: #e4e4e4;
+  --color-gray-300: #aeaeae;
+  --color-gray-400: #808080;
+  --color-gray-500: #636363;
+  --color-gray-600: #484848;
+  --color-gray-700: #3a3a3a;
+  --color-gray-800: #2e2e2e;
+  --color-gray-900: #161616;
+  --color-purple: #9b5ed4;
+  --color-purple-subdued: #a76bc2;
+  --color-teal: #009688;
+  --color-teal-subdued: #26a69a;
+  --color-gold: #fbbe25;
+  --color-gold-subdued: #f1c15b;
+  --color-green: #4caf50;
+  --color-green-subdued: #5cbf6c;
+  --color-red: #f44336;
+  --color-red-subdued: #f56b6b;
+  --color-orange: #ff9800;
+  --color-orange-subdued: #ffb74d;
+  --color-yellow: #ffeb3b;
+  --color-yellow-subdued: #fff176;
+  --color-anomalous-aqua: #08E8DE;
+  --color-cosmic-coral: #FF6F61;
+  --color-electric-tangerine: #FF7300;
+  --color-phantom-lime: #D0FF14;
+  --color-iridescent-teal: #00A89C;
+  --color-mysterious-mauve: #A3989D;
+  --color-starry-amber: #FFB300;
+  --color-celestial-cerise: #E6208C;
+  --color-nebula-navy: #1A3D6C;
+  --color-opalescent-olive: #8F9779;
+  --border-radius-small: 0.1875rem;
+  --border-radius-medium: 0.3rem;
+  --space-3xs: clamp(0.125rem, 0.11rem + 0.10vw, 0.1875rem);
+  --space-2xs: clamp(0.1875rem, 0.15rem + 0.19vw, 0.3125rem);
+  --space-xs: clamp(0.3125rem, 0.27rem + 0.19vw, 0.4375rem);
+  --space-s: clamp(0.625rem, 0.55rem + 0.38vw, 0.875rem);
+  --space-m: clamp(0.875rem, 0.74rem + 0.67vw, 1.3125rem);
+  --space-l: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
+  --space-xl: clamp(2.375rem, 2.03rem + 1.73vw, 3.5rem);
+  --space-2xl: clamp(3.5625rem, 3.04rem + 2.60vw, 5.25rem);
+  --space-3xl: clamp(5.9375rem, 5.07rem + 4.33vw, 8.75rem);
+  --space-xs-s: clamp(0.3125rem, 0.14rem + 0.87vw, 0.875rem);
+  --space-s-m: clamp(0.625rem, 0.41rem + 1.06vw, 1.3125rem);
+  --space-m-l: clamp(0.875rem, 0.55rem + 1.63vw, 1.9375rem);
+  --space-l-xl: clamp(1.1875rem, 0.48rem + 3.56vw, 3.5rem);
+  --space-l-2xl: clamp(2.375rem, 1.49rem + 4.42vw, 5.25rem);
+  --space-xl-2xl: clamp(3.5625rem, 1.97rem + 7.98vw, 8.75rem);
+  --space-2xl-3xl: clamp(5.9375rem, 3.46rem + 12.40vw, 14rem);
+  --size-step-min-2: clamp(0.8125rem, 0.75rem + 0.29vw, 1rem);
+  --size-step-min-1: clamp(1rem, 0.88rem + 0.58vw, 1.375rem);
+  --size-step-0: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
+  --size-step-1: clamp(1.4375rem, 1.21rem + 1.15vw, 2.1875rem);
+  --size-step-2: clamp(1.6875rem, 1.36rem + 1.63vw, 2.75rem);
+  --size-step-3: clamp(2.0625rem, 1.64rem + 2.12vw, 3.4375rem);
+  --size-step-4: clamp(2.5rem, 1.96rem + 2.69vw, 4.25rem);
+  --size-step-5: clamp(2.9375rem, 2.19rem + 3.75vw, 5.375rem);
+  --size-step-6: clamp(3.5rem, 2.52rem + 4.90vw, 6.6875rem);
+  --leading-flat: 1;
+  --leading-fine: 1.2;
+  --leading-standard: 1.4;
+  --font-display: Redhat,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
+  --font-base: Atkinson Hyperlegible,system-ui,sans-serif;
+  --font-mono: ui-monospace,Cascadia Code,Source Code Pro,Menlo,Consolas,DejaVu Sans Mono,monospace;
+  --font-regular: 400;
+  --font-bold: 700;
+  --font-extra-bold: 900;
+}
+
+.flow-space-3xs {
+  --flow-space: clamp(0.125rem, 0.11rem + 0.10vw, 0.1875rem);
+}
+.flow-space-2xs {
+  --flow-space: clamp(0.1875rem, 0.15rem + 0.19vw, 0.3125rem);
+}
+.flow-space-xs {
+  --flow-space: clamp(0.3125rem, 0.27rem + 0.19vw, 0.4375rem);
+}
+.flow-space-s {
+  --flow-space: clamp(0.625rem, 0.55rem + 0.38vw, 0.875rem);
+}
+.flow-space-m {
+  --flow-space: clamp(0.875rem, 0.74rem + 0.67vw, 1.3125rem);
+}
+.flow-space-l {
+  --flow-space: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
+}
+.flow-space-xl {
+  --flow-space: clamp(2.375rem, 2.03rem + 1.73vw, 3.5rem);
+}
+.flow-space-2xl {
+  --flow-space: clamp(3.5625rem, 3.04rem + 2.60vw, 5.25rem);
+}
+.flow-space-3xl {
+  --flow-space: clamp(5.9375rem, 5.07rem + 4.33vw, 8.75rem);
+}
+.flow-space-xs-s {
+  --flow-space: clamp(0.3125rem, 0.14rem + 0.87vw, 0.875rem);
+}
+.flow-space-s-m {
+  --flow-space: clamp(0.625rem, 0.41rem + 1.06vw, 1.3125rem);
+}
+.flow-space-m-l {
+  --flow-space: clamp(0.875rem, 0.55rem + 1.63vw, 1.9375rem);
+}
+.flow-space-l-xl {
+  --flow-space: clamp(1.1875rem, 0.48rem + 3.56vw, 3.5rem);
+}
+.flow-space-l-2xl {
+  --flow-space: clamp(2.375rem, 1.49rem + 4.42vw, 5.25rem);
+}
+.flow-space-xl-2xl {
+  --flow-space: clamp(3.5625rem, 1.97rem + 7.98vw, 8.75rem);
+}
+.flow-space-2xl-3xl {
+  --flow-space: clamp(5.9375rem, 3.46rem + 12.40vw, 14rem);
+}
+.region-space-3xs {
+  --region-space: clamp(0.125rem, 0.11rem + 0.10vw, 0.1875rem);
+}
+.region-space-2xs {
+  --region-space: clamp(0.1875rem, 0.15rem + 0.19vw, 0.3125rem);
+}
+.region-space-xs {
+  --region-space: clamp(0.3125rem, 0.27rem + 0.19vw, 0.4375rem);
+}
+.region-space-s {
+  --region-space: clamp(0.625rem, 0.55rem + 0.38vw, 0.875rem);
+}
+.region-space-m {
+  --region-space: clamp(0.875rem, 0.74rem + 0.67vw, 1.3125rem);
+}
+.region-space-l {
+  --region-space: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
+}
+.region-space-xl {
+  --region-space: clamp(2.375rem, 2.03rem + 1.73vw, 3.5rem);
+}
+.region-space-2xl {
+  --region-space: clamp(3.5625rem, 3.04rem + 2.60vw, 5.25rem);
+}
+.region-space-3xl {
+  --region-space: clamp(5.9375rem, 5.07rem + 4.33vw, 8.75rem);
+}
+.region-space-xs-s {
+  --region-space: clamp(0.3125rem, 0.14rem + 0.87vw, 0.875rem);
+}
+.region-space-s-m {
+  --region-space: clamp(0.625rem, 0.41rem + 1.06vw, 1.3125rem);
+}
+.region-space-m-l {
+  --region-space: clamp(0.875rem, 0.55rem + 1.63vw, 1.9375rem);
+}
+.region-space-l-xl {
+  --region-space: clamp(1.1875rem, 0.48rem + 3.56vw, 3.5rem);
+}
+.region-space-l-2xl {
+  --region-space: clamp(2.375rem, 1.49rem + 4.42vw, 5.25rem);
+}
+.region-space-xl-2xl {
+  --region-space: clamp(3.5625rem, 1.97rem + 7.98vw, 8.75rem);
+}
+.region-space-2xl-3xl {
+  --region-space: clamp(5.9375rem, 3.46rem + 12.40vw, 14rem);
+}
+.gutter-3xs {
+  --gutter: clamp(0.125rem, 0.11rem + 0.10vw, 0.1875rem);
+}
+.gutter-2xs {
+  --gutter: clamp(0.1875rem, 0.15rem + 0.19vw, 0.3125rem);
+}
+.gutter-xs {
+  --gutter: clamp(0.3125rem, 0.27rem + 0.19vw, 0.4375rem);
+}
+.gutter-s {
+  --gutter: clamp(0.625rem, 0.55rem + 0.38vw, 0.875rem);
+}
+.gutter-m {
+  --gutter: clamp(0.875rem, 0.74rem + 0.67vw, 1.3125rem);
+}
+.gutter-l {
+  --gutter: clamp(1.1875rem, 1.01rem + 0.87vw, 1.75rem);
+}
+.gutter-xl {
+  --gutter: clamp(2.375rem, 2.03rem + 1.73vw, 3.5rem);
+}
+.gutter-2xl {
+  --gutter: clamp(3.5625rem, 3.04rem + 2.60vw, 5.25rem);
+}
+.gutter-3xl {
+  --gutter: clamp(5.9375rem, 5.07rem + 4.33vw, 8.75rem);
+}
+.gutter-xs-s {
+  --gutter: clamp(0.3125rem, 0.14rem + 0.87vw, 0.875rem);
+}
+.gutter-s-m {
+  --gutter: clamp(0.625rem, 0.41rem + 1.06vw, 1.3125rem);
+}
+.gutter-m-l {
+  --gutter: clamp(0.875rem, 0.55rem + 1.63vw, 1.9375rem);
+}
+.gutter-l-xl {
+  --gutter: clamp(1.1875rem, 0.48rem + 3.56vw, 3.5rem);
+}
+.gutter-l-2xl {
+  --gutter: clamp(2.375rem, 1.49rem + 4.42vw, 5.25rem);
+}
+.gutter-xl-2xl {
+  --gutter: clamp(3.5625rem, 1.97rem + 7.98vw, 8.75rem);
+}
+.gutter-2xl-3xl {
+  --gutter: clamp(5.9375rem, 3.46rem + 12.40vw, 14rem);
+}

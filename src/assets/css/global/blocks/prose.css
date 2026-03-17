@@ -32,7 +32,7 @@
   hyphens: auto;
 }
 
-@media screen(md) {
+@media (min-width: 1000px) {
   .prose :is(h1, h2, h3) {
     overflow-wrap: unset;
     hyphens: unset;
@@ -89,7 +89,7 @@
   border-radius: var(--border-radius-medium);
 }
 
-@media screen(ltsm) {
+@media (max-width: 640px) {
   .prose > *,
   .prose a {
     overflow-wrap: break-word;

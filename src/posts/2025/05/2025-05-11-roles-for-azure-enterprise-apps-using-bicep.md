@@ -19,7 +19,7 @@ It's been a while since I last posted, but with the amount of things going on in
 
 ## The problem
 
-I am working on a project for simplifying the deployment of a zero-trust [secure Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub), an [Azure AI Foundry jumpstart](https://github.com/PlagueHO/azure-ai-foundry-jumpstart) if you will. This project deploys the resources using [Bicep](http://aka.ms/bicep), but one of the requirements is to assign the `reader` role to the service principal for the Enterprise Application added  `Azure Machine Learning`.
+I am working on a project for simplifying the deployment of a zero-trust [secure Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub), an [Microsoft Foundry Jumpstart](https://github.com/PlagueHO/microsoft-foundry-jumpstart) if you will. This project deploys the resources using [Bicep](http://aka.ms/bicep), but one of the requirements is to assign the `reader` role to the service principal for the Enterprise Application added  `Azure Machine Learning`.
 
 However, this is not as straightforward as it seems. The `Azure Machine Learning` Enterprise Application is a multi-tenant application, and the service principal object ID is different across all tenants. This means that you cannot hardcode the Object ID in your Bicep template and you can't use the Application ID of the `Azure Machine Learning` Enterprise Application either, as the role assignement requires the Object ID of the service principal in your tenant.
 
@@ -150,7 +150,7 @@ resource roleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-01-prev
 
 You can find the Github Gist containing the code above [here](https://gist.github.com/PlagueHO/0f3a2b1c4d5e7f8a6c9b8e4d5e7f8a6).
 
-To see the entire complete process in action, check out the Bicep for the [Azure AI Foundry Jumpstart](https://github.com/PlagueHO/azure-ai-foundry-jumpstart/blob/main/infra/main.bicep).
+To see the entire complete process in action, check out the Bicep for the [Microsoft Foundry Jumpstart](https://github.com/PlagueHO/microsoft-foundry-jumpstart/blob/main/infra/main.bicep).
 
 ## Conclusion
 

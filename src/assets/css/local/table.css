@@ -46,7 +46,7 @@ td:last-child {
   border-block-end: 0;
 }
 
-@media screen(sm) {
+@media (min-width: 640px) {
   table {
     border-collapse: collapse;
     margin: 0;

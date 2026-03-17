@@ -13,7 +13,7 @@ image: "/assets/banners/banner-2025-05-17-using-defaultazurecredential-with-sema
 
 ## Background
 
-I am working on a project for simplifying the deployment of a zero-trust [secure Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub). As part of this project I am creating some [Python scripts to generate synthetic data](https://github.com/PlagueHO/azure-ai-foundry-jumpstart/tree/main/scripts/data-generators#readme) for use as sample data.
+I am working on a project for simplifying the deployment of a zero-trust [secure Azure AI Foundry environment](https://learn.microsoft.com/azure/ai-foundry/how-to/create-secure-ai-hub). As part of this project I am creating some [Python scripts to generate synthetic data](https://github.com/PlagueHO/microsoft-foundry-jumpstart/tree/main/scripts/data-generators#readme) for use as sample data.
 
 ## Securing with Managed Identities
 
@@ -47,7 +47,7 @@ service = AzureChatCompletion(
 )
 ```
 
-That's it. It is fairly straight forward to get away from using API keys to authenticate to your Azure OpenAI Service endpoints. You can see the complete implementation in the [Azure AI Foundry jumpstart data generator](https://github.com/PlagueHO/azure-ai-foundry-jumpstart/blob/main/scripts/data-generators/synthetic_data_generator.py).
+That's it. It is fairly straight forward to get away from using API keys to authenticate to your Azure OpenAI Service endpoints. You can see the complete implementation in the [Microsoft Foundry Jumpstart data generator](https://github.com/PlagueHO/microsoft-foundry-jumpstart/blob/main/scripts/data-generators/synthetic_data_generator.py).
 
 ## Conclusion
 
@@ -60,4 +60,4 @@ Chances are I'll run into this again in the future, so I thought it was worth do
 - [Semantic Kernel Python SDK](https://github.com/microsoft/semantic-kernel/tree/main/python#readme)
 - [Azure Identity SDK for Python](https://learn.microsoft.com/python/api/overview/azure/identity-readme?view=azure-python)
 - [DefaultAzureCredential Class in Python](https://learn.microsoft.com/python/api/azure-identity/azure.identity.defaultazurecredential?view=azure-python)
-- [Python scripts to generate synthetic data](https://github.com/PlagueHO/azure-ai-foundry-jumpstart/tree/main/scripts/data-generators#readme) that demonstrate this approach.
+- [Python scripts to generate synthetic data](https://github.com/PlagueHO/microsoft-foundry-jumpstart/tree/main/scripts/data-generators#readme) that demonstrate this approach.
