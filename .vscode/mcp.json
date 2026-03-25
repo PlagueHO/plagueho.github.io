@@ -20,11 +20,11 @@
             "url": "https://api.githubcopilot.com/mcp/",
             "type": "http"
         },
-        "eleventy/source": {
+        "eleventy-repo": {
             "type": "sse",
             "url": "https://gitmcp.io/11ty/eleventy"
         },
-        "microsoft/clarity": {
+        "microsoft-clarity": {
             "command": "npx",
             "args": [
                 "@microsoft/clarity-mcp-server@latest",
@@ -32,11 +32,11 @@
             ],
             "type": "stdio"
         },
-        "microsoft/learn": {
+        "microsoft-learn": {
             "type": "http",
             "url": "https://learn.microsoft.com/api/mcp"
         },
-        "tailwind/source": {
+        "tailwind-repo": {
             "type": "sse",
             "url": "https://gitmcp.io/tailwindlabs/tailwindcss"
         }
