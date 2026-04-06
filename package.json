@@ -68,7 +68,7 @@
     "sanitize-html": "^2.17.2",
     "sharp": "^0.34.5",
     "sharp-ico": "^0.1.5",
-    "slugify": "^1.6.8",
+    "slugify": "^1.6.9",
     "svgo": "^4.0.1"
   }
 }
