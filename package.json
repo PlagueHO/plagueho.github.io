@@ -43,7 +43,7 @@
     "@toycode/markdown-it-class": "^1.2.4",
     "colorjs.io": "^0.6.1",
     "cross-env": "^10.1.0",
-    "cssnano": "^7.1.4",
+    "cssnano": "^7.1.5",
     "dayjs": "^1.11.20",
     "dotenv": "^17.4.2",
     "esbuild": "^0.28.0",
