@@ -37,7 +37,7 @@
     "install": "^0.13.0",
     "lite-youtube-embed": "^0.3.4",
     "npm": "^11.13.0",
-    "tailwindcss": "^4.2.1"
+    "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
     "@toycode/markdown-it-class": "^1.2.4",
