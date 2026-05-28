@@ -20,10 +20,6 @@
             "url": "https://api.githubcopilot.com/mcp/",
             "type": "http"
         },
-        "eleventy-repo": {
-            "type": "sse",
-            "url": "https://gitmcp.io/11ty/eleventy"
-        },
         "microsoft-clarity": {
             "command": "npx",
             "args": [
@@ -35,10 +31,6 @@
         "microsoft-learn": {
             "type": "http",
             "url": "https://learn.microsoft.com/api/mcp"
-        },
-        "tailwind-repo": {
-            "type": "sse",
-            "url": "https://gitmcp.io/tailwindlabs/tailwindcss"
         }
     }
 }

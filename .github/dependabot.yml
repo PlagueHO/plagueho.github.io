@@ -1,38 +1,17 @@
+# yaml-language-server: $schema=https://json.schemastore.org/dependabot-2.0.json
+# To get started with Dependabot version updates, you'll need to specify which
+# package ecosystems to update and where the package manifests are located.
+# Please see the documentation for more information:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+# https://containers.dev/guide/dependabot
+
 version: 2
 updates:
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-      day: "sunday" # Run updates on Sundays
-      time: "06:00" # UTC time for updates
-    open-pull-requests-limit: 5
-    commit-message:
-      prefix: "deps"
-    labels:
-      - "dependencies"
-      - "npm"
-    groups:
-      npm-minor-patch:
-        patterns:
-          - "*"
-        update-types:
-          - "minor"
-          - "patch"
-    ignore:
-      - dependency-name: "left-pad"
-        versions: ["*"] # Example: ignore left-pad updates
-    allow:
-      - dependency-type: "direct"
-      - dependency-type: "indirect"
-    security-updates: true # Enable security updates
-    versioning-strategy: widen # Or "increase", "lockfile-only", etc.
-
+  # GitHub Actions dependencies
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "sunday"
       time: "06:00"
     open-pull-requests-limit: 5
     commit-message:
@@ -40,11 +19,43 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
+      - "ci-cd"
+    rebase-strategy: "auto"
     groups:
-      actions-minor-patch:
+      actions-dependencies:
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
-    security-updates: true
+
+  # DevContainer features and configuration
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "06:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+      - "devcontainer"
+    rebase-strategy: "auto"
+
+  # NPM dependencies for repository tooling
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      time: "06:00"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+    labels:
+      - "dependencies"
+      - "npm"
+      - "tooling"
+    rebase-strategy: "auto"
+    allow:
+      - dependency-type: "all"
