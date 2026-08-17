@@ -1,5 +1,5 @@
 <script webc:type="render" webc:is="template">
-  const Image = require('@11ty/eleventy-img');
+  const {default: Image} = require('@11ty/eleventy-img');
   const {optimize} = require('svgo');
   const slugify = require('slugify');
 
