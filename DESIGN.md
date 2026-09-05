@@ -44,12 +44,12 @@ spacing:
 components:
   button-primary:
     backgroundColor: "{colors.primary}"
-    textColor: "{colors.text-light}"
+    textColor: "{colors.on-accent}"
     rounded: "{rounded.small}"
     padding: "{spacing.xs} {spacing.m}"
   button-secondary:
     backgroundColor: "{colors.secondary}"
-    textColor: "{colors.text-light}"
+    textColor: "{colors.on-accent}"
     rounded: "{rounded.small}"
     padding: "{spacing.xs} {spacing.m}"
   card:

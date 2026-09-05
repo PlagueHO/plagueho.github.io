@@ -30,7 +30,7 @@ schema: ProjectPosting
     {% endif %}
 
     {% include 'partials/edit-on.njk' %}
-  </article>
+  </div>
 
   <!--  h-card infos: https://indieweb.org/authorship -->
   <div hidden class="h-entry">
@@ -43,7 +43,7 @@ schema: ProjectPosting
       alt="{{ meta.author.name }}"
     />
   </div>
-</div>
+</article>
 
 {%- css "local" -%}
   {%- include 'css/post.css' -%}

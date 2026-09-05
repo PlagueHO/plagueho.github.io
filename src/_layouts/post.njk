@@ -43,8 +43,8 @@ schema: BlogPosting
       src="{{ meta.author.avatar | url | absoluteUrl(meta.url) }}"
       alt="{{ meta.author.name }}"
     />
-  </article>
-</div>
+  </div>
+</article>
 
 {%- css "local" -%}
   {%- include 'css/post.css' -%}
