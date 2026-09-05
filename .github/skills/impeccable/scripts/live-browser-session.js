@@ -11,7 +11,15 @@
   function createLiveBrowserSessionState({ prefix, storage, idFactory }) {
     if (!prefix) throw new Error('prefix required');
     const store = storage || root.localStorage;
-    const makeId = idFactory || function () { return Math.random().toString(16).slice(2, 10); };
+    const makeId = idFactory || function () {
+      if (root.crypto?.randomUUID) return root.crypto.randomUUID().replace(/-/g, '').slice(0, 8);
+      if (root.crypto?.getRandomValues) {
+        const bytes = new Uint8Array(4);
+        root.crypto.getRandomValues(bytes);
+        return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+      }
+      throw new Error('The Web Crypto API is required to create live session identifiers.');
+    };
     const sessionKey = prefix + '-session';
     const handledKey = sessionKey + '-handled';
     const scrollKey = sessionKey + '-scroll';

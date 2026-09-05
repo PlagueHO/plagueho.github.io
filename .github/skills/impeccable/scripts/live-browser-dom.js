@@ -86,7 +86,12 @@
 
     function id8() {
       if (crypto?.randomUUID) return crypto.randomUUID().replace(/-/g, '').slice(0, 8);
-      return (Math.random().toString(16).slice(2) + Date.now().toString(16)).slice(0, 8);
+      if (crypto?.getRandomValues) {
+        const bytes = new Uint8Array(4);
+        crypto.getRandomValues(bytes);
+        return Array.from(bytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+      }
+      throw new Error('The Web Crypto API is required to create live session identifiers.');
     }
 
     function cssId(id) {
