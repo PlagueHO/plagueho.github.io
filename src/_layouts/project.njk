@@ -3,12 +3,12 @@ layout: base
 schema: ProjectPosting
 ---
 
-<div class="region" style="--region-space-top: var(--space-l-2xl)">
+<article class="region" style="--region-space-top: var(--space-l-2xl)">
   <div class="wrapper flow prose">
     <h1 class="gradient-text-linear">{{ title }}</h1>
 
     {% if features and features.length > 0 %}
-      <div class="project-features" style="margin-bottom: 1em;"> {# Specific bottom margin for this page layout #}
+      <div class="project-features" style="margin-bottom: var(--space-m);">
         {% for feature in features %}
           {% include "partials/feature-icon.njk" %}
         {% endfor %}
@@ -25,7 +25,7 @@ schema: ProjectPosting
     {# Add the project repository button if projectUrl is defined #}
     {% if projectUrl %}
       <div> {# Wrapper div for spacing #}
-        <a href="{{ projectUrl }}" class="button" data-button-variant="secondary">&nbsp;&nbsp;&nbsp;{% svg "misc/github" %} GitHub Repository</a>
+        <a href="{{ projectUrl }}" class="button" data-button-variant="secondary">{% svg "misc/github" %} GitHub Repository</a>
       </div>
     {% endif %}
 
@@ -43,7 +43,7 @@ schema: ProjectPosting
       alt="{{ meta.author.name }}"
     />
   </div>
-</div>
+</article>
 
 {%- css "local" -%}
   {%- include 'css/post.css' -%}

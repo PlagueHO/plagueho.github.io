@@ -44,7 +44,7 @@ picture.post-banner img /* Fallback if not immediately after h1, but less specif
 
 .post date {
   font-size: var(--size-step-1);
-  color: var(--color-text-light);
+  color: var(--color-text-accent);
 }
 
 .post .credit {

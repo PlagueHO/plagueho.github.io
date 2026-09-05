@@ -62,14 +62,12 @@
 /* Variants */
 .button[data-button-variant='primary'] {
   --button-bg: var(--color-primary);
-  --button-color: var(--color-light);
-  --button-color: color-mix(in oklab, var(--color-primary) 5%, var(--color-light));
+  --button-color: var(--color-on-accent);
 }
 
 .button[data-button-variant='secondary'] {
   --button-bg: var(--color-secondary);
-  --button-color: var(--color-light);
-  --button-color: color-mix(in oklab, var(--color-secondary) 5%, var(--color-light));
+  --button-color: var(--color-on-accent);
 }
 
 .button[data-button-variant='tertiary'] {
@@ -110,7 +108,7 @@
   --button-tracking: var(--tracking-wide);
   --button-gap: var(--space-3xs);
   background: var(--gradient-linear-primary);
-  color: var(--color-light);
+  color: var(--color-on-accent);
   border-color: color-mix(in oklab, var(--color-primary) 70%, black 30%);
 }
 

@@ -29,9 +29,11 @@ description: "Join Daniel Scott-Raynsford's agentic AI journey. Practical insigh
   {% set latestPost = collections.livePosts[0] %}
   <section class="region region-space-l">
     <div class="wrapper flow prose">
+      <h2 class="gradient-text-linear">Latest article</h2>
       {% set item = latestPost %}
-      {% set headingLevel = "h2" %}
+      {% set headingLevel = "h3" %}
       {% include "partials/card-blog.njk" %}
+      <p><a href="/blog/" class="button" data-button-variant="secondary">Explore all articles</a></p>
     </div>
   </section>
 

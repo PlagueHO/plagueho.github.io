@@ -38,6 +38,7 @@
 
   --color-light: var(--color-gray-100);
   --color-dark: var(--color-gray-900);
+  --color-on-accent: #000;
   --color-mid: var(--color-gray-400);
 }
 
