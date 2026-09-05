@@ -1,7 +1,7 @@
 const storageKey = 'theme-preference';
 const themeColors = {
-  dark: '{{ meta.themeLight }}',
-  light: '{{ meta.themeDark }}'
+  dark: '{{ meta.themeDark }}',
+  light: '{{ meta.themeLight }}'
 };
 
 const theme = {
@@ -29,8 +29,12 @@ window.onload = () => {
 
 // sync with system changes
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ({matches: isDark}) => {
+  if (localStorage.getItem(storageKey)) {
+    return;
+  }
+
   theme.value = isDark ? 'dark' : 'light';
-  setPreference();
+  reflectPreference();
   updateMetaThemeColor();
 });
 
@@ -61,9 +65,10 @@ function reflectPreference() {
 }
 
 function updateMetaThemeColor() {
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
   const newColor = theme.value === 'dark' ? themeColors.dark : themeColors.light;
-  metaThemeColor.setAttribute('content', newColor);
+  document.querySelectorAll('meta[name="theme-color"]').forEach((metaThemeColor) => {
+    metaThemeColor.setAttribute('content', newColor);
+  });
 }
 
 // set early so no page flashes / CSS is made aware
