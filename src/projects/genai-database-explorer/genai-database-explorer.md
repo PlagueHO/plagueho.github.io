@@ -1,6 +1,6 @@
 ---
 title: "Generative AI Database Explorer"
-description: "Deploy your onwn Foundry Virtual Table Top server into Azure using Azure Bicep and GitHub Actions. It support deploying into either Azure Web App or an Azure Container app, with the persistent data stored into Azure Files."
+description: "A tool that builds enriched semantic models of relational database schemas so users can explore tables, stored procedures, and SQL queries with generative AI."
 features:
   - Azure AI
   - SQL
@@ -9,9 +9,9 @@ features:
 projectUrl: "https://github.com/PlagueHO/genai-database-explorer"
 ---
 
-With **Generative AI Database Explorer**, you can explore your database schema and stored procedures using Generative AI. This tool helps you understand your database schema and stored procedures by generating SQL queries based on the schema and explaining the schema and stored procedures in the database to the user based on the stored schema.
+With **Generative AI Database Explorer**, you can explore database schemas and stored procedures with generative AI. It generates SQL queries, explains database objects, and answers questions based on a semantic model built from the stored schema.
 
-Although there are many other tools available that perform similar functions, this tool produces a **semantic model** of the database schema, combined with a data dictionary and enriched using Generative AI.
+Unlike tools that query a database directly, this project produces a version-controlled **semantic model** enriched with a data dictionary and generative AI. That model lets database owners review, refine, and ground the information before it is used to answer questions.
 
 The reason that this approach of enriching a semantic model rather than just querying the database directly is:
 
