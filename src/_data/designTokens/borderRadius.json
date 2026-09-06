@@ -5,11 +5,11 @@
   "items": [
     {
       "name": "small",
-      "value": "0.1875rem"
+      "value": "0.5rem"
     },
     {
       "name": "Medium",
-      "value": "0.3rem"
+      "value": "0.75rem"
     }
   ]
 }
