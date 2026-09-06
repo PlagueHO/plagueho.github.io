@@ -34,6 +34,10 @@ custom-card .card-headline-flex {
   gap: var(--space-s);
 }
 
+custom-card .card-headline-flex > a {
+  min-inline-size: 0;
+}
+
 custom-card .card-headline-flex .project-features {
   margin-top: 0;
   margin-bottom: 0;
@@ -84,6 +88,11 @@ custom-card .card-description {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  font-size: var(--size-step-min-1);
+}
+
+custom-card .card-description > p {
+  margin-block: 0;
 }
 
 /* avoid overflow of long words */
@@ -119,7 +128,7 @@ custom-card[clickable]:focus-within {
   transform: translateY(-0.0625rem);
 }
 
-custom-card[clickable]:focus-within a:focus {
+custom-card[clickable]:focus-within a:focus:not(:focus-visible) {
   outline: none;
 }
 custom-card[clickable] {
