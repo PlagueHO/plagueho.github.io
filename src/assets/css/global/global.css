@@ -19,6 +19,7 @@
 /* blocks */
 @import './blocks/button.css' layer(blocks);
 @import './blocks/code.css' layer(blocks);
+@import './blocks/consent-banner.css' layer(blocks);
 @import './blocks/external-link.css' layer(blocks);
 @import './blocks/main-nav.css' layer(blocks);
 @import './blocks/prose.css' layer(blocks);
