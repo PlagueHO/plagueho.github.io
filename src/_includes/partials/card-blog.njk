@@ -12,7 +12,7 @@
     <div slot="tag" webc:nokeep>
     {% for tag in item.data.tags %}
       {% if tag != "posts" %}
-        <a class="button" href="/tags/{{ tag }}" data-small-button-tag>{{ tag }}</a>
+        <a class="button" href="/tags/{{ tag }}" data-small-button-tag data-tag-tone="{{ loop.index0 % 4 }}">{{ tag }}</a>
       {% endif %}
     {% endfor %}
     {# Feature icons appear in metadata rather than inside the heading. #}

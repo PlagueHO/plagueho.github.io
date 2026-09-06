@@ -25,6 +25,8 @@ eleventyComputed:
       <a
         href="/tags/{{ tag }}"
         class="button"
+        data-small-button-tag
+        data-tag-tone="{{ loop.index0 % 4 }}"
         {{
           helpers.getLinkActiveState('/tags/' + tag,
           page.url)

@@ -37,7 +37,7 @@ h3 {
 }
 
 h1 {
-  font-size: var(--size-step-2);
+  font-size: var(--size-step-3);
 }
 
 h2 {
@@ -50,7 +50,7 @@ h3 {
 
 blockquote {
   padding: var(--space-s-m);
-  border-inline-start: 0.5rem solid var(--color-primary);
+  border-inline-start: 0.25rem solid var(--color-primary);
   font-size: var(--size-step-min-1) 
 }
 
@@ -121,7 +121,7 @@ a:not([class]):hover {
 }
 
 :focus-visible {
-  outline: 3px solid var(--focus-color, currentColor);
+  outline: 3px solid var(--focus-color, var(--focus-ring));
   outline-offset: var(--focus-offset, 0.3ch);
 }
 
@@ -134,8 +134,26 @@ a:not([class]):hover {
 }
 
 ::selection {
-  background-color: var(--color-text);
-  color: var(--color-bg);
+  background-color: var(--color-primary);
+  color: var(--color-on-accent);
+}
+
+* {
+  scrollbar-color: var(--color-bg-accent-2) var(--color-bg);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a,
+  button,
+  .button,
+  custom-card {
+    transition:
+      color var(--transition-duration) var(--transition-timing),
+      background-color var(--transition-duration) var(--transition-timing),
+      border-color var(--transition-duration) var(--transition-timing),
+      box-shadow var(--transition-duration) var(--transition-timing),
+      transform var(--transition-duration) var(--transition-timing);
+  }
 }
 
 .preload-transitions * {

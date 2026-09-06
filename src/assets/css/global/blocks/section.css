@@ -3,8 +3,13 @@
 }
 
 .section__inner {
-  background-color: var(--spot-color, var(--color-bg-accent));
+  background: linear-gradient(
+    115deg,
+    color-mix(in oklab, var(--spot-color, var(--color-bg-accent)) 92%, var(--color-bg)),
+    var(--spot-color, var(--color-bg-accent))
+  );
   color: var(--color-text);
+  border-block: 1px solid color-mix(in oklab, var(--spot-color, var(--color-bg-accent)) 68%, var(--color-bg));
 }
 
 .section blockquote {

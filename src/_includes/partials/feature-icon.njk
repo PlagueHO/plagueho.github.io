@@ -12,8 +12,7 @@
 } %}
 {% set icon = iconMap[feature] %}
 {% if icon %}
-  <span class="button" data-small-button-tag data-icon-only>
+  <span class="feature-icon" role="img" aria-label="{{ feature }}">
     <img src="/assets/icons/{{ icon }}" alt="{{ feature }} icon" />
   </span>
 {% endif %}
-

@@ -1,18 +1,18 @@
 /* based on Andy Bell's article: https://piccalil.li/blog/how-i-build-a-button-component/ */
 
 .button {
-  --button-bg: var(--color-text);
-  --button-color: color-mix(in oklab, var(--button-bg) 10%, var(--color-bg));
-  --button-hover-bg: color-mix(in oklab, var(--button-bg) 90%, var(--color-bg));
-  --button-border-width: var(--border-thickness);
+  --button-bg: var(--color-primary);
+  --button-color: var(--color-on-accent);
+  --button-hover-bg: color-mix(in oklab, var(--button-bg) 82%, var(--color-text));
+  --button-border-width: 1px;
   --button-border-style: solid;
   --button-border-color: color-mix(in oklab, var(--button-bg) 80%, var(--color-text));
   --button-radius: var(--border-radius-small);
   --button-gap: var(--space-2xs);
   --button-padding: var(--space-xs) var(--space-m);
-  --button-font-family: var(--font-body);
-  --button-font-weight: var(--font-regular);
-  --button-font-size: var(--size-step-0);
+  --button-font-family: var(--font-base);
+  --button-font-weight: var(--font-bold);
+  --button-font-size: var(--size-step-min-1);
   --button-text-transform: none;
   --button-tracking: normal;
 
@@ -27,6 +27,7 @@
   border-color: var(--button-border-color);
   border-radius: var(--button-radius);
   text-decoration: none;
+  min-block-size: 2.75rem;
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
   font-size: var(--button-font-size);
@@ -52,7 +53,7 @@
 }
 
 .button:focus {
-  outline-color: var(--button-outline-color, var(--button-border-color));
+  outline-color: var(--button-outline-color, var(--focus-ring));
 }
 
 .button:active {
@@ -103,62 +104,63 @@
   --button-border-width: 1px;
   --button-radius: var(--border-radius-small);
   --button-font-size: var(--size-step-min-2);
-  --button-padding: var(--space-3xs) var(--space-xs);
+  --button-padding: var(--space-2xs) var(--space-s);
   --button-text-transform: lowercase;
-  --button-tracking: var(--tracking-wide);
+  --button-tracking: normal;
   --button-gap: var(--space-3xs);
-  background: var(--gradient-linear-primary);
+  background: var(--tag-bg, color-mix(in oklab, var(--color-primary) 18%, var(--color-bg)));
+  color: var(--tag-color, var(--color-text));
+  border-color: var(--tag-border, color-mix(in oklab, var(--color-primary) 62%, var(--color-bg-accent)));
+  min-block-size: 2.75rem;
+}
+
+.button[data-small-button-tag][data-tag-tone='1'] {
+  --tag-bg: color-mix(in oklab, var(--color-secondary) 16%, var(--color-bg));
+  --tag-border: color-mix(in oklab, var(--color-secondary) 62%, var(--color-bg-accent));
+}
+
+.button[data-small-button-tag][data-tag-tone='2'] {
+  --tag-bg: color-mix(in oklab, var(--color-tertiary) 20%, var(--color-bg));
+  --tag-border: color-mix(in oklab, var(--color-tertiary) 62%, var(--color-bg-accent));
+}
+
+.button[data-small-button-tag][data-tag-tone='3'] {
+  --tag-bg: color-mix(in oklab, #cf4662 14%, var(--color-bg));
+  --tag-border: color-mix(in oklab, #cf4662 58%, var(--color-bg-accent));
+}
+
+.button[data-small-button-tag]:hover,
+.button[data-small-button-tag]:focus-visible {
+  background: var(--tag-border);
   color: var(--color-on-accent);
-  border-color: color-mix(in oklab, var(--color-primary) 70%, black 30%);
 }
 
-/* Styles for icon-only version of small button tags */
-.button[data-small-button-tag][data-icon-only] {
-  /* Remove padding */
-  --button-padding: 0;
-  /* No gap needed if there's only an icon */
-  --button-gap: 0;
-  /* Change display to inline-block for better dimension control */
-  display: inline-block; 
-  vertical-align: middle; /* Helps align with adjacent text like "Uses:" */
-  /* Make background transparent */
-  background: transparent;
-  /* Remove the border */
-  border-width: 0;
-  /* Set explicit size for the button container to match the image */
-  width: 32px;
-  height: 32px;
-  /* Override line-height and font-size to prevent typographic interference */
-  line-height: 32px; /* Match height */
-  font-size: 0; /* Prevent text-based line height issues */
-  /* Prevent the button from shrinking in a flex container */
-  flex-shrink: 0; /* Still useful if parent .project-features is flex */
-  /* Reset typographic properties that might interfere */
-  text-box-trim: initial;
-  text-box-edge: initial;
-  /* Attempt to force visibility */
-  overflow: visible !important; 
-  /* box-shadow: none; */ 
+.feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  padding: var(--space-2xs);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 50%;
 }
 
-.button[data-small-button-tag][data-icon-only] img {
-  /* Set icon size */
+.feature-icon img {
   height: 32px;
   width: 32px;
-  /* Ensure the image scales correctly within its container if needed, though direct sizing is preferred here */
   object-fit: contain;
-  display: block; /* Make image a block element within its container */
-  /* Attempt to force visibility */
-  overflow: visible !important;
+  display: block;
 }
 
 /* Styles for the container of project feature icons */
 .project-features {
   display: flex;
   flex-wrap: wrap; /* Allow icons to wrap to the next line if many */
-  gap: 0.5em;      /* Consistent spacing between icons */
+  gap: var(--space-2xs);
   align-items: center; /* Vertically align icons if they have different heights (though they shouldn't with current setup) */
-  margin-top: 0.5em; /* Default top margin for spacing from content above */
+  margin-top: var(--space-2xs);
 }
 
 /* Radius variants */
