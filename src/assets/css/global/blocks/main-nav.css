@@ -14,7 +14,7 @@
   --gutter: var(--space-xs);
   --cluster-vertical-alignment: normal;
   --nav-list-background: var(--color-bg);
-  --nav-list-shadow: -5px 0 11px 0 hsl(0 0% 0% / 0.2);
+  --nav-list-shadow: var(--shadow-soft);
   --nav-list-layout: column;
   --nav-list-height: 100dvh;
   --nav-list-padding: var(--space-2xl) var(--space-s);
@@ -99,7 +99,7 @@
   /* configuration */
   --nav-item-background: transparent;
   --nav-item-text-color: var(--color-text);
-  --nav-item-padding: var(--space-xs) var(--space-2xs);
+  --nav-item-padding: var(--space-xs) var(--space-s);
   --nav-item-decoration-color: transparent;
 
   background: var(--nav-item-background);
@@ -113,6 +113,11 @@
   text-decoration-color: var(--nav-item-decoration-color);
   text-decoration-thickness: 3px;
   text-underline-offset: 0.2em;
+  font-family: var(--font-display);
+  font-size: var(--size-step-min-2);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
 }
 
 .mainnav a:where(:hover, :focus) {
@@ -123,9 +128,9 @@
 
 .mainnav [aria-current='page'],
 .mainnav [data-state='active'] {
-  --nav-item-background: var(--color-primary);
-  --nav-item-text-color: var(--color-on-accent);
-  --nav-item-decoration-color: transparent;
+  --nav-item-background: color-mix(in oklab, var(--color-primary) 16%, var(--color-bg));
+  --nav-item-text-color: var(--color-text);
+  --nav-item-decoration-color: var(--color-primary);
 }
 
 @media (min-width: 662px) {

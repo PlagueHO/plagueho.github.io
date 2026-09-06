@@ -15,7 +15,16 @@
 }
 
 .prose :is(pre, pre + *, figure, picture) {
-  --flow-space: var(--space-m-l);
+  --flow-space: var(--space-s-m);
+  --prose-measure: 72ch;
+}
+
+.prose > * {
+  max-inline-size: var(--prose-measure, 72ch);
+}
+
+.prose > :is(h1, h2, h3, figure, picture, .meta) {
+  max-inline-size: none;
 }
 
 .prose :is(figure + *, picture + *) {

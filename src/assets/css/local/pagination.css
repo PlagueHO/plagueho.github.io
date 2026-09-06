@@ -5,7 +5,7 @@
 .pagination li {
   color: var(--pagination-text, var(--color-text));
   background-color: var(--pagination-bg, var(--color-bg));
-  border: 3px solid var(--pagination-border, var(--color-bg-accent));
+  border: 1px solid var(--pagination-border, var(--border-subtle));
   border-radius: var(--border-radius-medium);
 }
 
@@ -15,23 +15,16 @@
 }
 
 .pagination a {
-  text-decoration: none;
-}
-
-.pagination a {
+  min-block-size: 2.75rem;
+  align-items: center;
+  display: inline-flex;
   padding: var(--space-xs) var(--space-s-m);
   text-decoration: none;
-  display: block;
-}
-
-.pagination li:not(:has(a)) {
-  padding: var(--space-xs) var(--space-s-m);
-  opacity: 0.6;
 }
 
 .pagination li:has(a:hover) {
-  --pagination-bg: var(--color-bg-accent);
-  --pagination-border: var(--color-bg-accent);
+  --pagination-bg: color-mix(in oklab, var(--color-primary) 16%, var(--color-bg));
+  --pagination-border: var(--color-primary);
 }
 
 .pagination li:has(a[aria-current='page']) {
