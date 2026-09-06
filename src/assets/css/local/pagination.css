@@ -22,11 +22,6 @@
   text-decoration: none;
 }
 
-.pagination li:not(:has(a)) {
-  padding: var(--space-xs) var(--space-s-m);
-  opacity: 0.6;
-}
-
 .pagination li:has(a:hover) {
   --pagination-bg: color-mix(in oklab, var(--color-primary) 16%, var(--color-bg));
   --pagination-border: var(--color-primary);

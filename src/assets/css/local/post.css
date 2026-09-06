@@ -10,7 +10,7 @@
   font-size: var(--size-step-1);
 }
 
-/* make featured image alwyays 16/9 */
+/* Make featured images always 16/9. */
 .post h1 + :is(picture, figure) img {
   max-inline-size: var(--max-img-width, 100%);
   block-size: auto;

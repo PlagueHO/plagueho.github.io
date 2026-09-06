@@ -131,7 +131,6 @@
   --nav-item-background: color-mix(in oklab, var(--color-primary) 16%, var(--color-bg));
   --nav-item-text-color: var(--color-text);
   --nav-item-decoration-color: var(--color-primary);
-  --nav-item-decoration-color: transparent;
 }
 
 @media (min-width: 662px) {

@@ -3,6 +3,7 @@
 }
 
 .section__inner {
+  background-color: var(--spot-color, var(--color-bg-accent));
   background: linear-gradient(
     115deg,
     color-mix(in oklab, var(--spot-color, var(--color-bg-accent)) 92%, var(--color-bg)),
