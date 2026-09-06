@@ -1,6 +1,7 @@
 import clarity from '@microsoft/clarity';
 
 const consentStorageKey = 'neural-flow-analytics-consent-v1';
+const consentValues = new Set(['granted', 'denied']);
 const consentBanner = document.querySelector('[data-consent-banner]');
 const consentSettingsButton = document.querySelector('[data-consent-settings]');
 const consentActionButtons = document.querySelectorAll('[data-consent-action]');
@@ -23,13 +24,17 @@ const setBannerVisibility = isVisible => {
 };
 
 const saveConsent = analyticsStorage => {
+  if (!consentValues.has(analyticsStorage)) {
+    return;
+  }
+
   localStorage.setItem(consentStorageKey, analyticsStorage);
   sendConsent(analyticsStorage);
   setBannerVisibility(false);
 };
 
 const storedConsent = localStorage.getItem(consentStorageKey);
-const hasValidConsent = storedConsent === 'granted' || storedConsent === 'denied';
+const hasValidConsent = consentValues.has(storedConsent);
 
 sendConsent(hasValidConsent ? storedConsent : 'denied');
 setBannerVisibility(!hasValidConsent);
