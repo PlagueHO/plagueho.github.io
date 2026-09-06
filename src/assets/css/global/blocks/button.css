@@ -27,7 +27,7 @@
   border-color: var(--button-border-color);
   border-radius: var(--button-radius);
   text-decoration: none;
-  min-block-size: 2.75rem;
+  min-block-size: 2.5rem;
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
   font-size: var(--button-font-size);
@@ -52,8 +52,9 @@
   color: var(--button-color);
 }
 
-.button:focus {
+.button:focus-visible {
   outline-color: var(--button-outline-color, var(--focus-ring));
+  outline-offset: 0.2rem;
 }
 
 .button:active {
@@ -78,21 +79,20 @@
 }
 
 .button[data-ghost-button] {
-  --button-bg: var(--color-bg);
-  --button-border-color: var(--color-text);
+  --button-bg: var(--surface-muted);
+  --button-border-color: var(--border-subtle);
   --button-color: var(--color-text);
   --button-hover-color: var(--color-bg);
 }
 
 .button[data-ghost-button]:hover {
-  --_ghost-hover-bg: var(--color-bg);
-  --_ghost-hover-bg: color-mix(in oklab, var(--button-bg) 95%, var(--color-dark));
+  --_ghost-hover-bg: color-mix(in oklab, var(--button-bg) 86%, var(--color-text));
   background: var(--_ghost-hover-bg);
   color: var(--button-color);
 }
 
 .button[data-small-button] {
-  --button-border-width: 2px;
+  --button-border-width: 1px;
   --button-radius: var(--border-radius-small);
   --button-font-size: var(--size-step-min-2);
   --button-padding: var(--space-2xs) var(--space-s) var(--space-3xs) var(--space-s);
@@ -102,16 +102,16 @@
 
 .button[data-small-button-tag] {
   --button-border-width: 1px;
-  --button-radius: var(--border-radius-small);
+  --button-radius: 0.625rem;
   --button-font-size: var(--size-step-min-2);
-  --button-padding: var(--space-2xs) var(--space-s);
+  --button-padding: var(--space-3xs) var(--space-xs);
   --button-text-transform: lowercase;
   --button-tracking: normal;
   --button-gap: var(--space-3xs);
   background: var(--tag-bg, color-mix(in oklab, var(--color-primary) 18%, var(--color-bg)));
   color: var(--tag-color, var(--color-text));
   border-color: var(--tag-border, color-mix(in oklab, var(--color-primary) 62%, var(--color-bg-accent)));
-  min-block-size: 2.75rem;
+  min-block-size: 1.75rem;
 }
 
 .button[data-small-button-tag][data-tag-tone='1'] {
@@ -131,8 +131,8 @@
 
 .button[data-small-button-tag]:hover,
 .button[data-small-button-tag]:focus-visible {
-  background: var(--tag-border);
-  color: var(--color-on-accent);
+  background: color-mix(in oklab, var(--tag-border) 80%, var(--color-bg));
+  color: var(--tag-color, var(--color-text));
 }
 
 .feature-icon {

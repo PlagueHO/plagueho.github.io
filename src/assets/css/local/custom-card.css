@@ -1,14 +1,14 @@
 custom-card {
   --gutter: var(--space-xs-s);
-  background-color: var(--card-bg, var(--surface-raised));
+  background-color: var(--card-bg, var(--surface-muted));
   border: 1px solid var(--border-subtle);
   color: var(--color-text);
   padding: var(--space-s-m);
   border-radius: var(--border-radius-medium);
-  box-shadow: 0 0.5rem 1.25rem color-mix(in srgb, var(--color-dark) 6%, transparent);
+  block-size: clamp(19rem, 27vw, 22rem);
   max-inline-size: unset;
   display: grid;
-  grid-template-rows: [image] max-content [headline] max-content [meta] max-content [desc] auto [footer] max-content;
+  grid-template-rows: [image] max-content [headline] minmax(3lh, max-content) [meta] max-content [desc] 1fr [footer] max-content;
 }
 
 /* avoid flow space being added to unused elements with nested slots */
@@ -23,25 +23,27 @@ custom-card ::selection {
 
 custom-card :is(h2, h3) {
   --flow-space: var(--space-s);
-  grid-row: headline; /* Assigns H2/H3 to the 'headline' grid row */
+  grid-row: headline;
+  line-height: 1.15;
 }
 
-/* New styles for making the headline a flex container */
 custom-card .card-headline-flex {
   display: flex;
   justify-content: space-between; /* Pushes title to left, features to right */
   align-items: center; /* Vertically aligns title and features */
-  gap: var(--space-s); /* Adds a small gap between title and features if they get close */
+  gap: var(--space-s);
 }
 
-/* Adjustments for project-features when inside the headline */
 custom-card .card-headline-flex .project-features {
-  margin-top: 0; /* Remove top margin if it was set for block display */
-  margin-bottom: 0; /* Remove bottom margin if it was set for block display */
-  /* The existing .project-features already uses flex, which is good */
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 custom-card :is(h2, h3) a {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   text-decoration: none;
 }
 
@@ -59,23 +61,29 @@ custom-card img {
 }
 
 custom-card > .meta {
-  grid-row: meta; /* Assigns elements with class 'meta' to the 'meta' grid row */
+  grid-row: meta;
   font-size: var(--size-step-min-1);
 }
 
-/* Target the div that receives slot="content" */
-custom-card > div:not(.meta) { /* Assuming .meta is the only other direct child div you might have */
-  grid-row: desc; /* Place it in the 'desc' row */
+custom-card > div:not(.meta) {
+  grid-row: desc;
 }
 
 custom-card > p {
-  grid-row: desc; /* Assigns P tags to the 'desc' grid row */
-  font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-1) */
+  grid-row: desc;
+  font-size: var(--size-step-min-1);
 }
 
 custom-card > footer {
-  grid-row: footer; /* Assigns footer elements to the 'footer' grid row */
-  font-size: var(--size-step-min-1); /* Reduced from var(--size-step-min-2) */
+  grid-row: footer;
+  font-size: var(--size-step-min-1);
+}
+
+custom-card .card-description {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
 }
 
 /* avoid overflow of long words */
@@ -107,8 +115,8 @@ custom-card[img-square] img {
 custom-card[clickable]:hover,
 custom-card[clickable]:focus-within {
   border-color: var(--color-primary);
-  box-shadow: var(--shadow-soft);
-  transform: translateY(-0.125rem);
+  background-color: var(--surface-raised);
+  transform: translateY(-0.0625rem);
 }
 
 custom-card[clickable]:focus-within a:focus {
@@ -124,4 +132,11 @@ custom-card[clickable] .card-link:after {
   position: absolute;
   right: 0;
   top: 0;
+}
+
+@media (max-width: 30rem) {
+  custom-card {
+    block-size: auto;
+    min-block-size: 18rem;
+  }
 }
