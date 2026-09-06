@@ -3,7 +3,7 @@
     <a class="card-link" href="{{ item.url | url }}">{{ item.data.title }}</a>
   </h2>
   <span slot="date"> {% include "partials/date.njk" %} </span>
-  <p slot="content">{{ item.data.description }}</p>
+  <p slot="content" class="card-description">{{ item.data.description }}</p>
 </custom-card>
 
 {% css "local" %}

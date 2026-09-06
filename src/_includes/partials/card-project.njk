@@ -13,7 +13,7 @@
       </div>
     {% endif %}
   </{{ headingLevel }}>
-  <div slot="content" webc:nokeep>
+  <div slot="content" class="card-description" webc:nokeep>
     {# Description is now the only direct content here, features moved to headline #}
     {{ item.data.description | markdownFormat | safe }}
   </div>
