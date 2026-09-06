@@ -3,7 +3,7 @@
 
 <custom-card clickable>
   <{{ headingLevel }} slot="headline" class="{{ headingTextStep }} card-headline-flex">
-    <a href="{{ item.url | url }}">{{ item.data.title }}</a>
+    <a class="card-link" href="{{ item.url | url }}">{{ item.data.title }}</a>
     {# Move feature icons inside the headline element #}
     {% if item.data.features and item.data.features.length > 0 %}
       <div class="project-features"> {# Removed card-features-inline, .project-features should be sufficient with parent .card-headline-flex #}
