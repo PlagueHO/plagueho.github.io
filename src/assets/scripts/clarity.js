@@ -1,4 +1,46 @@
-// src/assets/scripts/clarity.js
-import clarity from "@microsoft/clarity";
+import clarity from '@microsoft/clarity';
 
-clarity.init("i9o1b9f1tp");
+const consentStorageKey = 'neural-flow-analytics-consent-v1';
+const consentBanner = document.querySelector('[data-consent-banner]');
+const consentSettingsButton = document.querySelector('[data-consent-settings]');
+const consentActionButtons = document.querySelectorAll('[data-consent-action]');
+
+clarity.init('i9o1b9f1tp');
+
+const sendConsent = analyticsStorage => {
+  window.clarity('consentv2', {
+    ad_Storage: 'denied',
+    analytics_Storage: analyticsStorage
+  });
+};
+
+const setBannerVisibility = isVisible => {
+  if (!consentBanner) {
+    return;
+  }
+
+  consentBanner.hidden = !isVisible;
+};
+
+const saveConsent = analyticsStorage => {
+  localStorage.setItem(consentStorageKey, analyticsStorage);
+  sendConsent(analyticsStorage);
+  setBannerVisibility(false);
+};
+
+const storedConsent = localStorage.getItem(consentStorageKey);
+const hasValidConsent = storedConsent === 'granted' || storedConsent === 'denied';
+
+sendConsent(hasValidConsent ? storedConsent : 'denied');
+setBannerVisibility(!hasValidConsent);
+
+consentActionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    saveConsent(button.dataset.consentAction);
+  });
+});
+
+consentSettingsButton?.addEventListener('click', () => {
+  setBannerVisibility(true);
+  consentBanner?.focus();
+});
