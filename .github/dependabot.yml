@@ -4,6 +4,7 @@
 # Please see the documentation for more information:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 # https://containers.dev/guide/dependabot
+# dependabot-monthly-v1: monthly routine updates; security updates remain event-driven.
 
 version: 2
 updates:
@@ -11,51 +12,90 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-      time: "06:00"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Pacific/Auckland"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
+      prefix-development: "deps"
     labels:
       - "dependencies"
       - "github-actions"
-      - "ci-cd"
     rebase-strategy: "auto"
     groups:
-      actions-dependencies:
+      github-actions-minor-and-patch:
+        applies-to: "version-updates"
         patterns:
           - "*"
         update-types:
           - "minor"
           - "patch"
+      github-actions-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
 
   # DevContainer features and configuration
   - package-ecosystem: "devcontainers"
     directory: "/"
     schedule:
-      interval: "weekly"
-      time: "06:00"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Pacific/Auckland"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
+      prefix-development: "deps"
     labels:
       - "dependencies"
-      - "devcontainer"
+      - "devcontainers"
     rebase-strategy: "auto"
+    groups:
+      devcontainers-minor-and-patch:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      devcontainers-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
 
   # NPM dependencies for repository tooling
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
-      time: "06:00"
+      interval: "monthly"
+      time: "09:00"
+      timezone: "Pacific/Auckland"
+    cooldown:
+      default-days: 3
     open-pull-requests-limit: 5
     commit-message:
       prefix: "deps"
+      prefix-development: "deps"
     labels:
       - "dependencies"
       - "npm"
-      - "tooling"
     rebase-strategy: "auto"
+    groups:
+      npm-minor-and-patch:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+      npm-security:
+        applies-to: "security-updates"
+        patterns:
+          - "*"
     allow:
       - dependency-type: "all"
