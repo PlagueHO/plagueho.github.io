@@ -2,7 +2,7 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
     "name": "Node.js & TypeScript",
-    "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:5-26-bookworm",
     "features": {
         "ghcr.io/devcontainers/features/git-lfs:1": {},
         "ghcr.io/devcontainers/features/powershell:2": {},
@@ -34,6 +34,6 @@
         ]
       }
     },
-    "postCreateCommand": "npm install -g npm@11.6.2 && npm install",
+    "postCreateCommand": "npm ci",
     "forwardPorts": [8080]
 }

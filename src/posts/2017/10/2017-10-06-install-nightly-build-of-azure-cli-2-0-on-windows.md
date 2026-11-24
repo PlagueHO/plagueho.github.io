@@ -98,7 +98,7 @@ Easy as that! Now you can experiment with all the latest automation features in 
 
 If you want to install even more "bleeding edge" builds (built straight off the master branch on every merge to master) then you can make a small adjustment to the script above:
 
-On [line 34](cf9ed6c3fcadb4db6152ef1e1f18f791#file-add-azureclinightlybuildwithpython-ps1-L34) change the URL of the feed from:
+On [line 34](https://gist.github.com/PlagueHO/cf9ed6c3fcadb4db6152ef1e1f18f791#file-add-azureclinightlybuildwithpython-ps1-L34) change the URL of the feed from:
 
 https://azureclinightly.blob.core.windows.net/packages
 

@@ -1,7 +1,7 @@
 {% if tags.size > 1 %}
   <div class="my-s-m cluster">
     {% for tag in tags %}
-      <a class="button" data-small-button-tag data-tag-tone="{{ tag | tagTone }}" href="/tags/{{ tag }}"> {{ tag }} </a>
+      {% include "partials/tag-badge.njk" %}
     {% endfor %}
   </div>
 {% endif %}
