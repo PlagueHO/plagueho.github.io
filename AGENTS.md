@@ -28,7 +28,7 @@ repo-root/
 ## Commands
 
 ```bash
-# Install dependencies (Node >=20)
+# Install dependencies (Node >=26.13.1)
 npm install
 
 # Development server with live reload

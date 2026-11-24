@@ -53,7 +53,7 @@ You can also optionally supply which of the two _internal API Management keys_, 
 
 ### Download the Script
 
-1. Download the script [Get-AzureRMApiManagementGitCredential.ps1](70ae184e1c8d22848ade6a7bc0f8255d) using the PowerShell command:
+1. Download the script [Get-AzureRMApiManagementGitCredential.ps1](https://gist.github.com/PlagueHO/70ae184e1c8d22848ade6a7bc0f8255d) using the PowerShell command:
 
     ```powershell
     iwr https://gist.githubusercontent.com/PlagueHO/70ae184e1c8d22848ade6a7bc0f8255d/raw/a9ca51e690c04654dfcb934ccbc7ca9358c97f08/Get-AzureRMApiManagementGitCredential.ps1 -OutFile Get-AzureRMApiManagementGitCredential.ps1

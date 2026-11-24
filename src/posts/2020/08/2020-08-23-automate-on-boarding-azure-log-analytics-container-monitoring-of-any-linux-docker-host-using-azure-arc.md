@@ -56,7 +56,7 @@ These instructions assumes you have the following:
 
 The first step is to connect our Linux host to Azure Arc so that we can use it to perform all the other steps directly from the Azure Portal. We are going to use a [service principal for onboarding the machine](https://docs.microsoft.com/en-us/azure/azure-arc/servers/onboard-service-principal) as this will make it easier to automate.
 
-We are going to run [this Azure Arc Onboarding script generator PowerShell script](64a2fd67489ea22b3ca09cd5bf3a0782) in **Azure Cloud Shell** to create the **Service Principal** and generate the Linux Shell script for us. It can also generate a PowerShell script for onboarding **Windows machines** to Azure Arc.
+We are going to run [this Azure Arc Onboarding script generator PowerShell script](https://gist.github.com/PlagueHO/64a2fd67489ea22b3ca09cd5bf3a0782) in **Azure Cloud Shell** to create the **Service Principal** and generate the Linux Shell script for us. It can also generate a PowerShell script for onboarding **Windows machines** to Azure Arc.
 
 1. Open Azure Cloud Shell and ensure you're [using PowerShell](https://docs.microsoft.com/en-us/azure/cloud-shell/using-the-shell-window#swap-between-bash-and-powershell-environments).
 1. Download the script by running:
@@ -180,7 +180,7 @@ This will download and run the [microsoft/oms container image](https://hub.docke
 
 _**Important:** If you are installing onto Ubuntu server, you can avoid problems in this stage by making sure you've installed Docker using the [official Docker repository and instructions](https://docs.docker.com/engine/install/ubuntu/). I had used Snap on Ubuntu 18.05, which resulted in this error '**Error response from daemon: error while creating mount source path '/var/lib/docker/containers': mkdir /var/lib/docker: read-only file system.**' when running the script._
 
-The way to automate the installation of this on the host is to again use an ARM Template, but this time use the [Linux Custom Script extension](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux) to execute the above command. You can see the [ARM Template here](c3f09056cace496dded18da8bc1ed589). This ARM template could easily be combined into the ARM template from the preceding stage, but I kept them separate for the purposes of showing the process.
+The way to automate the installation of this on the host is to again use an ARM Template, but this time use the [Linux Custom Script extension](https://docs.microsoft.com/en-us/azure/virtual-machines/extensions/custom-script-linux) to execute the above command. You can see the [ARM Template here](https://gist.github.com/PlagueHO/c3f09056cace496dded18da8bc1ed589). This ARM template could easily be combined into the ARM template from the preceding stage, but I kept them separate for the purposes of showing the process.
 
 1. Run this command to download the ARM Template:
 

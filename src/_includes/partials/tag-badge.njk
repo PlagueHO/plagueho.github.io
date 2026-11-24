@@ -1,0 +1,5 @@
+{% if tag in collections.tagList %}
+  <a class="button" href="/tags/{{ tag }}/" data-small-button-tag data-tag-tone="{{ tag | tagTone }}">{{ tag }}</a>
+{% else %}
+  <span class="button" data-small-button-tag data-tag-tone="{{ tag | tagTone }}">{{ tag }}</span>
+{% endif %}

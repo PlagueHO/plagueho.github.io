@@ -107,7 +107,7 @@ In case you're interested in what the script actually contains, here are the com
 1. **ContainerHostDsc** - the call to the **Configuration ContainerHostDsc** to compile the DSC MOF file.
 1. **Start-DSCConfiguration** - this command starts the LCM applying the DSC MOF file produces by the **ContainerHostDsc**.
 
-The complete script can be found [here](d9595cae1788f436b97bd4c90d50d72e). Feel free to use this code in anyway that makes sense to you.
+The complete script can be found [here](https://gist.github.com/PlagueHO/d9595cae1788f436b97bd4c90d50d72e). Feel free to use this code in anyway that makes sense to you.
 
 ## What About Windows 10 AE?
 
